@@ -91,7 +91,7 @@ export default function MediaLibraryView() {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[rgba(255,255,255,0.15)] pb-6">
         <div>
           <div className="font-mono text-xs text-[#4fd1c5] uppercase tracking-widest mb-1">
-            ASSETS // PERSISTENT STORAGE
+            ASSETS — PERSISTENT STORAGE
           </div>
           <h1 className="font-heading text-3xl font-bold uppercase text-[#f4f4f4]">
             MEDIA &amp; DOCUMENT LIBRARY
@@ -250,7 +250,7 @@ export default function MediaLibraryView() {
           <BlueprintWrapper dark className="dialog admin-dialog max-w-2xl">
             <div className="dialog-title flex items-center justify-between border-b border-[rgba(255,255,255,0.15)] pb-3">
               <span className="font-heading text-lg text-[#f4f4f4] uppercase truncate max-w-md">
-                PREVIEW // {previewItem.originalName}
+                PREVIEW — {previewItem.originalName}
               </span>
               <button onClick={() => setPreviewItem(null)} className="text-gray-400 hover:text-white">
                 <X className="w-5 h-5" />

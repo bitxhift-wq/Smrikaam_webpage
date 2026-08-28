@@ -56,10 +56,10 @@ export default function Locations() {
       <div className="page-title-surface relative border border-border p-8 md:p-12 mb-12 overflow-hidden">
         <BannerDrawBorder />
         <div className="flex items-center justify-between mb-4">
-          <div className="font-mono text-[13px] text-accent uppercase tracking-[0.18em] font-medium">
-            GLOBAL HEADQUARTERS // LOCATION
+          <div className="text-[10px] md:text-[11px] text-[var(--color-accent)] uppercase tracking-[0.2em] font-semibold">
+            GLOBAL HEADQUARTERS
           </div>
-          <div className="font-mono text-[13px] text-text-muted border border-border px-3 py-1 bg-black/[0.02] dark:bg-white/[0.03]">
+          <div className="text-[10px] md:text-[11px] text-[var(--color-text-muted)] border border-[var(--color-border)] px-3 py-1 bg-black/[0.02] dark:bg-white/[0.03]">
             COIMBATORE, INDIA
           </div>
         </div>
@@ -67,9 +67,9 @@ export default function Locations() {
         <TextReveal
           text="ENGINEERING INTELLIGENCE FROM COIMBATORE."
           as="h1"
-          className="font-heading text-4xl md:text-6xl font-bold uppercase text-text mb-4"
+          className="font-heading text-3xl sm:text-5xl lg:text-6xl font-bold uppercase tracking-tight text-[var(--color-text)] leading-[0.96] mb-4"
         />
-        <p className="text-text-muted text-[16px] font-normal leading-[1.55] max-w-3xl border-l-2 border-accent pl-4">
+        <p className="text-[15px] sm:text-[16px] md:text-[18px] text-[var(--color-text-secondary)] max-w-3xl border-l-2 border-[var(--color-accent)] pl-4 font-normal leading-[1.6]">
           Headquartered in Coimbatore, Tamil Nadu, India, SMRIKAAM Technologies LLP delivers production-grade Data, AI, Industrial IoT, and Cloud engineering solutions to enterprise clients worldwide.
         </p>
       </div>
@@ -83,40 +83,44 @@ export default function Locations() {
                 <div className="flex items-center justify-between mb-4">
                   <div className="flex items-center gap-2">
                     <MapPin className="w-5 h-5 text-accent shrink-0" strokeWidth={1.5} />
-                    <span className="tag tag-accent font-mono text-[13px]">GLOBAL HEADQUARTERS</span>
+                    <span className="tag tag-accent text-[12px]">GLOBAL HEADQUARTERS</span>
                   </div>
-                  <span className="font-mono text-[13px] text-text-muted border border-border px-2 py-0.5 font-normal">
-                    PRIMARY NODE // 01
-                  </span>
                 </div>
 
-                <h2 className="font-heading text-3xl font-semibold uppercase text-text mb-3">
+                <h2 className="font-heading text-2xl md:text-3xl font-bold uppercase text-text mb-3">
                   {primaryHQ.name || 'COIMBATORE HQ'}
                 </h2>
-                <div className="font-mono text-[13px] text-accent uppercase mb-6 font-medium">
+                <div className="text-[11px] text-accent uppercase mb-6 font-semibold tracking-wider">
                   {primaryHQ.type || 'PRIMARY TECHNOLOGY & DELIVERY CENTER'}
                 </div>
 
-                <div className="space-y-4 text-[15px] text-text-muted border-t border-border pt-6 leading-[1.55]">
-                  <div className="text-text font-medium text-base">
+                <a
+                  href="https://maps.app.goo.gl/kViWRBkDBqauRi8z7?g_st=ac"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Open SMRIKAAM Technologies location in Google Maps"
+                  className="space-y-4 text-[14px] md:text-[15px] text-text-muted border-t border-border pt-6 leading-[1.55] block group/address cursor-pointer"
+                >
+                  <div className="text-text font-semibold text-base group-hover/address:text-accent transition-colors">
                     SMRIKAAM Technologies LLP
                   </div>
-                  <div className="whitespace-pre-line">
-                    {primaryHQ.address || 'No. 19, Nataraj Nagar, Koundampalayam\nCoimbatore, Tamil Nadu 641030, India'}
+                  <div className="whitespace-pre-line group-hover/address:text-text transition-colors">
+                    2WVM+H7X, Nataraj Nagar, P and T Colony
+                    Koundampalayam, Coimbatore, Tamil Nadu 641030, India
                   </div>
                   {primaryHQ.description && (
-                    <div className="pt-2 text-[14px] text-text-muted font-normal">
+                    <div className="pt-2 text-[13px] md:text-[14px] text-text-muted font-normal">
                       <RichTextRenderer content={primaryHQ.description} />
                     </div>
                   )}
-                </div>
+                </a>
               </div>
 
-              <div className="pt-6 border-t border-border mt-8 flex flex-wrap items-center justify-between gap-4 font-mono text-[14px]">
-                <a href={`mailto:${primaryHQ.email || 'contact@smrikaam.com'}`} className="text-accent font-medium hover:underline flex items-center gap-1.5">
+              <div className="pt-6 border-t border-border mt-8 flex flex-wrap items-center justify-between gap-4 font-mono text-[13px]">
+                <a href={`mailto:${primaryHQ.email || 'contact@smrikaam.com'}`} className="text-accent font-semibold hover:underline flex items-center gap-1.5">
                   <Mail className="w-4 h-4" /> {primaryHQ.email || 'contact@smrikaam.com'}
                 </a>
-                <a href={`tel:${(primaryHQ.phone || '+91 91506 84601').replace(/\s+/g, '')}`} className="text-accent font-medium hover:underline flex items-center gap-1.5">
+                <a href={`tel:${(primaryHQ.phone || '+91 91506 84601').replace(/\s+/g, '')}`} className="text-accent font-semibold hover:underline flex items-center gap-1.5">
                   <Phone className="w-4 h-4" /> {primaryHQ.phone || '+91 91506 84601'}
                 </a>
               </div>
@@ -127,11 +131,11 @@ export default function Locations() {
         <div className="lg:col-span-5 flex flex-col justify-between gap-6">
           <Reveal index={1}>
             <BlueprintWrapper className="p-8 bg-bg/95 backdrop-blur-md">
-              <div className="font-mono text-[13px] text-accent uppercase tracking-widest mb-2 font-medium">ENTERPRISE DELIVERY</div>
-              <h3 className="font-heading text-xl font-semibold uppercase text-text mb-3">
+              <div className="font-mono text-[10px] md:text-[11px] text-accent uppercase tracking-[0.2em] mb-2 font-semibold">ENTERPRISE DELIVERY</div>
+              <h3 className="font-heading text-xl font-bold uppercase text-text mb-3">
                 SINGLE-POINT ACCOUNTABILITY
               </h3>
-              <p className="text-[15px] text-text-muted leading-[1.55] font-normal">
+              <p className="text-[14px] md:text-[15px] text-text-muted leading-[1.55] font-normal">
                 All client projects—from initial architectural discovery and telemetry pilot runs to production scaling—are engineered, governed, and supported directly by our senior team in Coimbatore.
               </p>
             </BlueprintWrapper>
@@ -155,7 +159,7 @@ export default function Locations() {
       {otherLocations.length > 0 && (
         <div className="mb-16">
           <div className="font-mono text-[13px] text-accent uppercase tracking-[0.18em] mb-2 font-medium">
-            REGIONAL CENTERS // GLOBAL NETWORK
+            REGIONAL CENTERS
           </div>
           <h2 className="font-heading text-2xl md:text-3xl font-semibold uppercase text-text mb-8 border-b border-border pb-4">
             ADDITIONAL TECHNOLOGY HUBS
@@ -205,7 +209,7 @@ export default function Locations() {
       {/* Engineering Capabilities at HQ */}
       <div className="mb-16">
         <div className="font-mono text-[13px] text-accent uppercase tracking-[0.18em] mb-2 font-medium">
-          FACILITIES &amp; LABS // COIMBATORE CENTER
+          FACILITIES &amp; LABS
         </div>
         <h2 className="font-heading text-2xl md:text-3xl font-semibold uppercase text-text mb-8 border-b border-border pb-4">
           COIMBATORE ENGINEERING DIVISIONS

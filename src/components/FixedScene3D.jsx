@@ -1,9 +1,8 @@
 import React, { useRef, useEffect, useState, useMemo } from 'react';
-import { useLocation } from 'react-router-dom';
 import { Canvas, useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 
-function ArchitecturalGridBlocks({ isDark = false }) {
+function ArchitecturalGridBlocks({ isDark = false, onContextLost }) {
   const groupRef = useRef();
   const scrollRef = useRef(0);
 
@@ -61,6 +60,22 @@ function ArchitecturalGridBlocks({ isDark = false }) {
     });
   });
 
+  // Handle WebGL context loss gracefully
+  useEffect(() => {
+    const canvasEl = document.querySelector('canvas');
+    if (!canvasEl) return;
+
+    const handleWebGlLost = (e) => {
+      e.preventDefault();
+      if (onContextLost) onContextLost();
+    };
+
+    canvasEl.addEventListener('webglcontextlost', handleWebGlLost, false);
+    return () => {
+      canvasEl.removeEventListener('webglcontextlost', handleWebGlLost);
+    };
+  }, [onContextLost]);
+
   // Dynamic Theme Colors
   const meshColor = isDark ? '#0f172a' : '#cbd5e1';
   const meshOpacity = isDark ? 0.45 : 0.25;
@@ -112,6 +127,7 @@ function ArchitecturalGridBlocks({ isDark = false }) {
 
 export default function FixedScene3D() {
   const [shouldRender, setShouldRender] = useState(true);
+  const [contextLost, setContextLost] = useState(false);
   const [isDark, setIsDark] = useState(() =>
     typeof document !== 'undefined'
       ? document.documentElement.classList.contains('dark')
@@ -137,9 +153,11 @@ export default function FixedScene3D() {
       }
     };
 
-    const prefersReducedMotion = window.matchMedia(
-      '(prefers-reduced-motion: reduce)'
-    ).matches;
+    const prefersReducedMotion =
+      typeof window !== 'undefined' &&
+      window.matchMedia &&
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
     if (prefersReducedMotion) {
       setShouldRender(false);
     }
@@ -151,21 +169,24 @@ export default function FixedScene3D() {
     };
   }, []);
 
-  if (!shouldRender) return null;
+  if (!shouldRender || contextLost) return null;
 
   return (
     <div
-      className={`fixed inset-0 z-0 pointer-events-none overflow-hidden transition-opacity duration-300 ${
+      className={`fixed inset-0 -z-10 pointer-events-none overflow-hidden transition-opacity duration-300 ${
         isDark ? 'opacity-80' : 'opacity-65'
       }`}
       aria-hidden="true"
     >
       <Canvas
         camera={{ position: [0, 0, 14], fov: 45 }}
-        dpr={[1, 1.5]}
-        gl={{ antialias: true, alpha: true }}
+        dpr={[1, 1.25]}
+        gl={{ antialias: false, alpha: true, powerPreference: 'low-power' }}
       >
-        <ArchitecturalGridBlocks isDark={isDark} />
+        <ArchitecturalGridBlocks
+          isDark={isDark}
+          onContextLost={() => setContextLost(true)}
+        />
       </Canvas>
     </div>
   );

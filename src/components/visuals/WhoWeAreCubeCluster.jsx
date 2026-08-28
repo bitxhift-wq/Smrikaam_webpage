@@ -151,7 +151,7 @@ export default function WhoWeAreCubeCluster({ className = '' }) {
     >
       <canvas
         ref={canvasRef}
-        className="w-full h-full max-w-[340px] max-h-[340px] object-contain"
+        className="w-full h-full max-w-full sm:max-w-[340px] max-h-[340px] object-contain"
       />
     </div>
   );

@@ -16,6 +16,7 @@ import HeroCubeCluster from '../components/visuals/HeroCubeCluster';
 import WhoWeAreCubeCluster from '../components/visuals/WhoWeAreCubeCluster';
 import Smrikaam3DCoreSection from '../components/visuals/Smrikaam3DCoreSection';
 import TechStackRibbon from '../components/TechStackRibbon';
+import AnimatedMetric from '../components/AnimatedMetric';
 import { useCMS } from '../context/CMSContext';
 
 export default function Home() {
@@ -52,96 +53,23 @@ export default function Home() {
     });
   }, [rawCaseStudies]);
 
-  const techDomains = [
-    { num: '01', label: 'AI / ML', icon: Brain },
-    { num: '02', label: 'Data & Analytics', icon: BarChart2 },
-    { num: '03', label: 'Cloud & DevOps', icon: Cloud },
-    { num: '04', label: 'IIoT & Connected Systems', icon: Cpu },
-    { num: '05', label: 'Software Engineering', icon: Network },
-    { num: '06', label: 'Data & App Security', icon: Lock },
-  ];
-
-  const pillars = [
-    {
-      label: 'OUR GOAL',
-      desc: 'Create innovative solutions that drive business growth and operational excellence.',
-    },
-    {
-      label: 'OUR VISION',
-      desc: 'To be a global leader in engineering intelligence and enterprise transformation.',
-    },
-    {
-      label: 'OUR MISSION',
-      desc: 'Deliver secure, scalable and intelligent solutions through engineering excellence and continuous innovation.',
-    },
-  ];
-
-  const capabilities = [
-    {
-      id: 'data-analytics',
-      num: '01',
-      title: 'DATA ANALYTICS & BI',
-      desc: 'Transform raw data into meaningful insights with advanced analytics and visual intelligence.',
-      icon: BarChart2,
-    },
-    {
-      id: 'data-eng',
-      num: '02',
-      title: 'DATA ENGINEERING',
-      desc: 'Build robust data platforms, pipelines and architecture for reliable and scalable data flows.',
-      icon: Database,
-    },
-    {
-      id: 'devops-cloud',
-      num: '03',
-      title: 'DEVOPS & CLOUD ENGINEERING',
-      desc: 'Modernize infrastructure, automate deployments and build cloud-native systems that scale seamlessly.',
-      icon: Cloud,
-    },
-    {
-      id: 'iiot',
-      num: '04',
-      title: 'INDUSTRIAL IoT',
-      desc: 'Connect machines, collect real-time data and unlock operational intelligence at the edge.',
-      icon: Cpu,
-    },
-    {
-      id: 'gen-ai',
-      num: '05',
-      title: 'GENERATIVE & AGENTIC AI',
-      desc: 'Build GenAI applications and intelligent agents that automate, augment and accelerate decisions.',
-      icon: Brain,
-    },
-    {
-      id: 'governance',
-      num: '06',
-      title: 'DATA GOVERNANCE & COMPLIANCE',
-      desc: 'Ensure data quality, security, privacy and compliance across your enterprise ecosystem.',
-      icon: Lock,
-    },
-  ];
-
   const problems = [
     {
-      index: '01',
       title: 'LEGACY SYSTEMS',
       point1: 'Modernization & Cloud Migration',
       point2: 'Scalable & Resilient Architecture',
     },
     {
-      index: '02',
       title: 'DISCONNECTED MACHINES',
       point1: 'Edge IIoT & Telemetry Pipelines',
       point2: 'Real-Time Operational Intelligence',
     },
     {
-      index: '03',
       title: 'FRAGMENTED DATA',
       point1: 'Unified Data Engineering',
       point2: 'Trusted Single Source of Truth',
     },
     {
-      index: '04',
       title: 'MANUAL PROCESSES',
       point1: 'Generative AI & Agentic Automation',
       point2: 'Higher Productivity & Lower Errors',
@@ -160,7 +88,7 @@ export default function Home() {
     <div className="relative z-10 w-full overflow-x-hidden bg-transparent text-[var(--color-text)] transition-colors duration-200">
       
       {/* ============================================================ */}
-      {/* SCROLL 0 — HERO (LOCKED) */}
+      {/* SCROLL 0 — HERO */}
       {/* ============================================================ */}
       <section
         id="hero"
@@ -189,7 +117,7 @@ export default function Home() {
             </h1>
 
             {/* Description */}
-            <p className="text-[13px] md:text-[15px] text-[var(--color-text-secondary)] max-w-lg leading-[1.5] font-normal">
+            <p className="text-[15px] sm:text-[16px] md:text-[18px] text-[var(--color-text-secondary)] max-w-xl leading-[1.6] font-normal">
               We build intelligent, secure, and scalable technology solutions
               that help enterprises modernize, automate and grow.
             </p>
@@ -212,28 +140,43 @@ export default function Home() {
             </div>
 
             {/* System Proof Metrics Bar */}
-            <div className="grid grid-cols-3 gap-4 p-4 mt-2 home-card-surface border border-[var(--color-border)] max-w-lg">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 p-3.5 sm:p-4 mt-2 home-card-surface border border-[var(--color-border)] max-w-lg">
               <div>
-                <div className="font-heading text-2xl md:text-3xl font-bold text-[var(--color-text)] tracking-tight">
-                  50+
-                </div>
-                <div className="font-mono text-[10px] text-[var(--color-text-muted)] uppercase tracking-wider mt-0.5 font-normal">
+                <AnimatedMetric
+                  targetValue={50}
+                  suffix="+"
+                  decimals={0}
+                  duration={1800}
+                  className="font-heading text-2xl md:text-3xl font-bold text-[var(--color-text)] tracking-tight"
+                  ariaLabel="50+ Deployments"
+                />
+                <div className="text-[10px] sm:text-[11px] text-[var(--color-text-muted)] uppercase tracking-wider mt-0.5 font-normal">
                   Deployments
                 </div>
               </div>
-              <div className="border-l border-[var(--color-border)] pl-3">
-                <div className="font-heading text-2xl md:text-3xl font-bold text-[var(--color-text)] tracking-tight">
-                  17M+
-                </div>
-                <div className="font-mono text-[10px] text-[var(--color-text-muted)] uppercase tracking-wider mt-0.5 font-normal">
+              <div className="border-t sm:border-t-0 sm:border-l border-[var(--color-border)] pt-2.5 sm:pt-0 pl-0 sm:pl-3">
+                <AnimatedMetric
+                  targetValue={17}
+                  suffix="M+"
+                  decimals={0}
+                  duration={1800}
+                  className="font-heading text-2xl md:text-3xl font-bold text-[var(--color-text)] tracking-tight"
+                  ariaLabel="17M+ Data Points Processed"
+                />
+                <div className="text-[10px] sm:text-[11px] text-[var(--color-text-muted)] uppercase tracking-wider mt-0.5 font-normal">
                   Data Points Processed
                 </div>
               </div>
-              <div className="border-l border-[var(--color-border)] pl-3">
-                <div className="font-heading text-2xl md:text-3xl font-bold text-[var(--color-text)] tracking-tight">
-                  99.999%
-                </div>
-                <div className="font-mono text-[10px] text-[var(--color-text-muted)] uppercase tracking-wider mt-0.5 font-normal">
+              <div className="border-t sm:border-t-0 sm:border-l border-[var(--color-border)] pt-2.5 sm:pt-0 pl-0 sm:pl-3">
+                <AnimatedMetric
+                  targetValue={99.999}
+                  suffix="%"
+                  decimals={3}
+                  duration={1800}
+                  className="font-heading text-2xl md:text-3xl font-bold text-[var(--color-text)] tracking-tight"
+                  ariaLabel="99.999% System Uptime"
+                />
+                <div className="text-[10px] sm:text-[11px] text-[var(--color-text-muted)] uppercase tracking-wider mt-0.5 font-normal">
                   System Uptime
                 </div>
               </div>
@@ -272,38 +215,31 @@ export default function Home() {
       {/* ============================================================ */}
       <section
         id="problems"
-        data-scroll-label="SERVICES & TRANSFORMATION"
-        aria-label="Services, Transformation Architecture, and Live Technology Relays"
+        data-scroll-label="SERVICES & BUSINESS PROBLEMS"
+        aria-label="Services and Business Problems We Solve"
         className="relative py-10 md:py-14 px-6 md:px-12 lg:px-16 border-b border-[var(--color-border)] bg-[var(--color-bg)]/85 backdrop-blur-sm overflow-hidden"
       >
         <div className="max-w-7xl mx-auto w-full relative z-10 space-y-6">
           
           {/* ======================================================== */}
-          {/* 1. HEADER: BUSINESS PROBLEMS WE SOLVE / TRANSFORMATION ARCHITECTURE */}
+          {/* 1. HEADER: BUSINESS PROBLEMS WE SOLVE */}
           {/* ======================================================== */}
           <div className="pb-3 border-b border-[var(--color-border)]">
-            <div className="font-mono text-[11px] text-[var(--color-text-muted)] uppercase tracking-[0.2em] font-semibold mb-1 flex items-center gap-2">
-              <span className="w-1.5 h-1.5 bg-[var(--color-accent)]" />
+            <h2 className="font-heading text-2xl sm:text-3xl md:text-4xl font-bold uppercase text-[var(--color-text)] tracking-tight flex items-center gap-3">
+              <span className="w-2 h-2 bg-[var(--color-accent)] shrink-0" />
               <span>BUSINESS PROBLEMS WE SOLVE</span>
-            </div>
-            <h2 className="font-heading text-2xl md:text-3xl lg:text-4xl font-bold uppercase text-[var(--color-text)] tracking-tight">
-              Transformation Architecture
             </h2>
           </div>
 
           {/* ======================================================== */}
-          {/* 2. // SERVICES & LIVE SERVICE STACK (LTR RELAY) */}
+          {/* 2. SERVICES (LTR RELAY) */}
           {/* ======================================================== */}
-          <div className="border border-[var(--color-border)] home-card-surface p-3.5 md:p-4 overflow-hidden">
-            <div className="flex items-center justify-between mb-3 px-1">
-              <div className="font-mono text-[10px] md:text-[11px] text-[var(--color-accent)] font-bold uppercase tracking-widest flex items-center gap-2">
-                <span className="w-1.5 h-1.5 bg-[var(--color-accent)]" />
-                <span>// SERVICES</span>
-              </div>
-              <div className="flex items-center gap-1.5 font-mono text-[9px] md:text-[10px] text-[var(--color-text-muted)] uppercase tracking-wider">
-                <span className="w-1.5 h-1.5 rounded-full bg-[var(--color-accent)] animate-pulse" />
-                <span>LIVE SERVICE STACK // {activeServices.length} CAPABILITIES</span>
-              </div>
+          <div className="border border-[var(--color-border)] home-card-surface p-4 md:p-5 overflow-hidden">
+            <div className="flex items-center mb-3 px-1">
+              <h3 className="font-heading text-xl sm:text-2xl md:text-3xl font-bold uppercase text-[var(--color-accent)] tracking-tight flex items-center gap-2.5">
+                <span className="w-1.5 h-1.5 bg-[var(--color-accent)] shrink-0" />
+                <span>SERVICES</span>
+              </h3>
             </div>
 
             {/* Viewport with Continuous LTR Movement */}
@@ -338,32 +274,22 @@ export default function Home() {
           </div>
 
           {/* ======================================================== */}
-          {/* 3. 01..04 TRANSFORMATION ITEMS (4 BUSINESS PROBLEMS) */}
+          {/* 3. BUSINESS PROBLEMS CARDS */}
           {/* ======================================================== */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {problems.map((prob) => (
               <div
-                key={prob.index}
-                className="p-3.5 border border-[var(--color-border)] home-card-surface hover:border-[var(--color-border-strong)] transition-all duration-300 flex flex-col justify-between"
+                key={prob.title}
+                className="p-4 border border-[var(--color-border)] home-card-surface hover:border-[var(--color-border-strong)] transition-all duration-300 flex flex-col justify-between"
               >
-                <div className="flex items-center justify-between mb-1.5">
-                  <span className="font-mono text-[11px] font-bold text-[var(--color-accent)]">
-                    {prob.index}
-                  </span>
-                  <span className="font-mono text-[9px] text-[var(--color-text-muted)] uppercase tracking-wider">
-                    TRANSFORMATION
-                  </span>
-                </div>
-                <h3 className="font-mono text-xs font-bold uppercase text-[var(--color-text)] mb-2">
+                <h3 className="font-heading text-sm sm:text-base font-bold uppercase tracking-tight text-[var(--color-text)] mb-3">
                   {prob.title}
                 </h3>
-                <div className="space-y-1 border-t border-[var(--color-border)] pt-2 text-[11px] font-mono">
-                  <div className="text-[var(--color-text-secondary)] font-normal">
-                    <span className="text-[var(--color-accent)] font-bold mr-1">↳</span>
+                <div className="space-y-2 border-t border-[var(--color-border)] pt-3 text-xs sm:text-[13px] font-mono">
+                  <div className="text-[var(--color-text-secondary)] font-normal leading-relaxed">
                     {prob.point1}
                   </div>
-                  <div className="text-[var(--color-text)] font-semibold">
-                    <span className="text-[var(--color-accent)] font-bold mr-1">↳</span>
+                  <div className="text-[var(--color-text-secondary)] font-normal leading-relaxed">
                     {prob.point2}
                   </div>
                 </div>
@@ -372,18 +298,14 @@ export default function Home() {
           </div>
 
           {/* ======================================================== */}
-          {/* 4. // CASE STUDIES & LIVE PROJECT FEED (RTL RELAY) */}
+          {/* 4. CASE STUDIES (RTL RELAY) */}
           {/* ======================================================== */}
-          <div className="border border-[var(--color-border)] home-card-surface p-3.5 md:p-4 overflow-hidden">
-            <div className="flex items-center justify-between mb-3 px-1">
-              <div className="font-mono text-[10px] md:text-[11px] text-[var(--color-accent)] font-bold uppercase tracking-widest flex items-center gap-2">
-                <span className="w-1.5 h-1.5 bg-[var(--color-accent)]" />
-                <span>// CASE STUDIES</span>
-              </div>
-              <div className="flex items-center gap-1.5 font-mono text-[9px] md:text-[10px] text-[var(--color-text-muted)] uppercase tracking-wider">
-                <span className="w-1.5 h-1.5 rounded-full bg-[var(--color-accent)] animate-pulse" />
-                <span>LIVE PROJECT FEED // {activeCaseStudies.length} DEPLOYMENTS</span>
-              </div>
+          <div className="border border-[var(--color-border)] home-card-surface p-4 md:p-5 overflow-hidden">
+            <div className="flex items-center mb-3 px-1">
+              <h3 className="font-heading text-xl sm:text-2xl md:text-3xl font-bold uppercase text-[var(--color-accent)] tracking-tight flex items-center gap-2.5">
+                <span className="w-1.5 h-1.5 bg-[var(--color-accent)] shrink-0" />
+                <span>CASE STUDIES</span>
+              </h3>
             </div>
 
             {/* Viewport with Continuous RTL Movement */}
@@ -408,7 +330,7 @@ export default function Home() {
                         />
                       ) : (
                         <div className="w-full h-full flex items-center justify-center font-mono text-[9px] text-[var(--color-text-muted)]">
-                          SMK//CS
+                          SMK CS
                         </div>
                       )}
                     </div>
@@ -416,17 +338,17 @@ export default function Home() {
                     {/* Content Details */}
                     <div className="flex flex-col justify-between min-w-0 flex-1">
                       <div>
-                        <div className="font-mono text-[9px] text-[var(--color-accent)] font-bold uppercase tracking-wider mb-0.5 truncate">
-                          CASE STUDY // {cs.industry}
+                        <div className="font-mono text-[10px] text-[var(--color-accent)] font-bold uppercase tracking-wider mb-1 truncate">
+                          {cs.industry}
                         </div>
-                        <h3 className="font-heading text-xs sm:text-sm font-bold uppercase tracking-tight text-[var(--color-text)] group-hover:text-[var(--color-accent)] transition-colors truncate">
+                        <h3 className="font-heading text-xs sm:text-sm font-bold uppercase tracking-tight text-[var(--color-text)] group-hover:text-[var(--color-accent)] transition-colors truncate mb-1">
                           {cs.title}
                         </h3>
-                        <div className="text-[10px] font-mono text-[var(--color-text-secondary)] line-clamp-1 mt-1 font-normal">
-                          <span className="text-[var(--color-text-muted)] font-semibold">P:</span> {cs.problem}
+                        <div className="text-[11px] font-mono text-[var(--color-text-secondary)] line-clamp-1 font-normal">
+                          P: {cs.problem}
                         </div>
-                        <div className="text-[10px] font-mono text-[var(--color-text)] font-semibold line-clamp-1 mt-0.5">
-                          <span className="text-[var(--color-accent)] font-bold">↳ S:</span> {cs.solution}
+                        <div className="text-[11px] font-mono text-[var(--color-text-secondary)] line-clamp-1 mt-0.5 font-normal">
+                          S: {cs.solution}
                         </div>
                       </div>
 
@@ -460,12 +382,12 @@ export default function Home() {
           <div className="border border-[var(--color-border)] p-6 md:p-8 home-card-surface flex flex-col sm:flex-row items-center justify-between gap-4">
             <div className="space-y-1 text-center sm:text-left">
               <div className="font-mono text-[10px] text-[var(--color-accent)] font-bold uppercase tracking-widest">
-                ENTERPRISE TRANSFORMATION // STRATEGY CONSULTATION
+                ENTERPRISE TRANSFORMATION • STRATEGY CONSULTATION
               </div>
               <h3 className="font-heading text-lg md:text-xl font-bold uppercase text-[var(--color-text)]">
                 Ready to engineer your next intelligent system?
               </h3>
-              <p className="text-xs md:text-sm text-[var(--color-text-secondary)] font-normal max-w-xl">
+              <p className="text-[14px] sm:text-[15px] md:text-[17px] text-[var(--color-text-secondary)] font-normal max-w-xl leading-[1.6]">
                 Connect with our technical leads in Coimbatore to review architecture blueprints and project roadmaps.
               </p>
             </div>

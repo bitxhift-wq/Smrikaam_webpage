@@ -54,54 +54,48 @@ export default function Smrikaam3DCoreSection() {
 
   // Left: 6 Engineering Capabilities (Pills with circuit paths)
   const capabilities = [
-    { id: 'cap-0', num: '01', title: 'AI / ML', icon: Brain },
-    { id: 'cap-1', num: '02', title: 'Data & Analytics', icon: BarChart2 },
-    { id: 'cap-2', num: '03', title: 'Cloud & DevOps', icon: Cloud },
-    { id: 'cap-3', num: '04', title: 'IIoT & Connected Systems', icon: Cpu },
-    { id: 'cap-4', num: '05', title: 'Software Engineering', icon: Code2 },
-    { id: 'cap-5', num: '06', title: 'Data & App Security', icon: Lock },
+    { id: 'cap-0', title: 'AI / ML', icon: Brain },
+    { id: 'cap-1', title: 'Data & Analytics', icon: BarChart2 },
+    { id: 'cap-2', title: 'Cloud & DevOps', icon: Cloud },
+    { id: 'cap-3', title: 'IIoT & Connected Systems', icon: Cpu },
+    { id: 'cap-4', title: 'Software Engineering', icon: Code2 },
+    { id: 'cap-5', title: 'Data & App Security', icon: Lock },
   ];
 
   // Right: 6 What We Build (Circular framed nodes)
   const buildItems = [
     {
       id: 'build-0',
-      num: '01',
       title: 'DATA ANALYTICS & BI',
       desc: 'Transform raw data into meaningful insights with advanced analytics and visual intelligence.',
       icon: TrendingUp,
     },
     {
       id: 'build-1',
-      num: '02',
       title: 'DATA ENGINEERING',
       desc: 'Build robust data platforms, pipelines and architecture for reliable and scalable data flows.',
       icon: Database,
     },
     {
       id: 'build-2',
-      num: '03',
       title: 'DEVOPS & CLOUD ENGINEERING',
       desc: 'Modernize infrastructure, automate deployments and build cloud-native systems that scale seamlessly.',
       icon: Cloud,
     },
     {
       id: 'build-3',
-      num: '04',
       title: 'INDUSTRIAL IOT',
       desc: 'Connect machines, collect real-time data and unlock operational intelligence at the edge.',
       icon: Wifi,
     },
     {
       id: 'build-4',
-      num: '05',
       title: 'GENERATIVE & AGENTIC AI',
       desc: 'Build GenAI applications and intelligent agents that automate, augment and accelerate decisions.',
       icon: Brain,
     },
     {
       id: 'build-5',
-      num: '06',
       title: 'DATA GOVERNANCE & COMPLIANCE',
       desc: 'Ensure data quality, security, privacy and compliance across your enterprise ecosystem.',
       icon: ShieldCheck,
@@ -550,7 +544,7 @@ export default function Smrikaam3DCoreSection() {
             
             {/* Section Header Block */}
             <div className="space-y-3">
-              <div className="font-mono text-[11px] text-[var(--color-text-muted)] uppercase tracking-[0.2em] font-semibold flex items-center gap-2">
+              <div className="text-[11px] text-[var(--color-text-muted)] uppercase tracking-[0.2em] font-semibold flex items-center gap-2">
                 <span className="w-1.5 h-1.5 bg-[var(--color-accent)]" />
                 <span>WHO WE ARE</span>
               </div>
@@ -559,7 +553,7 @@ export default function Smrikaam3DCoreSection() {
                 Engineering Intelligence Across AI, Data, Cloud &amp; <span className="text-amber-400 dark:text-amber-300">IIoT.</span>
               </h2>
 
-              <div className="space-y-2 text-[13px] md:text-[14px] text-[var(--color-text-secondary)] leading-[1.55] font-normal">
+              <div className="space-y-2.5 text-[15px] sm:text-[16px] md:text-[18px] text-[var(--color-text-secondary)] leading-[1.6] font-normal">
                 <p>
                   We are a technology development and engineering company helping enterprises build intelligent systems across AI, Data, Cloud, IIoT and Software.
                 </p>
@@ -571,12 +565,12 @@ export default function Smrikaam3DCoreSection() {
 
             {/* 6 Engineering Capability Capsule Pills */}
             <div className="space-y-2.5 pt-2">
-              <div className="font-mono text-[10px] text-[var(--color-text-muted)] uppercase tracking-widest font-semibold flex items-center gap-2">
+              <div className="text-[10px] text-[var(--color-text-muted)] uppercase tracking-widest font-semibold flex items-center gap-2">
                 <span className="w-1.5 h-1.5 bg-[var(--color-accent)]" />
                 <span>ENGINEERING CAPABILITIES</span>
               </div>
 
-              <div className="space-y-2 max-w-[320px]">
+              <div className="space-y-2 max-w-full sm:max-w-[320px]">
                 {capabilities.map((cap) => {
                   const Icon = cap.icon;
                   const isHovered = hoveredNode === cap.id;
@@ -595,13 +589,10 @@ export default function Smrikaam3DCoreSection() {
                       }`}
                     >
                       <div className="flex items-center gap-3">
-                        <span className="font-mono text-[11px] text-[var(--color-accent)] font-bold">
-                          {cap.num}
-                        </span>
                         <div className="w-6 h-6 rounded-full border border-[var(--color-border)] flex items-center justify-center text-[var(--color-accent)] bg-[var(--color-bg)]">
                           <Icon className="w-3.5 h-3.5" strokeWidth={1.75} />
                         </div>
-                        <span className="font-mono text-[11px] font-semibold uppercase tracking-wider text-[var(--color-text)]">
+                        <span className="text-[11px] font-semibold uppercase tracking-wider text-[var(--color-text)]">
                           {cap.title}
                         </span>
                       </div>
@@ -623,37 +614,16 @@ export default function Smrikaam3DCoreSection() {
           </div>
 
           {/* ========================================================== */}
-          {/* CENTER VISUAL: 3D CORE ISOMETRIC HYPERCUBE & SYSTEM LABELS */}
+          {/* CENTER VISUAL: 3D CORE ISOMETRIC HYPERCUBE */}
           {/* ========================================================== */}
           <div className="my-8 lg:my-0 lg:absolute lg:top-1/2 lg:left-1/2 lg:-translate-x-1/2 lg:-translate-y-1/2 w-full lg:w-[460px] flex flex-col items-center justify-center z-10 pointer-events-none">
-            
-            {/* Top 3D Core Header Tag: •---- [ 3D CORE ] ----• */}
-            <div className="flex items-center gap-2 font-mono text-[10px] text-[var(--color-text-muted)] uppercase tracking-widest mb-1">
-              <span className="text-[var(--color-border-strong)]">•----</span>
-              <span className="border border-[var(--color-border)] bg-[var(--color-surface)] text-[var(--color-text)] px-2.5 py-0.5 font-bold">
-                3D CORE
-              </span>
-              <span className="text-[var(--color-border-strong)]">----•</span>
-            </div>
-
             {/* Real 3D Hypercube Canvas */}
-            <div className="w-[340px] sm:w-[400px] h-[340px] sm:h-[400px] relative flex items-center justify-center">
+            <div className="max-w-full w-[280px] sm:w-[400px] h-[280px] sm:h-[400px] relative flex items-center justify-center overflow-hidden">
               <canvas
                 ref={canvasRef}
                 className="w-full h-full object-contain"
               />
             </div>
-
-            {/* Central System Tag & Coordinate Typography */}
-            <div className="text-center space-y-0.5 mt-[-20px] relative z-20">
-              <div className="font-mono text-[11px] font-bold text-[var(--color-text)] uppercase tracking-[0.25em]">
-                CONNECTED SYSTEM
-              </div>
-              <div className="font-mono text-[9px] text-[var(--color-text-muted)] uppercase tracking-[0.25em]">
-                ARCHITECTURE NODE
-              </div>
-            </div>
-
           </div>
 
           {/* ========================================================== */}
@@ -663,7 +633,7 @@ export default function Smrikaam3DCoreSection() {
             
             {/* Header Block */}
             <div className="space-y-1.5">
-              <div className="font-mono text-[11px] text-[var(--color-text-muted)] uppercase tracking-[0.2em] font-semibold flex items-center gap-2">
+              <div className="text-[11px] text-[var(--color-text-muted)] uppercase tracking-[0.2em] font-semibold flex items-center gap-2">
                 <span className="w-1.5 h-1.5 bg-[var(--color-accent)]" />
                 <span>WHAT WE BUILD</span>
               </div>
@@ -690,13 +660,6 @@ export default function Smrikaam3DCoreSection() {
                       isHovered ? '-translate-x-1 bg-[var(--color-surface-subtle)]/80' : 'hover:bg-[var(--color-surface-subtle)]/40'
                     }`}
                   >
-                    {/* Left Connector Node Dot */}
-                    <span
-                      className="font-mono text-[12px] font-bold text-[var(--color-accent)] shrink-0 mt-1"
-                    >
-                      {item.num}
-                    </span>
-
                     {/* Circular Technical Icon Frame */}
                     <div
                       className="w-8 h-8 rounded-full border border-[var(--color-border-strong)] shrink-0 flex items-center justify-center bg-[var(--color-surface)] text-[var(--color-text)] transition-transform duration-200"
@@ -709,10 +672,10 @@ export default function Smrikaam3DCoreSection() {
 
                     {/* Title & Description */}
                     <div className="flex-1 min-w-0">
-                      <h3 className="font-mono text-[12px] font-bold uppercase tracking-wider text-[var(--color-text)] mb-0.5">
+                      <h3 className="font-heading text-sm font-bold uppercase tracking-wider text-[var(--color-text)] mb-0.5">
                         {item.title}
                       </h3>
-                      <p className="text-[11px] text-[var(--color-text-secondary)] leading-[1.4] font-normal">
+                      <p className="text-xs md:text-[13px] text-[var(--color-text-secondary)] leading-[1.5] font-normal">
                         {item.desc}
                       </p>
                     </div>
@@ -725,7 +688,7 @@ export default function Smrikaam3DCoreSection() {
             <div className="pt-2">
               <Link
                 to="/services"
-                className="inline-flex items-center justify-between px-5 py-2.5 border border-[var(--button-secondary-border)] bg-[var(--button-secondary-bg)] text-[var(--button-secondary-text)] hover:border-[var(--color-accent)] hover:bg-[var(--color-surface-subtle)] font-mono text-xs font-bold uppercase tracking-widest transition-all duration-200 group"
+                className="inline-flex items-center justify-between px-5 py-2.5 border border-[var(--button-secondary-border)] bg-[var(--button-secondary-bg)] text-[var(--button-secondary-text)] hover:border-[var(--color-accent)] hover:bg-[var(--color-surface-subtle)] text-xs font-semibold uppercase tracking-widest transition-all duration-200 group"
               >
                 <span>EXPLORE SERVICES</span>
                 <ArrowUpRight className="w-4 h-4 ml-2 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
@@ -771,12 +734,12 @@ export default function Smrikaam3DCoreSection() {
                     </div>
 
                     {/* Title */}
-                    <h4 className="font-mono text-xs md:text-sm font-bold uppercase tracking-widest text-[var(--color-text)] mb-1.5">
+                    <h4 className="font-heading text-base font-bold uppercase tracking-wider text-[var(--color-text)] mb-1.5">
                       {pillar.title}
                     </h4>
 
                     {/* Description */}
-                    <p className="text-[12px] text-[var(--color-text-secondary)] leading-[1.45] font-normal">
+                    <p className="text-xs md:text-[13px] text-[var(--color-text-secondary)] leading-[1.5] font-normal">
                       {pillar.desc}
                     </p>
                   </div>
@@ -784,7 +747,7 @@ export default function Smrikaam3DCoreSection() {
                   {/* Dashed Horizontal Connector Line between cards on desktop */}
                   {idx < 2 && (
                     <div className="hidden md:flex absolute -right-4 top-1/2 -translate-y-1/2 z-30 text-[var(--color-border-strong)]">
-                      <span className="font-mono text-[10px] tracking-tighter">-----</span>
+                      <span className="text-[10px] tracking-tighter">-----</span>
                     </div>
                   )}
 
@@ -801,12 +764,12 @@ export default function Smrikaam3DCoreSection() {
 
           {/* Strategic Flow Ribbon: INTELLIGENT SYSTEMS -> OPERATIONAL EXCELLENCE -> BUSINESS IMPACT */}
           <div className="mt-3 flex justify-center">
-            <div className="inline-flex flex-wrap items-center justify-center gap-2 sm:gap-4 px-6 py-2.5 rounded-full border border-[var(--color-border)] bg-[var(--color-surface)] shadow-sm font-mono text-[10px] sm:text-[11px] tracking-widest uppercase text-[var(--color-text)]">
-              <span className="font-bold">INTELLIGENT SYSTEMS</span>
-              <span className="text-[var(--color-text-muted)] font-bold">→</span>
-              <span className="font-bold">OPERATIONAL EXCELLENCE</span>
-              <span className="text-[var(--color-text-muted)] font-bold">→</span>
-              <span className="font-bold">BUSINESS IMPACT</span>
+            <div className="inline-flex flex-wrap items-center justify-center gap-2 sm:gap-4 px-6 py-2.5 rounded-full border border-[var(--color-border)] bg-[var(--color-surface)] shadow-sm text-[10px] sm:text-[11px] tracking-widest uppercase text-[var(--color-text)] font-semibold">
+              <span>INTELLIGENT SYSTEMS</span>
+              <span className="text-[var(--color-text-muted)]">→</span>
+              <span>OPERATIONAL EXCELLENCE</span>
+              <span className="text-[var(--color-text-muted)]">→</span>
+              <span>BUSINESS IMPACT</span>
             </div>
           </div>
 

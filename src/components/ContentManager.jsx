@@ -143,7 +143,7 @@ export default function ContentManager({ resource, title, fields }) {
       <div className="border-b border-[rgba(255,255,255,0.15)] pb-6 mb-8 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <div className="font-mono text-xs text-[#4fd1c5] uppercase tracking-widest mb-1">
-            CONTENT MANAGER // {resource.toUpperCase()}
+            CONTENT MANAGER — {resource.toUpperCase()}
           </div>
           <h1 className="font-heading text-3xl font-bold uppercase text-[#f4f4f4]">
             MANAGE {title}

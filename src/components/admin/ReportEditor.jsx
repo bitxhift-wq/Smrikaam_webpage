@@ -96,7 +96,7 @@ export default function ReportEditor({ report, onSave, onCancel }) {
       <div className="flex items-center justify-between border-b border-[rgba(255,255,255,0.15)] pb-4">
         <div>
           <div className="font-mono text-xs text-[#4fd1c5] uppercase tracking-widest mb-1">
-            FLASH REPORT EDITOR // HOMEPAGE WORKBENCH
+            FLASH REPORT EDITOR — HOMEPAGE WORKBENCH
           </div>
           <h2 className="font-heading text-2xl font-bold uppercase text-[#f4f4f4]">
             {report ? 'EDIT FLASH REPORT' : 'CREATE NEW FLASH REPORT'}
@@ -361,7 +361,7 @@ export default function ReportEditor({ report, onSave, onCancel }) {
 
               <div className="flex items-center justify-between mb-2">
                 <span className="font-mono text-[10px] text-[#4fd1c5] uppercase tracking-widest font-bold">
-                  {formData.reportType.toUpperCase()} REPORT // {formData.category.toUpperCase()}
+                  {formData.reportType.toUpperCase()} REPORT • {formData.category.toUpperCase()}
                 </span>
                 <span className="font-mono text-[10px] text-gray-400">
                   {formData.date}

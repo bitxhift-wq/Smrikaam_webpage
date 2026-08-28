@@ -62,6 +62,32 @@ export default function NavBar() {
     setMobileOpen(false);
   }, [location.pathname]);
 
+  // Handle mobile menu drawer body-scroll locking and ESC key listener
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') {
+        setMobileOpen(false);
+        setServicesDropdown(false);
+        setAcceleratorsDropdown(false);
+        setIndustriesDropdown(false);
+        setCaseStudiesDropdown(false);
+        setCompanyDropdown(false);
+      }
+    };
+
+    if (mobileOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => {
+      document.body.style.overflow = '';
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [mobileOpen]);
+
   const toggleTheme = () => {
     setTheme((prev) => (prev === 'dark' ? 'light' : 'dark'));
   };
@@ -145,7 +171,7 @@ export default function NavBar() {
           {/* HOME */}
           <Link
             to="/"
-            className={`font-mono text-xs uppercase tracking-widest font-semibold transition-colors ${
+            className={`text-xs uppercase tracking-widest font-semibold transition-colors ${
               isActive('/') ? 'text-[var(--ribbon-active)] border-b-2 border-[var(--ribbon-active)] pb-0.5' : 'text-[var(--ribbon-text-secondary)] hover:text-[var(--ribbon-text)]'
             }`}
           >
@@ -161,7 +187,7 @@ export default function NavBar() {
             <Link
               to="/services"
               onClick={() => setServicesDropdown(false)}
-              className={`font-mono text-xs uppercase tracking-widest font-semibold flex items-center gap-1.5 cursor-pointer bg-transparent border-0 outline-none p-0 transition-colors ${
+              className={`text-xs uppercase tracking-widest font-semibold flex items-center gap-1.5 cursor-pointer bg-transparent border-0 outline-none p-0 transition-colors ${
                 isServicesActive || servicesDropdown ? 'text-[var(--ribbon-active)]' : 'text-[var(--ribbon-text-secondary)] hover:text-[var(--ribbon-text)]'
               }`}
             >
@@ -188,7 +214,7 @@ export default function NavBar() {
                         key={sub.path}
                         to={sub.path}
                         onClick={() => setServicesDropdown(false)}
-                        className={`px-3 py-2 text-xs font-mono uppercase tracking-wider flex items-center justify-between transition-colors duration-150 rounded-none group ${
+                        className={`px-3 py-2 text-xs uppercase tracking-wider flex items-center justify-between transition-colors duration-150 rounded-none group ${
                           subActive
                             ? 'text-[var(--ribbon-dropdown-text)] font-bold bg-[var(--ribbon-dropdown-active)] border-l-2 border-[var(--ribbon-dropdown-text)]'
                             : 'text-[var(--ribbon-dropdown-text-secondary)] hover:bg-[var(--ribbon-dropdown-hover)] hover:text-[var(--ribbon-dropdown-text)]'
@@ -196,7 +222,7 @@ export default function NavBar() {
                       >
                         <span className="truncate mr-2">{sub.name}</span>
                         <span
-                          className={`font-mono text-xs transition-all duration-150 shrink-0 ${
+                          className={`text-xs transition-all duration-150 shrink-0 ${
                             subActive
                               ? 'text-[var(--ribbon-dropdown-text)] translate-x-0.5 opacity-100'
                               : 'text-[var(--ribbon-dropdown-text-muted)] opacity-30 group-hover:opacity-100 group-hover:translate-x-0.5'
@@ -222,7 +248,7 @@ export default function NavBar() {
             <Link
               to="/products"
               onClick={() => setAcceleratorsDropdown(false)}
-              className={`font-mono text-xs uppercase tracking-widest font-semibold flex items-center gap-1.5 cursor-pointer bg-transparent border-0 outline-none p-0 transition-colors ${
+              className={`text-xs uppercase tracking-widest font-semibold flex items-center gap-1.5 cursor-pointer bg-transparent border-0 outline-none p-0 transition-colors ${
                 isAcceleratorsActive || acceleratorsDropdown ? 'text-[var(--ribbon-active)]' : 'text-[var(--ribbon-text-secondary)] hover:text-[var(--ribbon-text)]'
               }`}
             >
@@ -249,7 +275,7 @@ export default function NavBar() {
                         key={sub.name}
                         to={sub.path}
                         onClick={() => setAcceleratorsDropdown(false)}
-                        className={`px-3 py-2 text-xs font-mono uppercase tracking-wider flex items-center justify-between transition-colors duration-150 rounded-none group ${
+                        className={`px-3 py-2 text-xs uppercase tracking-wider flex items-center justify-between transition-colors duration-150 rounded-none group ${
                           subActive
                             ? 'text-[var(--ribbon-dropdown-text)] font-bold bg-[var(--ribbon-dropdown-active)] border-l-2 border-[var(--ribbon-dropdown-text)]'
                             : 'text-[var(--ribbon-dropdown-text-secondary)] hover:bg-[var(--ribbon-dropdown-hover)] hover:text-[var(--ribbon-dropdown-text)]'
@@ -257,7 +283,7 @@ export default function NavBar() {
                       >
                         <span className="truncate mr-2">{sub.name}</span>
                         <span
-                          className={`font-mono text-xs transition-all duration-150 shrink-0 ${
+                          className={`text-xs transition-all duration-150 shrink-0 ${
                             subActive
                               ? 'text-[var(--ribbon-dropdown-text)] translate-x-0.5 opacity-100'
                               : 'text-[var(--ribbon-dropdown-text-muted)] opacity-30 group-hover:opacity-100 group-hover:translate-x-0.5'
@@ -283,7 +309,7 @@ export default function NavBar() {
             <Link
               to="/industries"
               onClick={() => setIndustriesDropdown(false)}
-              className={`font-mono text-xs uppercase tracking-widest font-semibold flex items-center gap-1.5 cursor-pointer bg-transparent border-0 outline-none p-0 transition-colors ${
+              className={`text-xs uppercase tracking-widest font-semibold flex items-center gap-1.5 cursor-pointer bg-transparent border-0 outline-none p-0 transition-colors ${
                 isIndustriesActive || industriesDropdown ? 'text-[var(--ribbon-active)]' : 'text-[var(--ribbon-text-secondary)] hover:text-[var(--ribbon-text)]'
               }`}
             >
@@ -310,7 +336,7 @@ export default function NavBar() {
                         key={sub.path}
                         to={sub.path}
                         onClick={() => setIndustriesDropdown(false)}
-                        className={`px-3 py-2 text-xs font-mono uppercase tracking-wider flex items-center justify-between transition-colors duration-150 rounded-none group ${
+                        className={`px-3 py-2 text-xs uppercase tracking-wider flex items-center justify-between transition-colors duration-150 rounded-none group ${
                           subActive
                             ? 'text-[var(--ribbon-dropdown-text)] font-bold bg-[var(--ribbon-dropdown-active)] border-l-2 border-[var(--ribbon-dropdown-text)]'
                             : 'text-[var(--ribbon-dropdown-text-secondary)] hover:bg-[var(--ribbon-dropdown-hover)] hover:text-[var(--ribbon-dropdown-text)]'
@@ -318,7 +344,7 @@ export default function NavBar() {
                       >
                         <span className="truncate mr-2">{sub.name}</span>
                         <span
-                          className={`font-mono text-xs transition-all duration-150 shrink-0 ${
+                          className={`text-xs transition-all duration-150 shrink-0 ${
                             subActive
                               ? 'text-[var(--ribbon-dropdown-text)] translate-x-0.5 opacity-100'
                               : 'text-[var(--ribbon-dropdown-text-muted)] opacity-30 group-hover:opacity-100 group-hover:translate-x-0.5'
@@ -344,7 +370,7 @@ export default function NavBar() {
             <Link
               to="/case-studies"
               onClick={() => setCaseStudiesDropdown(false)}
-              className={`font-mono text-xs uppercase tracking-widest font-semibold flex items-center gap-1.5 cursor-pointer bg-transparent border-0 outline-none p-0 transition-colors ${
+              className={`text-xs uppercase tracking-widest font-semibold flex items-center gap-1.5 cursor-pointer bg-transparent border-0 outline-none p-0 transition-colors ${
                 isCaseStudiesActive || caseStudiesDropdown ? 'text-[var(--ribbon-active)]' : 'text-[var(--ribbon-text-secondary)] hover:text-[var(--ribbon-text)]'
               }`}
             >
@@ -371,7 +397,7 @@ export default function NavBar() {
                         key={sub.path}
                         to={sub.path}
                         onClick={() => setCaseStudiesDropdown(false)}
-                        className={`px-3 py-2 text-xs font-mono uppercase tracking-wider flex items-center justify-between transition-colors duration-150 rounded-none group ${
+                        className={`px-3 py-2 text-xs uppercase tracking-wider flex items-center justify-between transition-colors duration-150 rounded-none group ${
                           subActive
                             ? 'text-[var(--ribbon-dropdown-text)] font-bold bg-[var(--ribbon-dropdown-active)] border-l-2 border-[var(--ribbon-dropdown-text)]'
                             : 'text-[var(--ribbon-dropdown-text-secondary)] hover:bg-[var(--ribbon-dropdown-hover)] hover:text-[var(--ribbon-dropdown-text)]'
@@ -379,7 +405,7 @@ export default function NavBar() {
                       >
                         <span className="truncate mr-2">{sub.name}</span>
                         <span
-                          className={`font-mono text-xs transition-all duration-150 shrink-0 ${
+                          className={`text-xs transition-all duration-150 shrink-0 ${
                             subActive
                               ? 'text-[var(--ribbon-dropdown-text)] translate-x-0.5 opacity-100'
                               : 'text-[var(--ribbon-dropdown-text-muted)] opacity-30 group-hover:opacity-100 group-hover:translate-x-0.5'
@@ -405,7 +431,7 @@ export default function NavBar() {
             <Link
               to="/about"
               onClick={() => setCompanyDropdown(false)}
-              className={`font-mono text-xs uppercase tracking-widest font-semibold flex items-center gap-1.5 cursor-pointer bg-transparent border-0 outline-none p-0 transition-colors ${
+              className={`text-xs uppercase tracking-widest font-semibold flex items-center gap-1.5 cursor-pointer bg-transparent border-0 outline-none p-0 transition-colors ${
                 isCompanyActive || companyDropdown ? 'text-[var(--ribbon-active)]' : 'text-[var(--ribbon-text-secondary)] hover:text-[var(--ribbon-text)]'
               }`}
             >
@@ -432,7 +458,7 @@ export default function NavBar() {
                         key={sub.path}
                         to={sub.path}
                         onClick={() => setCompanyDropdown(false)}
-                        className={`px-3 py-2 text-xs font-mono uppercase tracking-wider flex items-center justify-between transition-colors duration-150 rounded-none group ${
+                        className={`px-3 py-2 text-xs uppercase tracking-wider flex items-center justify-between transition-colors duration-150 rounded-none group ${
                           subActive
                             ? 'text-[var(--ribbon-dropdown-text)] font-bold bg-[var(--ribbon-dropdown-active)] border-l-2 border-[var(--ribbon-dropdown-text)]'
                             : 'text-[var(--ribbon-dropdown-text-secondary)] hover:bg-[var(--ribbon-dropdown-hover)] hover:text-[var(--ribbon-dropdown-text)]'
@@ -440,7 +466,7 @@ export default function NavBar() {
                       >
                         <span className="truncate mr-2">{sub.name}</span>
                         <span
-                          className={`font-mono text-xs transition-all duration-150 shrink-0 ${
+                          className={`text-xs transition-all duration-150 shrink-0 ${
                             subActive
                               ? 'text-[var(--ribbon-dropdown-text)] translate-x-0.5 opacity-100'
                               : 'text-[var(--ribbon-dropdown-text-muted)] opacity-30 group-hover:opacity-100 group-hover:translate-x-0.5'
@@ -476,7 +502,7 @@ export default function NavBar() {
 
           <Link
             to="/contact"
-            className="h-9 px-4 bg-[var(--ribbon-button-bg)] text-[var(--ribbon-button-text)] border border-[var(--ribbon-button-border)] hover:opacity-90 text-xs font-mono font-bold uppercase tracking-wider inline-flex items-center gap-1.5 transition-all shadow-sm"
+            className="h-9 px-4 bg-[var(--ribbon-button-bg)] text-[var(--ribbon-button-text)] border border-[var(--ribbon-button-border)] hover:opacity-90 text-xs font-semibold uppercase tracking-wider inline-flex items-center gap-1.5 transition-all shadow-sm"
           >
             <span>BOOK A CALL</span>
             <ArrowUpRight className="w-3.5 h-3.5 stroke-current" strokeWidth={1.5} aria-hidden="true" focusable="false" />
@@ -515,7 +541,7 @@ export default function NavBar() {
           <Link
             to="/"
             onClick={() => setMobileOpen(false)}
-            className={`font-mono text-sm uppercase tracking-wider py-2 border-b border-[var(--ribbon-border)] transition-colors ${
+            className={`text-sm uppercase tracking-wider py-2 border-b border-[var(--ribbon-border)] transition-colors ${
               isActive('/') ? 'text-[var(--ribbon-text)] font-bold border-l-2 border-[var(--ribbon-active)] pl-2' : 'text-[var(--ribbon-text-secondary)] hover:text-[var(--ribbon-text)]'
             }`}
           >
@@ -527,7 +553,7 @@ export default function NavBar() {
             <Link
               to="/services"
               onClick={() => setMobileOpen(false)}
-              className="font-mono text-xs text-[var(--ribbon-active)] uppercase tracking-widest mb-2 font-bold block hover:underline"
+              className="text-xs text-[var(--ribbon-active)] uppercase tracking-widest mb-2 font-bold block hover:underline"
             >
               SERVICES
             </Link>
@@ -537,7 +563,7 @@ export default function NavBar() {
                   key={sub.path}
                   to={sub.path}
                   onClick={() => setMobileOpen(false)}
-                  className={`font-mono text-xs uppercase tracking-wider py-1 transition-colors ${
+                  className={`text-xs uppercase tracking-wider py-1 transition-colors ${
                     isActive(sub.path) ? 'text-[var(--ribbon-text)] font-bold' : 'text-[var(--ribbon-text-secondary)] hover:text-[var(--ribbon-text)]'
                   }`}
                 >
@@ -552,7 +578,7 @@ export default function NavBar() {
             <Link
               to="/products"
               onClick={() => setMobileOpen(false)}
-              className="font-mono text-xs text-[var(--ribbon-active)] uppercase tracking-widest mb-2 font-bold block hover:underline"
+              className="text-xs text-[var(--ribbon-active)] uppercase tracking-widest mb-2 font-bold block hover:underline"
             >
               PRODUCTS
             </Link>
@@ -562,7 +588,7 @@ export default function NavBar() {
                   key={sub.name}
                   to={sub.path}
                   onClick={() => setMobileOpen(false)}
-                  className="font-mono text-xs uppercase tracking-wider py-1 text-[var(--ribbon-text-secondary)] hover:text-[var(--ribbon-text)] transition-colors"
+                  className="text-xs uppercase tracking-wider py-1 text-[var(--ribbon-text-secondary)] hover:text-[var(--ribbon-text)] transition-colors"
                 >
                   {sub.name}
                 </Link>
@@ -575,7 +601,7 @@ export default function NavBar() {
             <Link
               to="/industries"
               onClick={() => setMobileOpen(false)}
-              className="font-mono text-xs text-[var(--ribbon-active)] uppercase tracking-widest mb-2 font-bold block hover:underline"
+              className="text-xs text-[var(--ribbon-active)] uppercase tracking-widest mb-2 font-bold block hover:underline"
             >
               INDUSTRIES
             </Link>
@@ -585,7 +611,7 @@ export default function NavBar() {
                   key={sub.path}
                   to={sub.path}
                   onClick={() => setMobileOpen(false)}
-                  className={`font-mono text-xs uppercase tracking-wider py-1 transition-colors ${
+                  className={`text-xs uppercase tracking-wider py-1 transition-colors ${
                     isActive(sub.path) ? 'text-[var(--ribbon-text)] font-bold' : 'text-[var(--ribbon-text-secondary)] hover:text-[var(--ribbon-text)]'
                   }`}
                 >
@@ -600,7 +626,7 @@ export default function NavBar() {
             <Link
               to="/case-studies"
               onClick={() => setMobileOpen(false)}
-              className="font-mono text-xs text-[var(--ribbon-active)] uppercase tracking-widest mb-2 font-bold block hover:underline"
+              className="text-xs text-[var(--ribbon-active)] uppercase tracking-widest mb-2 font-bold block hover:underline"
             >
               CASE STUDIES
             </Link>
@@ -610,7 +636,7 @@ export default function NavBar() {
                   key={sub.path}
                   to={sub.path}
                   onClick={() => setMobileOpen(false)}
-                  className={`font-mono text-xs uppercase tracking-wider py-1 transition-colors ${
+                  className={`text-xs uppercase tracking-wider py-1 transition-colors ${
                     isActive(sub.path) ? 'text-[var(--ribbon-text)] font-bold' : 'text-[var(--ribbon-text-secondary)] hover:text-[var(--ribbon-text)]'
                   }`}
                 >
@@ -622,7 +648,7 @@ export default function NavBar() {
 
           {/* Mobile Company Section */}
           <div className="pt-2">
-            <div className="font-mono text-xs text-[var(--ribbon-active)] uppercase tracking-widest mb-2 font-bold">
+            <div className="text-xs text-[var(--ribbon-active)] uppercase tracking-widest mb-2 font-bold">
               COMPANY
             </div>
             <div className="pl-3 flex flex-col gap-2 border-l-2 border-[var(--ribbon-border)]">
@@ -631,7 +657,7 @@ export default function NavBar() {
                   key={sub.path}
                   to={sub.path}
                   onClick={() => setMobileOpen(false)}
-                  className={`font-mono text-xs uppercase tracking-wider py-1 transition-colors ${
+                  className={`text-xs uppercase tracking-wider py-1 transition-colors ${
                     isActive(sub.path) ? 'text-[var(--ribbon-text)] font-bold' : 'text-[var(--ribbon-text-secondary)] hover:text-[var(--ribbon-text)]'
                   }`}
                 >
@@ -645,7 +671,7 @@ export default function NavBar() {
             <Link
               to="/contact"
               onClick={() => setMobileOpen(false)}
-              className="bg-[var(--ribbon-button-bg)] text-[var(--ribbon-button-text)] border border-[var(--ribbon-button-border)] py-3 px-4 text-xs font-mono font-bold uppercase tracking-wider flex items-center justify-center gap-2"
+              className="bg-[var(--ribbon-button-bg)] text-[var(--ribbon-button-text)] border border-[var(--ribbon-button-border)] py-3 px-4 text-xs font-semibold uppercase tracking-wider flex items-center justify-center gap-2"
             >
               Book Strategy Call <ArrowUpRight className="w-4 h-4" strokeWidth={2} />
             </Link>

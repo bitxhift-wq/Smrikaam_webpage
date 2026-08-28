@@ -106,7 +106,7 @@ export default function CaseStudyDetail() {
     return (
       <div className="pt-32 pb-24 px-6 max-w-4xl mx-auto text-center">
         <BlueprintWrapper className="p-12">
-          <div className="font-mono text-xs text-accent uppercase mb-4">404 // NOT_FOUND</div>
+          <div className="font-mono text-xs text-accent uppercase mb-4">404 NOT FOUND</div>
           <h1 className="font-heading text-3xl text-text mb-4">CASE STUDY NOT FOUND</h1>
           <p className="text-text-muted mb-6">{error}</p>
           <Link to="/case-studies" className="btn btn-primary">
@@ -123,20 +123,20 @@ export default function CaseStudyDetail() {
     <div className="relative z-10 pt-28 pb-24 px-6 md:px-16 max-w-5xl mx-auto">
       <ReadingProgressBar />
 
-      <Link to="/case-studies" className="inline-flex items-center gap-2 font-mono text-xs text-accent uppercase mb-8 hover:underline">
+      <Link to="/case-studies" className="inline-flex items-center gap-2 text-xs text-accent uppercase mb-8 hover:underline font-semibold">
         <ArrowLeft className="w-4 h-4" strokeWidth={1.5} /> Back to Case Studies
       </Link>
 
       <div id="overview" data-scroll-label="OVERVIEW">
         <BlueprintWrapper className="service-detail-surface p-8 md:p-12 mb-12">
         <div className="flex flex-wrap items-center justify-between gap-2 mb-4">
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-3 text-xs text-text-muted">
             <span className="tag tag-accent">{caseStudy.industry || 'CASE STUDY'}</span>
-            <span className="font-mono text-xs text-text-muted">CLIENT: {caseStudy.client_name}</span>
+            {caseStudy.client_name && <span>{caseStudy.client_name}</span>}
           </div>
           {caseStudy.accelerator && (
-            <span className="font-mono text-xs text-accent border border-accent px-2 py-0.5 uppercase font-medium">
-              ACCELERATOR: {caseStudy.accelerator}
+            <span className="text-xs text-accent border border-accent px-2 py-0.5 uppercase font-semibold">
+              {caseStudy.accelerator}
             </span>
           )}
         </div>
@@ -144,12 +144,12 @@ export default function CaseStudyDetail() {
         <TextReveal
           text={caseStudy.title}
           as="h1"
-          className="font-heading text-3xl md:text-5xl font-bold uppercase text-text mb-6 tracking-tight"
+          className="font-heading text-3xl sm:text-5xl lg:text-6xl font-bold uppercase tracking-tight text-[var(--color-text)] mb-6 leading-[0.96]"
         />
 
         {caseStudy.cover_image_url && (
           <Reveal className="mb-10 overflow-hidden border border-border h-80 relative bg-black/5 dark:bg-white/5">
-            <img src={caseStudy.cover_image_url} alt={caseStudy.title} className="w-full h-full object-cover duotone" />
+            <img src={caseStudy.cover_image_url} alt={caseStudy.title} className="w-full h-full object-cover" />
           </Reveal>
         )}
 
@@ -157,7 +157,7 @@ export default function CaseStudyDetail() {
         {outcomes.length > 0 && (
           <div id="metrics" data-scroll-label="METRICS">
             <Reveal className="mb-12 p-6 subtle-readable-surface border border-border">
-              <div className="font-mono text-xs text-accent uppercase tracking-widest mb-4 font-medium">VERIFIED MEASURABLE METRICS</div>
+              <div className="font-mono text-[10px] md:text-[11px] text-accent uppercase tracking-[0.2em] mb-4 font-semibold">VERIFIED MEASURABLE METRICS</div>
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
                 {outcomes.map((out, idx) => (
                   <div key={idx} className="border-l-2 border-accent pl-4">
@@ -178,10 +178,12 @@ export default function CaseStudyDetail() {
         {caseStudy.challenge && (
           <div id="challenge" data-scroll-label="CHALLENGE">
             <Reveal className="mb-10">
-              <h2 className="font-heading text-2xl font-bold uppercase text-text mb-3 border-b border-border pb-2">
-                THE OPERATIONAL CHALLENGE
+              <h2 className="font-mono text-[10px] md:text-[11px] text-[var(--color-accent)] uppercase tracking-[0.2em] font-semibold mb-3 text-left">
+                THE CHALLENGE
               </h2>
-              <RichTextRenderer content={caseStudy.challenge} />
+              <div className="text-[14px] md:text-[15px] font-normal text-text-muted leading-[1.6] text-left">
+                <RichTextRenderer content={caseStudy.challenge} />
+              </div>
             </Reveal>
           </div>
         )}
@@ -190,10 +192,12 @@ export default function CaseStudyDetail() {
         {caseStudy.solution && (
           <div id="solution" data-scroll-label="SOLUTION">
             <Reveal className="mb-10">
-              <h2 className="font-heading text-2xl font-bold uppercase text-text mb-3 border-b border-border pb-2">
-                THE SMRIKAAM DEPLOYED SOLUTION
+              <h2 className="font-mono text-[10px] md:text-[11px] text-[var(--color-accent)] uppercase tracking-[0.2em] font-semibold mb-3 text-left">
+                THE SMRIKAAM SOLUTION
               </h2>
-              <RichTextRenderer content={caseStudy.solution} />
+              <div className="text-[14px] md:text-[15px] font-normal text-text-muted leading-[1.6] text-left bg-accent/5 p-6 border border-accent/30">
+                <RichTextRenderer content={caseStudy.solution} />
+              </div>
             </Reveal>
           </div>
         )}

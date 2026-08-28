@@ -73,7 +73,7 @@ export default function BlogDetail() {
     return (
       <div className="pt-32 pb-24 px-6 max-w-4xl mx-auto text-center">
         <BlueprintWrapper className="p-12">
-          <div className="font-mono text-xs text-accent uppercase mb-4">404 // NOT_FOUND</div>
+          <div className="font-mono text-xs text-accent uppercase mb-4">404 NOT FOUND</div>
           <h1 className="font-heading text-3xl text-text mb-4">ARTICLE NOT FOUND</h1>
           <p className="text-text-muted mb-6">{error}</p>
           <Link to="/blog" className="btn btn-primary">
@@ -88,7 +88,7 @@ export default function BlogDetail() {
     <div className="relative z-10 pt-28 pb-24 px-6 md:px-16 max-w-4xl mx-auto">
       <ReadingProgressBar />
 
-      <Link to="/blog" className="inline-flex items-center gap-2 font-mono text-xs text-accent uppercase mb-8 hover:underline">
+      <Link to="/blog" className="inline-flex items-center gap-2 text-xs text-accent uppercase mb-8 hover:underline font-semibold">
         <ArrowLeft className="w-4 h-4" strokeWidth={1.5} /> Back to Journal
       </Link>
 
@@ -98,7 +98,7 @@ export default function BlogDetail() {
             {(post.category || post.category_id) && (
               <span className="tag tag-accent">{post.category || post.category_id}</span>
             )}
-            <span className="font-mono text-xs text-text-muted flex items-center gap-1 font-normal">
+            <span className="text-xs text-text-muted flex items-center gap-1 font-normal">
               <Calendar className="w-3.5 h-3.5 text-accent" strokeWidth={1.5} />
               {post.created_at || post.published_at ? new Date(post.created_at || post.published_at).toLocaleDateString() : 'N/A'}
             </span>
@@ -107,18 +107,18 @@ export default function BlogDetail() {
           <TextReveal
             text={post.title}
             as="h1"
-            className="font-heading text-3xl md:text-5xl font-bold uppercase text-text mb-6 tracking-tight"
+            className="font-heading text-3xl sm:text-5xl lg:text-6xl font-bold uppercase tracking-tight text-[var(--color-text)] mb-6 leading-[0.96]"
           />
 
           {post.excerpt && (
-            <p className="text-lg md:text-xl text-text-muted font-normal border-l-2 border-accent pl-4 mb-8 leading-relaxed">
+            <p className="text-[15px] sm:text-[16px] md:text-[18px] text-[var(--color-text-secondary)] font-normal border-l-2 border-[var(--color-accent)] pl-4 mb-8 leading-[1.6]">
               {post.excerpt}
             </p>
           )}
 
           {post.cover_image_url && (
             <Reveal className="mb-10 overflow-hidden border border-border h-80 relative bg-black/5 dark:bg-white/5">
-              <img src={post.cover_image_url} alt={post.title} className="w-full h-full object-cover duotone" />
+              <img src={post.cover_image_url} alt={post.title} className="w-full h-full object-cover" />
             </Reveal>
           )}
 
@@ -126,7 +126,9 @@ export default function BlogDetail() {
           {post.content && (
             <div id="content" data-scroll-label="INSIGHTS">
               <Reveal className="mb-12">
-                <RichTextRenderer content={post.content} />
+                <div className="text-[14px] md:text-[15px] font-normal text-text-muted leading-[1.6] text-left">
+                  <RichTextRenderer content={post.content} />
+                </div>
               </Reveal>
             </div>
           )}

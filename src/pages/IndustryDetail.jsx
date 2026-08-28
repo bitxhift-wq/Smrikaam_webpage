@@ -84,7 +84,7 @@ export default function IndustryDetail() {
     return (
       <div className="pt-32 pb-24 px-6 max-w-4xl mx-auto text-center">
         <BlueprintWrapper className="service-detail-surface p-12">
-          <div className="font-mono text-xs text-accent uppercase mb-4">404 // NOT_FOUND</div>
+          <div className="font-mono text-xs text-accent uppercase mb-4">404 NOT FOUND</div>
           <h1 className="font-heading text-3xl text-text mb-4 uppercase">SECTOR NOT FOUND</h1>
           <p className="text-text-muted mb-6">{error || 'The requested industry sector specification does not exist.'}</p>
           <Link to="/industries" className="btn btn-primary">
@@ -127,24 +127,20 @@ export default function IndustryDetail() {
     <div className="relative z-10 pt-28 pb-24 px-6 md:px-16 max-w-5xl mx-auto">
       <ReadingProgressBar />
 
-      <Link to="/industries" className="inline-flex items-center gap-2 font-mono text-xs text-accent uppercase mb-8 hover:underline">
+      <Link to="/industries" className="inline-flex items-center gap-2 text-xs text-accent uppercase mb-8 hover:underline font-semibold">
         <ArrowLeft className="w-4 h-4" strokeWidth={1.5} /> Back to Industries Catalog
       </Link>
 
       <div id="overview" data-scroll-label="OVERVIEW">
         <BlueprintWrapper className="service-detail-surface p-8 md:p-12 mb-12">
-          <div className="flex items-center gap-3 mb-4">
-            <span className="tag tag-accent">ENTERPRISE DOMAIN</span>
-            <span className="font-mono text-xs text-text-muted">SLUG: {industry.slug}</span>
-          </div>
 
           <TextReveal
             text={industry.name || industry.title}
             as="h1"
-            className="font-heading text-4xl md:text-5xl font-bold uppercase text-text mb-6"
+            className="font-heading text-3xl sm:text-5xl lg:text-6xl font-bold uppercase tracking-tight text-[var(--color-text)] mb-6 leading-[0.96]"
           />
 
-          <p className="text-lg md:text-xl text-text-muted font-normal border-l-2 border-accent pl-4 mb-8 text-left">
+          <p className="text-[15px] sm:text-[16px] md:text-[18px] text-[var(--color-text-secondary)] font-normal border-l-2 border-[var(--color-accent)] pl-4 mb-8 text-left leading-[1.6]">
             {industry.summary || industry.tagline}
           </p>
 
@@ -159,8 +155,8 @@ export default function IndustryDetail() {
                 }}
                 className="w-full h-full object-cover"
               />
-              <div className="absolute bottom-0 left-0 right-0 p-3 bg-black/80 backdrop-blur-sm text-[12px] font-mono text-white/90 tracking-wider text-left">
-                {(industry.name || industry.title).toUpperCase()} // Enterprise Domain Architecture
+              <div className="absolute bottom-0 left-0 right-0 p-3 bg-black/80 backdrop-blur-sm text-[11px] font-mono text-white/90 tracking-wider text-left uppercase">
+                {(industry.name || industry.title).toUpperCase()} — Enterprise Domain Architecture
               </div>
             </Reveal>
           )}
@@ -168,21 +164,21 @@ export default function IndustryDetail() {
           {/* Detailed Narrative Content */}
           {(industry.content || industry.description) && (
             <Reveal className="mb-12">
-              <div className="text-[15px] md:text-[16px] font-normal text-text-muted leading-[1.6] text-left">
+              <div className="text-[14px] md:text-[15px] font-normal text-text-muted leading-[1.6] text-left">
                 <RichTextRenderer content={industry.content || industry.description} />
               </div>
             </Reveal>
           )}
 
-          {/* 01 // BUSINESS PROBLEMS SOLVED */}
+          {/* BUSINESS PROBLEMS SOLVED */}
           {businessProblems.length > 0 && (
             <div id="problems" data-scroll-label="PROBLEMS" className="border-t border-border pt-8 mb-12">
-              <h3 className="font-mono text-[12px] md:text-[13px] text-accent uppercase tracking-[0.12em] font-medium mb-3 text-left">
-                01 // BUSINESS PROBLEMS SOLVED
+              <h3 className="font-mono text-[10px] md:text-[11px] text-[var(--color-accent)] uppercase tracking-[0.2em] font-semibold mb-3 text-left">
+                BUSINESS PROBLEMS SOLVED
               </h3>
               <ul className="space-y-2">
                 {businessProblems.map((prob, i) => (
-                  <li key={i} className="flex items-start gap-2.5 text-[14px] md:text-[15px] font-normal text-text-muted">
+                  <li key={i} className="flex items-start gap-2.5 text-[13px] md:text-[14px] font-normal text-text-muted">
                     <span className="w-1.5 h-1.5 rounded-full bg-accent mt-2 shrink-0" aria-hidden="true" />
                     <div>{renderBulletText(prob)}</div>
                   </li>
@@ -191,15 +187,15 @@ export default function IndustryDetail() {
             </div>
           )}
 
-          {/* 02 // HOW SMRIKAAM SOLVES IT */}
+          {/* HOW SMRIKAAM SOLVES IT */}
           {solutions.length > 0 && (
             <div id="solutions" data-scroll-label="SOLUTIONS" className="border-t border-border pt-8 mb-12">
-              <h3 className="font-mono text-[12px] md:text-[13px] text-accent uppercase tracking-[0.12em] font-medium mb-3 text-left">
-                02 // HOW SMRIKAAM SOLVES IT
+              <h3 className="font-mono text-[10px] md:text-[11px] text-[var(--color-accent)] uppercase tracking-[0.2em] font-semibold mb-3 text-left">
+                HOW SMRIKAAM SOLVES IT
               </h3>
               <ul className="space-y-2">
                 {solutions.map((sol, i) => (
-                  <li key={i} className="flex items-start gap-2.5 text-[14px] md:text-[15px] font-normal text-text-muted">
+                  <li key={i} className="flex items-start gap-2.5 text-[13px] md:text-[14px] font-normal text-text-muted">
                     <span className="w-1.5 h-1.5 rounded-full bg-accent mt-2 shrink-0" aria-hidden="true" />
                     <div>{renderBulletText(sol)}</div>
                   </li>
@@ -208,16 +204,16 @@ export default function IndustryDetail() {
             </div>
           )}
 
-          {/* 03 // CORE CAPABILITIES & USE CASES */}
+          {/* CORE CAPABILITIES & USE CASES */}
           {capabilities.length > 0 && (
             <div id="capabilities" data-scroll-label="CAPABILITIES">
               <Reveal className="border-t border-border pt-8 mb-12">
-                <h3 className="font-mono text-[12px] md:text-[13px] text-accent uppercase tracking-[0.12em] font-medium mb-4 text-left">
-                  03 // CORE CAPABILITIES &amp; USE CASES
+                <h3 className="font-mono text-[10px] md:text-[11px] text-[var(--color-accent)] uppercase tracking-[0.2em] font-semibold mb-4 text-left">
+                  CORE CAPABILITIES &amp; USE CASES
                 </h3>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                   {capabilities.map((cap, idx) => (
-                    <div key={idx} className="flex items-center gap-2 px-3.5 py-2 bg-black/[0.03] dark:bg-white/[0.04] border border-border text-[13px] md:text-[14px] font-mono text-text font-normal">
+                    <div key={idx} className="flex items-center gap-2 px-3.5 py-2 bg-black/[0.03] dark:bg-white/[0.04] border border-border text-[12px] md:text-[13px] font-mono text-text font-normal">
                       <span className="text-accent font-medium select-none">+</span>
                       <span>{cap}</span>
                     </div>
@@ -227,12 +223,12 @@ export default function IndustryDetail() {
             </div>
           )}
 
-          {/* 04 // MODERN TECHNOLOGY STACK */}
+          {/* MODERN TECHNOLOGY STACK */}
           {techList.length > 0 && (
             <div id="technology" data-scroll-label="TECH STACK">
               <Reveal className="border-t border-border pt-8 mb-12">
                 <h3 className="font-mono text-[12px] md:text-[13px] text-accent uppercase tracking-[0.12em] font-medium mb-4 text-left">
-                  04 // MODERN TECHNOLOGY STACK
+                  MODERN TECHNOLOGY STACK
                 </h3>
                 <div className="flex flex-wrap gap-2.5">
                   {techList.map((tech, idx) => (
@@ -248,11 +244,11 @@ export default function IndustryDetail() {
             </div>
           )}
 
-          {/* 05 // BUSINESS OUTCOME */}
+          {/* BUSINESS OUTCOME */}
           <div id="outcome" data-scroll-label="OUTCOME" className="border-t border-border pt-8 mb-12">
             <div className="p-4 bg-black/[0.02] dark:bg-white/[0.03] border-l-2 border-accent">
               <div className="font-mono text-[12px] text-accent uppercase tracking-[0.12em] font-medium mb-1 text-left">
-                05 // BUSINESS OUTCOME
+                BUSINESS OUTCOME
               </div>
               {Array.isArray(outcomes) ? (
                 <ul className="space-y-1.5">

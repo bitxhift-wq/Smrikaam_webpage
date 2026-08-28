@@ -48,20 +48,20 @@ export default function Staffing() {
       <div id="overview" data-scroll-label="STAFFING" className="page-title-surface relative border border-border p-8 md:p-12 mb-16 overflow-hidden">
         <BannerDrawBorder />
         <div className="flex items-center justify-between mb-4">
-          <div className="font-mono text-xs text-accent uppercase tracking-[0.2em]">
-            ENTERPRISE TALENT // SPECIALISED STAFFING
+          <div className="text-[10px] md:text-[11px] text-[var(--color-accent)] uppercase tracking-[0.2em] font-semibold">
+            ENTERPRISE TALENT &amp; SPECIALISED STAFFING
           </div>
-          <div className="font-mono text-xs text-text-muted border border-border px-3 py-1 bg-black/[0.02] dark:bg-white/[0.03]">
-            {displayModels.length} ENGAGEMENT MODELS
+          <div className="text-[10px] md:text-[11px] text-[var(--color-text-muted)] border border-[var(--color-border)] px-3 py-1 bg-black/[0.02] dark:bg-white/[0.03]">
+            ENGAGEMENT MODELS
           </div>
         </div>
 
         <TextReveal
           text="TECHNICAL TALENT. ENGINEERED FOR SPEED."
           as="h1"
-          className="font-heading text-4xl md:text-6xl font-bold uppercase text-text mb-4"
+          className="font-heading text-3xl sm:text-5xl lg:text-6xl font-bold uppercase tracking-tight text-[var(--color-text)] leading-[0.96] mb-4"
         />
-        <p className="text-text-muted text-lg max-w-3xl border-l-2 border-accent pl-4 font-normal leading-relaxed">
+        <p className="text-[15px] sm:text-[16px] md:text-[18px] text-[var(--color-text-secondary)] max-w-3xl border-l-2 border-[var(--color-accent)] pl-4 font-normal leading-[1.6]">
           Temporary staffing, permanent placement, contract &amp; project-based pods, and executive search—across AI, Data, Cloud, DevOps, IIoT, and enterprise transformation.
         </p>
       </div>
@@ -71,33 +71,32 @@ export default function Staffing() {
         {stats.map((s, idx) => (
           <BlueprintWrapper key={idx} className="p-6 text-center">
             <div className="font-heading font-bold text-4xl text-accent mb-2">{s.num}</div>
-            <div className="font-mono text-[14px] text-text-muted uppercase tracking-wider font-normal">{s.label}</div>
+            <div className="text-[13px] text-text-muted uppercase tracking-wider font-normal">{s.label}</div>
           </BlueprintWrapper>
         ))}
       </div>
 
       {/* 4 Engagement Models */}
       <div id="models" data-scroll-label="ENGAGEMENT MODELS" className="mb-16">
-        <div className="font-mono text-[13px] text-accent uppercase tracking-[0.18em] mb-2 font-medium">
-          ENGAGEMENT MODELS // FLEXIBLE HIRING
+        <div className="text-[10px] md:text-[11px] text-[var(--color-accent)] uppercase tracking-[0.2em] mb-2 font-semibold">
+          ENGAGEMENT MODELS
         </div>
-        <h2 className="font-heading text-3xl font-semibold uppercase text-text mb-8 border-b border-border pb-4">
-          FOUR WAYS TO HIRE WITH SMRIKAAM
+        <h2 className="font-heading text-2xl md:text-3xl font-bold uppercase text-text mb-8 border-b border-border pb-4">
+          ENGAGEMENT OPTIONS
         </h2>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {displayModels.map((m, idx) => (
             <BlueprintWrapper key={idx} className="p-8 flex flex-col justify-between group hover:border-accent">
               <div>
-                <span className="font-mono text-[13px] text-accent font-medium mb-2 block">MODEL // 0{idx + 1}</span>
-                <h3 className="font-heading text-2xl font-semibold uppercase text-text mb-2 group-hover:text-accent transition-colors">
+                <h3 className="font-heading text-2xl font-bold uppercase text-text mb-2 group-hover:text-accent transition-colors">
                   {m.title}
                 </h3>
-                <p className="font-sans text-[15px] font-medium text-text mb-4">
+                <p className="text-[14px] md:text-[15px] font-normal text-text mb-4">
                   {m.subtitle}
                 </p>
                 {m.desc && (
-                  <div className="text-text-muted text-[15px] font-normal leading-[1.55] mb-6">
+                  <div className="text-text-muted text-[13px] md:text-[14px] font-normal leading-[1.55] mb-6">
                     <RichTextRenderer content={m.desc} />
                   </div>
                 )}
@@ -105,8 +104,7 @@ export default function Staffing() {
 
               <div className="pt-4 border-t border-border space-y-2">
                 {m.bullets.map((b, i) => (
-                  <div key={i} className="flex items-center gap-2 font-mono text-[14px] font-normal text-text">
-                    <span className="text-accent font-medium">+</span>
+                  <div key={i} className="flex items-center gap-2 text-[13px] font-normal text-text">
                     <span>{b}</span>
                   </div>
                 ))}
@@ -118,26 +116,26 @@ export default function Staffing() {
 
       {/* Industries Served */}
       <div id="verticals" data-scroll-label="DOMAINS" className="mb-16">
-        <div className="font-mono text-[13px] text-accent uppercase tracking-[0.18em] mb-2 font-medium">
-          VERTICAL EXPERIENCE // DOMAIN SPECTRUM
+        <div className="text-[10px] md:text-[11px] text-[var(--color-accent)] uppercase tracking-[0.2em] mb-2 font-semibold">
+          VERTICAL EXPERIENCE
         </div>
-        <h2 className="font-heading text-2xl font-semibold uppercase text-text mb-6">
+        <h2 className="font-heading text-2xl md:text-3xl font-bold uppercase text-text mb-6">
           TALENT FOR EVERY VERTICAL WE TOUCH
         </h2>
 
         <div className="flex flex-wrap gap-2">
           {verticals.map((v, idx) => (
-            <span key={idx} className="tag tag-accent text-[13px] font-normal py-2 px-4">
-              + {v}
+            <span key={idx} className="tag tag-accent text-[12px] font-normal py-2 px-4">
+              {v}
             </span>
           ))}
         </div>
       </div>
 
       {/* 4-Step Process */}
-      <div id="process" data-scroll-label="4-STEP PROCESS" className="mb-16">
-        <div className="font-mono text-[13px] text-accent uppercase tracking-[0.18em] mb-2 font-medium">
-          VETTING &amp; SELECTION // REPEATABLE PROCESS
+      <div id="process" data-scroll-label="VETTING PROCESS" className="mb-16">
+        <div className="text-[10px] md:text-[11px] text-[var(--color-accent)] uppercase tracking-[0.2em] mb-2 font-semibold">
+          VETTING &amp; SELECTION
         </div>
         <h2 className="font-heading text-3xl font-semibold uppercase text-text mb-8 border-b border-border pb-4">
           FROM BRIEF TO ONBOARDED — IN 4 STEPS
@@ -146,8 +144,7 @@ export default function Staffing() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
           {processSteps.map((step, idx) => (
             <BlueprintWrapper key={idx} className="p-6">
-              <div className="font-heading font-bold text-3xl text-accent mb-2">{step.num}</div>
-              <div className="font-heading font-semibold text-lg uppercase text-text mb-2">{step.name}</div>
+              <div className="font-heading font-bold text-lg uppercase text-text mb-2">{step.name}</div>
               <p className="text-[14px] font-normal text-text-muted leading-[1.5]">{step.desc}</p>
             </BlueprintWrapper>
           ))}
@@ -156,8 +153,8 @@ export default function Staffing() {
 
       {/* FAQ Accordions */}
       <div id="faq" data-scroll-label="FAQ" className="mb-16">
-        <div className="font-mono text-[13px] text-accent uppercase tracking-[0.18em] mb-2 font-medium">
-          FREQUENTLY ASKED QUESTIONS // FAQ
+        <div className="text-[11px] text-accent uppercase tracking-[0.2em] mb-2 font-semibold">
+          FREQUENTLY ASKED QUESTIONS
         </div>
         <h2 className="font-heading text-3xl font-semibold uppercase text-text mb-8 border-b border-border pb-4">
           STAFFING FREQUENTLY ASKED QUESTIONS

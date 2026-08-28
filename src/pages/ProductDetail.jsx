@@ -95,7 +95,7 @@ export default function ProductDetail() {
     return (
       <div className="pt-32 pb-24 px-6 max-w-4xl mx-auto text-center">
         <BlueprintWrapper className="service-detail-surface p-12">
-          <div className="font-mono text-xs text-accent uppercase mb-4">404 // NOT_FOUND</div>
+          <div className="font-mono text-xs text-accent uppercase mb-4">404 NOT FOUND</div>
           <h1 className="font-heading text-3xl text-text mb-4 uppercase">PRODUCT NOT FOUND</h1>
           <p className="text-text-muted mb-6">{error || 'The requested product specification does not exist.'}</p>
           <Link to="/products" className="btn btn-primary">
@@ -129,24 +129,20 @@ export default function ProductDetail() {
     <div className="relative z-10 pt-28 pb-24 px-6 md:px-16 max-w-5xl mx-auto">
       <ReadingProgressBar />
 
-      <Link to="/products" className="inline-flex items-center gap-2 font-mono text-xs text-accent uppercase mb-8 hover:underline">
+      <Link to="/products" className="inline-flex items-center gap-2 text-xs text-accent uppercase mb-8 hover:underline font-semibold">
         <ArrowLeft className="w-4 h-4" strokeWidth={1.5} /> Back to Products Catalog
       </Link>
 
       <div id="overview" data-scroll-label="OVERVIEW">
         <BlueprintWrapper className="service-detail-surface p-8 md:p-12 mb-12">
-          <div className="flex items-center gap-3 mb-4">
-            <span className="tag tag-accent">ENGINEERED PRODUCT</span>
-            <span className="font-mono text-xs text-text-muted">SLUG: {product.slug}</span>
-          </div>
 
           <TextReveal
             text={product.name || product.title}
             as="h1"
-            className="font-heading text-4xl md:text-5xl font-bold uppercase text-text mb-6"
+            className="font-heading text-3xl sm:text-5xl lg:text-6xl font-bold uppercase tracking-tight text-[var(--color-text)] mb-6 leading-[0.96]"
           />
 
-          <p className="text-lg md:text-xl text-text-muted font-normal border-l-2 border-accent pl-4 mb-8 text-left">
+          <p className="text-[15px] sm:text-[16px] md:text-[18px] text-[var(--color-text-secondary)] font-normal border-l-2 border-[var(--color-accent)] pl-4 mb-8 text-left leading-[1.6]">
             {product.tagline || product.shortDescription}
           </p>
 
@@ -161,8 +157,8 @@ export default function ProductDetail() {
                 }}
                 className="w-full h-full object-cover"
               />
-              <div className="absolute bottom-0 left-0 right-0 p-3 bg-black/80 backdrop-blur-sm text-[12px] font-mono text-white/90 tracking-wider text-left">
-                {(product.name || product.title).toUpperCase()} // Production Engineering Specification
+              <div className="absolute bottom-0 left-0 right-0 p-3 bg-black/80 backdrop-blur-sm text-[11px] text-white/90 tracking-wider text-left uppercase">
+                {(product.name || product.title).toUpperCase()} — Production Engineering Specification
               </div>
             </Reveal>
           )}
@@ -170,30 +166,30 @@ export default function ProductDetail() {
           {/* Narrative Content Body */}
           {(product.fullDescription || product.description) && (
             <Reveal className="mb-12">
-              <div className="text-[15px] md:text-[16px] font-normal text-text-muted leading-[1.6] text-left">
+              <div className="text-[14px] md:text-[15px] font-normal text-text-muted leading-[1.6] text-left">
                 <RichTextRenderer content={product.fullDescription || product.description} />
               </div>
             </Reveal>
           )}
 
-          {/* 01 // PROBLEM SOLVED & 02 // SOLUTION PROVIDED */}
+          {/* PROBLEM SOLVED & SOLUTION PROVIDED */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 border-t border-border pt-8 mb-12">
             <div className="flex flex-col h-full">
-              <h3 className="font-mono text-[12px] md:text-[13px] text-accent uppercase tracking-[0.12em] font-medium mb-3 text-left">
-                01 // PROBLEM SOLVED
+              <h3 className="text-[10px] md:text-[11px] text-[var(--color-accent)] uppercase tracking-[0.2em] font-semibold mb-3 text-left">
+                PROBLEM SOLVED
               </h3>
               <div className="subtle-readable-surface p-4 border border-border flex-1 flex flex-col justify-center">
                 {problemPoints.length > 1 ? (
                   <ul className="space-y-2">
                     {problemPoints.map((prob, i) => (
-                      <li key={i} className="flex items-start gap-2.5 text-[14px] md:text-[15px] font-normal text-text-muted">
+                      <li key={i} className="flex items-start gap-2.5 text-[13px] md:text-[14px] font-normal text-text-muted">
                         <span className="w-1.5 h-1.5 rounded-full bg-accent mt-2 shrink-0" aria-hidden="true" />
                         <div>{renderBulletText(prob)}</div>
                       </li>
                     ))}
                   </ul>
                 ) : (
-                  <div className="text-[14px] md:text-[15px] text-text-muted leading-[1.6] text-left">
+                  <div className="text-[13px] md:text-[14px] text-text-muted leading-[1.6] text-left">
                     {renderBulletText(product.problem)}
                   </div>
                 )}
@@ -201,65 +197,54 @@ export default function ProductDetail() {
             </div>
 
             <div className="flex flex-col h-full">
-              <h3 className="font-mono text-[12px] md:text-[13px] text-accent uppercase tracking-[0.12em] font-medium mb-3 text-left">
-                02 // SOLUTION PROVIDED
+              <h3 className="text-[11px] text-[var(--color-accent)] uppercase tracking-[0.2em] font-semibold mb-3 text-left">
+                SOLUTION PROVIDED
               </h3>
-              <div className="bg-accent/5 p-4 border border-accent/30 text-[14px] md:text-[15px] text-text font-medium leading-[1.6] flex-1 flex flex-col justify-center text-left">
+              <div className="bg-accent/5 p-4 border border-accent/30 text-[13px] md:text-[14px] text-text font-normal leading-[1.6] flex-1 flex flex-col justify-center text-left">
                 <RichTextRenderer content={product.solution || 'Standardized edge intelligence engine delivering sub-second anomaly detection, local protocol normalization, and autonomous offline operations.'} />
               </div>
             </div>
           </div>
 
-          {/* 03 // HOW IT WORKS & 04 // ARCHITECTURE */}
+          {/* HOW IT WORKS & ARCHITECTURE */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 border-t border-border pt-8 mb-12">
             <div className="flex flex-col h-full">
-              <h3 className="font-mono text-[12px] md:text-[13px] text-accent uppercase tracking-[0.12em] font-medium mb-3 text-left">
-                03 // HOW IT WORKS
+              <h3 className="text-[11px] text-[var(--color-accent)] uppercase tracking-[0.2em] font-semibold mb-3 text-left">
+                HOW IT WORKS
               </h3>
-              <div className="subtle-readable-surface p-4 border border-border flex-1 flex flex-wrap items-center gap-2 font-mono text-[12px] md:text-[13px]">
+              <div className="subtle-readable-surface p-4 border border-border flex-1 flex flex-wrap items-center gap-2 text-[12px] md:text-[13px]">
                 {flowSteps.map((step, idx) => (
-                  <React.Fragment key={idx}>
-                    <span className="px-2.5 py-1 bg-black/[0.03] dark:bg-white/[0.04] border border-border text-text font-medium">
-                      {step}
-                    </span>
-                    {idx < flowSteps.length - 1 && (
-                      <span className="text-accent font-bold select-none text-xs">→</span>
-                    )}
-                  </React.Fragment>
+                  <span key={idx} className="px-2.5 py-1 bg-black/[0.03] dark:bg-white/[0.04] border border-border text-text font-normal">
+                    {step}
+                  </span>
                 ))}
               </div>
             </div>
 
             <div className="flex flex-col h-full">
-              <h3 className="font-mono text-[12px] md:text-[13px] text-accent uppercase tracking-[0.12em] font-medium mb-3 text-left">
-                04 // ARCHITECTURE
+              <h3 className="text-[11px] text-[var(--color-accent)] uppercase tracking-[0.2em] font-semibold mb-3 text-left">
+                ARCHITECTURE
               </h3>
-              <div className="subtle-readable-surface p-4 border border-border flex-1 flex flex-wrap items-center gap-2 font-mono text-[12px] md:text-[13px]">
+              <div className="subtle-readable-surface p-4 border border-border flex-1 flex flex-wrap items-center gap-2 text-[12px] md:text-[13px]">
                 {archComponents.map((comp, idx) => (
-                  <React.Fragment key={idx}>
-                    <span className="px-2.5 py-1 bg-black/[0.03] dark:bg-white/[0.04] border border-border text-text font-normal">
-                      {comp}
-                    </span>
-                    {idx < archComponents.length - 1 && (
-                      <span className="text-accent font-bold select-none text-xs">+</span>
-                    )}
-                  </React.Fragment>
+                  <span key={idx} className="px-2.5 py-1 bg-black/[0.03] dark:bg-white/[0.04] border border-border text-text font-normal">
+                    {comp}
+                  </span>
                 ))}
               </div>
             </div>
           </div>
 
-          {/* 05 // KEY CAPABILITIES & FEATURES */}
+          {/* KEY CAPABILITIES & FEATURES */}
           {keyCapabilities.length > 0 && (
             <div id="capabilities" data-scroll-label="CAPABILITIES">
               <Reveal className="border-t border-border pt-8 mb-12">
-                <h3 className="font-mono text-[12px] md:text-[13px] text-accent uppercase tracking-[0.12em] font-medium mb-4 text-left">
-                  05 // KEY CAPABILITIES &amp; FEATURES
+                <h3 className="text-[11px] text-[var(--color-accent)] uppercase tracking-[0.2em] font-semibold mb-4 text-left">
+                  KEY CAPABILITIES &amp; FEATURES
                 </h3>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                   {keyCapabilities.map((cap, idx) => (
-                    <div key={idx} className="flex items-center gap-2 px-3.5 py-2 bg-black/[0.03] dark:bg-white/[0.04] border border-border text-[13px] md:text-[14px] font-mono text-text font-normal">
-                      <span className="text-accent font-medium select-none">+</span>
+                    <div key={idx} className="flex items-center gap-2 px-3.5 py-2 bg-black/[0.03] dark:bg-white/[0.04] border border-border text-[12px] md:text-[13px] text-text font-normal">
                       <span>{cap}</span>
                     </div>
                   ))}
@@ -268,18 +253,18 @@ export default function ProductDetail() {
             </div>
           )}
 
-          {/* 06 // MODERN TECHNOLOGY STACK */}
+          {/* MODERN TECHNOLOGY STACK */}
           {techList.length > 0 && (
             <div id="technology" data-scroll-label="TECH STACK">
               <Reveal className="border-t border-border pt-8 mb-12">
-                <h3 className="font-mono text-[12px] md:text-[13px] text-accent uppercase tracking-[0.12em] font-medium mb-4 text-left">
-                  06 // MODERN TECHNOLOGY STACK
+                <h3 className="text-[11px] text-[var(--color-accent)] uppercase tracking-[0.2em] font-semibold mb-4 text-left">
+                  MODERN TECHNOLOGY STACK
                 </h3>
                 <div className="flex flex-wrap gap-2.5">
                   {techList.map((tech, idx) => (
                     <span
                       key={idx}
-                      className="inline-flex items-center px-3 py-1.5 bg-bg border border-border text-[13px] md:text-[14px] font-mono text-text font-medium"
+                      className="inline-flex items-center px-3 py-1.5 bg-bg border border-border text-[12px] md:text-[13px] text-text font-normal"
                     >
                       {tech}
                     </span>
@@ -289,29 +274,29 @@ export default function ProductDetail() {
             </div>
           )}
 
-          {/* 07 // BUSINESS OUTCOME */}
+          {/* BUSINESS OUTCOME */}
           {product.businessOutcomes && (
             <div id="outcome" data-scroll-label="OUTCOME" className="border-t border-border pt-8 mb-12">
               <div className="p-4 bg-black/[0.02] dark:bg-white/[0.03] border-l-2 border-accent">
-                <div className="font-mono text-[12px] text-accent uppercase tracking-[0.12em] font-medium mb-1 text-left">
-                  07 // BUSINESS OUTCOME
+                <div className="text-[11px] text-[var(--color-accent)] uppercase tracking-[0.2em] font-semibold mb-1 text-left">
+                  BUSINESS OUTCOME
                 </div>
-                <p className="text-[15px] md:text-[16px] text-text font-semibold leading-[1.5] text-left">
+                <p className="text-[14px] md:text-[15px] text-text font-normal leading-[1.5] text-left">
                   {product.businessOutcomes}
                 </p>
               </div>
             </div>
           )}
 
-          {/* 08 // LINKED CASE STUDY */}
+          {/* LINKED CASE STUDY */}
           {product.caseStudy && (
             <div id="casestudy" data-scroll-label="CASE STUDY" className="border-t border-border pt-8 mb-12">
-              <div className="p-3.5 border border-border/70 flex flex-col sm:flex-row sm:items-center justify-between gap-3 font-mono text-[13px]">
+              <div className="p-3.5 border border-border/70 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-[13px]">
                 <div>
-                  <span className="text-[11px] text-text-muted font-medium uppercase tracking-wider block mb-0.5 text-left">
-                    08 // LINKED CASE STUDY
+                  <span className="text-[11px] text-text-muted font-normal uppercase tracking-wider block mb-0.5 text-left">
+                    LINKED CASE STUDY
                   </span>
-                  <span className="text-text font-bold uppercase text-left block">{product.caseStudy}</span>
+                  <span className="font-heading font-bold text-text uppercase text-base text-left block">{product.caseStudy}</span>
                 </div>
                 <Link to="/case-studies" className="text-accent hover:underline inline-flex items-center gap-1.5 font-bold shrink-0">
                   <span>View Blueprint</span>
@@ -325,7 +310,7 @@ export default function ProductDetail() {
           <div id="cta" data-scroll-label="STRATEGY CALL" className="border-t border-border pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
             <div>
               <div className="font-heading text-lg font-bold text-text uppercase text-left">Deploy This Product</div>
-              <div className="font-mono text-xs text-text-muted text-left">Initiate a 48-hour enterprise pilot or proof-of-concept setup</div>
+              <div className="text-xs text-text-muted text-left">Initiate a 48-hour enterprise pilot or proof-of-concept setup</div>
             </div>
             <Link to="/contact" className="btn btn-primary">
               Discuss This Product <ArrowUpRight className="w-4 h-4" strokeWidth={1.5} />

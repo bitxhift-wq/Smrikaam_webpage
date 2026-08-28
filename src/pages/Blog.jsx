@@ -24,20 +24,20 @@ export default function Blog() {
       <div id="overview" data-scroll-label="INSIGHTS" className="page-title-surface relative border border-border p-8 md:p-12 mb-16 overflow-hidden">
         <BannerDrawBorder />
         <div className="flex items-center justify-between mb-4">
-          <div className="font-mono text-xs text-accent uppercase tracking-[0.2em]">
-            JOURNAL // ENGINEERING &amp; ARCHITECTURE
+          <div className="font-mono text-[10px] md:text-[11px] text-[var(--color-accent)] uppercase tracking-[0.2em] font-semibold">
+            JOURNAL &amp; ENGINEERING ARCHITECTURE
           </div>
-          <div className="font-mono text-xs text-text-muted border border-border px-3 py-1 bg-black/[0.02] dark:bg-white/[0.03]">
-            {posts.length} ARTICLES
+          <div className="font-mono text-[10px] md:text-[11px] text-[var(--color-text-muted)] border border-[var(--color-border)] px-3 py-1 bg-black/[0.02] dark:bg-white/[0.03]">
+            ARTICLES
           </div>
         </div>
 
         <TextReveal
           text="TECHNICAL PERSPECTIVES FROM THE FRONTLINE."
           as="h1"
-          className="font-heading text-4xl md:text-6xl font-bold uppercase text-text mb-4"
+          className="font-heading text-3xl sm:text-5xl lg:text-6xl font-bold uppercase tracking-tight text-[var(--color-text)] leading-[0.96] mb-4"
         />
-        <p className="text-text-muted text-lg max-w-3xl border-l-2 border-accent pl-4 font-normal leading-relaxed">
+        <p className="text-[15px] sm:text-[16px] md:text-[18px] text-[var(--color-text-secondary)] max-w-3xl border-l-2 border-[var(--color-accent)] pl-4 font-normal leading-[1.6]">
           Deep-dives into IIoT telemetry architectures, zero-downtime database migrations, deterministic LLM pipelines, and production engineering best practices.
         </p>
       </div>
@@ -61,7 +61,7 @@ export default function Blog() {
                     )}
                   </div>
                 )}
-                <div className="card-kicker font-mono text-[13px] font-medium text-accent uppercase tracking-[0.18em]">ARTICLE // {post.slug}</div>
+                <div className="card-kicker font-mono text-[13px] font-medium text-accent uppercase tracking-[0.18em]">ARTICLE • {post.slug}</div>
                 <h2 className="card-title text-xl md:text-2xl font-semibold uppercase group-hover:text-accent transition-colors">
                   {post.title}
                 </h2>

@@ -127,7 +127,7 @@ export default function Industries() {
         caseStudy: linkedCase ? linkedCase.title : (item.caseStudy || `${item.name} Enterprise Transformation`),
         caseStudySlug: linkedCase ? linkedCase.slug : null,
         image: item.cover_image_url || item.image || 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?q=80&w=1200&auto=format&fit=crop',
-        caption: `${(item.name || item.title).toUpperCase()} // Enterprise Domain Architecture`
+        caption: `${(item.name || item.title).toUpperCase()} — Enterprise Domain Architecture`
       };
     });
   }, [rawCmsIndustries, rawCaseStudies]);
@@ -164,21 +164,21 @@ export default function Industries() {
         <div className="page-title-surface relative border border-border p-8 md:p-12 overflow-hidden">
           <BannerDrawBorder />
           <div className="flex items-center justify-between mb-4">
-            <div className="font-mono text-xs md:text-[13px] text-accent uppercase tracking-[0.2em] font-medium">
-              INDUSTRIES &amp; DOMAINS // DEPLOYMENT BLUEPRINTS
+            <div className="font-mono text-[10px] md:text-[11px] text-[var(--color-accent)] uppercase tracking-[0.2em] font-semibold">
+              INDUSTRIES &amp; DOMAINS
             </div>
-            <div className="font-mono text-xs md:text-[13px] text-text-muted border border-border px-3 py-1 bg-black/[0.02] dark:bg-white/[0.03]">
-              {industries.length} SECTOR SOLUTIONS
+            <div className="font-mono text-[10px] md:text-[11px] text-[var(--color-text-muted)] border border-[var(--color-border)] px-3 py-1 bg-black/[0.02] dark:bg-white/[0.03]">
+              SECTOR SOLUTIONS
             </div>
           </div>
 
           <TextReveal
             text="TECHNOLOGY THAT UNDERSTANDS YOUR INDUSTRY"
             as="h1"
-            className="font-heading text-4xl sm:text-5xl md:text-6xl font-bold uppercase tracking-tight text-text leading-[1.0] mb-4 max-w-5xl"
+            className="font-heading text-3xl sm:text-5xl lg:text-6xl font-bold uppercase tracking-tight text-[var(--color-text)] leading-[0.96] mb-4 max-w-5xl"
           />
 
-          <p className="text-[16px] md:text-[18px] text-text-muted max-w-3xl font-normal leading-[1.6] border-l-2 border-accent pl-4 text-left">
+          <p className="text-[15px] sm:text-[16px] md:text-[18px] text-[var(--color-text-secondary)] max-w-3xl font-normal leading-[1.6] border-l-2 border-[var(--color-accent)] pl-4 text-left">
             SMRIKAAM brings specialized engineering frameworks and domain expertise tailored to the unique operational and regulatory realities of major global enterprise sectors.
           </p>
         </div>
@@ -188,7 +188,7 @@ export default function Industries() {
       <section id="sectors" data-scroll-label="INDUSTRY SYSTEM" className="px-6 md:px-16 max-w-7xl mx-auto mb-20">
         {industries.length === 0 ? (
           <div className="page-title-surface border border-border p-12 text-center my-12">
-            <div className="font-mono text-xs text-accent uppercase mb-2">SYSTEM // STATUS</div>
+            <div className="font-mono text-xs text-accent uppercase mb-2">SYSTEM STATUS</div>
             <h2 className="font-heading text-2xl font-bold uppercase text-text mb-2">NO PUBLISHED INDUSTRIES CURRENTLY AVAILABLE</h2>
             <p className="text-text-muted text-sm max-w-md mx-auto">All sector profiles are currently in draft, undergoing maintenance, or archived.</p>
           </div>
@@ -277,7 +277,7 @@ export default function Industries() {
                       </div>
                       <div>
                         <div className="font-mono text-[12px] text-accent uppercase tracking-[0.12em] font-medium">
-                          SPECIFICATION // {activeIndustry.num} OF {industries.length}
+                          SPECIFICATION
                         </div>
                         <h2 className="font-heading text-2xl md:text-3xl font-semibold text-text tracking-tight mt-0.5 uppercase">
                           {activeIndustry.name}
@@ -325,11 +325,11 @@ export default function Industries() {
                     </div>
                   )}
 
-                  {/* 01 // BUSINESS PROBLEMS SOLVED */}
+                  {/* BUSINESS PROBLEMS SOLVED */}
                   {activeIndustry.businessProblems && activeIndustry.businessProblems.length > 0 && (
                     <div>
                       <h4 className="font-mono text-[12px] md:text-[13px] text-accent font-medium uppercase tracking-[0.12em] mb-2.5 text-left">
-                        01 // BUSINESS PROBLEMS SOLVED
+                        BUSINESS PROBLEMS SOLVED
                       </h4>
                       <ul className="space-y-2">
                         {activeIndustry.businessProblems.map((prob, i) => (
@@ -342,11 +342,11 @@ export default function Industries() {
                     </div>
                   )}
 
-                  {/* 02 // HOW SMRIKAAM SOLVES IT */}
+                  {/* HOW SMRIKAAM SOLVES IT */}
                   {activeIndustry.solutions && activeIndustry.solutions.length > 0 && (
                     <div>
                       <h4 className="font-mono text-[12px] md:text-[13px] text-accent font-medium uppercase tracking-[0.12em] mb-2.5 text-left">
-                        02 // HOW SMRIKAAM SOLVES IT
+                        HOW SMRIKAAM SOLVES IT
                       </h4>
                       <ul className="space-y-2">
                         {activeIndustry.solutions.map((sol, i) => (
@@ -363,7 +363,7 @@ export default function Industries() {
                   {activeIndustry.capabilities && activeIndustry.capabilities.length > 0 && (
                     <div>
                       <h4 className="font-mono text-[12px] md:text-[13px] text-accent font-medium uppercase tracking-[0.12em] mb-3 text-left">
-                        03 // CORE CAPABILITIES &amp; USE CASES
+                        CORE CAPABILITIES &amp; USE CASES
                       </h4>
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                         {activeIndustry.capabilities.map((cap, i) => (
@@ -379,11 +379,11 @@ export default function Industries() {
                     </div>
                   )}
 
-                  {/* 04 // MODERN TECHNOLOGY STACK */}
+                  {/* MODERN TECHNOLOGY STACK */}
                   {activeIndustry.technology && activeIndustry.technology.length > 0 && (
                     <div>
                       <h4 className="font-mono text-[12px] md:text-[13px] text-accent font-medium uppercase tracking-[0.12em] mb-3 text-left">
-                        04 // MODERN TECHNOLOGY STACK
+                        MODERN TECHNOLOGY STACK
                       </h4>
                       <div className="flex flex-wrap gap-2.5">
                         {activeIndustry.technology.map((tech, i) => (
@@ -398,11 +398,11 @@ export default function Industries() {
                     </div>
                   )}
 
-                  {/* 05 // BUSINESS OUTCOME */}
+                  {/* BUSINESS OUTCOME */}
                   {activeIndustry.outcomes && (
                     <div className="p-4 bg-black/[0.02] dark:bg-white/[0.03] border-l-2 border-accent">
                       <div className="font-mono text-[12px] text-accent uppercase tracking-[0.12em] font-medium mb-1 text-left">
-                        05 // BUSINESS OUTCOME
+                        BUSINESS OUTCOME
                       </div>
                       {Array.isArray(activeIndustry.outcomes) ? (
                         <ul className="space-y-1.5">
@@ -477,7 +477,7 @@ export default function Industries() {
       <section id="cta" data-scroll-label="STRATEGY CALL" className="px-6 md:px-16 max-w-7xl mx-auto mt-24">
         <Reveal variant="scale" className="border border-border p-10 md:p-14 text-center bg-bg/95 backdrop-blur-md">
           <div className="font-mono text-[12px] md:text-[13px] text-accent uppercase tracking-[0.14em] font-medium mb-3">
-            DOMAIN ENGINEERING // 48-HOUR CONSULTATION
+            DOMAIN ENGINEERING • 48-HOUR CONSULTATION
           </div>
           <h2 className="font-heading text-3xl md:text-4xl font-bold uppercase text-text mb-4">
             NEED A SPECIALIZED TECHNOLOGY BLUEPRINT FOR YOUR SECTOR?

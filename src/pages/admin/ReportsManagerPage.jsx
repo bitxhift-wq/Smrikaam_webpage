@@ -84,7 +84,7 @@ export default function ReportsManagerPage() {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[rgba(255,255,255,0.15)] pb-6">
         <div>
           <div className="font-mono text-xs text-[#4fd1c5] uppercase tracking-widest mb-1">
-            HOMEPAGE WORKBENCH // FLASH REPORTS
+            HOMEPAGE WORKBENCH — FLASH REPORTS
           </div>
           <h1 className="font-heading text-3xl font-bold uppercase text-[#f4f4f4]">
             MANAGE FLASH REPORTS
@@ -148,7 +148,7 @@ export default function ReportsManagerPage() {
                 {/* Top Badge & Date */}
                 <div className="flex items-center justify-between text-[10px] font-mono mb-2">
                   <span className="text-[#4fd1c5] font-bold uppercase bg-[#1c2333] px-2 py-0.5 border border-[#4fd1c5]/30">
-                    {report.reportType} // {report.category}
+                    {report.reportType} • {report.category}
                   </span>
                   <span className="text-gray-400 flex items-center gap-1">
                     <Calendar className="w-3 h-3" /> {report.date}

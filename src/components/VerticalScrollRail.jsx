@@ -259,21 +259,21 @@ export default function VerticalScrollRail() {
       </aside>
 
       {/* ============================================================ */}
-      {/* MOBILE / TABLET COMPACT ADAPTIVE SCROLL JUMPER (< xl) */}
+      {/* TABLET ADAPTIVE SCROLL JUMPER (sm to xl) */}
       {/* ============================================================ */}
       <div
         ref={drawerRef}
-        className="xl:hidden fixed bottom-14 left-4 z-40 pointer-events-auto"
+        className="hidden sm:block xl:hidden fixed bottom-14 left-4 z-40 pointer-events-auto"
       >
         <button
           type="button"
           onClick={() => setMobileDrawerOpen(!mobileDrawerOpen)}
-          className="flex items-center gap-2 px-3 py-1.5 bg-[var(--color-bg)]/95 border border-[var(--color-border)] backdrop-blur-md shadow-lg text-[var(--color-text)] font-mono text-[10px] font-bold uppercase tracking-wider transition-all hover:border-[var(--color-accent)] cursor-pointer"
+          className="flex items-center gap-2 px-3 py-1.5 bg-[var(--color-bg)]/95 border border-[var(--color-border)] backdrop-blur-md shadow-lg text-[var(--color-text)] text-[10px] font-semibold uppercase tracking-wider transition-all hover:border-[var(--color-accent)] cursor-pointer"
           aria-label="Section Jumper and Current Scroll"
         >
           <span className="w-1.5 h-1.5 rounded-full bg-[var(--color-accent)] animate-pulse" />
           <span className="truncate max-w-[170px] sm:max-w-[240px]">
-            {activeSecObj ? `${activeSecObj.scrollLabel} // ${activeSecObj.title}` : 'NAVIGATION'}
+            {activeSecObj ? (activeSecObj.title ? `${activeSecObj.scrollLabel} — ${activeSecObj.title}` : activeSecObj.scrollLabel) : 'NAVIGATION'}
           </span>
           <span className="text-[var(--color-text-muted)] font-normal ml-0.5">
             ({sections.length})
@@ -283,7 +283,7 @@ export default function VerticalScrollRail() {
         {/* Mobile Section Jump Popup Menu */}
         {mobileDrawerOpen && (
           <div className="absolute bottom-full left-0 mb-2 w-72 max-h-64 overflow-y-auto bg-[var(--color-bg)] border border-[var(--color-border)] shadow-2xl p-2 flex flex-col gap-1 z-50 animate-in fade-in slide-in-from-bottom-2 duration-150">
-            <div className="font-mono text-[9px] text-[var(--color-text-muted)] uppercase tracking-widest px-2 py-1 border-b border-[var(--color-border)] font-semibold flex items-center justify-between">
+            <div className="text-[9px] text-[var(--color-text-muted)] uppercase tracking-widest px-2 py-1 border-b border-[var(--color-border)] font-semibold flex items-center justify-between">
               <span>PAGE ARCHITECTURE</span>
               <span>{sections.length} SECTIONS</span>
             </div>
@@ -296,7 +296,7 @@ export default function VerticalScrollRail() {
                     scrollToSection(sec.id);
                     setMobileDrawerOpen(false);
                   }}
-                  className={`text-left px-2.5 py-2 font-mono text-[10px] uppercase tracking-wider flex items-center justify-between transition-colors cursor-pointer ${
+                  className={`text-left px-2.5 py-2 text-[10px] uppercase tracking-wider flex items-center justify-between transition-colors cursor-pointer ${
                     isActive
                       ? 'bg-[var(--color-surface-subtle)] text-[var(--color-text)] font-bold border-l-2 border-[var(--color-accent)]'
                       : 'text-[var(--color-text-muted)] hover:text-[var(--color-text)] hover:bg-black/[0.02] dark:hover:bg-white/[0.02]'

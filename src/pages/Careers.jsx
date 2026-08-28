@@ -37,10 +37,10 @@ export default function Careers() {
       <div className="page-title-surface relative border border-border p-8 md:p-12 mb-16 overflow-hidden">
         <BannerDrawBorder />
         <div className="flex items-center justify-between mb-4">
-          <div className="font-mono text-xs text-accent uppercase tracking-[0.2em]">
-            CAREERS // AI • DATA • INDUSTRIAL INTELLIGENCE
+          <div className="font-mono text-[10px] md:text-[11px] text-[var(--color-accent)] uppercase tracking-[0.2em] font-semibold">
+            CAREERS &amp; ENGINEERING OPPORTUNITIES
           </div>
-          <div className="font-mono text-xs text-text-muted border border-border px-3 py-1 bg-black/[0.02] dark:bg-white/[0.03]">
+          <div className="font-mono text-[10px] md:text-[11px] text-[var(--color-text-muted)] border border-[var(--color-border)] px-3 py-1 bg-black/[0.02] dark:bg-white/[0.03]">
             COIMBATORE &amp; REMOTE
           </div>
         </div>
@@ -48,9 +48,9 @@ export default function Careers() {
         <TextReveal
           text="BUILD WHAT'S NEXT WITH SMRIKAAM."
           as="h1"
-          className="font-heading text-4xl md:text-6xl font-bold uppercase text-text mb-4"
+          className="font-heading text-3xl sm:text-5xl lg:text-6xl font-bold uppercase tracking-tight text-[var(--color-text)] leading-[0.96] mb-4"
         />
-        <p className="text-text-muted text-lg max-w-3xl border-l-2 border-accent pl-4 font-normal leading-relaxed">
+        <p className="text-[15px] sm:text-[16px] md:text-[18px] text-[var(--color-text-secondary)] max-w-3xl border-l-2 border-[var(--color-accent)] pl-4 font-normal leading-[1.6]">
           Work on Industrial IoT platforms, enterprise AI systems, cloud analytics, machine learning pipelines, and next-generation operational intelligence solutions for real-world clients.
         </p>
       </div>
@@ -60,7 +60,7 @@ export default function Careers() {
         <div className="flex items-center justify-between border-b border-border pb-4 mb-6 font-mono text-xs">
           <div className="flex items-center gap-2">
             <Activity className="w-4 h-4 text-accent" />
-            <span className="font-bold text-text">OPERATIONS.LIVE // ENGINEERING DEMO</span>
+            <span className="font-semibold text-text">OPERATIONS DEMO</span>
           </div>
           <div className="flex gap-4 text-text-muted">
             <span>UPTIME: <strong className="text-accent font-bold">99.9%</strong></span>
@@ -91,7 +91,7 @@ export default function Careers() {
       {/* Why Engineers Choose SMRIKAAM */}
       <div className="mb-16">
         <div className="font-mono text-[13px] text-accent uppercase tracking-[0.18em] mb-2 font-medium">
-          CULTURE &amp; GROWTH // WHY SMRIKAAM
+          CULTURE &amp; GROWTH
         </div>
         <h2 className="font-heading text-3xl font-semibold uppercase text-text mb-8 border-b border-border pb-4">
           WHY ENGINEERS CHOOSE SMRIKAAM
@@ -110,7 +110,7 @@ export default function Careers() {
       {/* Open Positions */}
       <div className="mb-16">
         <div className="font-mono text-[13px] text-accent uppercase tracking-[0.18em] mb-2 font-medium">
-          JOIN US // OPEN POSITIONS
+          JOIN US • OPEN POSITIONS
         </div>
         <h2 className="font-heading text-3xl font-semibold uppercase text-text mb-8 border-b border-border pb-4">
           ACTIVE OPPORTUNITIES
@@ -198,7 +198,7 @@ export default function Careers() {
       {/* Tech Stack Pills */}
       <div className="mb-16">
         <div className="font-mono text-[13px] text-accent uppercase tracking-[0.18em] mb-2 font-medium">
-          TOOLING // TECHNOLOGIES YOU'LL WORK WITH
+          TOOLING & TECHNOLOGIES
         </div>
         <h2 className="font-heading text-2xl font-semibold uppercase text-text mb-6">
           MODERN TECH STACK
@@ -216,7 +216,7 @@ export default function Careers() {
       {/* 5-Step Hiring Process */}
       <div className="mb-16">
         <div className="font-mono text-[13px] text-accent uppercase tracking-[0.18em] mb-2 font-medium">
-          HIRING FLOW // TRANSPARENT PROCESS
+          HIRING FLOW
         </div>
         <h2 className="font-heading text-3xl font-semibold uppercase text-text mb-8 border-b border-border pb-4">
           OUR HIRING PROCESS

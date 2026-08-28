@@ -108,7 +108,7 @@ export default function Services() {
         accelerator: linkedAcc ? linkedAcc.name : (item.accelerator || 'Proprietary SMRIKAAM Asset'),
         caseStudy: linkedCase ? linkedCase.title : (item.caseStudy || `${item.title || item.name} Deployment Blueprint`),
         image: item.cover_image_url || item.image || 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=1200&auto=format&fit=crop',
-        caption: `${(item.title || item.name).toUpperCase()} // Architecture Blueprint`
+        caption: `${(item.title || item.name).toUpperCase()} — Architecture Blueprint`
       };
     });
   }, [rawCmsServices, rawAccelerators, rawCaseStudies]);
@@ -145,21 +145,21 @@ export default function Services() {
         <div className="page-title-surface relative border border-border p-8 md:p-12 overflow-hidden">
           <BannerDrawBorder />
           <div className="flex items-center justify-between mb-4">
-            <div className="font-mono text-xs md:text-[13px] text-accent uppercase tracking-[0.2em] font-medium">
-              CORE CAPABILITIES // TECHNICAL SERVICES
+            <div className="font-mono text-[10px] md:text-[11px] text-[var(--color-accent)] uppercase tracking-[0.2em] font-semibold">
+              CORE CAPABILITIES
             </div>
-            <div className="font-mono text-xs md:text-[13px] text-text-muted border border-border px-3 py-1 bg-black/[0.02] dark:bg-white/[0.03]">
-              {services.length} TECHNICAL DOMAINS
+            <div className="font-mono text-[10px] md:text-[11px] text-[var(--color-text-muted)] border border-[var(--color-border)] px-3 py-1 bg-black/[0.02] dark:bg-white/[0.03]">
+              TECHNICAL SERVICES
             </div>
           </div>
 
           <TextReveal
             text="ENTERPRISE ENGINEERING &amp; AI CAPABILITIES"
             as="h1"
-            className="font-heading text-4xl sm:text-5xl md:text-6xl font-bold uppercase tracking-tight text-text leading-[1.0] mb-4 max-w-5xl"
+            className="font-heading text-3xl sm:text-5xl lg:text-6xl font-bold uppercase tracking-tight text-[var(--color-text)] leading-[0.96] mb-4 max-w-5xl"
           />
 
-          <p className="text-[16px] md:text-[18px] text-text-muted max-w-3xl font-normal leading-[1.6] border-l-2 border-accent pl-4 text-left">
+          <p className="text-[15px] sm:text-[16px] md:text-[18px] text-[var(--color-text-secondary)] max-w-3xl font-normal leading-[1.6] border-l-2 border-[var(--color-accent)] pl-4 text-left">
             SMRIKAAM delivers specialized software engineering, artificial intelligence, cloud modernization, and industrial automation solutions across global enterprise operations.
           </p>
         </div>
@@ -169,7 +169,7 @@ export default function Services() {
       <section id="capabilities" data-scroll-label="SERVICE SYSTEM" className="px-6 md:px-16 max-w-7xl mx-auto mb-20">
         {services.length === 0 ? (
           <div className="page-title-surface border border-border p-12 text-center my-12">
-            <div className="font-mono text-xs text-accent uppercase mb-2">SYSTEM // STATUS</div>
+            <div className="font-mono text-xs text-accent uppercase mb-2">SYSTEM STATUS</div>
             <h2 className="font-heading text-2xl font-bold uppercase text-text mb-2">NO PUBLISHED SERVICES CURRENTLY AVAILABLE</h2>
             <p className="text-text-muted text-sm max-w-md mx-auto">All services are currently in draft, undergoing maintenance, or archived.</p>
           </div>
@@ -207,39 +207,34 @@ export default function Services() {
                         : 'hover:bg-black/[0.02] dark:hover:bg-white/[0.015]'
                     }`}
                   >
-                    <div className="flex items-start gap-3.5">
-                      <span className={`font-mono text-[12px] font-medium tracking-widest pt-0.5 transition-colors ${
-                        isActive ? 'text-accent' : 'text-text-muted/60 group-hover:text-text'
-                      }`}>
-                        {srv.num}
-                      </span>
+                    <div className="flex items-start justify-between gap-4 w-full">
                       <div>
-                        <h3 className={`font-heading text-base md:text-[17px] font-semibold tracking-tight transition-colors uppercase ${
-                          isActive ? 'text-text' : 'text-text/80 group-hover:text-text'
+                        <h3 className={`font-heading text-base md:text-lg font-bold tracking-tight transition-colors uppercase ${
+                          isActive ? 'text-accent' : 'text-text/90 group-hover:text-accent'
                         }`}>
                           {srv.title}
                         </h3>
-                        <p className="text-[13px] text-text-muted font-normal leading-[1.4] mt-0.5 line-clamp-1 max-w-md">
+                        <p className="text-[13px] md:text-sm text-text-muted font-normal leading-[1.4] mt-1 line-clamp-1 max-w-md">
                           {srv.tagline}
                         </p>
                       </div>
-                    </div>
 
-                    <span
-                      className={`font-mono text-sm shrink-0 mt-1 transition-transform duration-200 ${
-                        isActive ? 'text-accent translate-x-1' : 'text-text-muted/40 group-hover:translate-x-1 group-hover:text-text-muted'
-                      }`}
-                      aria-hidden="true"
-                    >
-                      →
-                    </span>
+                      <span
+                        className={`text-sm shrink-0 mt-1 transition-transform duration-200 ${
+                          isActive ? 'text-accent translate-x-1' : 'text-text-muted/40 group-hover:translate-x-1 group-hover:text-text-muted'
+                        }`}
+                        aria-hidden="true"
+                      >
+                        →
+                      </span>
+                    </div>
                   </div>
                 );
               })}
               </div>
             </aside>
 
-            {/* Right Column: Active Service Detailed Specification Stage (Normal Document Scroll) */}
+            {/* Right Column: Active Service Detailed Stage (Normal Document Scroll) */}
             {activeService && (
               <main className="lg:col-span-7 min-w-0">
                 <div
@@ -250,29 +245,16 @@ export default function Services() {
                   className="service-detail-panel p-6 md:p-8 space-y-6"
                 >
                   
-                  {/* Header: Service Number, Badge, and Title */}
-                  <div className="flex items-start justify-between gap-4 border-b border-border/70 pb-5">
-                    <div className="flex items-start gap-3.5">
-                      <div className="w-10 h-10 border border-border flex items-center justify-center text-accent shrink-0 mt-0.5 font-mono text-sm font-bold">
-                        {activeService.num}
-                      </div>
-                      <div>
-                        <div className="font-mono text-[12px] text-accent uppercase tracking-[0.12em] font-medium">
-                          SPECIFICATION // {activeService.num} OF {services.length}
-                        </div>
-                        <h2 className="font-heading text-2xl md:text-3xl font-semibold text-text tracking-tight mt-0.5 uppercase">
-                          {activeService.title}
-                        </h2>
-                      </div>
-                    </div>
-                    <div className="hidden sm:block font-mono text-[11px] text-text-muted/70 uppercase tracking-widest border border-border px-2 py-1">
-                      ENTERPRISE READY
-                    </div>
+                  {/* Header: Title */}
+                  <div className="border-b border-border/70 pb-5">
+                    <h2 className="font-heading text-2xl sm:text-3xl lg:text-4xl font-bold text-text tracking-tight uppercase">
+                      {activeService.title}
+                    </h2>
                   </div>
 
                   {/* Service Detailed Narrative */}
                   {activeService.description && (
-                    <div className="text-[15px] md:text-[16px] font-normal text-text-muted leading-[1.6] text-left">
+                    <div className="text-[14px] md:text-[15px] font-normal text-text-muted leading-[1.6] text-left">
                       <RichTextRenderer content={activeService.description} />
                     </div>
                   )}
@@ -299,19 +281,16 @@ export default function Services() {
                         transform: `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translate3d(${translateX}px, ${translateY}px, 0px)`
                       }}
                     />
-                    <div className="absolute bottom-0 left-0 right-0 p-3 bg-black/80 backdrop-blur-sm text-[12px] font-mono text-white/90 tracking-wider text-left">
-                      {activeService.caption}
-                    </div>
                   </div>
 
                   {/* Business Problems Solved */}
                   <div>
-                    <h4 className="font-mono text-[12px] md:text-[13px] text-accent font-medium uppercase tracking-[0.12em] mb-2.5 text-left">
+                    <h4 className="text-[11px] text-accent font-semibold uppercase tracking-[0.2em] mb-2.5 text-left">
                       BUSINESS PROBLEMS SOLVED
                     </h4>
                     <ul className="space-y-2">
                       {activeService.businessProblems.map((prob, i) => (
-                        <li key={i} className="flex items-start gap-2.5 text-[14px] md:text-[15px] font-normal text-text-muted">
+                        <li key={i} className="flex items-start gap-2.5 text-[13px] md:text-[14px] font-normal text-text-muted">
                           <span className="w-1.5 h-1.5 rounded-full bg-accent mt-2 shrink-0" aria-hidden="true" />
                           <div>{renderBulletText(prob)}</div>
                         </li>
@@ -321,16 +300,15 @@ export default function Services() {
 
                   {/* Core Capabilities */}
                   <div>
-                    <h4 className="font-mono text-[12px] md:text-[13px] text-accent font-medium uppercase tracking-[0.12em] mb-3 text-left">
+                    <h4 className="text-[11px] text-accent font-semibold uppercase tracking-[0.2em] mb-3 text-left">
                       CORE CAPABILITIES
                     </h4>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                       {activeService.capabilities.map((cap, i) => (
                         <div
                           key={i}
-                          className="flex items-center gap-2 px-3.5 py-2 bg-black/[0.03] dark:bg-white/[0.04] border border-border text-[13px] md:text-[14px] font-mono text-text font-normal"
+                          className="flex items-center gap-2 px-3.5 py-2 bg-black/[0.03] dark:bg-white/[0.04] border border-border text-[12px] md:text-[13px] text-text font-normal"
                         >
-                          <span className="text-accent font-medium select-none">+</span>
                           <span>{cap}</span>
                         </div>
                       ))}
@@ -339,14 +317,14 @@ export default function Services() {
 
                   {/* Technology Stack */}
                   <div>
-                    <h4 className="font-mono text-[12px] md:text-[13px] text-accent font-medium uppercase tracking-[0.12em] mb-3 text-left">
+                    <h4 className="text-[11px] text-accent font-semibold uppercase tracking-[0.2em] mb-3 text-left">
                       MODERN TECHNOLOGY STACK
                     </h4>
                     <div className="flex flex-wrap gap-2.5">
                       {activeService.technology.map((tech, i) => (
                         <span
                           key={i}
-                          className="inline-flex items-center px-3 py-1.5 bg-bg border border-border text-[13px] md:text-[14px] font-mono text-text font-medium"
+                          className="inline-flex items-center px-3 py-1.5 bg-bg border border-border text-[12px] md:text-[13px] text-text font-normal"
                         >
                           {tech}
                         </span>
@@ -356,19 +334,28 @@ export default function Services() {
 
                   {/* Business Outcome */}
                   <div className="p-4 bg-black/[0.02] dark:bg-white/[0.03] border-l-2 border-accent">
-                    <div className="font-mono text-[12px] text-accent uppercase tracking-[0.12em] font-medium mb-1 text-left">
+                    <div className="text-[11px] text-accent uppercase tracking-[0.2em] font-semibold mb-1 text-left">
                       BUSINESS OUTCOME
                     </div>
-                    <p className="text-[15px] md:text-[16px] text-text font-semibold leading-[1.5] text-left">
+                    <p className="text-[14px] md:text-[15px] text-text font-normal leading-[1.5] text-left">
                       {activeService.outcomes}
                     </p>
                   </div>
 
                   {/* Accelerator & Case Study Links */}
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2 border-t border-border/70 font-mono text-[13px]">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2 border-t border-border/70 text-[13px]">
                     <div className="p-3.5 border border-border/70 flex flex-col justify-between">
-                      <span className="text-[11px] text-text-muted font-medium uppercase tracking-wider mb-1.5 text-left">
+                      <span className="text-[11px] text-text-muted font-normal uppercase tracking-wider mb-1.5 text-left">
                         ENGINEERED PRODUCT / ASSET
+                      </span>
+                      <Link to="/products" className="text-text font-semibold hover:text-accent transition-colors inline-flex items-center gap-1.5 group/acc">
+                        <span>{activeService.accelerator}</span>
+                        <span className="text-accent transition-transform duration-200 group-hover/acc:translate-x-1" aria-hidden="true">→</span>
+                      </Link>
+                    </div>
+                    <div className="p-3.5 border border-border/70 flex flex-col justify-between">
+                      <span className="text-[11px] text-text-muted font-normal uppercase tracking-wider mb-1.5 text-left">
+                        CASE STUDY / WORKBENCH
                       </span>
                       <Link to="/products" className="text-text font-medium hover:text-accent transition-colors inline-flex items-center gap-1.5 group/acc">
                         <span>{activeService.accelerator}</span>
@@ -414,7 +401,7 @@ export default function Services() {
       <section id="cta" data-scroll-label="STRATEGY CALL" className="px-6 md:px-16 max-w-7xl mx-auto mt-24">
         <Reveal variant="scale" className="border border-border p-10 md:p-14 text-center bg-bg/95 backdrop-blur-md">
           <div className="font-mono text-[12px] md:text-[13px] text-accent uppercase tracking-[0.14em] font-medium mb-3">
-            ENGAGEMENT // TECHNOLOGY CONSULTATION
+            ENGAGEMENT • TECHNOLOGY CONSULTATION
           </div>
           <h2 className="font-heading text-3xl md:text-4xl font-bold uppercase text-text mb-4">
             TALK TO OUR TECHNOLOGY TEAM

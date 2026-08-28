@@ -120,7 +120,7 @@ export default function Products() {
         caseStudy: linkedCase ? linkedCase.title : (item.caseStudy || `${item.name || item.title} Enterprise Deployment`),
         caseStudySlug: linkedCase ? linkedCase.slug : null,
         image: item.cover_image_url || item.image || 'https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?q=80&w=1200&auto=format&fit=crop',
-        caption: `${(item.name || item.title).toUpperCase()} // Production Engineering Specification`
+        caption: `${(item.name || item.title).toUpperCase()} — Production Engineering Specification`
       };
     });
   }, [rawCmsProducts, rawCaseStudies]);
@@ -157,21 +157,21 @@ export default function Products() {
         <div className="page-title-surface relative border border-border p-8 md:p-12 overflow-hidden">
           <BannerDrawBorder />
           <div className="flex items-center justify-between mb-4">
-            <div className="font-mono text-xs md:text-[13px] text-accent uppercase tracking-[0.2em] font-medium">
-              PRODUCTS // ENGINEERING ASSETS
+            <div className="font-mono text-[10px] md:text-[11px] text-[var(--color-accent)] uppercase tracking-[0.2em] font-semibold">
+              PRODUCTS &amp; ENGINEERING ASSETS
             </div>
-            <div className="font-mono text-xs md:text-[13px] text-text-muted border border-border px-3 py-1 bg-black/[0.02] dark:bg-white/[0.03]">
-              {products.length} ENTERPRISE PRODUCTS
+            <div className="font-mono text-[10px] md:text-[11px] text-[var(--color-text-muted)] border border-[var(--color-border)] px-3 py-1 bg-black/[0.02] dark:bg-white/[0.03]">
+              ENTERPRISE PRODUCTS
             </div>
           </div>
 
           <TextReveal
             text="ENGINEERED PRODUCTS FOR ENTERPRISE TRANSFORMATION"
             as="h1"
-            className="font-heading text-4xl sm:text-5xl md:text-6xl font-bold uppercase tracking-tight text-text leading-[1.0] mb-4 max-w-5xl"
+            className="font-heading text-3xl sm:text-5xl lg:text-6xl font-bold uppercase tracking-tight text-[var(--color-text)] leading-[0.96] mb-4 max-w-5xl"
           />
 
-          <p className="text-[16px] md:text-[18px] text-text-muted max-w-3xl font-normal leading-[1.6] border-l-2 border-accent pl-4 text-left">
+          <p className="text-[15px] sm:text-[16px] md:text-[18px] text-[var(--color-text-secondary)] max-w-3xl font-normal leading-[1.6] border-l-2 border-[var(--color-accent)] pl-4 text-left">
             SMRIKAAM proprietary engineering assets and reusable accelerators reduce enterprise deployment timelines by up to 60%.
           </p>
         </div>
@@ -181,7 +181,7 @@ export default function Products() {
       <section id="capabilities" data-scroll-label="PRODUCT SYSTEM" className="px-6 md:px-16 max-w-7xl mx-auto mb-20">
         {products.length === 0 ? (
           <div className="page-title-surface border border-border p-12 text-center my-12">
-            <div className="font-mono text-xs text-accent uppercase mb-2">SYSTEM // STATUS</div>
+            <div className="font-mono text-xs text-accent uppercase mb-2">SYSTEM STATUS</div>
             <h2 className="font-heading text-2xl font-bold uppercase text-text mb-2">NO PUBLISHED PRODUCTS CURRENTLY AVAILABLE</h2>
             <p className="text-text-muted text-sm max-w-md mx-auto">All products are currently in draft, undergoing maintenance, or archived.</p>
           </div>
@@ -219,26 +219,19 @@ export default function Products() {
                         : 'hover:bg-black/[0.02] dark:hover:bg-white/[0.015]'
                     }`}
                   >
-                    <div className="flex items-start gap-3.5">
-                      <span className={`font-mono text-[12px] font-medium tracking-widest pt-0.5 transition-colors ${
-                        isActive ? 'text-accent' : 'text-text-muted/60 group-hover:text-text'
+                    <div>
+                      <h3 className={`font-heading text-base md:text-lg font-bold tracking-tight transition-colors uppercase ${
+                        isActive ? 'text-accent' : 'text-text/90 group-hover:text-accent'
                       }`}>
-                        {prod.num}
-                      </span>
-                      <div>
-                        <h3 className={`font-heading text-base md:text-[17px] font-semibold tracking-tight transition-colors uppercase ${
-                          isActive ? 'text-text' : 'text-text/80 group-hover:text-text'
-                        }`}>
-                          {prod.title}
-                        </h3>
-                        <p className="text-[13px] text-text-muted font-normal leading-[1.4] mt-0.5 line-clamp-1 max-w-md">
-                          {prod.tagline}
-                        </p>
-                      </div>
+                        {prod.title}
+                      </h3>
+                      <p className="text-[13px] md:text-sm text-text-muted font-normal leading-[1.4] mt-1 line-clamp-1 max-w-md">
+                        {prod.tagline}
+                      </p>
                     </div>
 
                     <span
-                      className={`font-mono text-sm shrink-0 mt-1 transition-transform duration-200 ${
+                      className={`text-sm shrink-0 mt-1 transition-transform duration-200 ${
                         isActive ? 'text-accent translate-x-1' : 'text-text-muted/40 group-hover:translate-x-1 group-hover:text-text-muted'
                       }`}
                       aria-hidden="true"
@@ -262,29 +255,16 @@ export default function Products() {
                   className="service-detail-panel p-6 md:p-8 space-y-6"
                 >
                   
-                  {/* Header: Product Number, Badge, and Title */}
-                  <div className="flex items-start justify-between gap-4 border-b border-border/70 pb-5">
-                    <div className="flex items-start gap-3.5">
-                      <div className="w-10 h-10 border border-border flex items-center justify-center text-accent shrink-0 mt-0.5 font-mono text-sm font-bold">
-                        {activeProduct.num}
-                      </div>
-                      <div>
-                        <div className="font-mono text-[12px] text-accent uppercase tracking-[0.12em] font-medium">
-                          SPECIFICATION // {activeProduct.num} OF {products.length}
-                        </div>
-                        <h2 className="font-heading text-2xl md:text-3xl font-semibold text-text tracking-tight mt-0.5 uppercase">
-                          {activeProduct.title}
-                        </h2>
-                      </div>
-                    </div>
-                    <div className="hidden sm:block font-mono text-[11px] text-text-muted/70 uppercase tracking-widest border border-border px-2 py-1">
-                      REUSABLE ENGINEERING ASSET
-                    </div>
+                  {/* Header: Title */}
+                  <div className="border-b border-border/70 pb-5">
+                    <h2 className="font-heading text-2xl sm:text-3xl lg:text-4xl font-bold text-text tracking-tight uppercase">
+                      {activeProduct.title}
+                    </h2>
                   </div>
 
                   {/* Product Detailed Narrative */}
                   {activeProduct.description && (
-                    <div className="text-[15px] md:text-[16px] font-normal text-text-muted leading-[1.6] text-left">
+                    <div className="text-[14px] md:text-[15px] font-normal text-text-muted leading-[1.6] text-left">
                       <RichTextRenderer content={activeProduct.description} />
                     </div>
                   )}
@@ -312,30 +292,27 @@ export default function Products() {
                           transform: `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translate3d(${translateX}px, ${translateY}px, 0px)`
                         }}
                       />
-                      <div className="absolute bottom-0 left-0 right-0 p-3 bg-black/80 backdrop-blur-sm text-[12px] font-mono text-white/90 tracking-wider text-left">
-                        {activeProduct.caption}
-                      </div>
                     </div>
                   )}
 
-                  {/* 01 // PROBLEM SOLVED & 02 // SOLUTION PROVIDED */}
+                  {/* PROBLEM SOLVED & SOLUTION PROVIDED */}
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div className="flex flex-col h-full">
-                      <h4 className="font-mono text-[12px] md:text-[13px] text-accent font-medium uppercase tracking-[0.12em] mb-2.5 text-left">
-                        01 // PROBLEM SOLVED
+                      <h4 className="text-[11px] text-accent font-semibold uppercase tracking-[0.2em] mb-2.5 text-left">
+                        PROBLEM SOLVED
                       </h4>
                       <div className="subtle-readable-surface p-4 border border-border flex-1 flex flex-col justify-center">
                         {activeProduct.problemPoints && activeProduct.problemPoints.length > 1 ? (
                           <ul className="space-y-2">
                             {activeProduct.problemPoints.map((prob, i) => (
-                              <li key={i} className="flex items-start gap-2.5 text-[14px] md:text-[15px] font-normal text-text-muted">
+                              <li key={i} className="flex items-start gap-2.5 text-[13px] md:text-[14px] font-normal text-text-muted">
                                 <span className="w-1.5 h-1.5 rounded-full bg-accent mt-2 shrink-0" aria-hidden="true" />
                                 <div>{renderBulletText(prob)}</div>
                               </li>
                             ))}
                           </ul>
                         ) : (
-                          <div className="text-[14px] md:text-[15px] text-text-muted leading-[1.6]">
+                          <div className="text-[13px] md:text-[14px] text-text-muted leading-[1.6]">
                             {renderBulletText(activeProduct.problem)}
                           </div>
                         )}
@@ -343,67 +320,56 @@ export default function Products() {
                     </div>
 
                     <div className="flex flex-col h-full">
-                      <h4 className="font-mono text-[12px] md:text-[13px] text-accent font-medium uppercase tracking-[0.12em] mb-2.5 text-left">
-                        02 // SOLUTION PROVIDED
+                      <h4 className="text-[11px] text-accent font-semibold uppercase tracking-[0.2em] mb-2.5 text-left">
+                        SOLUTION PROVIDED
                       </h4>
-                      <div className="bg-accent/5 p-4 border border-accent/30 text-[14px] md:text-[15px] text-text font-medium leading-[1.6] flex-1 flex flex-col justify-center text-left">
+                      <div className="bg-accent/5 p-4 border border-accent/30 text-[13px] md:text-[14px] text-text font-normal leading-[1.6] flex-1 flex flex-col justify-center text-left">
                         <RichTextRenderer content={activeProduct.solution} />
                       </div>
                     </div>
                   </div>
 
-                  {/* 03 // HOW IT WORKS & 04 // ARCHITECTURE */}
+                  {/* HOW IT WORKS & ARCHITECTURE */}
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div className="flex flex-col h-full">
-                      <h4 className="font-mono text-[12px] md:text-[13px] text-accent font-medium uppercase tracking-[0.12em] mb-2.5 text-left">
-                        03 // HOW IT WORKS
+                      <h4 className="text-[11px] text-accent font-semibold uppercase tracking-[0.2em] mb-2.5 text-left">
+                        HOW IT WORKS
                       </h4>
-                      <div className="subtle-readable-surface p-4 border border-border flex-1 flex flex-wrap items-center gap-2 font-mono text-[12px] md:text-[13px]">
+                      <div className="subtle-readable-surface p-4 border border-border flex-1 flex flex-wrap items-center gap-2 text-[12px] md:text-[13px]">
                         {activeProduct.flowSteps.map((step, idx) => (
-                          <React.Fragment key={idx}>
-                            <span className="px-2.5 py-1 bg-black/[0.03] dark:bg-white/[0.04] border border-border text-text font-medium">
-                              {step}
-                            </span>
-                            {idx < activeProduct.flowSteps.length - 1 && (
-                              <span className="text-accent font-bold select-none text-xs">→</span>
-                            )}
-                          </React.Fragment>
+                          <span key={idx} className="px-2.5 py-1 bg-black/[0.03] dark:bg-white/[0.04] border border-border text-text font-normal">
+                            {step}
+                          </span>
                         ))}
                       </div>
                     </div>
 
                     <div className="flex flex-col h-full">
-                      <h4 className="font-mono text-[12px] md:text-[13px] text-accent font-medium uppercase tracking-[0.12em] mb-2.5 text-left">
-                        04 // ARCHITECTURE
+                      <h4 className="text-[11px] text-accent font-semibold uppercase tracking-[0.2em] mb-2.5 text-left">
+                        ARCHITECTURE
                       </h4>
-                      <div className="subtle-readable-surface p-4 border border-border flex-1 flex flex-wrap items-center gap-2 font-mono text-[12px] md:text-[13px]">
+                      <div className="subtle-readable-surface p-4 border border-border flex-1 flex flex-wrap items-center gap-2 text-[12px] md:text-[13px]">
                         {activeProduct.archComponents.map((comp, idx) => (
-                          <React.Fragment key={idx}>
-                            <span className="px-2.5 py-1 bg-black/[0.03] dark:bg-white/[0.04] border border-border text-text font-normal">
-                              {comp}
-                            </span>
-                            {idx < activeProduct.archComponents.length - 1 && (
-                              <span className="text-accent font-bold select-none text-xs">+</span>
-                            )}
-                          </React.Fragment>
+                          <span key={idx} className="px-2.5 py-1 bg-black/[0.03] dark:bg-white/[0.04] border border-border text-text font-normal">
+                            {comp}
+                          </span>
                         ))}
                       </div>
                     </div>
                   </div>
 
-                  {/* 05 // KEY CAPABILITIES & FEATURES */}
+                  {/* KEY CAPABILITIES & FEATURES */}
                   {activeProduct.capabilities && activeProduct.capabilities.length > 0 && (
                     <div>
-                      <h4 className="font-mono text-[12px] md:text-[13px] text-accent font-medium uppercase tracking-[0.12em] mb-3 text-left">
-                        05 // KEY CAPABILITIES &amp; FEATURES
+                      <h4 className="text-[11px] text-accent font-semibold uppercase tracking-[0.2em] mb-3 text-left">
+                        KEY CAPABILITIES &amp; FEATURES
                       </h4>
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                         {activeProduct.capabilities.map((cap, i) => (
                           <div
                             key={i}
-                            className="flex items-center gap-2 px-3.5 py-2 bg-black/[0.03] dark:bg-white/[0.04] border border-border text-[13px] md:text-[14px] font-mono text-text font-normal"
+                            className="flex items-center gap-2 px-3.5 py-2 bg-black/[0.03] dark:bg-white/[0.04] border border-border text-[12px] md:text-[13px] text-text font-normal"
                           >
-                            <span className="text-accent font-medium select-none">+</span>
                             <span>{cap}</span>
                           </div>
                         ))}
@@ -411,17 +377,17 @@ export default function Products() {
                     </div>
                   )}
 
-                  {/* 06 // MODERN TECHNOLOGY STACK */}
+                  {/* MODERN TECHNOLOGY STACK */}
                   {activeProduct.technology && activeProduct.technology.length > 0 && (
                     <div>
-                      <h4 className="font-mono text-[12px] md:text-[13px] text-accent font-medium uppercase tracking-[0.12em] mb-3 text-left">
-                        06 // MODERN TECHNOLOGY STACK
+                      <h4 className="text-[11px] text-accent font-semibold uppercase tracking-[0.2em] mb-3 text-left">
+                        MODERN TECHNOLOGY STACK
                       </h4>
                       <div className="flex flex-wrap gap-2.5">
                         {activeProduct.technology.map((tech, i) => (
                           <span
                             key={i}
-                            className="inline-flex items-center px-3 py-1.5 bg-bg border border-border text-[13px] md:text-[14px] font-mono text-text font-medium"
+                            className="inline-flex items-center px-3 py-1.5 bg-bg border border-border text-[12px] md:text-[13px] text-text font-normal"
                           >
                             {tech}
                           </span>
@@ -430,52 +396,60 @@ export default function Products() {
                     </div>
                   )}
 
-                  {/* 07 // BUSINESS OUTCOME */}
+                  {/* BUSINESS OUTCOME */}
                   {activeProduct.outcomes && (
                     <div className="p-4 bg-black/[0.02] dark:bg-white/[0.03] border-l-2 border-accent">
-                      <div className="font-mono text-[12px] text-accent uppercase tracking-[0.12em] font-medium mb-1 text-left">
-                        07 // BUSINESS OUTCOME
+                      <div className="text-[11px] text-accent uppercase tracking-[0.2em] font-semibold mb-1 text-left">
+                        BUSINESS OUTCOME
                       </div>
-                      <p className="text-[15px] md:text-[16px] text-text font-semibold leading-[1.5] text-left">
+                      <p className="text-[14px] md:text-[15px] text-text font-normal leading-[1.5] text-left">
                         {activeProduct.outcomes}
                       </p>
                     </div>
                   )}
 
-                  {/* 08 // LINKED CASE STUDY */}
+                  {/* LINKED CASE STUDY */}
                   {activeProduct.caseStudy && (
-                    <div className="p-3.5 border border-border/70 flex flex-col sm:flex-row sm:items-center justify-between gap-3 font-mono text-[13px]">
+                    <div className="p-3.5 border border-border/70 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-[13px]">
                       <div>
-                        <span className="text-[11px] text-text-muted font-medium uppercase tracking-wider block mb-0.5 text-left">
-                          08 // LINKED CASE STUDY
+                        <span className="text-[11px] text-text-muted font-normal uppercase tracking-wider block mb-0.5 text-left">
+                          LINKED CASE STUDY
                         </span>
-                        <span className="text-text font-bold uppercase text-left block">{activeProduct.caseStudy}</span>
+                        <div className="font-heading font-bold text-text uppercase text-base">
+                          {activeProduct.caseStudy}
+                        </div>
                       </div>
-                      <Link
-                        to={activeProduct.caseStudySlug ? `/case-studies/${activeProduct.caseStudySlug}` : '/case-studies'}
-                        className="text-accent hover:underline inline-flex items-center gap-1.5 font-bold shrink-0"
-                      >
-                        <span>View Blueprint</span>
-                        <ArrowUpRight className="w-3.5 h-3.5" />
-                      </Link>
+                      {activeProduct.caseStudySlug ? (
+                        <Link
+                          to={`/case-studies/${activeProduct.caseStudySlug}`}
+                          className="btn btn-secondary text-xs shrink-0 self-start sm:self-center inline-flex items-center gap-1 font-semibold"
+                        >
+                          View Architecture Blueprint <ArrowUpRight className="w-3.5 h-3.5" />
+                        </Link>
+                      ) : (
+                        <Link
+                          to="/case-studies"
+                          className="btn btn-secondary text-xs shrink-0 self-start sm:self-center inline-flex items-center gap-1 font-semibold"
+                        >
+                          View Case Studies <ArrowUpRight className="w-3.5 h-3.5" />
+                        </Link>
+                      )}
                     </div>
                   )}
 
-                  {/* Direct Specification & CTA Links */}
-                  <div className="pt-2 flex flex-col sm:flex-row gap-3">
+                  {/* CTA Footer Row */}
+                  <div className="pt-4 border-t border-border/70 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                     <Link
                       to={`/products/${activeProduct.slug}`}
-                      className="admin-btn flex-1 py-3 text-xs font-semibold uppercase tracking-wider inline-flex items-center justify-center gap-2 text-text hover:text-accent"
+                      className="btn btn-secondary text-xs inline-flex items-center justify-center gap-1.5"
                     >
-                      <span>VIEW FULL SPECIFICATION</span>
-                      <ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />
+                      View Full Specification <ArrowRight className="w-3.5 h-3.5" />
                     </Link>
                     <Link
                       to="/contact"
-                      className="btn btn-primary flex-1 py-3 text-xs font-semibold uppercase tracking-wider inline-flex items-center justify-center gap-2"
+                      className="btn btn-primary text-xs inline-flex items-center justify-center gap-1.5"
                     >
-                      <span>DISCUSS THIS PRODUCT</span>
-                      <span className="arrow-hover" aria-hidden="true">→</span>
+                      Discuss This Product <ArrowUpRight className="w-3.5 h-3.5" />
                     </Link>
                   </div>
                 </div>
@@ -489,7 +463,7 @@ export default function Products() {
       <section id="cta" data-scroll-label="STRATEGY CALL" className="px-6 md:px-16 max-w-7xl mx-auto mt-24">
         <Reveal variant="scale" className="border border-border p-10 md:p-14 text-center bg-bg/95 backdrop-blur-md">
           <div className="font-mono text-[12px] md:text-[13px] text-accent uppercase tracking-[0.14em] font-medium mb-3">
-            ACCELERATE TRANSFORMATION // 48-HOUR PILOT
+            ACCELERATE TRANSFORMATION • 48-HOUR PILOT
           </div>
           <h2 className="font-heading text-3xl md:text-4xl font-bold uppercase text-text mb-4">
             WANT TO DEPLOY AN ENGINEERED PRODUCT IN YOUR ENTERPRISE?

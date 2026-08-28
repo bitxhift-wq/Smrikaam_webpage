@@ -47,7 +47,7 @@ export default function ServiceDetail() {
     return (
       <div className="pt-32 pb-24 px-6 max-w-4xl mx-auto text-center">
         <BlueprintWrapper className="service-detail-surface p-12">
-          <div className="font-mono text-xs text-accent uppercase mb-4">404 // NOT_FOUND</div>
+          <div className="font-mono text-xs text-accent uppercase mb-4">404 NOT FOUND</div>
           <h1 className="font-heading text-3xl text-text mb-4">SERVICE NOT FOUND</h1>
           <p className="text-text-muted mb-6">{error || 'The requested service specification does not exist.'}</p>
           <Link to="/services" className="btn btn-primary">
@@ -74,12 +74,12 @@ export default function ServiceDetail() {
         </div>
 
         <TextReveal
-          text={service.title}
+          text={service.title || service.name}
           as="h1"
-          className="font-heading text-4xl md:text-5xl font-bold uppercase text-text mb-6"
+          className="font-heading text-3xl sm:text-5xl lg:text-6xl font-bold uppercase tracking-tight text-[var(--color-text)] mb-6 leading-[0.96]"
         />
 
-        <p className="text-lg md:text-xl text-text-muted font-normal border-l-2 border-accent pl-4 mb-8">
+        <p className="text-[15px] sm:text-[16px] md:text-[18px] text-[var(--color-text-secondary)] font-normal border-l-2 border-[var(--color-accent)] pl-4 mb-8 leading-[1.6]">
           {service.summary || service.tagline}
         </p>
 
@@ -92,7 +92,9 @@ export default function ServiceDetail() {
         {/* Content Body */}
         {(service.content || service.description) && (
           <Reveal className="mb-12">
-            <RichTextRenderer content={service.content || service.description} />
+            <div className="text-[14px] md:text-[15px] font-normal text-text-muted leading-[1.6] text-left">
+              <RichTextRenderer content={service.content || service.description} />
+            </div>
           </Reveal>
         )}
 
@@ -100,14 +102,14 @@ export default function ServiceDetail() {
         {service.capabilities && service.capabilities.length > 0 && (
           <div id="capabilities" data-scroll-label="CAPABILITIES">
             <Reveal className="border-t border-border pt-8 mb-12">
-              <h3 className="font-heading text-xl font-bold text-text mb-4 uppercase">
+              <h3 className="font-mono text-[10px] md:text-[11px] text-[var(--color-accent)] uppercase tracking-[0.2em] font-semibold mb-4 text-left">
                 CORE CAPABILITIES &amp; INTEGRATIONS
               </h3>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {service.capabilities.map((cap, idx) => (
                   <div key={idx} className="flex items-start gap-3 p-3 bg-black/[0.035] dark:bg-white/[0.04] border border-border">
                     <CheckCircle2 className="w-5 h-5 text-accent shrink-0 mt-0.5" strokeWidth={1.5} />
-                    <span className="font-mono text-sm text-text font-normal">{cap}</span>
+                    <span className="font-mono text-[12px] md:text-[13px] text-text font-normal">{cap}</span>
                   </div>
                 ))}
               </div>
@@ -119,14 +121,14 @@ export default function ServiceDetail() {
         {service.technology && service.technology.length > 0 && (
           <div id="technology" data-scroll-label="TECH STACK">
             <Reveal className="border-t border-border pt-8 mb-12">
-              <h3 className="font-heading text-xl font-bold text-text mb-4 uppercase">
+              <h3 className="text-[10px] md:text-[11px] text-[var(--color-accent)] uppercase tracking-[0.2em] font-semibold mb-4 text-left">
                 MODERN TECHNOLOGY STACK
               </h3>
               <div className="flex flex-wrap gap-2.5">
                 {service.technology.map((tech, idx) => (
                   <span
                     key={idx}
-                    className="inline-flex items-center px-3 py-1.5 bg-black/[0.02] dark:bg-white/[0.04] border border-border text-[13px] md:text-[14px] font-mono text-text font-medium"
+                    className="inline-flex items-center px-3 py-1.5 bg-black/[0.02] dark:bg-white/[0.04] border border-border text-[12px] md:text-[13px] text-text font-normal"
                   >
                     {tech}
                   </span>
@@ -144,10 +146,10 @@ export default function ServiceDetail() {
                 {service.accelerator && (
                   <div className="p-5 bg-black/[0.02] dark:bg-white/[0.03] border border-border flex flex-col justify-between">
                     <div>
-                      <span className="font-mono text-xs text-accent uppercase font-bold block mb-1">PROPRIETARY ACCELERATOR</span>
+                      <span className="text-[11px] text-accent uppercase font-semibold block mb-1">PROPRIETARY ACCELERATOR</span>
                       <span className="font-heading text-lg font-bold text-text uppercase block mb-3">{service.accelerator}</span>
                     </div>
-                    <Link to="/products" className="text-xs font-mono text-accent hover:underline inline-flex items-center gap-1 font-bold">
+                    <Link to="/products" className="text-xs text-accent hover:underline inline-flex items-center gap-1 font-semibold">
                       Explore Product Asset <ArrowUpRight className="w-3.5 h-3.5" />
                     </Link>
                   </div>
@@ -155,10 +157,10 @@ export default function ServiceDetail() {
                 {service.caseStudy && (
                   <div className="p-5 bg-black/[0.02] dark:bg-white/[0.03] border border-border flex flex-col justify-between">
                     <div>
-                      <span className="font-mono text-xs text-text-muted uppercase font-bold block mb-1">LINKED CASE STUDY</span>
+                      <span className="text-[11px] text-text-muted uppercase font-semibold block mb-1">LINKED CASE STUDY</span>
                       <span className="font-heading text-lg font-bold text-text uppercase block mb-3">{service.caseStudy}</span>
                     </div>
-                    <Link to="/case-studies" className="text-xs font-mono text-accent hover:underline inline-flex items-center gap-1 font-bold">
+                    <Link to="/case-studies" className="text-xs text-accent hover:underline inline-flex items-center gap-1 font-semibold">
                       View Architecture Blueprint <ArrowUpRight className="w-3.5 h-3.5" />
                     </Link>
                   </div>
@@ -172,7 +174,7 @@ export default function ServiceDetail() {
         <div id="cta" data-scroll-label="STRATEGY CALL" className="border-t border-border pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div>
             <div className="font-heading text-lg font-bold text-text uppercase">Deploy This Capability</div>
-            <div className="font-mono text-xs text-text-muted">Get a tailored proof-of-concept for your enterprise operations</div>
+            <div className="text-xs text-text-muted">Get a tailored proof-of-concept for your enterprise operations</div>
           </div>
           <Link to="/contact" className="btn btn-primary">
             Book a Technical Call <ArrowUpRight className="w-4 h-4" strokeWidth={1.5} />

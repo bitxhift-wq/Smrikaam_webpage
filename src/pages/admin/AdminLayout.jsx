@@ -112,7 +112,7 @@ export default function AdminLayout() {
             <div>
               <Logo height={36} dark />
               <div className="font-mono text-[10px] text-[#4fd1c5] uppercase tracking-widest mt-2">
-                SMRIKAAM CMS v2.0 // CENTRAL
+                SMRIKAAM CMS v2.0 • CENTRAL
               </div>
             </div>
             <button

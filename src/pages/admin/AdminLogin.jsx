@@ -133,7 +133,7 @@ export default function AdminLogin() {
           <div className="text-center mb-8 flex flex-col items-center">
             <Logo variant="stacked" dark height={46} className="mb-4" />
             <div className="font-mono text-[11px] text-[#4fd1c5] uppercase tracking-widest mt-2 border border-[#4fd1c5]/30 px-3 py-1 bg-[#1c2333]">
-              ADMIN CONTROL ROOM // SECURE LOGIN
+              ADMIN CONTROL ROOM — SECURE LOGIN
             </div>
           </div>
 
@@ -211,7 +211,7 @@ export default function AdminLogin() {
           </form>
 
           <div className="mt-6 pt-4 border-t border-[rgba(255,255,255,0.12)] text-center font-mono text-[10px] text-[#9aa3b5]">
-            CENTRAL AUTHENTICATION // BCRYPT COST 10 &amp; PERSISTENT API
+            CENTRAL AUTHENTICATION — BCRYPT COST 10 &amp; PERSISTENT API
           </div>
         </BlueprintWrapper>
       </div>

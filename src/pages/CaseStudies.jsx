@@ -24,20 +24,20 @@ export default function CaseStudies() {
       <div id="overview" data-scroll-label="CASE STUDIES" className="page-title-surface relative border border-border p-8 md:p-12 mb-16 overflow-hidden">
         <BannerDrawBorder />
         <div className="flex items-center justify-between mb-4">
-          <div className="font-mono text-xs text-accent uppercase tracking-[0.2em]">
-            VERIFIED PROOF // CASE STUDIES
+          <div className="font-mono text-[10px] md:text-[11px] text-[var(--color-accent)] uppercase tracking-[0.2em] font-semibold">
+            VERIFIED PROOF &amp; CASE STUDIES
           </div>
-          <div className="font-mono text-xs text-text-muted border border-border px-3 py-1 bg-black/[0.02] dark:bg-white/[0.03]">
-            {displayList.length} DEPLOYMENT BLUEPRINTS
+          <div className="font-mono text-[10px] md:text-[11px] text-[var(--color-text-muted)] border border-[var(--color-border)] px-3 py-1 bg-black/[0.02] dark:bg-white/[0.03]">
+            DEPLOYMENT BLUEPRINTS
           </div>
         </div>
 
         <TextReveal
           text="REAL PROBLEMS. ENGINEERED SOLUTIONS. MEASURABLE OUTCOMES."
           as="h1"
-          className="font-heading text-4xl md:text-6xl font-bold uppercase text-text mb-4"
+          className="font-heading text-3xl sm:text-5xl lg:text-6xl font-bold uppercase tracking-tight text-[var(--color-text)] leading-[0.96] mb-4"
         />
-        <p className="text-text-muted text-lg max-w-3xl border-l-2 border-accent pl-4 font-normal leading-relaxed">
+        <p className="text-[15px] sm:text-[16px] md:text-[18px] text-[var(--color-text-secondary)] max-w-3xl border-l-2 border-[var(--color-accent)] pl-4 font-normal leading-[1.6]">
           Verified production case studies connecting client challenges, SMRIKAAM engineering solutions, proprietary accelerators, and quantitative business results.
         </p>
       </div>
@@ -62,38 +62,38 @@ export default function CaseStudies() {
                     </div>
                     {cs.accelerator && (
                       <div className="font-mono text-xs text-text-muted">
-                        ACCELERATOR: <strong className="text-accent font-bold">{cs.accelerator}</strong>
+                        ACCELERATOR: <strong className="text-accent font-semibold">{cs.accelerator}</strong>
                       </div>
                     )}
                   </div>
 
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-                    {/* 1. Industry & Client */}
+                    {/* Industry & Client */}
                     <div className="subtle-readable-surface p-4 border border-border">
-                      <h3 className="font-mono text-xs text-text-muted uppercase font-bold mb-1">1. INDUSTRY &amp; DOMAIN</h3>
+                      <h3 className="font-mono text-xs text-text-muted uppercase font-semibold mb-1">INDUSTRY &amp; DOMAIN</h3>
                       <p className="text-sm font-semibold text-text">{cs.client_name || 'Enterprise Client'}</p>
                       <span className="text-xs text-text-muted">{cs.industry}</span>
                     </div>
 
-                    {/* 2. Challenge */}
+                    {/* Challenge */}
                     <div className="subtle-readable-surface p-4 border border-border">
-                      <h3 className="font-mono text-xs text-text-muted uppercase font-bold mb-1">2. CHALLENGE</h3>
+                      <h3 className="font-mono text-xs text-text-muted uppercase font-semibold mb-1">CHALLENGE</h3>
                       <div className="text-xs text-text-muted leading-relaxed font-normal">
                         <RichTextRenderer content={cs.challenge} />
                       </div>
                     </div>
 
-                    {/* 3. Solution */}
+                    {/* Solution */}
                     <div className="bg-accent/5 p-4 border border-accent/30">
-                      <h3 className="font-mono text-xs text-accent uppercase font-bold mb-1">3. SMRIKAAM SOLUTION</h3>
-                      <div className="text-xs text-text font-medium leading-relaxed">
+                      <h3 className="font-mono text-xs text-accent uppercase font-semibold mb-1">SMRIKAAM SOLUTION</h3>
+                      <div className="text-xs text-text font-normal leading-relaxed">
                         <RichTextRenderer content={cs.solution} />
                       </div>
                     </div>
 
-                    {/* 4. Result */}
+                    {/* Result */}
                     <div className="subtle-readable-surface p-4 border border-border">
-                      <h3 className="font-mono text-xs text-text uppercase font-bold mb-1">4. RESULT &amp; METRICS</h3>
+                      <h3 className="font-mono text-xs text-text uppercase font-semibold mb-1">RESULT &amp; METRICS</h3>
                       {rawOutcomes.length > 0 ? (
                         <div className="space-y-1">
                           {rawOutcomes.map((out, i) => (

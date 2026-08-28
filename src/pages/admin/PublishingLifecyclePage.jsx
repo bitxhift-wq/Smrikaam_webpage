@@ -112,7 +112,7 @@ export default function PublishingLifecyclePage({ viewType = 'published' }) {
       {/* Header */}
       <div className="border-b border-[rgba(255,255,255,0.15)] pb-6">
         <div className="font-mono text-xs text-[#4fd1c5] uppercase tracking-widest mb-1">
-          PUBLISHING LIFECYCLE // {viewType.toUpperCase()}
+          PUBLISHING LIFECYCLE — {viewType.toUpperCase()}
         </div>
         <h1 className="font-heading text-3xl font-bold uppercase text-[#f4f4f4]">
           {getTitle()}

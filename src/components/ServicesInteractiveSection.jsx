@@ -18,7 +18,7 @@ export default function ServicesInteractiveSection() {
       capabilities: ['Executive KPI Views', 'Real-Time Telemetry', 'Automated Financial Reporting', 'Embedded Analytics'],
       tech: ['PowerBI', 'Tableau', 'Looker', 'BigQuery'],
       image: 'https://images.unsplash.com/photo-1551836022-d5d88e9218df?q=80&w=1200&auto=format&fit=crop',
-      caption: 'DATA → INSIGHT → DECISION // Enterprise Telemetry Control Environment',
+      caption: 'DATA → INSIGHT → DECISION — Enterprise Telemetry Control Environment',
       link: '/services'
     },
     {
@@ -30,7 +30,7 @@ export default function ServicesInteractiveSection() {
       capabilities: ['OPC-UA / Modbus Ingestion', 'Edge Sensor Integration', 'Predictive Maintenance', 'Live Floor Wallboards'],
       tech: ['MQTT', 'Node-RED', 'TimescaleDB', 'InfluxDB'],
       image: 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?q=80&w=1200&auto=format&fit=crop',
-      caption: 'CONNECTED MACHINES // Smart Factory Floor & OEE Automation',
+      caption: 'CONNECTED MACHINES — Smart Factory Floor & OEE Automation',
       link: '/services'
     },
     {
@@ -42,7 +42,7 @@ export default function ServicesInteractiveSection() {
       capabilities: ['ETL / ELT Pipelines', 'Lakehouse Architecture', 'Schema Drift Control', 'CDC Telemetry Sync'],
       tech: ['dbt', 'Apache Spark', 'Snowflake', 'Databricks'],
       image: 'https://images.unsplash.com/photo-1573164713988-8665fc963095?q=80&w=1200&auto=format&fit=crop',
-      caption: 'DATA PLATFORMS // High-Throughput Engineering Infrastructure',
+      caption: 'DATA PLATFORMS — High-Throughput Engineering Infrastructure',
       link: '/services'
     },
     {
@@ -54,7 +54,7 @@ export default function ServicesInteractiveSection() {
       capabilities: ['Agentic RAG Pipelines', 'Document OCR & NLP', 'Custom Fine-Tuned Models', 'Enterprise Guardrails'],
       tech: ['LangChain', 'LlamaIndex', 'OpenAI Enterprise', 'Gemini API'],
       image: 'https://images.unsplash.com/photo-1531482615713-2afd69097998?q=80&w=1200&auto=format&fit=crop',
-      caption: 'HUMAN + ARTIFICIAL INTELLIGENCE // Autonomous Agentic AI Systems',
+      caption: 'HUMAN + ARTIFICIAL INTELLIGENCE — Autonomous Agentic AI Systems',
       link: '/services'
     },
     {
@@ -66,7 +66,7 @@ export default function ServicesInteractiveSection() {
       capabilities: ['Cloud Landing Zones', 'Infrastructure as Code', 'Zero-Downtime Migration', 'Kubernetes / Docker'],
       tech: ['AWS', 'Google Cloud', 'Azure', 'Terraform', 'Kubernetes'],
       image: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?q=80&w=1200&auto=format&fit=crop',
-      caption: 'CLOUD INFRASTRUCTURE // Distributed Multi-Cloud System Architecture',
+      caption: 'CLOUD INFRASTRUCTURE — Distributed Multi-Cloud System Architecture',
       link: '/services'
     },
     {
@@ -78,7 +78,7 @@ export default function ServicesInteractiveSection() {
       capabilities: ['Automated Lineage Mapping', 'Data Cataloging', 'Role-Based Access Control', 'DPDP Compliance Audit'],
       tech: ['Collibra', 'Apache Atlas', 'Privacera', 'Great Expectations'],
       image: 'https://images.unsplash.com/photo-1563986768609-322da13575f3?q=80&w=1200&auto=format&fit=crop',
-      caption: 'TRUST & COMPLIANCE // Enterprise Lineage & Security Control',
+      caption: 'TRUST & COMPLIANCE — Enterprise Lineage & Security Control',
       link: '/services'
     }
   ];
@@ -115,7 +115,7 @@ export default function ServicesInteractiveSection() {
         <div className="mb-16 border-b border-[#E5E5E5] pb-6 flex flex-col md:flex-row md:items-end justify-between gap-4">
           <div>
             <div className="font-mono text-xs text-[#111111] uppercase tracking-[0.2em] mb-2 font-bold">
-              ENGINEERING CAPABILITIES // OUR SERVICES
+              ENGINEERING CAPABILITIES
             </div>
             <h2 className="font-heading text-3xl md:text-5xl font-extrabold uppercase text-[#111111] tracking-tight">
               CONNECTED TECHNOLOGY SYSTEM
@@ -298,7 +298,7 @@ export default function ServicesInteractiveSection() {
                 {/* Layer 4: Minimal Editorial Metadata Overlay */}
                 <div className="absolute top-4 left-4 right-4 flex justify-between items-start pointer-events-none z-20">
                   <div className="bg-[#111111]/90 backdrop-blur-md px-3 py-1 text-[10px] font-mono text-[#FFFFFF] tracking-widest font-bold">
-                    SMRIKAAM // {activeService.num} OF 06
+                    SMRIKAAM
                   </div>
                   <div className="bg-[#111111]/90 backdrop-blur-md px-3 py-1 text-[10px] font-mono text-[#FFFFFF] tracking-widest font-bold">
                     SYSTEMS READY
