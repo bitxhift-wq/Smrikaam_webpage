@@ -269,6 +269,7 @@ function createResourceRoutes(resourcePath, collectionName) {
 createResourceRoutes('posts', 'posts');
 createResourceRoutes('services', 'services');
 createResourceRoutes('accelerators', 'accelerators');
+createResourceRoutes('products', 'accelerators');
 createResourceRoutes('industries', 'industries');
 createResourceRoutes('case-studies', 'caseStudies');
 createResourceRoutes('reports', 'reports');

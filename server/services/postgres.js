@@ -15,22 +15,40 @@ class PostgresService {
   }
 
   init() {
-    const connectionString =
-      process.env.DATABASE_URL ||
+    const isProd = process.env.NODE_ENV === 'production' || process.env.VERCEL === '1';
+    const connectionString = process.env.DATABASE_URL;
+
+    if (!connectionString && isProd) {
+      console.error('CRITICAL CONFIG ERROR: DATABASE_URL is missing in production environment!');
+      this.connectionError = 'DATABASE_URL missing in production';
+      this.isConnected = false;
+      return;
+    }
+
+    const finalConnString = connectionString ||
       `postgresql://${process.env.PGUSER || 'postgres'}:${process.env.PGPASSWORD || 'postgres'}@${process.env.PGHOST || 'localhost'}:${process.env.PGPORT || 5432}/${process.env.PGDATABASE || 'smrikaam_db'}`;
 
-    try {
-      this.pool = new Pool({
-        connectionString,
-        connectionTimeoutMillis: 3000,
-        idleTimeoutMillis: 30000,
-        max: 20
-      });
+    // Determine SSL requirement for Supabase / production
+    const isSupabase = finalConnString.includes('supabase') || finalConnString.includes('sslmode=require');
+    const sslConfig = (isProd || isSupabase || !finalConnString.includes('localhost'))
+      ? { rejectUnauthorized: false }
+      : false;
 
-      this.pool.on('error', (err) => {
-        console.warn('PostgreSQL Pool background error:', err.message);
-        this.isConnected = false;
-      });
+    try {
+      if (!this.pool) {
+        this.pool = new Pool({
+          connectionString: finalConnString,
+          ssl: sslConfig,
+          connectionTimeoutMillis: 5000,
+          idleTimeoutMillis: 30000,
+          max: isProd ? 10 : 20
+        });
+
+        this.pool.on('error', (err) => {
+          console.warn('PostgreSQL Pool background error:', err.message);
+          this.isConnected = false;
+        });
+      }
 
       // Try initial connection test
       this.testConnection();
@@ -272,10 +290,19 @@ class PostgresService {
   }
 
   getStatus() {
+    let hostName = process.env.PGHOST || 'localhost';
+    if (process.env.DATABASE_URL) {
+      try {
+        const url = new URL(process.env.DATABASE_URL.replace(/^postgres:/, 'http:').replace(/^postgresql:/, 'http:'));
+        hostName = url.hostname || 'remote-supabase';
+      } catch {
+        hostName = 'configured-database-url';
+      }
+    }
     return {
       engine: 'PostgreSQL',
       connected: this.isConnected,
-      host: process.env.PGHOST || 'localhost',
+      host: hostName,
       port: process.env.PGPORT || 5432,
       database: process.env.PGDATABASE || 'smrikaam_db',
       error: this.connectionError
