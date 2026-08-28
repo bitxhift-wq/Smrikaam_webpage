@@ -1,9 +1,22 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { MapPin, Mail, Phone, Globe, Linkedin, Twitter, Instagram, Facebook } from 'lucide-react';
 import Logo from './Logo';
+import { useCMS } from '../context/CMSContext';
 
 export default function Footer() {
+  const { services: cmsPublishedServices } = useCMS() || {};
+
+  const servicesList = useMemo(() => {
+    const list = Array.isArray(cmsPublishedServices) && cmsPublishedServices.length > 0
+      ? cmsPublishedServices.map((s) => ({
+          name: s.title || s.name,
+          path: `/services/${s.slug}`
+        }))
+      : [];
+    return [...list, { name: 'Staffing Services', path: '/staffing' }];
+  }, [cmsPublishedServices]);
+
   return (
     <footer className="relative z-10 border-t border-[var(--color-border)] bg-[var(--color-bg)]/95 backdrop-blur-md pt-8 pb-8 text-[var(--color-text)]">
       <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-6 mb-6">
@@ -46,17 +59,13 @@ export default function Footer() {
             Services
           </h4>
           <ul className="space-y-1.5 text-[12px] font-mono">
-            <li><Link to="/services/ai-ml" className="text-[var(--color-text-secondary)] hover:text-[var(--color-text)] transition-colors">AI / ML</Link></li>
-            <li><Link to="/services/industrial-iot-iiot" className="text-[var(--color-text-secondary)] hover:text-[var(--color-text)] transition-colors">Industrial IoT (IIoT)</Link></li>
-            <li><Link to="/services/data-engineering" className="text-[var(--color-text-secondary)] hover:text-[var(--color-text)] transition-colors">Data Engineering</Link></li>
-            <li><Link to="/services/generative-agentic-ai" className="text-[var(--color-text-secondary)] hover:text-[var(--color-text)] transition-colors">Generative &amp; Agentic AI</Link></li>
-            <li><Link to="/services/devops-cloud" className="text-[var(--color-text-secondary)] hover:text-[var(--color-text)] transition-colors">DevOps &amp; Cloud</Link></li>
-            <li><Link to="/services/data-governance" className="text-[var(--color-text-secondary)] hover:text-[var(--color-text)] transition-colors">Data Governance</Link></li>
-            <li><Link to="/services/integration-services" className="text-[var(--color-text-secondary)] hover:text-[var(--color-text)] transition-colors">Integration Services</Link></li>
-            <li><Link to="/services/servicenow-solutions" className="text-[var(--color-text-secondary)] hover:text-[var(--color-text)] transition-colors">ServiceNow Solutions</Link></li>
-            <li><Link to="/services/advisory-services" className="text-[var(--color-text-secondary)] hover:text-[var(--color-text)] transition-colors">Advisory Services</Link></li>
-            <li><Link to="/services/ai-workflow-automation" className="text-[var(--color-text-secondary)] hover:text-[var(--color-text)] transition-colors">AI Workflow Automation</Link></li>
-            <li><Link to="/staffing" className="text-[var(--color-text-secondary)] hover:text-[var(--color-text)] transition-colors">Staffing Services</Link></li>
+            {servicesList.map((item, idx) => (
+              <li key={idx}>
+                <Link to={item.path} className="text-[var(--color-text-secondary)] hover:text-[var(--color-text)] transition-colors">
+                  {item.name}
+                </Link>
+              </li>
+            ))}
           </ul>
         </div>
 

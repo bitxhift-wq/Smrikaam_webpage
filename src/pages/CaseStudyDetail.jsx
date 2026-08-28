@@ -6,6 +6,7 @@ import BlueprintWrapper from '../components/BlueprintWrapper';
 import ReadingProgressBar from '../components/anim/ReadingProgressBar';
 import TextReveal from '../components/anim/TextReveal';
 import Reveal from '../components/anim/Reveal';
+import RichTextRenderer from '../components/RichTextRenderer';
 
 export default function CaseStudyDetail() {
   const { slug } = useParams();
@@ -80,19 +81,16 @@ export default function CaseStudyDetail() {
     async function loadCaseStudy() {
       try {
         const res = await api.get(`/case-studies/${slug}`);
-        if (res.data) {
+        if (res.data && (res.data.status === 'published' || !res.data.status)) {
           setCaseStudy(res.data);
-        } else if (defaultCaseStudiesMap[slug]) {
-          setCaseStudy(defaultCaseStudiesMap[slug]);
+          setError(null);
         } else {
-          setError('Case study not found.');
+          setCaseStudy(null);
+          setError('The requested case study deployment blueprint is currently unavailable or archived.');
         }
       } catch (err) {
-        if (defaultCaseStudiesMap[slug]) {
-          setCaseStudy(defaultCaseStudiesMap[slug]);
-        } else {
-          setError('Case study not found.');
-        }
+        setCaseStudy(null);
+        setError('The requested case study deployment blueprint is currently unavailable or archived.');
       } finally {
         setLoading(false);
       }
@@ -177,28 +175,37 @@ export default function CaseStudyDetail() {
         )}
 
         {/* Challenge Section */}
-        <div id="challenge" data-scroll-label="CHALLENGE">
-          <Reveal className="mb-10">
-            <h2 className="font-heading text-2xl font-bold uppercase text-text mb-3 border-b border-border pb-2">
-              THE OPERATIONAL CHALLENGE
-            </h2>
-            <p className="prose-content text-text leading-relaxed text-base whitespace-pre-line font-normal">
-              {caseStudy.challenge}
-            </p>
-          </Reveal>
-        </div>
+        {caseStudy.challenge && (
+          <div id="challenge" data-scroll-label="CHALLENGE">
+            <Reveal className="mb-10">
+              <h2 className="font-heading text-2xl font-bold uppercase text-text mb-3 border-b border-border pb-2">
+                THE OPERATIONAL CHALLENGE
+              </h2>
+              <RichTextRenderer content={caseStudy.challenge} />
+            </Reveal>
+          </div>
+        )}
 
         {/* Solution Section */}
-        <div id="solution" data-scroll-label="SOLUTION">
-          <Reveal className="mb-10">
-            <h2 className="font-heading text-2xl font-bold uppercase text-text mb-3 border-b border-border pb-2">
-              THE SMRIKAAM DEPLOYED SOLUTION
-            </h2>
-            <p className="prose-content text-text leading-relaxed text-base whitespace-pre-line font-normal">
-              {caseStudy.solution}
-            </p>
-          </Reveal>
-        </div>
+        {caseStudy.solution && (
+          <div id="solution" data-scroll-label="SOLUTION">
+            <Reveal className="mb-10">
+              <h2 className="font-heading text-2xl font-bold uppercase text-text mb-3 border-b border-border pb-2">
+                THE SMRIKAAM DEPLOYED SOLUTION
+              </h2>
+              <RichTextRenderer content={caseStudy.solution} />
+            </Reveal>
+          </div>
+        )}
+
+        {/* Full Content if available */}
+        {caseStudy.content && (
+          <div id="details" data-scroll-label="DETAILS">
+            <Reveal className="mb-10">
+              <RichTextRenderer content={caseStudy.content} />
+            </Reveal>
+          </div>
+        )}
 
         {/* Technologies Used */}
         {caseStudy.technologies && caseStudy.technologies.length > 0 && (

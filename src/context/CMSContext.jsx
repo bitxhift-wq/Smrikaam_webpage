@@ -5,12 +5,22 @@ const CMSContext = createContext(null);
 
 export function CMSProvider({ children }) {
   const [refreshTrigger, setRefreshTrigger] = useState(0);
+  const [services, setServices] = useState([]);
+  const [accelerators, setAccelerators] = useState([]);
+  const [industries, setIndustries] = useState([]);
+  const [caseStudies, setCaseStudies] = useState([]);
+  const [posts, setPosts] = useState([]);
+  const [reports, setReports] = useState([]);
+  const [staffing, setStaffing] = useState([]);
+  const [locations, setLocations] = useState([]);
+  const [settings, setSettings] = useState(null);
+  const [isLoaded, setIsLoaded] = useState(false);
 
   const refresh = useCallback(() => {
     setRefreshTrigger((prev) => prev + 1);
   }, []);
 
-  // Public fetch helper (queries /api/{resource})
+  // Public fetch helper (queries /api/{resource} - returns ONLY published items)
   const fetchPublic = useCallback(async (resource, params = {}) => {
     try {
       const res = await api.get(`/${resource}`, { params });
@@ -21,16 +31,74 @@ export function CMSProvider({ children }) {
     }
   }, []);
 
-  // Public fetch single item
+  // Public fetch single item (returns 404/null if trashed/draft/archived/not-found)
   const fetchPublicItem = useCallback(async (resource, idOrSlug) => {
     try {
       const res = await api.get(`/${resource}/${idOrSlug}`);
       return res.data || null;
     } catch (err) {
-      console.warn(`CMS: Failed to fetch public item ${resource}/${idOrSlug}`, err);
       return null;
     }
   }, []);
+
+  // Load all published collections on mount and on every admin mutation
+  useEffect(() => {
+    let isMounted = true;
+    async function loadAllPublished() {
+      try {
+        const [srvRes, accRes, indRes, csRes, postRes, repRes, staffRes, locRes, setRes] = await Promise.allSettled([
+          api.get('/services'),
+          api.get('/accelerators'),
+          api.get('/industries'),
+          api.get('/case-studies'),
+          api.get('/posts'),
+          api.get('/reports'),
+          api.get('/staffing'),
+          api.get('/locations'),
+          api.get('/settings')
+        ]);
+
+        if (isMounted) {
+          if (srvRes.status === 'fulfilled' && Array.isArray(srvRes.value.data)) {
+            setServices(srvRes.value.data);
+          }
+          if (accRes.status === 'fulfilled' && Array.isArray(accRes.value.data)) {
+            setAccelerators(accRes.value.data);
+          }
+          if (indRes.status === 'fulfilled' && Array.isArray(indRes.value.data)) {
+            setIndustries(indRes.value.data);
+          }
+          if (csRes.status === 'fulfilled' && Array.isArray(csRes.value.data)) {
+            setCaseStudies(csRes.value.data);
+          }
+          if (postRes.status === 'fulfilled' && Array.isArray(postRes.value.data)) {
+            setPosts(postRes.value.data);
+          }
+          if (repRes.status === 'fulfilled' && Array.isArray(repRes.value.data)) {
+            setReports(repRes.value.data);
+          }
+          if (staffRes.status === 'fulfilled' && Array.isArray(staffRes.value.data)) {
+            setStaffing(staffRes.value.data);
+          }
+          if (locRes.status === 'fulfilled' && Array.isArray(locRes.value.data)) {
+            setLocations(locRes.value.data);
+          }
+          if (setRes.status === 'fulfilled' && setRes.value.data) {
+            setSettings(setRes.value.data);
+          }
+          setIsLoaded(true);
+        }
+      } catch (err) {
+        console.warn('CMSProvider: Error loading published data', err);
+        if (isMounted) setIsLoaded(true);
+      }
+    }
+
+    loadAllPublished();
+    return () => {
+      isMounted = false;
+    };
+  }, [refreshTrigger]);
 
   // Admin fetch helper (queries /api/{resource}/admin/all)
   const fetchAdmin = useCallback(async (resource, params = {}) => {
@@ -121,6 +189,16 @@ export function CMSProvider({ children }) {
   const value = {
     refreshTrigger,
     refresh,
+    services,
+    accelerators,
+    industries,
+    caseStudies,
+    posts,
+    reports,
+    staffing,
+    locations,
+    settings,
+    isLoaded,
     fetchPublic,
     fetchPublicItem,
     fetchAdmin,
@@ -145,3 +223,4 @@ export function useCMS() {
   }
   return context;
 }
+

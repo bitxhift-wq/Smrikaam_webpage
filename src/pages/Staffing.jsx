@@ -1,46 +1,27 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { Users, ArrowUpRight, CheckCircle2, ShieldCheck, ChevronDown, ChevronUp } from 'lucide-react';
+import { useCMS } from '../context/CMSContext';
 import BlueprintWrapper from '../components/BlueprintWrapper';
 import TextReveal from '../components/anim/TextReveal';
 import BannerDrawBorder from '../components/anim/BannerDrawBorder';
 import Reveal from '../components/anim/Reveal';
+import RichTextRenderer from '../components/RichTextRenderer';
 
 export default function Staffing() {
   const [openFaq, setOpenFaq] = useState(null);
+  const { staffing: rawStaffing } = useCMS() || {};
+
+  const displayModels = useMemo(() => {
+    if (!Array.isArray(rawStaffing)) return [];
+    return rawStaffing;
+  }, [rawStaffing]);
 
   const stats = [
     { num: '2,500+', label: 'Vetted Specialists' },
     { num: '72h', label: 'Avg. Time to Shortlist' },
     { num: '95%', label: 'Offer Acceptance' },
     { num: '40+', label: 'Enterprise Clients' }
-  ];
-
-  const models = [
-    {
-      title: 'Temporary Staffing',
-      subtitle: 'On-demand specialists for surge capacity and short-term programs.',
-      desc: 'Scale your team within days with pre-vetted technology professionals for project sprints, seasonal demand, parental leave cover, or transformation programs. We handle sourcing, screening, onboarding, and payroll.',
-      bullets: ['48–72h shortlist turnaround', 'Fully payrolled & compliant', 'Engineering, data, cloud & IIoT roles', 'Onsite, hybrid or fully remote']
-    },
-    {
-      title: 'Permanent Placement',
-      subtitle: 'End-to-end recruitment for full-time technology hires.',
-      desc: 'Hire senior engineers, data scientists, architects, and product specialists who will stay and grow with you. Our multi-stage technical and behavioural screening ensures every candidate matches your stack and culture.',
-      bullets: ['Niche AI, Data, IIoT, Cloud roles', 'Cultural & leadership fit screening', 'Replacement guarantee', 'Salary benchmarking & offer support']
-    },
-    {
-      title: 'Contract & Project-Based Staffing',
-      subtitle: 'Outcome-driven pods for time-boxed transformation programs.',
-      desc: 'Build a dedicated delivery pod—engineers, data scientists, SREs, and product owners—aligned to a specific roadmap with clear milestones and outcomes. Ideal for analytics platforms, IIoT rollouts, and cloud migrations.',
-      bullets: ['Fixed-duration engagements (3–18 months)', 'Milestone-based delivery', 'Dedicated pod with single accountability', 'Smooth handover & documentation']
-    },
-    {
-      title: 'Executive Search',
-      subtitle: 'Confidential search for CXO, VP and Director-level technology leaders.',
-      desc: 'When you are hiring a CTO, Head of Data, VP Engineering, or transformation leader, we run a discreet executive search across India and key global markets—combining domain mapping and reference assessments.',
-      bullets: ['CTO, CIO, CDO, VP Eng & Head of Data', 'Confidential market mapping', 'Reference-backed shortlists', 'Onboarding & 90-day success support']
-    }
   ];
 
   const verticals = ['Manufacturing', 'Energy & Utilities', 'Retail & E-Commerce', 'BFSI', 'Healthcare & Life Sciences', 'Logistics & Supply Chain', 'Automotive', 'Telecom', 'Media'];
@@ -68,15 +49,15 @@ export default function Staffing() {
         <BannerDrawBorder />
         <div className="flex items-center justify-between mb-4">
           <div className="font-mono text-xs text-accent uppercase tracking-[0.2em]">
-            STAFFING SERVICES // TECH TALENT AUGMENTATION
+            ENTERPRISE TALENT // SPECIALISED STAFFING
           </div>
           <div className="font-mono text-xs text-text-muted border border-border px-3 py-1 bg-black/[0.02] dark:bg-white/[0.03]">
-            2,500+ VETTED SPECIALISTS
+            {displayModels.length} ENGAGEMENT MODELS
           </div>
         </div>
 
         <TextReveal
-          text="SPECIALIST TECHNOLOGY TALENT. ENGINEERED FOR DELIVERY."
+          text="TECHNICAL TALENT. ENGINEERED FOR SPEED."
           as="h1"
           className="font-heading text-4xl md:text-6xl font-bold uppercase text-text mb-4"
         />
@@ -105,7 +86,7 @@ export default function Staffing() {
         </h2>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {models.map((m, idx) => (
+          {displayModels.map((m, idx) => (
             <BlueprintWrapper key={idx} className="p-8 flex flex-col justify-between group hover:border-accent">
               <div>
                 <span className="font-mono text-[13px] text-accent font-medium mb-2 block">MODEL // 0{idx + 1}</span>
@@ -115,9 +96,11 @@ export default function Staffing() {
                 <p className="font-sans text-[15px] font-medium text-text mb-4">
                   {m.subtitle}
                 </p>
-                <p className="text-text-muted text-[15px] font-normal leading-[1.55] mb-6">
-                  {m.desc}
-                </p>
+                {m.desc && (
+                  <div className="text-text-muted text-[15px] font-normal leading-[1.55] mb-6">
+                    <RichTextRenderer content={m.desc} />
+                  </div>
+                )}
               </div>
 
               <div className="pt-4 border-t border-border space-y-2">

@@ -273,6 +273,8 @@ createResourceRoutes('accelerators', 'accelerators');
 createResourceRoutes('industries', 'industries');
 createResourceRoutes('case-studies', 'caseStudies');
 createResourceRoutes('reports', 'reports');
+createResourceRoutes('staffing', 'staffing');
+createResourceRoutes('locations', 'locations');
 
 // ============================================================
 // 3. MEDIA UPLOAD & LIBRARY

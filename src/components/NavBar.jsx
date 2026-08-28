@@ -1,9 +1,15 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, ArrowUpRight, ChevronDown, Sun, Moon } from 'lucide-react';
 import Logo from './Logo';
+import { useCMS } from '../context/CMSContext';
 
 export default function NavBar() {
+  const {
+    services: cmsPublishedServices,
+    accelerators: cmsPublishedAccelerators,
+    industries: cmsPublishedIndustries
+  } = useCMS() || {};
   const [mobileOpen, setMobileOpen] = useState(false);
   const [servicesDropdown, setServicesDropdown] = useState(false);
   const [acceleratorsDropdown, setAcceleratorsDropdown] = useState(false);
@@ -60,35 +66,47 @@ export default function NavBar() {
     setTheme((prev) => (prev === 'dark' ? 'light' : 'dark'));
   };
 
-  const servicesSubLinks = [
-    { name: 'AI / ML', path: '/services/ai-ml' },
-    { name: 'Industrial IoT (IIoT)', path: '/services/industrial-iot-iiot' },
-    { name: 'Data Engineering', path: '/services/data-engineering' },
-    { name: 'Generative & Agentic AI', path: '/services/generative-agentic-ai' },
-    { name: 'DevOps & Cloud', path: '/services/devops-cloud' },
-    { name: 'Data Governance', path: '/services/data-governance' },
-    { name: 'Integration Services', path: '/services/integration-services' },
-    { name: 'ServiceNow Solutions', path: '/services/servicenow-solutions' },
-    { name: 'Advisory Services', path: '/services/advisory-services' },
-    { name: 'AI Workflow Automation', path: '/services/ai-workflow-automation' },
-    { name: 'Staffing Services', path: '/staffing' },
-  ];
+  const servicesSubLinks = useMemo(() => {
+    const list = Array.isArray(cmsPublishedServices) && cmsPublishedServices.length > 0
+      ? cmsPublishedServices.map((s) => ({
+          name: s.title || s.name,
+          path: `/services/${s.slug}`
+        }))
+      : [];
+    return [...list, { name: 'Staffing Services', path: '/staffing' }];
+  }, [cmsPublishedServices]);
 
-  const acceleratorsSubLinks = [
-    { name: 'BitXhift', path: '/accelerators#bitxhift' },
-    { name: 'MigrateMax', path: '/accelerators#migratemax' },
-    { name: 'ParseMaster', path: '/accelerators#parsemaster' },
-    { name: 'LinkGenX', path: '/accelerators#linkgenx' },
-  ];
+  const acceleratorsSubLinks = useMemo(() => {
+    if (Array.isArray(cmsPublishedAccelerators) && cmsPublishedAccelerators.length > 0) {
+      return cmsPublishedAccelerators.map((a) => ({
+        name: a.name || a.title,
+        path: `/products/${a.slug || a.id}`
+      }));
+    }
+    return [
+      { name: 'BitXhift', path: '/products/bitxhift' },
+      { name: 'MigrateMax', path: '/products/migratemax' },
+      { name: 'ParseMaster', path: '/products/parsemaster' },
+      { name: 'LinkGenX', path: '/products/linkgenx' },
+    ];
+  }, [cmsPublishedAccelerators]);
 
-  const industriesSubLinks = [
-    { name: 'Manufacturing', path: '/industries/manufacturing' },
-    { name: 'Energy & Utilities', path: '/industries/energy-utilities' },
-    { name: 'Retail & E-Commerce', path: '/industries/retail-e-commerce' },
-    { name: 'BFSI', path: '/industries/bfsi' },
-    { name: 'Healthcare', path: '/industries/healthcare-life-sciences' },
-    { name: 'Logistics', path: '/industries/logistics-supply-chain' },
-  ];
+  const industriesSubLinks = useMemo(() => {
+    if (Array.isArray(cmsPublishedIndustries) && cmsPublishedIndustries.length > 0) {
+      return cmsPublishedIndustries.map((i) => ({
+        name: i.name || i.title,
+        path: `/industries/${i.slug || i.id}`
+      }));
+    }
+    return [
+      { name: 'Manufacturing', path: '/industries/manufacturing' },
+      { name: 'Energy & Utilities', path: '/industries/energy-utilities' },
+      { name: 'Retail & E-Commerce', path: '/industries/retail-e-commerce' },
+      { name: 'BFSI', path: '/industries/bfsi' },
+      { name: 'Healthcare', path: '/industries/healthcare-life-sciences' },
+      { name: 'Logistics', path: '/industries/logistics-supply-chain' },
+    ];
+  }, [cmsPublishedIndustries]);
 
   const caseStudiesSubLinks = [
     { name: 'Blogs & Insights', path: '/blog' },
@@ -107,7 +125,7 @@ export default function NavBar() {
   };
 
   const isServicesActive = servicesSubLinks.some((link) => location.pathname === link.path || location.pathname.startsWith(link.path.split('#')[0])) || location.pathname === '/services';
-  const isAcceleratorsActive = location.pathname === '/accelerators';
+  const isAcceleratorsActive = acceleratorsSubLinks.some((link) => location.pathname === link.path || location.pathname.startsWith(link.path.split('#')[0])) || location.pathname === '/products' || location.pathname === '/accelerators';
   const isIndustriesActive = industriesSubLinks.some((link) => location.pathname === link.path || location.pathname.startsWith(link.path)) || location.pathname === '/industries';
   const isCaseStudiesActive = caseStudiesSubLinks.some((link) => location.pathname.startsWith(link.path)) || location.pathname === '/case-studies';
   const isCompanyActive = companySubLinks.some((link) => location.pathname.startsWith(link.path));
@@ -162,7 +180,7 @@ export default function NavBar() {
                 className="absolute left-0 top-full pt-1 w-64 z-50"
                 style={{ filter: 'drop-shadow(0 10px 25px rgba(0, 0, 0, 0.45))' }}
               >
-                <div className="bg-[var(--ribbon-dropdown-bg)] border border-[var(--ribbon-dropdown-border)] p-1.5 shadow-2xl flex flex-col gap-0.5 rounded-none">
+                <div className="bg-[var(--ribbon-dropdown-bg)] border border-[var(--ribbon-dropdown-border)] p-1.5 shadow-2xl flex flex-col gap-0.5 rounded-none max-h-[70vh] overflow-y-auto custom-scrollbar">
                   {servicesSubLinks.map((sub) => {
                     const subActive = isActive(sub.path);
                     return (
@@ -170,13 +188,23 @@ export default function NavBar() {
                         key={sub.path}
                         to={sub.path}
                         onClick={() => setServicesDropdown(false)}
-                        className={`px-3 py-2 text-xs font-mono uppercase tracking-wider transition-colors duration-150 rounded-none ${
+                        className={`px-3 py-2 text-xs font-mono uppercase tracking-wider flex items-center justify-between transition-colors duration-150 rounded-none group ${
                           subActive
                             ? 'text-[var(--ribbon-dropdown-text)] font-bold bg-[var(--ribbon-dropdown-active)] border-l-2 border-[var(--ribbon-dropdown-text)]'
                             : 'text-[var(--ribbon-dropdown-text-secondary)] hover:bg-[var(--ribbon-dropdown-hover)] hover:text-[var(--ribbon-dropdown-text)]'
                         }`}
                       >
-                        {sub.name}
+                        <span className="truncate mr-2">{sub.name}</span>
+                        <span
+                          className={`font-mono text-xs transition-all duration-150 shrink-0 ${
+                            subActive
+                              ? 'text-[var(--ribbon-dropdown-text)] translate-x-0.5 opacity-100'
+                              : 'text-[var(--ribbon-dropdown-text-muted)] opacity-30 group-hover:opacity-100 group-hover:translate-x-0.5'
+                          }`}
+                          aria-hidden="true"
+                        >
+                          →
+                        </span>
                       </Link>
                     );
                   })}
@@ -192,13 +220,13 @@ export default function NavBar() {
             onMouseLeave={() => setAcceleratorsDropdown(false)}
           >
             <Link
-              to="/accelerators"
+              to="/products"
               onClick={() => setAcceleratorsDropdown(false)}
               className={`font-mono text-xs uppercase tracking-widest font-semibold flex items-center gap-1.5 cursor-pointer bg-transparent border-0 outline-none p-0 transition-colors ${
                 isAcceleratorsActive || acceleratorsDropdown ? 'text-[var(--ribbon-active)]' : 'text-[var(--ribbon-text-secondary)] hover:text-[var(--ribbon-text)]'
               }`}
             >
-              <span>ACCELERATORS</span>
+              <span>PRODUCTS</span>
               <ChevronDown
                 className={`w-3.5 h-3.5 transition-transform duration-200 ${
                   acceleratorsDropdown ? 'rotate-180 text-[var(--ribbon-text)]' : 'text-[var(--ribbon-text-muted)]'
@@ -210,19 +238,34 @@ export default function NavBar() {
 
             {acceleratorsDropdown && (
               <div
-                className="absolute left-0 top-full pt-1 w-56 z-50"
+                className="absolute left-0 top-full pt-1 w-64 z-50"
                 style={{ filter: 'drop-shadow(0 10px 25px rgba(0, 0, 0, 0.45))' }}
               >
-                <div className="bg-[var(--ribbon-dropdown-bg)] border border-[var(--ribbon-dropdown-border)] p-1.5 shadow-2xl flex flex-col gap-0.5 rounded-none">
+                <div className="bg-[var(--ribbon-dropdown-bg)] border border-[var(--ribbon-dropdown-border)] p-1.5 shadow-2xl flex flex-col gap-0.5 rounded-none max-h-[70vh] overflow-y-auto custom-scrollbar">
                   {acceleratorsSubLinks.map((sub) => {
+                    const subActive = isActive(sub.path);
                     return (
                       <Link
                         key={sub.name}
                         to={sub.path}
                         onClick={() => setAcceleratorsDropdown(false)}
-                        className="px-3 py-2 text-xs font-mono uppercase tracking-wider text-[var(--ribbon-dropdown-text-secondary)] hover:bg-[var(--ribbon-dropdown-hover)] hover:text-[var(--ribbon-dropdown-text)] transition-colors duration-150 rounded-none"
+                        className={`px-3 py-2 text-xs font-mono uppercase tracking-wider flex items-center justify-between transition-colors duration-150 rounded-none group ${
+                          subActive
+                            ? 'text-[var(--ribbon-dropdown-text)] font-bold bg-[var(--ribbon-dropdown-active)] border-l-2 border-[var(--ribbon-dropdown-text)]'
+                            : 'text-[var(--ribbon-dropdown-text-secondary)] hover:bg-[var(--ribbon-dropdown-hover)] hover:text-[var(--ribbon-dropdown-text)]'
+                        }`}
                       >
-                        {sub.name}
+                        <span className="truncate mr-2">{sub.name}</span>
+                        <span
+                          className={`font-mono text-xs transition-all duration-150 shrink-0 ${
+                            subActive
+                              ? 'text-[var(--ribbon-dropdown-text)] translate-x-0.5 opacity-100'
+                              : 'text-[var(--ribbon-dropdown-text-muted)] opacity-30 group-hover:opacity-100 group-hover:translate-x-0.5'
+                          }`}
+                          aria-hidden="true"
+                        >
+                          →
+                        </span>
                       </Link>
                     );
                   })}
@@ -259,7 +302,7 @@ export default function NavBar() {
                 className="absolute left-0 top-full pt-1 w-64 z-50"
                 style={{ filter: 'drop-shadow(0 10px 25px rgba(0, 0, 0, 0.45))' }}
               >
-                <div className="bg-[var(--ribbon-dropdown-bg)] border border-[var(--ribbon-dropdown-border)] p-1.5 shadow-2xl flex flex-col gap-0.5 rounded-none">
+                <div className="bg-[var(--ribbon-dropdown-bg)] border border-[var(--ribbon-dropdown-border)] p-1.5 shadow-2xl flex flex-col gap-0.5 rounded-none max-h-[70vh] overflow-y-auto custom-scrollbar">
                   {industriesSubLinks.map((sub) => {
                     const subActive = isActive(sub.path);
                     return (
@@ -267,13 +310,23 @@ export default function NavBar() {
                         key={sub.path}
                         to={sub.path}
                         onClick={() => setIndustriesDropdown(false)}
-                        className={`px-3 py-2 text-xs font-mono uppercase tracking-wider transition-colors duration-150 rounded-none ${
+                        className={`px-3 py-2 text-xs font-mono uppercase tracking-wider flex items-center justify-between transition-colors duration-150 rounded-none group ${
                           subActive
                             ? 'text-[var(--ribbon-dropdown-text)] font-bold bg-[var(--ribbon-dropdown-active)] border-l-2 border-[var(--ribbon-dropdown-text)]'
                             : 'text-[var(--ribbon-dropdown-text-secondary)] hover:bg-[var(--ribbon-dropdown-hover)] hover:text-[var(--ribbon-dropdown-text)]'
                         }`}
                       >
-                        {sub.name}
+                        <span className="truncate mr-2">{sub.name}</span>
+                        <span
+                          className={`font-mono text-xs transition-all duration-150 shrink-0 ${
+                            subActive
+                              ? 'text-[var(--ribbon-dropdown-text)] translate-x-0.5 opacity-100'
+                              : 'text-[var(--ribbon-dropdown-text-muted)] opacity-30 group-hover:opacity-100 group-hover:translate-x-0.5'
+                          }`}
+                          aria-hidden="true"
+                        >
+                          →
+                        </span>
                       </Link>
                     );
                   })}
@@ -307,10 +360,10 @@ export default function NavBar() {
 
             {caseStudiesDropdown && (
               <div
-                className="absolute left-0 top-full pt-1 w-56 z-50"
+                className="absolute left-0 top-full pt-1 w-64 z-50"
                 style={{ filter: 'drop-shadow(0 10px 25px rgba(0, 0, 0, 0.45))' }}
               >
-                <div className="bg-[var(--ribbon-dropdown-bg)] border border-[var(--ribbon-dropdown-border)] p-1.5 shadow-2xl flex flex-col gap-0.5 rounded-none">
+                <div className="bg-[var(--ribbon-dropdown-bg)] border border-[var(--ribbon-dropdown-border)] p-1.5 shadow-2xl flex flex-col gap-0.5 rounded-none max-h-[70vh] overflow-y-auto custom-scrollbar">
                   {caseStudiesSubLinks.map((sub) => {
                     const subActive = isActive(sub.path);
                     return (
@@ -318,13 +371,23 @@ export default function NavBar() {
                         key={sub.path}
                         to={sub.path}
                         onClick={() => setCaseStudiesDropdown(false)}
-                        className={`px-3 py-2 text-xs font-mono uppercase tracking-wider transition-colors duration-150 rounded-none ${
+                        className={`px-3 py-2 text-xs font-mono uppercase tracking-wider flex items-center justify-between transition-colors duration-150 rounded-none group ${
                           subActive
                             ? 'text-[var(--ribbon-dropdown-text)] font-bold bg-[var(--ribbon-dropdown-active)] border-l-2 border-[var(--ribbon-dropdown-text)]'
                             : 'text-[var(--ribbon-dropdown-text-secondary)] hover:bg-[var(--ribbon-dropdown-hover)] hover:text-[var(--ribbon-dropdown-text)]'
                         }`}
                       >
-                        {sub.name}
+                        <span className="truncate mr-2">{sub.name}</span>
+                        <span
+                          className={`font-mono text-xs transition-all duration-150 shrink-0 ${
+                            subActive
+                              ? 'text-[var(--ribbon-dropdown-text)] translate-x-0.5 opacity-100'
+                              : 'text-[var(--ribbon-dropdown-text-muted)] opacity-30 group-hover:opacity-100 group-hover:translate-x-0.5'
+                          }`}
+                          aria-hidden="true"
+                        >
+                          →
+                        </span>
                       </Link>
                     );
                   })}
@@ -358,10 +421,10 @@ export default function NavBar() {
 
             {companyDropdown && (
               <div
-                className="absolute left-0 top-full pt-1 w-56 z-50"
+                className="absolute left-0 top-full pt-1 w-64 z-50"
                 style={{ filter: 'drop-shadow(0 10px 25px rgba(0, 0, 0, 0.45))' }}
               >
-                <div className="bg-[var(--ribbon-dropdown-bg)] border border-[var(--ribbon-dropdown-border)] p-1.5 shadow-2xl flex flex-col gap-0.5 rounded-none">
+                <div className="bg-[var(--ribbon-dropdown-bg)] border border-[var(--ribbon-dropdown-border)] p-1.5 shadow-2xl flex flex-col gap-0.5 rounded-none max-h-[70vh] overflow-y-auto custom-scrollbar">
                   {companySubLinks.map((sub) => {
                     const subActive = isActive(sub.path);
                     return (
@@ -369,13 +432,23 @@ export default function NavBar() {
                         key={sub.path}
                         to={sub.path}
                         onClick={() => setCompanyDropdown(false)}
-                        className={`px-3 py-2 text-xs font-mono uppercase tracking-wider transition-colors duration-150 rounded-none ${
+                        className={`px-3 py-2 text-xs font-mono uppercase tracking-wider flex items-center justify-between transition-colors duration-150 rounded-none group ${
                           subActive
                             ? 'text-[var(--ribbon-dropdown-text)] font-bold bg-[var(--ribbon-dropdown-active)] border-l-2 border-[var(--ribbon-dropdown-text)]'
                             : 'text-[var(--ribbon-dropdown-text-secondary)] hover:bg-[var(--ribbon-dropdown-hover)] hover:text-[var(--ribbon-dropdown-text)]'
                         }`}
                       >
-                        {sub.name}
+                        <span className="truncate mr-2">{sub.name}</span>
+                        <span
+                          className={`font-mono text-xs transition-all duration-150 shrink-0 ${
+                            subActive
+                              ? 'text-[var(--ribbon-dropdown-text)] translate-x-0.5 opacity-100'
+                              : 'text-[var(--ribbon-dropdown-text-muted)] opacity-30 group-hover:opacity-100 group-hover:translate-x-0.5'
+                          }`}
+                          aria-hidden="true"
+                        >
+                          →
+                        </span>
                       </Link>
                     );
                   })}
@@ -477,11 +550,11 @@ export default function NavBar() {
           {/* Mobile Accelerators Section */}
           <div className="pt-2">
             <Link
-              to="/accelerators"
+              to="/products"
               onClick={() => setMobileOpen(false)}
               className="font-mono text-xs text-[var(--ribbon-active)] uppercase tracking-widest mb-2 font-bold block hover:underline"
             >
-              ACCELERATORS
+              PRODUCTS
             </Link>
             <div className="pl-3 flex flex-col gap-2 border-l-2 border-[var(--ribbon-border)]">
               {acceleratorsSubLinks.map((sub) => (

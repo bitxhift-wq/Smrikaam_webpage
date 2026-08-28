@@ -14,126 +14,43 @@ import {
 
 import HeroCubeCluster from '../components/visuals/HeroCubeCluster';
 import WhoWeAreCubeCluster from '../components/visuals/WhoWeAreCubeCluster';
+import Smrikaam3DCoreSection from '../components/visuals/Smrikaam3DCoreSection';
 import TechStackRibbon from '../components/TechStackRibbon';
 import { useCMS } from '../context/CMSContext';
 
-// Default Fallback Data for Services Relay
-const DEFAULT_SERVICES = [
-  { num: '01', title: 'AI / ML', desc: 'Predictive intelligence, computer vision, forecasting, and production MLOps.', path: '/services/ai-ml' },
-  { num: '02', title: 'Industrial IoT (IIoT)', desc: 'Multi-protocol machine connectivity, real-time telemetry, and OEE.', path: '/services/industrial-iot-iiot' },
-  { num: '03', title: 'Data Engineering', desc: 'Cloud-native data pipelines, lakehouses, CDC ingestion, and modernization.', path: '/services/data-engineering' },
-  { num: '04', title: 'Generative & Agentic AI', desc: 'LLM-powered assistants, RAG, intelligent agents, and workflow copilots.', path: '/services/generative-agentic-ai' },
-  { num: '05', title: 'DevOps & Cloud', desc: 'Cloud engineering, CI/CD, Kubernetes, IaC, and observability.', path: '/services/devops-cloud' },
-  { num: '06', title: 'Data Governance', desc: 'Lineage, metadata, cataloguing, MDM, privacy, and DPDP compliance.', path: '/services/data-governance' },
-  { num: '07', title: 'Integration Services', desc: 'Modern integration across SAP, Salesforce, ERP, and Kafka.', path: '/services/integration-services' },
-  { num: '08', title: 'ServiceNow Solutions', desc: 'End-to-end ITSM, ITOM, ITAM, CSM, and Flow Designer automation.', path: '/services/servicenow-solutions' },
-  { num: '09', title: 'Advisory Services', desc: 'Strategic cloud, AI, data, and platform modernization blueprints.', path: '/services/advisory-services' },
-  { num: '10', title: 'AI Workflow Automation', desc: 'Agentic AI workflows orchestrating multi-step business tasks.', path: '/services/ai-workflow-automation' },
-  { num: '11', title: 'Staffing Services', desc: 'Specialized enterprise engineering and technology talent.', path: '/staffing' },
-];
-
-// Default Fallback Data for Case Studies Relay
-const DEFAULT_CASE_STUDIES = [
-  {
-    title: 'Smart Factory Manufacturing Transformation',
-    industry: 'MANUFACTURING',
-    problem: 'Siloed factory CNC and PLC machines causing unpredicted downtime and zero OEE visibility.',
-    solution: 'Deployed edge IIoT gateways streaming sub-second telemetry to centralized floor wallboards.',
-    tech: ['MQTT', 'OPC-UA', 'BitXhift', 'TimescaleDB', 'Python'],
-    path: '/case-studies/smart-factory-manufacturing',
-    image: 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?q=80&w=400&auto=format&fit=crop'
-  },
-  {
-    title: 'Automotive OEM Live Analytics Dashboard',
-    industry: 'AUTOMOTIVE & OEM',
-    problem: 'Fragmented assembly station data and delayed end-of-day defect reporting.',
-    solution: 'Vision-based defect detection synchronized directly with SAP S/4HANA production orders.',
-    tech: ['BitXhift', 'LinkGenX', 'OpenCV', 'PyTorch', 'SAP'],
-    path: '/case-studies',
-    image: 'https://images.unsplash.com/photo-1563986768609-322da13575f3?q=80&w=400&auto=format&fit=crop'
-  },
-  {
-    title: 'Multi-Tenant Cloud Data Lakehouse Migration',
-    industry: 'CLOUD & DATA PLATFORMS',
-    problem: 'Legacy on-prem warehouse unable to scale for real-time analytics with high query latency.',
-    solution: 'Zero-downtime automated schema migration and parallel CDC replication to Snowflake.',
-    tech: ['MigrateMax', 'Snowflake', 'dbt', 'Databricks', 'AWS'],
-    path: '/case-studies',
-    image: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=400&auto=format&fit=crop'
-  },
-  {
-    title: 'Automated Regulatory Compliance Agent',
-    industry: 'BFSI & GOVERNANCE',
-    problem: 'Slow manual review of complex compliance documents and high error exposure.',
-    solution: 'Agentic AI document processing with DPDP audit trails and core banking sync.',
-    tech: ['LangChain', 'LlamaIndex', 'ParseMaster', 'PostgreSQL'],
-    path: '/case-studies',
-    image: 'https://images.unsplash.com/photo-1507679799987-c73779587ccf?q=80&w=400&auto=format&fit=crop'
-  },
-];
-
 export default function Home() {
-  const { fetchPublic, refreshTrigger } = useCMS() || {};
+  const { services: rawServices, caseStudies: rawCaseStudies } = useCMS() || {};
 
-  const [cmsServices, setCmsServices] = useState([]);
-  const [cmsCaseStudies, setCmsCaseStudies] = useState([]);
+  const cmsServices = React.useMemo(() => {
+    if (!Array.isArray(rawServices)) return [];
+    return rawServices.map((s, idx) => ({
+      num: String(idx + 1).padStart(2, '0'),
+      title: s.title || s.name,
+      desc: s.tagline || s.description || s.summary || '',
+      path: s.slug ? `/services/${s.slug}` : '/services',
+    }));
+  }, [rawServices]);
 
-  // Fetch Live CMS items dynamically for both relays
-  useEffect(() => {
-    let isMounted = true;
-    async function loadCMSRelays() {
-      if (!fetchPublic) return;
-      try {
-        const [srvs, cases] = await Promise.all([
-          fetchPublic('services').catch(() => []),
-          fetchPublic('case-studies').catch(() => []),
-        ]);
+  const cmsCaseStudies = React.useMemo(() => {
+    if (!Array.isArray(rawCaseStudies)) return [];
+    return rawCaseStudies.map((c) => {
+      const technologies = Array.isArray(c.technologies)
+        ? c.technologies
+        : typeof c.technologies === 'string'
+        ? c.technologies.split(',').map((t) => t.trim())
+        : ['Enterprise', 'Cloud', 'Data'];
 
-        if (isMounted) {
-          if (Array.isArray(srvs) && srvs.length > 0) {
-            setCmsServices(
-              srvs.map((s, idx) => ({
-                num: String(idx + 1).padStart(2, '0'),
-                title: s.title || s.name,
-                desc: s.tagline || s.description || s.summary || '',
-                path: s.slug ? `/services/${s.slug}` : '/services',
-              }))
-            );
-          }
-          if (Array.isArray(cases) && cases.length > 0) {
-            setCmsCaseStudies(
-              cases.map((c) => {
-                const technologies = Array.isArray(c.technologies)
-                  ? c.technologies
-                  : typeof c.technologies === 'string'
-                  ? c.technologies.split(',').map((t) => t.trim())
-                  : ['Enterprise', 'Cloud', 'Data'];
-
-                return {
-                  title: c.title,
-                  industry: (c.industry || c.category || 'ENTERPRISE').toUpperCase(),
-                  problem: c.challenge || c.problemStatement || c.summary || 'Operational system bottleneck.',
-                  solution: c.solution || c.solutionStatement || 'Engineered automated transformation.',
-                  tech: technologies.slice(0, 4),
-                  path: c.slug ? `/case-studies/${c.slug}` : '/case-studies',
-                  image: c.cover_image_url || null,
-                };
-              })
-            );
-          }
-        }
-      } catch (err) {
-        console.warn('Could not load live CMS relays', err);
-      }
-    }
-
-    loadCMSRelays();
-    const interval = setInterval(loadCMSRelays, 25000);
-    return () => {
-      isMounted = false;
-      clearInterval(interval);
-    };
-  }, [fetchPublic, refreshTrigger]);
+      return {
+        title: c.title,
+        industry: (c.industry || c.category || 'ENTERPRISE').toUpperCase(),
+        problem: c.challenge || c.problemStatement || c.summary || 'Operational system bottleneck.',
+        solution: c.solution || c.solutionStatement || 'Engineered automated transformation.',
+        tech: technologies.slice(0, 4),
+        path: c.slug ? `/case-studies/${c.slug}` : '/case-studies',
+        image: c.cover_image_url || null,
+      };
+    });
+  }, [rawCaseStudies]);
 
   const techDomains = [
     { num: '01', label: 'AI / ML', icon: Brain },
@@ -231,9 +148,9 @@ export default function Home() {
     },
   ];
 
-  // Active Relay Lists (CMS if available, otherwise default fallback)
-  const activeServices = cmsServices.length > 0 ? cmsServices : DEFAULT_SERVICES;
-  const activeCaseStudies = cmsCaseStudies.length > 0 ? cmsCaseStudies : DEFAULT_CASE_STUDIES;
+  // Active Relay Lists directly from CMS
+  const activeServices = cmsServices;
+  const activeCaseStudies = cmsCaseStudies;
 
   // Duplicated arrays for seamless infinite looping
   const marqueeServices = [...activeServices, ...activeServices];
@@ -340,196 +257,31 @@ export default function Home() {
       </section>
 
       {/* ============================================================ */}
-      {/* SCROLL 1 — CONNECTED 3-COLUMN ARCHITECTURAL SYSTEM (5 - 2 - 5) */}
+      {/* SCROLL 1 — CONNECTED 3D CORE ARCHITECTURAL SYSTEM */}
       {/* ============================================================ */}
       <section
         id="overview"
         data-scroll-label="WHO WE ARE & WHAT WE BUILD"
         aria-label="Who We Are and What We Build"
-        className="relative py-10 md:py-14 px-6 md:px-12 lg:px-16 border-b border-[var(--color-border)] bg-[var(--color-bg)]/85 backdrop-blur-sm overflow-hidden"
       >
-        <div className="max-w-7xl mx-auto w-full relative z-10">
-          {/* 12-Column Architectural System: Left 5 cols | Center 2 cols | Right 5 cols */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-0 items-stretch border border-[var(--color-border)] home-card-surface">
-            
-            {/* ======================================================== */}
-            {/* LEFT COLUMN: WHO WE ARE (5 Columns on Desktop) */}
-            {/* ======================================================== */}
-            <div className="lg:col-span-5 p-5 md:p-7 flex flex-col justify-between space-y-6">
-              <div className="space-y-4">
-                {/* Eyebrow & Title */}
-                <div className="space-y-2">
-                  <div className="font-mono text-[11px] text-[var(--color-text-muted)] uppercase tracking-[0.2em] font-semibold flex items-center gap-2">
-                    <span className="w-1.5 h-1.5 bg-[var(--color-accent)]" />
-                    <span>WHO WE ARE</span>
-                  </div>
-                  <h2 className="font-heading text-xl sm:text-2xl md:text-3xl font-bold uppercase text-[var(--color-text)] tracking-tight leading-[1.1]">
-                    Engineering Intelligence Across AI, Data, Cloud &amp; IIoT.
-                  </h2>
-                </div>
-
-                {/* Overview Paragraphs */}
-                <div className="space-y-2 text-[13px] md:text-[14px] leading-[1.5]">
-                  <p className="text-[var(--color-text)] font-medium">
-                    We are a technology development and engineering company helping enterprises build intelligent systems across AI, Data, Cloud, IIoT and Software.
-                  </p>
-                  <p className="text-[var(--color-text-secondary)] font-normal">
-                    We combine deep engineering with domain understanding to design, build and scale solutions that create real impact.
-                  </p>
-                </div>
-
-                {/* 6 Capability Badges */}
-                <div className="pt-2">
-                  <div className="font-mono text-[10px] text-[var(--color-text-muted)] uppercase tracking-wider mb-2 font-semibold">
-                    ENGINEERING CAPABILITIES
-                  </div>
-                  <div className="grid grid-cols-2 gap-2">
-                    {techDomains.map((t) => {
-                      const Icon = t.icon;
-                      return (
-                        <div
-                          key={t.num}
-                          className="flex items-center justify-between p-2 border border-[var(--color-border)] bg-[var(--color-surface-subtle)]/60 hover:border-[var(--color-border-strong)] transition-all group"
-                        >
-                          <div className="flex items-center gap-2 overflow-hidden">
-                            <span className="font-mono text-[9px] text-[var(--color-accent)] font-bold shrink-0">
-                              {t.num}
-                            </span>
-                            <Icon className="w-3.5 h-3.5 text-[var(--color-accent)] shrink-0" strokeWidth={1.5} />
-                            <span className="font-mono text-[10px] uppercase tracking-wider text-[var(--color-text)] font-semibold truncate">
-                              {t.label}
-                            </span>
-                          </div>
-                          <span className="hidden xl:inline-block w-1 h-1 rounded-full bg-[var(--color-border-strong)] group-hover:bg-[var(--color-accent)] shrink-0 ml-1" />
-                        </div>
-                      );
-                    })}
-                  </div>
-                </div>
-              </div>
-
-              {/* 3 Pillars: Goal / Vision / Mission */}
-              <div className="space-y-2 pt-3 border-t border-[var(--color-border)]">
-                {pillars.map((pillar, idx) => (
-                  <div
-                    key={idx}
-                    className="p-2.5 border border-[var(--color-border)] bg-[var(--color-surface-subtle)]/40 flex flex-col justify-between"
-                  >
-                    <div className="font-mono text-[10px] font-bold text-[var(--color-accent)] uppercase tracking-wider mb-0.5">
-                      {pillar.label}
-                    </div>
-                    <p className="text-[11px] md:text-[12px] text-[var(--color-text-secondary)] leading-[1.4] font-normal">
-                      {pillar.desc}
-                    </p>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* ======================================================== */}
-            {/* CENTER COLUMN: 3D CORE (2 Columns on Desktop) */}
-            {/* ======================================================== */}
-            <div className="lg:col-span-2 flex flex-col items-center justify-between py-6 px-3 border-t lg:border-t-0 lg:border-x border-[var(--color-border)] bg-[var(--color-surface-subtle)]/30 relative">
-              
-              {/* Top Architecture Connector Tag */}
-              <div className="w-full flex items-center justify-between font-mono text-[9px] text-[var(--color-text-muted)] uppercase tracking-widest px-1">
-                <span className="hidden xl:inline text-[var(--color-accent)]">●──</span>
-                <span className="font-bold text-[var(--color-accent)]">3D CORE</span>
-                <span className="hidden xl:inline text-[var(--color-accent)]">──●</span>
-              </div>
-
-              {/* Center 3D Cube Cluster Animation */}
-              <div className="w-full flex-1 flex items-center justify-center my-2 relative">
-                {/* Subtle architectural horizontal guideline behind cube */}
-                <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 h-[1px] border-t border-dashed border-[var(--color-border)] pointer-events-none" />
-                <WhoWeAreCubeCluster className="w-full max-w-[200px] aspect-square relative z-10" />
-              </div>
-
-              {/* Bottom Node Architecture Labels */}
-              <div className="text-center font-mono space-y-0.5 pt-2 border-t border-[var(--color-border)] w-full">
-                <div className="text-[9px] font-bold text-[var(--color-text)] uppercase tracking-widest">
-                  CONNECTED SYSTEM
-                </div>
-                <div className="text-[8px] text-[var(--color-text-muted)] uppercase tracking-widest">
-                  ARCHITECTURE NODE
-                </div>
-              </div>
-            </div>
-
-            {/* ======================================================== */}
-            {/* RIGHT COLUMN: WHAT WE BUILD (5 Columns on Desktop) */}
-            {/* ======================================================== */}
-            <div className="lg:col-span-5 p-5 md:p-7 flex flex-col justify-between space-y-6 border-t lg:border-t-0 border-[var(--color-border)]">
-              <div className="space-y-4">
-                {/* Eyebrow & Title */}
-                <div className="space-y-1">
-                  <div className="font-mono text-[11px] text-[var(--color-text-muted)] uppercase tracking-[0.2em] font-semibold flex items-center gap-2">
-                    <span className="w-1.5 h-1.5 bg-[var(--color-accent)]" />
-                    <span>WHAT WE BUILD</span>
-                  </div>
-                  <h2 className="font-heading text-xl sm:text-2xl md:text-3xl font-bold uppercase text-[var(--color-text)] tracking-tight">
-                    Technology. Engineered End to End.
-                  </h2>
-                </div>
-
-                {/* 6 Capabilities in Compact Architectural Cards */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-2">
-                  {capabilities.map((cap) => {
-                    const Icon = cap.icon;
-                    return (
-                      <div
-                        key={cap.id}
-                        className="p-2.5 border border-[var(--color-border)] bg-[var(--color-surface-subtle)]/60 hover:border-[var(--color-border-strong)] transition-all flex items-start gap-2.5 group"
-                      >
-                        <span className="font-mono text-[9px] text-[var(--color-accent)] font-bold shrink-0 mt-0.5">
-                          {cap.num}
-                        </span>
-                        <div className="flex-1 min-w-0">
-                          <div className="flex items-center justify-between mb-0.5">
-                            <h3 className="font-mono text-[11px] md:text-[12px] font-bold uppercase tracking-wider text-[var(--color-text)] truncate">
-                              {cap.title}
-                            </h3>
-                            <Icon className="w-3 h-3 text-[var(--color-accent)] shrink-0 ml-1 group-hover:scale-110 transition-transform" strokeWidth={1.5} />
-                          </div>
-                          <p className="text-[11px] text-[var(--color-text-secondary)] leading-[1.35] font-normal line-clamp-2">
-                            {cap.desc}
-                          </p>
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
-
-              {/* Explore Services Action Link */}
-              <div className="pt-2">
-                <Link
-                  to="/services"
-                  className="inline-flex items-center justify-between w-full p-2.5 bg-[var(--button-secondary-bg)] border border-[var(--button-secondary-border)] text-[var(--button-secondary-text)] font-mono text-xs font-bold uppercase tracking-wider hover:bg-[var(--button-bg)] hover:text-[var(--button-text)] hover:border-[var(--button-border)] transition-all shadow-sm"
-                >
-                  <span>EXPLORE SERVICES</span>
-                  <ArrowRight className="w-4 h-4" />
-                </Link>
-              </div>
-            </div>
-
-          </div>
-        </div>
+        <Smrikaam3DCoreSection />
       </section>
 
       {/* ============================================================ */}
-      {/* SCROLL 2 — BUSINESS PROBLEMS & TWO LIVE HORIZONTAL RELAYS */}
+      {/* SCROLL 2 — CONNECTED HOMEPAGE FLOW */}
       {/* ============================================================ */}
       <section
         id="problems"
-        data-scroll-label="BUSINESS PROBLEMS"
-        aria-label="Business Problems and Live Technology Relays"
+        data-scroll-label="SERVICES & TRANSFORMATION"
+        aria-label="Services, Transformation Architecture, and Live Technology Relays"
         className="relative py-10 md:py-14 px-6 md:px-12 lg:px-16 border-b border-[var(--color-border)] bg-[var(--color-bg)]/85 backdrop-blur-sm overflow-hidden"
       >
-        <div className="max-w-7xl mx-auto w-full relative z-10">
+        <div className="max-w-7xl mx-auto w-full relative z-10 space-y-6">
           
-          {/* Section Header */}
-          <div className="mb-6 pb-3 border-b border-[var(--color-border)]">
+          {/* ======================================================== */}
+          {/* 1. HEADER: BUSINESS PROBLEMS WE SOLVE / TRANSFORMATION ARCHITECTURE */}
+          {/* ======================================================== */}
+          <div className="pb-3 border-b border-[var(--color-border)]">
             <div className="font-mono text-[11px] text-[var(--color-text-muted)] uppercase tracking-[0.2em] font-semibold mb-1 flex items-center gap-2">
               <span className="w-1.5 h-1.5 bg-[var(--color-accent)]" />
               <span>BUSINESS PROBLEMS WE SOLVE</span>
@@ -539,8 +291,56 @@ export default function Home() {
             </h2>
           </div>
 
-          {/* Compact Transformation Architecture Rail (4 Core Business Problems) */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 mb-10">
+          {/* ======================================================== */}
+          {/* 2. // SERVICES & LIVE SERVICE STACK (LTR RELAY) */}
+          {/* ======================================================== */}
+          <div className="border border-[var(--color-border)] home-card-surface p-3.5 md:p-4 overflow-hidden">
+            <div className="flex items-center justify-between mb-3 px-1">
+              <div className="font-mono text-[10px] md:text-[11px] text-[var(--color-accent)] font-bold uppercase tracking-widest flex items-center gap-2">
+                <span className="w-1.5 h-1.5 bg-[var(--color-accent)]" />
+                <span>// SERVICES</span>
+              </div>
+              <div className="flex items-center gap-1.5 font-mono text-[9px] md:text-[10px] text-[var(--color-text-muted)] uppercase tracking-wider">
+                <span className="w-1.5 h-1.5 rounded-full bg-[var(--color-accent)] animate-pulse" />
+                <span>LIVE SERVICE STACK // {activeServices.length} CAPABILITIES</span>
+              </div>
+            </div>
+
+            {/* Viewport with Continuous LTR Movement */}
+            <div className="scroll2-layer-container py-1">
+              <div className="scroll2-layer-track-ltr gap-3">
+                {marqueeServices.map((srv, idx) => (
+                  <Link
+                    key={`srv-${idx}`}
+                    to={srv.path}
+                    className="px-4 py-2.5 border border-[var(--color-border)] bg-[var(--color-bg)]/90 hover:border-[var(--color-accent)] transition-all shrink-0 flex items-center gap-3.5 group select-none cursor-pointer w-[260px] sm:w-[300px]"
+                  >
+                    <span className="font-mono text-[11px] text-[var(--color-accent)] font-bold shrink-0">
+                      {srv.num}
+                    </span>
+                    <div className="flex flex-col min-w-0 flex-1">
+                      <span className="font-mono text-xs font-bold uppercase tracking-wider text-[var(--color-text)] group-hover:text-[var(--color-accent)] transition-colors truncate">
+                        {srv.title}
+                      </span>
+                      {srv.desc && (
+                        <span className="font-mono text-[10px] text-[var(--color-text-muted)] truncate font-normal mt-0.5">
+                          {srv.desc}
+                        </span>
+                      )}
+                    </div>
+                    <span className="font-mono text-xs text-[var(--color-accent)] group-hover:translate-x-1 transition-transform shrink-0">
+                      →
+                    </span>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* ======================================================== */}
+          {/* 3. 01..04 TRANSFORMATION ITEMS (4 BUSINESS PROBLEMS) */}
+          {/* ======================================================== */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
             {problems.map((prob) => (
               <div
                 key={prob.index}
@@ -572,139 +372,92 @@ export default function Home() {
           </div>
 
           {/* ======================================================== */}
-          {/* TWO LIVE HORIZONTAL RELAY LAYERS */}
+          {/* 4. // CASE STUDIES & LIVE PROJECT FEED (RTL RELAY) */}
           {/* ======================================================== */}
-          <div className="space-y-6">
-            
-            {/* LAYER 01 // SERVICES RELAY (LEFT → RIGHT) */}
-            <div className="border border-[var(--color-border)] home-card-surface p-3.5 md:p-4 overflow-hidden">
-              <div className="flex items-center justify-between mb-3 px-1">
-                <div className="font-mono text-[10px] md:text-[11px] text-[var(--color-accent)] font-bold uppercase tracking-widest flex items-center gap-2">
-                  <span className="w-1.5 h-1.5 bg-[var(--color-accent)]" />
-                  <span>01 // SERVICES</span>
-                </div>
-                <div className="flex items-center gap-1.5 font-mono text-[9px] md:text-[10px] text-[var(--color-text-muted)] uppercase tracking-wider">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[var(--color-accent)] animate-pulse" />
-                  <span>LIVE SERVICE STACK // {activeServices.length} CAPABILITIES</span>
-                </div>
+          <div className="border border-[var(--color-border)] home-card-surface p-3.5 md:p-4 overflow-hidden">
+            <div className="flex items-center justify-between mb-3 px-1">
+              <div className="font-mono text-[10px] md:text-[11px] text-[var(--color-accent)] font-bold uppercase tracking-widest flex items-center gap-2">
+                <span className="w-1.5 h-1.5 bg-[var(--color-accent)]" />
+                <span>// CASE STUDIES</span>
               </div>
+              <div className="flex items-center gap-1.5 font-mono text-[9px] md:text-[10px] text-[var(--color-text-muted)] uppercase tracking-wider">
+                <span className="w-1.5 h-1.5 rounded-full bg-[var(--color-accent)] animate-pulse" />
+                <span>LIVE PROJECT FEED // {activeCaseStudies.length} DEPLOYMENTS</span>
+              </div>
+            </div>
 
-              {/* Viewport with Continuous LTR Movement */}
-              <div className="scroll2-layer-container py-1">
-                <div className="scroll2-layer-track-ltr gap-3">
-                  {marqueeServices.map((srv, idx) => (
-                    <Link
-                      key={`srv-${idx}`}
-                      to={srv.path}
-                      className="px-4 py-2.5 border border-[var(--color-border)] bg-[var(--color-bg)]/90 hover:border-[var(--color-accent)] transition-all shrink-0 flex items-center gap-3.5 group select-none cursor-pointer w-[260px] sm:w-[300px]"
-                    >
-                      <span className="font-mono text-[11px] text-[var(--color-accent)] font-bold shrink-0">
-                        {srv.num}
-                      </span>
-                      <div className="flex flex-col min-w-0 flex-1">
-                        <span className="font-mono text-xs font-bold uppercase tracking-wider text-[var(--color-text)] group-hover:text-[var(--color-accent)] transition-colors truncate">
-                          {srv.title}
+            {/* Viewport with Continuous RTL Movement */}
+            <div className="scroll2-layer-container py-1">
+              <div className="scroll2-layer-track-rtl gap-4">
+                {marqueeCaseStudies.map((cs, idx) => (
+                  <Link
+                    key={`cs-${idx}`}
+                    to={cs.path}
+                    className="p-3.5 border border-[var(--color-border)] bg-[var(--color-bg)]/90 hover:border-[var(--color-accent)] transition-all shrink-0 flex gap-3.5 group select-none cursor-pointer w-[300px] sm:w-[380px]"
+                  >
+                    {/* Image / Thumbnail */}
+                    <div className="w-16 sm:w-20 aspect-square border border-[var(--color-border)] overflow-hidden shrink-0 bg-black/5 dark:bg-white/5 relative">
+                      {cs.image ? (
+                        <img
+                          src={cs.image}
+                          alt=""
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                          onError={(e) => {
+                            e.currentTarget.style.display = 'none';
+                          }}
+                        />
+                      ) : (
+                        <div className="w-full h-full flex items-center justify-center font-mono text-[9px] text-[var(--color-text-muted)]">
+                          SMK//CS
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Content Details */}
+                    <div className="flex flex-col justify-between min-w-0 flex-1">
+                      <div>
+                        <div className="font-mono text-[9px] text-[var(--color-accent)] font-bold uppercase tracking-wider mb-0.5 truncate">
+                          CASE STUDY // {cs.industry}
+                        </div>
+                        <h3 className="font-heading text-xs sm:text-sm font-bold uppercase tracking-tight text-[var(--color-text)] group-hover:text-[var(--color-accent)] transition-colors truncate">
+                          {cs.title}
+                        </h3>
+                        <div className="text-[10px] font-mono text-[var(--color-text-secondary)] line-clamp-1 mt-1 font-normal">
+                          <span className="text-[var(--color-text-muted)] font-semibold">P:</span> {cs.problem}
+                        </div>
+                        <div className="text-[10px] font-mono text-[var(--color-text)] font-semibold line-clamp-1 mt-0.5">
+                          <span className="text-[var(--color-accent)] font-bold">↳ S:</span> {cs.solution}
+                        </div>
+                      </div>
+
+                      {/* Tech Tags & Read CTA */}
+                      <div className="flex items-center justify-between pt-2 mt-2 border-t border-[var(--color-border)]">
+                        <div className="flex items-center gap-1 overflow-hidden">
+                          {cs.tech && cs.tech.slice(0, 2).map((t, i) => (
+                            <span
+                              key={i}
+                              className="px-1.5 py-0.5 border border-[var(--color-border)] bg-[var(--color-surface-subtle)] text-[8px] font-mono text-[var(--color-text-secondary)] uppercase truncate"
+                            >
+                              {t}
+                            </span>
+                          ))}
+                        </div>
+                        <span className="font-mono text-[10px] text-[var(--color-accent)] font-bold uppercase flex items-center gap-1 group-hover:translate-x-0.5 transition-transform shrink-0 ml-1">
+                          <span>READ</span>
+                          <span>→</span>
                         </span>
-                        {srv.desc && (
-                          <span className="font-mono text-[10px] text-[var(--color-text-muted)] truncate font-normal mt-0.5">
-                            {srv.desc}
-                          </span>
-                        )}
                       </div>
-                      <span className="font-mono text-xs text-[var(--color-accent)] group-hover:translate-x-1 transition-transform shrink-0">
-                        →
-                      </span>
-                    </Link>
-                  ))}
-                </div>
+                    </div>
+                  </Link>
+                ))}
               </div>
             </div>
-
-            {/* LAYER 02 // CASE STUDIES RELAY (RIGHT → LEFT) */}
-            <div className="border border-[var(--color-border)] home-card-surface p-3.5 md:p-4 overflow-hidden">
-              <div className="flex items-center justify-between mb-3 px-1">
-                <div className="font-mono text-[10px] md:text-[11px] text-[var(--color-accent)] font-bold uppercase tracking-widest flex items-center gap-2">
-                  <span className="w-1.5 h-1.5 bg-[var(--color-accent)]" />
-                  <span>02 // CASE STUDIES</span>
-                </div>
-                <div className="flex items-center gap-1.5 font-mono text-[9px] md:text-[10px] text-[var(--color-text-muted)] uppercase tracking-wider">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[var(--color-accent)] animate-pulse" />
-                  <span>LIVE PROJECT FEED // {activeCaseStudies.length} DEPLOYMENTS</span>
-                </div>
-              </div>
-
-              {/* Viewport with Continuous RTL Movement */}
-              <div className="scroll2-layer-container py-1">
-                <div className="scroll2-layer-track-rtl gap-4">
-                  {marqueeCaseStudies.map((cs, idx) => (
-                    <Link
-                      key={`cs-${idx}`}
-                      to={cs.path}
-                      className="p-3.5 border border-[var(--color-border)] bg-[var(--color-bg)]/90 hover:border-[var(--color-accent)] transition-all shrink-0 flex gap-3.5 group select-none cursor-pointer w-[300px] sm:w-[380px]"
-                    >
-                      {/* Image / Thumbnail */}
-                      <div className="w-16 sm:w-20 aspect-square border border-[var(--color-border)] overflow-hidden shrink-0 bg-black/5 dark:bg-white/5 relative">
-                        {cs.image ? (
-                          <img
-                            src={cs.image}
-                            alt=""
-                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                            onError={(e) => {
-                              e.currentTarget.style.display = 'none';
-                            }}
-                          />
-                        ) : (
-                          <div className="w-full h-full flex items-center justify-center font-mono text-[9px] text-[var(--color-text-muted)]">
-                            SMK//CS
-                          </div>
-                        )}
-                      </div>
-
-                      {/* Content Details */}
-                      <div className="flex flex-col justify-between min-w-0 flex-1">
-                        <div>
-                          <div className="font-mono text-[9px] text-[var(--color-accent)] font-bold uppercase tracking-wider mb-0.5 truncate">
-                            CASE STUDY // {cs.industry}
-                          </div>
-                          <h3 className="font-heading text-xs sm:text-sm font-bold uppercase tracking-tight text-[var(--color-text)] group-hover:text-[var(--color-accent)] transition-colors truncate">
-                            {cs.title}
-                          </h3>
-                          <div className="text-[10px] font-mono text-[var(--color-text-secondary)] line-clamp-1 mt-1 font-normal">
-                            <span className="text-[var(--color-text-muted)] font-semibold">P:</span> {cs.problem}
-                          </div>
-                          <div className="text-[10px] font-mono text-[var(--color-text)] font-semibold line-clamp-1 mt-0.5">
-                            <span className="text-[var(--color-accent)] font-bold">↳ S:</span> {cs.solution}
-                          </div>
-                        </div>
-
-                        {/* Tech Tags & Read CTA */}
-                        <div className="flex items-center justify-between pt-2 mt-2 border-t border-[var(--color-border)]">
-                          <div className="flex items-center gap-1 overflow-hidden">
-                            {cs.tech && cs.tech.slice(0, 2).map((t, i) => (
-                              <span
-                                key={i}
-                                className="px-1.5 py-0.5 border border-[var(--color-border)] bg-[var(--color-surface-subtle)] text-[8px] font-mono text-[var(--color-text-secondary)] uppercase truncate"
-                              >
-                                {t}
-                              </span>
-                            ))}
-                          </div>
-                          <span className="font-mono text-[10px] text-[var(--color-accent)] font-bold uppercase flex items-center gap-1 group-hover:translate-x-0.5 transition-transform shrink-0 ml-1">
-                            <span>READ</span>
-                            <span>→</span>
-                          </span>
-                        </div>
-                      </div>
-                    </Link>
-                  ))}
-                </div>
-              </div>
-            </div>
-
           </div>
 
-          {/* End CTA Band */}
-          <div className="mt-10 border border-[var(--color-border)] p-6 md:p-8 home-card-surface flex flex-col sm:flex-row items-center justify-between gap-4">
+          {/* ======================================================== */}
+          {/* 5. BOOK STRATEGY CALL (END CTA BAND) */}
+          {/* ======================================================== */}
+          <div className="border border-[var(--color-border)] p-6 md:p-8 home-card-surface flex flex-col sm:flex-row items-center justify-between gap-4">
             <div className="space-y-1 text-center sm:text-left">
               <div className="font-mono text-[10px] text-[var(--color-accent)] font-bold uppercase tracking-widest">
                 ENTERPRISE TRANSFORMATION // STRATEGY CONSULTATION

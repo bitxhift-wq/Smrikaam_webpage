@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import {
-  ArrowRight, ArrowUpRight, Factory, BatteryCharging, ShoppingBag,
-  Landmark, Stethoscope, Truck, Car, PhoneCall, Tv, Building2
+  ArrowRight, ArrowUpRight, Cpu, Cloud, Database, Network,
+  Zap
 } from 'lucide-react';
 import { useCMS } from '../context/CMSContext';
 import TextReveal from '../components/anim/TextReveal';
@@ -14,11 +14,32 @@ function parseBulletPoints(data) {
   if (!data) return [];
   if (Array.isArray(data)) return data;
   if (typeof data !== 'string') return [String(data)];
+  
   if (data.includes('\n- ') || data.includes('\n• ') || data.includes('\n* ')) {
     return data.split(/\n[-•*]\s+/).map(s => s.trim().replace(/^[-•*]\s+/, '')).filter(Boolean);
   }
+  
   const sentences = data.split(/(?<=[.?!])\s+(?=[A-Z])/).map(s => s.trim()).filter(Boolean);
   return sentences.length > 0 ? sentences : [data];
+}
+
+function parseFlowSteps(text) {
+  if (!text) return [];
+  if (Array.isArray(text)) return text;
+  if (typeof text !== 'string') return [String(text)];
+  if (text.includes('→')) return text.split('→').map(s => s.trim()).filter(Boolean);
+  if (text.includes('->')) return text.split('->').map(s => s.trim()).filter(Boolean);
+  if (text.includes('\n')) return text.split('\n').map(s => s.trim().replace(/^[-•*]\s+/, '')).filter(Boolean);
+  return [text];
+}
+
+function parseArchitectureComponents(text) {
+  if (!text) return [];
+  if (Array.isArray(text)) return text;
+  if (typeof text !== 'string') return [String(text)];
+  if (text.includes('+')) return text.split('+').map(s => s.trim().replace(/\.$/, '')).filter(Boolean);
+  if (text.includes('\n')) return text.split('\n').map(s => s.trim().replace(/^[-•*]\s+/, '')).filter(Boolean);
+  return [text];
 }
 
 function renderBulletText(text) {
@@ -38,109 +59,81 @@ function renderBulletText(text) {
   return <span className="text-text-muted font-normal text-left">{clean}</span>;
 }
 
-export default function Industries() {
-  const { industries: rawCmsIndustries, caseStudies: rawCaseStudies, isLoaded } = useCMS() || {};
+export default function Products() {
+  const { accelerators: rawCmsProducts, caseStudies: rawCaseStudies, isLoaded } = useCMS() || {};
   const [activeIdx, setActiveIdx] = useState(0);
   const [mousePos, setMousePos] = useState({ x: 0.5, y: 0.5 });
   const [isHovered, setIsHovered] = useState(false);
   const stageRef = useRef(null);
 
   const iconMap = {
-    manufacturing: Factory,
-    energy: BatteryCharging,
-    'energy-utilities': BatteryCharging,
-    retail: ShoppingBag,
-    'retail-ecommerce': ShoppingBag,
-    bfsi: Landmark,
-    healthcare: Stethoscope,
-    'healthcare-life-sciences': Stethoscope,
-    logistics: Truck,
-    'logistics-supply-chain': Truck,
-    automotive: Car,
-    telecom: PhoneCall,
-    media: Tv
+    bitxhift: Cpu,
+    migratemax: Cloud,
+    parsemaster: Database,
+    linkgenx: Network
   };
 
-  const acceleratorMap = {
-    manufacturing: { name: 'BitXhift IIoT Platform', slug: 'bitxhift' },
-    energy: { name: 'BitXhift Telemetry Pipeline', slug: 'bitxhift' },
-    'energy-utilities': { name: 'BitXhift Telemetry Pipeline', slug: 'bitxhift' },
-    retail: { name: 'LinkGenX Integration Mesh', slug: 'linkgenx' },
-    'retail-ecommerce': { name: 'LinkGenX Integration Mesh', slug: 'linkgenx' },
-    bfsi: { name: 'LinkGenX Integration Mesh', slug: 'linkgenx' },
-    healthcare: { name: 'ParseMaster Streaming Engine', slug: 'parsemaster' },
-    'healthcare-life-sciences': { name: 'ParseMaster Streaming Engine', slug: 'parsemaster' },
-    logistics: { name: 'ParseMaster Ingestion Engine', slug: 'parsemaster' },
-    'logistics-supply-chain': { name: 'ParseMaster Ingestion Engine', slug: 'parsemaster' }
-  };
-
-  const industries = useMemo(() => {
-    if (!Array.isArray(rawCmsIndustries)) return [];
-    return rawCmsIndustries.map((item, idx) => {
+  const products = useMemo(() => {
+    if (!Array.isArray(rawCmsProducts)) return [];
+    return rawCmsProducts.map((item, idx) => {
       const slugLower = (item.slug || item.id || '').toLowerCase();
-      
       const linkedCase = Array.isArray(rawCaseStudies)
         ? rawCaseStudies.find(cs =>
-            cs.industry?.toLowerCase() === item.name?.toLowerCase() ||
-            cs.industry?.toLowerCase() === slugLower ||
+            cs.accelerator?.toLowerCase() === item.name?.toLowerCase() ||
+            cs.accelerator?.toLowerCase() === slugLower ||
             (cs.slug && cs.slug.includes(slugLower))
           )
         : null;
-
-      const relatedAcc = acceleratorMap[slugLower] || { name: 'BitXhift & LinkGenX', slug: 'bitxhift' };
 
       return {
         id: item.slug || item.id,
         slug: item.slug || item.id,
         num: String(idx + 1).padStart(2, '0'),
-        name: item.name || item.title,
-        icon: iconMap[slugLower] || Building2,
-        tagline: item.summary || item.tagline || item.description || '',
-        whatWeDo: item.content || item.description || item.summary || '',
-        businessProblems: parseBulletPoints(item.businessProblems || item.challenge || item.problemStatement || [
-          'Unplanned Machine Downtime: High scrap rates and unpredicted machinery faults causing production bottlenecks.',
-          'Manual Production Tracking: Paper-based shift logs and disconnected operational spreadsheets.',
-          'Supply Chain Stockouts: Inability to anticipate inventory buffers across distributed distribution facilities.'
+        title: item.name || item.title,
+        icon: iconMap[slugLower] || Zap,
+        category: item.category || 'REUSABLE ENGINEERING ASSET',
+        tagline: item.tagline || item.shortDescription || '',
+        description: item.fullDescription || item.shortDescription || item.description || '',
+        problem: item.problem || item.problemStatement || '',
+        problemPoints: parseBulletPoints(item.problem || item.problemStatement || [
+          'Operational Unpredictability: High scrap rates and unpredicted machinery faults causing costly downtime.',
+          'Legacy Protocol Fragmentation: Inability to bridge heterogeneous PLC architectures to unified telemetry streams.',
+          'Data Latency Overhead: Sluggish cloud-dependent architectures that compromise sub-second edge operations.'
         ]),
-        solutions: parseBulletPoints(item.solutions || item.solution || item.key_solutions || [
-          'Edge IIoT Telemetry: Continuous sub-second signal capture from heterogeneous sensors.',
-          'Live OEE Management: Automated calculation and visualization of plant availability, performance, and quality metrics.',
-          'Computer Vision Inspection: Edge-deployed defect recognition reducing visual inspection overhead by 80%.'
-        ]),
-        capabilities: Array.isArray(item.useCases) && item.useCases.length > 0
-          ? item.useCases
-          : (Array.isArray(item.key_solutions) ? item.key_solutions : (Array.isArray(item.capabilities) ? item.capabilities : [
-              'Automotive Assembly Lines',
-              'CNC Precision Tooling',
-              'Textile Machinery Telemetry',
-              'Continuous Process Manufacturing'
-            ])),
+        solution: item.solution || item.solutionStatement || 'Standardized edge intelligence engine delivering sub-second anomaly detection, local protocol normalization, and autonomous offline operations.',
+        howItWorks: item.howItWorks || 'Edge Telemetry → Signal Normalization → Stream Processing → Unified Dashboard',
+        flowSteps: parseFlowSteps(item.howItWorks || 'Edge Telemetry → Signal Normalization → Stream Processing → Unified Dashboard'),
+        architecture: item.architecture || 'OPC-UA Collector + Node-RED Middleware + TimescaleDB Engine + React Mesh',
+        archComponents: parseArchitectureComponents(item.architecture || 'OPC-UA Collector + Node-RED Middleware + TimescaleDB Engine + React Mesh'),
+        capabilities: Array.isArray(item.keyFeatures) && item.keyFeatures.length > 0
+          ? item.keyFeatures
+          : (Array.isArray(item.keyCapabilities) ? item.keyCapabilities : [
+              'Real-Time OEE Calculation',
+              'Vibration Anomaly Detection',
+              'Energy Load Optimization',
+              'Automated Shift Reporting'
+            ]),
         technology: Array.isArray(item.technology) && item.technology.length > 0
           ? item.technology
-          : (Array.isArray(item.techStack) && item.techStack.length > 0 ? item.techStack : ['OPC-UA', 'MQTT', 'TimescaleDB', 'Python', 'React', 'SAP Connector']),
-        outcomes: parseBulletPoints(item.outcomes || item.outcome || item.businessOutcomes || [
-          '35% reduction in unplanned downtime and operational latency across facilities.',
-          'Real-time visibility across all connected assets and downstream business systems.'
-        ]),
-        acceleratorName: relatedAcc.name,
-        acceleratorSlug: relatedAcc.slug,
-        caseStudy: linkedCase ? linkedCase.title : (item.caseStudy || `${item.name} Enterprise Transformation`),
+          : ['MQTT', 'OPC-UA', 'Node-RED', 'TimescaleDB', 'Docker Edge', 'React', 'Python', 'Grafana'],
+        outcomes: item.businessOutcomes || item.outcomes || '35% reduction in unplanned downtime and 60% faster deployment across distributed industrial plants.',
+        caseStudy: linkedCase ? linkedCase.title : (item.caseStudy || `${item.name || item.title} Enterprise Deployment`),
         caseStudySlug: linkedCase ? linkedCase.slug : null,
-        image: item.cover_image_url || item.image || 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?q=80&w=1200&auto=format&fit=crop',
-        caption: `${(item.name || item.title).toUpperCase()} // Enterprise Domain Architecture`
+        image: item.cover_image_url || item.image || 'https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?q=80&w=1200&auto=format&fit=crop',
+        caption: `${(item.name || item.title).toUpperCase()} // Production Engineering Specification`
       };
     });
-  }, [rawCmsIndustries, rawCaseStudies]);
+  }, [rawCmsProducts, rawCaseStudies]);
 
   // Preload images to eliminate flickers
   useEffect(() => {
-    industries.forEach((ind) => {
-      if (ind.image) {
+    products.forEach((prod) => {
+      if (prod.image) {
         const img = new Image();
-        img.src = ind.image;
+        img.src = prod.image;
       }
     });
-  }, [industries]);
+  }, [products]);
 
   const handleMouseMove = (e) => {
     if (!stageRef.current) return;
@@ -150,7 +143,7 @@ export default function Industries() {
     setMousePos({ x, y });
   };
 
-  const activeIndustry = industries[activeIdx] || industries[0] || null;
+  const activeProduct = products[activeIdx] || products[0] || null;
 
   const rotateX = isHovered ? (0.5 - mousePos.y) * 4 : 0;
   const rotateY = isHovered ? (mousePos.x - 0.5) * 4 : 0;
@@ -159,58 +152,58 @@ export default function Industries() {
 
   return (
     <div className="relative z-10 pt-28 pb-24 text-text">
-      {/* SECTION 01 — INDUSTRIES HERO */}
-      <section id="overview" data-scroll-label="INDUSTRIES" className="px-6 md:px-16 max-w-7xl mx-auto mb-16">
+      {/* SECTION 01 — PRODUCTS HERO */}
+      <section id="overview" data-scroll-label="PRODUCTS" className="px-6 md:px-16 max-w-7xl mx-auto mb-16">
         <div className="page-title-surface relative border border-border p-8 md:p-12 overflow-hidden">
           <BannerDrawBorder />
           <div className="flex items-center justify-between mb-4">
             <div className="font-mono text-xs md:text-[13px] text-accent uppercase tracking-[0.2em] font-medium">
-              INDUSTRIES &amp; DOMAINS // DEPLOYMENT BLUEPRINTS
+              PRODUCTS // ENGINEERING ASSETS
             </div>
             <div className="font-mono text-xs md:text-[13px] text-text-muted border border-border px-3 py-1 bg-black/[0.02] dark:bg-white/[0.03]">
-              {industries.length} SECTOR SOLUTIONS
+              {products.length} ENTERPRISE PRODUCTS
             </div>
           </div>
 
           <TextReveal
-            text="TECHNOLOGY THAT UNDERSTANDS YOUR INDUSTRY"
+            text="ENGINEERED PRODUCTS FOR ENTERPRISE TRANSFORMATION"
             as="h1"
             className="font-heading text-4xl sm:text-5xl md:text-6xl font-bold uppercase tracking-tight text-text leading-[1.0] mb-4 max-w-5xl"
           />
 
           <p className="text-[16px] md:text-[18px] text-text-muted max-w-3xl font-normal leading-[1.6] border-l-2 border-accent pl-4 text-left">
-            SMRIKAAM brings specialized engineering frameworks and domain expertise tailored to the unique operational and regulatory realities of major global enterprise sectors.
+            SMRIKAAM proprietary engineering assets and reusable accelerators reduce enterprise deployment timelines by up to 60%.
           </p>
         </div>
       </section>
 
-      {/* SECTION 02 — THE INDUSTRY SYSTEM (Interactive Master-Detail Architecture) */}
-      <section id="sectors" data-scroll-label="INDUSTRY SYSTEM" className="px-6 md:px-16 max-w-7xl mx-auto mb-20">
-        {industries.length === 0 ? (
+      {/* SECTION 02 — THE PRODUCT SYSTEM (Interactive Master-Detail Architecture) */}
+      <section id="capabilities" data-scroll-label="PRODUCT SYSTEM" className="px-6 md:px-16 max-w-7xl mx-auto mb-20">
+        {products.length === 0 ? (
           <div className="page-title-surface border border-border p-12 text-center my-12">
             <div className="font-mono text-xs text-accent uppercase mb-2">SYSTEM // STATUS</div>
-            <h2 className="font-heading text-2xl font-bold uppercase text-text mb-2">NO PUBLISHED INDUSTRIES CURRENTLY AVAILABLE</h2>
-            <p className="text-text-muted text-sm max-w-md mx-auto">All sector profiles are currently in draft, undergoing maintenance, or archived.</p>
+            <h2 className="font-heading text-2xl font-bold uppercase text-text mb-2">NO PUBLISHED PRODUCTS CURRENTLY AVAILABLE</h2>
+            <p className="text-text-muted text-sm max-w-md mx-auto">All products are currently in draft, undergoing maintenance, or archived.</p>
           </div>
         ) : (
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-start border-t border-border/70 pt-10">
             
-            {/* Left Column: Industries Selector List (Sticky Desktop Navigation) */}
+            {/* Left Column: Products Selector List (Sticky Desktop Navigation) */}
             <aside className="lg:col-span-5 lg:sticky lg:top-20 self-start z-20">
               <div
                 role="tablist"
-                aria-label="Target Industries"
+                aria-label="Enterprise Products"
                 className="page-title-surface border border-border overflow-hidden flex flex-col divide-y divide-border/70"
               >
-              {industries.map((ind, idx) => {
+              {products.map((prod, idx) => {
                 const isActive = activeIdx === idx;
                 return (
                   <div
-                    key={ind.id}
+                    key={prod.id}
                     role="tab"
-                    id={`industry-tab-${ind.id}`}
+                    id={`product-tab-${prod.id}`}
                     aria-selected={isActive}
-                    aria-controls={`industry-panel-${ind.id}`}
+                    aria-controls={`product-panel-${prod.id}`}
                     tabIndex={0}
                     onClick={() => setActiveIdx(idx)}
                     onKeyDown={(e) => {
@@ -230,16 +223,16 @@ export default function Industries() {
                       <span className={`font-mono text-[12px] font-medium tracking-widest pt-0.5 transition-colors ${
                         isActive ? 'text-accent' : 'text-text-muted/60 group-hover:text-text'
                       }`}>
-                        {ind.num}
+                        {prod.num}
                       </span>
                       <div>
                         <h3 className={`font-heading text-base md:text-[17px] font-semibold tracking-tight transition-colors uppercase ${
                           isActive ? 'text-text' : 'text-text/80 group-hover:text-text'
                         }`}>
-                          {ind.name}
+                          {prod.title}
                         </h3>
                         <p className="text-[13px] text-text-muted font-normal leading-[1.4] mt-0.5 line-clamp-1 max-w-md">
-                          {ind.tagline}
+                          {prod.tagline}
                         </p>
                       </div>
                     </div>
@@ -258,46 +251,46 @@ export default function Industries() {
               </div>
             </aside>
 
-            {/* Right Column: Active Industry Detailed Specification Stage (Normal Document Scroll) */}
-            {activeIndustry && (
+            {/* Right Column: Active Product Detailed Specification Stage (Normal Document Scroll) */}
+            {activeProduct && (
               <main className="lg:col-span-7 min-w-0">
                 <div
-                  key={activeIndustry.id}
+                  key={activeProduct.id}
                   role="tabpanel"
-                  id={`industry-panel-${activeIndustry.id}`}
-                  aria-labelledby={`industry-tab-${activeIndustry.id}`}
+                  id={`product-panel-${activeProduct.id}`}
+                  aria-labelledby={`product-tab-${activeProduct.id}`}
                   className="service-detail-panel p-6 md:p-8 space-y-6"
                 >
                   
-                  {/* Header: Industry Number, Badge, and Title */}
+                  {/* Header: Product Number, Badge, and Title */}
                   <div className="flex items-start justify-between gap-4 border-b border-border/70 pb-5">
                     <div className="flex items-start gap-3.5">
                       <div className="w-10 h-10 border border-border flex items-center justify-center text-accent shrink-0 mt-0.5 font-mono text-sm font-bold">
-                        {activeIndustry.num}
+                        {activeProduct.num}
                       </div>
                       <div>
                         <div className="font-mono text-[12px] text-accent uppercase tracking-[0.12em] font-medium">
-                          SPECIFICATION // {activeIndustry.num} OF {industries.length}
+                          SPECIFICATION // {activeProduct.num} OF {products.length}
                         </div>
                         <h2 className="font-heading text-2xl md:text-3xl font-semibold text-text tracking-tight mt-0.5 uppercase">
-                          {activeIndustry.name}
+                          {activeProduct.title}
                         </h2>
                       </div>
                     </div>
                     <div className="hidden sm:block font-mono text-[11px] text-text-muted/70 uppercase tracking-widest border border-border px-2 py-1">
-                      ENTERPRISE DOMAIN
+                      REUSABLE ENGINEERING ASSET
                     </div>
                   </div>
 
-                  {/* Industry Context Narrative */}
-                  {activeIndustry.whatWeDo && (
+                  {/* Product Detailed Narrative */}
+                  {activeProduct.description && (
                     <div className="text-[15px] md:text-[16px] font-normal text-text-muted leading-[1.6] text-left">
-                      <RichTextRenderer content={activeIndustry.whatWeDo} />
+                      <RichTextRenderer content={activeProduct.description} />
                     </div>
                   )}
 
                   {/* Real Photograph with Parallax on Desktop */}
-                  {activeIndustry.image && (
+                  {activeProduct.image && (
                     <div
                       ref={stageRef}
                       onMouseMove={handleMouseMove}
@@ -309,8 +302,8 @@ export default function Industries() {
                       className="relative overflow-hidden aspect-video border border-border bg-black/5 dark:bg-white/5"
                     >
                       <img
-                        src={activeIndustry.image}
-                        alt={activeIndustry.name}
+                        src={activeProduct.image}
+                        alt={activeProduct.title}
                         onError={(e) => {
                           e.currentTarget.style.display = 'none';
                         }}
@@ -320,53 +313,92 @@ export default function Industries() {
                         }}
                       />
                       <div className="absolute bottom-0 left-0 right-0 p-3 bg-black/80 backdrop-blur-sm text-[12px] font-mono text-white/90 tracking-wider text-left">
-                        {activeIndustry.caption}
+                        {activeProduct.caption}
                       </div>
                     </div>
                   )}
 
-                  {/* 01 // BUSINESS PROBLEMS SOLVED */}
-                  {activeIndustry.businessProblems && activeIndustry.businessProblems.length > 0 && (
-                    <div>
+                  {/* 01 // PROBLEM SOLVED & 02 // SOLUTION PROVIDED */}
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="flex flex-col h-full">
                       <h4 className="font-mono text-[12px] md:text-[13px] text-accent font-medium uppercase tracking-[0.12em] mb-2.5 text-left">
-                        01 // BUSINESS PROBLEMS SOLVED
+                        01 // PROBLEM SOLVED
                       </h4>
-                      <ul className="space-y-2">
-                        {activeIndustry.businessProblems.map((prob, i) => (
-                          <li key={i} className="flex items-start gap-2.5 text-[14px] md:text-[15px] font-normal text-text-muted">
-                            <span className="w-1.5 h-1.5 rounded-full bg-accent mt-2 shrink-0" aria-hidden="true" />
-                            <div>{renderBulletText(prob)}</div>
-                          </li>
-                        ))}
-                      </ul>
+                      <div className="subtle-readable-surface p-4 border border-border flex-1 flex flex-col justify-center">
+                        {activeProduct.problemPoints && activeProduct.problemPoints.length > 1 ? (
+                          <ul className="space-y-2">
+                            {activeProduct.problemPoints.map((prob, i) => (
+                              <li key={i} className="flex items-start gap-2.5 text-[14px] md:text-[15px] font-normal text-text-muted">
+                                <span className="w-1.5 h-1.5 rounded-full bg-accent mt-2 shrink-0" aria-hidden="true" />
+                                <div>{renderBulletText(prob)}</div>
+                              </li>
+                            ))}
+                          </ul>
+                        ) : (
+                          <div className="text-[14px] md:text-[15px] text-text-muted leading-[1.6]">
+                            {renderBulletText(activeProduct.problem)}
+                          </div>
+                        )}
+                      </div>
                     </div>
-                  )}
 
-                  {/* 02 // HOW SMRIKAAM SOLVES IT */}
-                  {activeIndustry.solutions && activeIndustry.solutions.length > 0 && (
-                    <div>
+                    <div className="flex flex-col h-full">
                       <h4 className="font-mono text-[12px] md:text-[13px] text-accent font-medium uppercase tracking-[0.12em] mb-2.5 text-left">
-                        02 // HOW SMRIKAAM SOLVES IT
+                        02 // SOLUTION PROVIDED
                       </h4>
-                      <ul className="space-y-2">
-                        {activeIndustry.solutions.map((sol, i) => (
-                          <li key={i} className="flex items-start gap-2.5 text-[14px] md:text-[15px] font-normal text-text-muted">
-                            <span className="w-1.5 h-1.5 rounded-full bg-accent mt-2 shrink-0" aria-hidden="true" />
-                            <div>{renderBulletText(sol)}</div>
-                          </li>
-                        ))}
-                      </ul>
+                      <div className="bg-accent/5 p-4 border border-accent/30 text-[14px] md:text-[15px] text-text font-medium leading-[1.6] flex-1 flex flex-col justify-center text-left">
+                        <RichTextRenderer content={activeProduct.solution} />
+                      </div>
                     </div>
-                  )}
+                  </div>
 
-                  {/* 03 // CORE CAPABILITIES & USE CASES */}
-                  {activeIndustry.capabilities && activeIndustry.capabilities.length > 0 && (
+                  {/* 03 // HOW IT WORKS & 04 // ARCHITECTURE */}
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="flex flex-col h-full">
+                      <h4 className="font-mono text-[12px] md:text-[13px] text-accent font-medium uppercase tracking-[0.12em] mb-2.5 text-left">
+                        03 // HOW IT WORKS
+                      </h4>
+                      <div className="subtle-readable-surface p-4 border border-border flex-1 flex flex-wrap items-center gap-2 font-mono text-[12px] md:text-[13px]">
+                        {activeProduct.flowSteps.map((step, idx) => (
+                          <React.Fragment key={idx}>
+                            <span className="px-2.5 py-1 bg-black/[0.03] dark:bg-white/[0.04] border border-border text-text font-medium">
+                              {step}
+                            </span>
+                            {idx < activeProduct.flowSteps.length - 1 && (
+                              <span className="text-accent font-bold select-none text-xs">→</span>
+                            )}
+                          </React.Fragment>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div className="flex flex-col h-full">
+                      <h4 className="font-mono text-[12px] md:text-[13px] text-accent font-medium uppercase tracking-[0.12em] mb-2.5 text-left">
+                        04 // ARCHITECTURE
+                      </h4>
+                      <div className="subtle-readable-surface p-4 border border-border flex-1 flex flex-wrap items-center gap-2 font-mono text-[12px] md:text-[13px]">
+                        {activeProduct.archComponents.map((comp, idx) => (
+                          <React.Fragment key={idx}>
+                            <span className="px-2.5 py-1 bg-black/[0.03] dark:bg-white/[0.04] border border-border text-text font-normal">
+                              {comp}
+                            </span>
+                            {idx < activeProduct.archComponents.length - 1 && (
+                              <span className="text-accent font-bold select-none text-xs">+</span>
+                            )}
+                          </React.Fragment>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* 05 // KEY CAPABILITIES & FEATURES */}
+                  {activeProduct.capabilities && activeProduct.capabilities.length > 0 && (
                     <div>
                       <h4 className="font-mono text-[12px] md:text-[13px] text-accent font-medium uppercase tracking-[0.12em] mb-3 text-left">
-                        03 // CORE CAPABILITIES &amp; USE CASES
+                        05 // KEY CAPABILITIES &amp; FEATURES
                       </h4>
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-                        {activeIndustry.capabilities.map((cap, i) => (
+                        {activeProduct.capabilities.map((cap, i) => (
                           <div
                             key={i}
                             className="flex items-center gap-2 px-3.5 py-2 bg-black/[0.03] dark:bg-white/[0.04] border border-border text-[13px] md:text-[14px] font-mono text-text font-normal"
@@ -379,14 +411,14 @@ export default function Industries() {
                     </div>
                   )}
 
-                  {/* 04 // MODERN TECHNOLOGY STACK */}
-                  {activeIndustry.technology && activeIndustry.technology.length > 0 && (
+                  {/* 06 // MODERN TECHNOLOGY STACK */}
+                  {activeProduct.technology && activeProduct.technology.length > 0 && (
                     <div>
                       <h4 className="font-mono text-[12px] md:text-[13px] text-accent font-medium uppercase tracking-[0.12em] mb-3 text-left">
-                        04 // MODERN TECHNOLOGY STACK
+                        06 // MODERN TECHNOLOGY STACK
                       </h4>
                       <div className="flex flex-wrap gap-2.5">
-                        {activeIndustry.technology.map((tech, i) => (
+                        {activeProduct.technology.map((tech, i) => (
                           <span
                             key={i}
                             className="inline-flex items-center px-3 py-1.5 bg-bg border border-border text-[13px] md:text-[14px] font-mono text-text font-medium"
@@ -398,61 +430,41 @@ export default function Industries() {
                     </div>
                   )}
 
-                  {/* 05 // BUSINESS OUTCOME */}
-                  {activeIndustry.outcomes && (
+                  {/* 07 // BUSINESS OUTCOME */}
+                  {activeProduct.outcomes && (
                     <div className="p-4 bg-black/[0.02] dark:bg-white/[0.03] border-l-2 border-accent">
                       <div className="font-mono text-[12px] text-accent uppercase tracking-[0.12em] font-medium mb-1 text-left">
-                        05 // BUSINESS OUTCOME
+                        07 // BUSINESS OUTCOME
                       </div>
-                      {Array.isArray(activeIndustry.outcomes) ? (
-                        <ul className="space-y-1.5">
-                          {activeIndustry.outcomes.map((outc, i) => (
-                            <li key={i} className="flex items-start gap-2 text-[14px] md:text-[15px] font-semibold text-text">
-                              <span className="w-1.5 h-1.5 rounded-full bg-accent mt-2 shrink-0" aria-hidden="true" />
-                              <div>{renderBulletText(outc)}</div>
-                            </li>
-                          ))}
-                        </ul>
-                      ) : (
-                        <p className="text-[15px] md:text-[16px] text-text font-semibold leading-[1.5] text-left">
-                          {activeIndustry.outcomes}
-                        </p>
-                      )}
+                      <p className="text-[15px] md:text-[16px] text-text font-semibold leading-[1.5] text-left">
+                        {activeProduct.outcomes}
+                      </p>
                     </div>
                   )}
 
-                  {/* 06 // RELATED PRODUCT / ACCELERATOR & CASE STUDY */}
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2 border-t border-border/70 font-mono text-[13px]">
-                    <div className="p-3.5 border border-border/70 flex flex-col justify-between">
-                      <span className="text-[11px] text-text-muted font-medium uppercase tracking-wider mb-1.5 text-left">
-                        RELATED PRODUCT / ACCELERATOR
-                      </span>
+                  {/* 08 // LINKED CASE STUDY */}
+                  {activeProduct.caseStudy && (
+                    <div className="p-3.5 border border-border/70 flex flex-col sm:flex-row sm:items-center justify-between gap-3 font-mono text-[13px]">
+                      <div>
+                        <span className="text-[11px] text-text-muted font-medium uppercase tracking-wider block mb-0.5 text-left">
+                          08 // LINKED CASE STUDY
+                        </span>
+                        <span className="text-text font-bold uppercase text-left block">{activeProduct.caseStudy}</span>
+                      </div>
                       <Link
-                        to={`/products/${activeIndustry.acceleratorSlug}`}
-                        className="text-text font-medium hover:text-accent transition-colors inline-flex items-center gap-1.5 group/acc"
+                        to={activeProduct.caseStudySlug ? `/case-studies/${activeProduct.caseStudySlug}` : '/case-studies'}
+                        className="text-accent hover:underline inline-flex items-center gap-1.5 font-bold shrink-0"
                       >
-                        <span>{activeIndustry.acceleratorName}</span>
-                        <span className="text-accent transition-transform duration-200 group-hover/acc:translate-x-1" aria-hidden="true">→</span>
+                        <span>View Blueprint</span>
+                        <ArrowUpRight className="w-3.5 h-3.5" />
                       </Link>
                     </div>
-                    <div className="p-3.5 border border-border/70 flex flex-col justify-between">
-                      <span className="text-[11px] text-text-muted font-medium uppercase tracking-wider mb-1.5 text-left">
-                        LINKED CASE STUDY
-                      </span>
-                      <Link
-                        to={activeIndustry.caseStudySlug ? `/case-studies/${activeIndustry.caseStudySlug}` : '/case-studies'}
-                        className="text-text font-medium hover:text-accent transition-colors inline-flex items-center gap-1.5 group/cs"
-                      >
-                        <span className="line-clamp-1">{activeIndustry.caseStudy}</span>
-                        <span className="text-accent transition-transform duration-200 group-hover/cs:translate-x-1 shrink-0" aria-hidden="true">→</span>
-                      </Link>
-                    </div>
-                  </div>
+                  )}
 
                   {/* Direct Specification & CTA Links */}
                   <div className="pt-2 flex flex-col sm:flex-row gap-3">
                     <Link
-                      to={`/industries/${activeIndustry.slug}`}
+                      to={`/products/${activeProduct.slug}`}
                       className="admin-btn flex-1 py-3 text-xs font-semibold uppercase tracking-wider inline-flex items-center justify-center gap-2 text-text hover:text-accent"
                     >
                       <span>VIEW FULL SPECIFICATION</span>
@@ -462,7 +474,7 @@ export default function Industries() {
                       to="/contact"
                       className="btn btn-primary flex-1 py-3 text-xs font-semibold uppercase tracking-wider inline-flex items-center justify-center gap-2"
                     >
-                      <span>DISCUSS THIS INDUSTRY</span>
+                      <span>DISCUSS THIS PRODUCT</span>
                       <span className="arrow-hover" aria-hidden="true">→</span>
                     </Link>
                   </div>
@@ -477,13 +489,13 @@ export default function Industries() {
       <section id="cta" data-scroll-label="STRATEGY CALL" className="px-6 md:px-16 max-w-7xl mx-auto mt-24">
         <Reveal variant="scale" className="border border-border p-10 md:p-14 text-center bg-bg/95 backdrop-blur-md">
           <div className="font-mono text-[12px] md:text-[13px] text-accent uppercase tracking-[0.14em] font-medium mb-3">
-            DOMAIN ENGINEERING // 48-HOUR CONSULTATION
+            ACCELERATE TRANSFORMATION // 48-HOUR PILOT
           </div>
           <h2 className="font-heading text-3xl md:text-4xl font-bold uppercase text-text mb-4">
-            NEED A SPECIALIZED TECHNOLOGY BLUEPRINT FOR YOUR SECTOR?
+            WANT TO DEPLOY AN ENGINEERED PRODUCT IN YOUR ENTERPRISE?
           </h2>
           <p className="text-text-muted text-[15px] md:text-[16px] font-normal max-w-xl mx-auto mb-8 leading-[1.6]">
-            Our domain architects collaborate with enterprise leadership to map technical requirements and deliver pilot architectures.
+            Our solutions engineering team can conduct a 48-hour pilot setup using BitXhift, MigrateMax, ParseMaster, or LinkGenX.
           </p>
           <Link to="/contact" className="btn btn-primary text-sm font-semibold uppercase tracking-wider inline-flex items-center gap-2">
             <span>BOOK STRATEGY CALL</span>

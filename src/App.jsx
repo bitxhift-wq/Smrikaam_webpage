@@ -19,6 +19,8 @@ import { CMSProvider } from './context/CMSContext';
 import Home from './pages/Home';
 import Services from './pages/Services';
 import ServiceDetail from './pages/ServiceDetail';
+import Products from './pages/Products';
+import ProductDetail from './pages/ProductDetail';
 import Accelerators from './pages/Accelerators';
 import Industries from './pages/Industries';
 import IndustryDetail from './pages/IndustryDetail';
@@ -88,7 +90,7 @@ const SERVICE_FIELDS = [
 ];
 
 const ACCELERATOR_FIELDS = [
-  { name: 'name', label: 'Accelerator Name', required: true, placeholder: 'e.g. BitXhift' },
+  { name: 'name', label: 'Product Name', required: true, placeholder: 'e.g. BitXhift' },
   { name: 'slug', label: 'Slug', placeholder: 'bitxhift' },
   { name: 'category', label: 'Category', placeholder: 'Industrial IoT' },
   { name: 'tagline', label: 'Tagline', placeholder: 'Industrial IoT & Edge Intelligence Accelerator' },
@@ -147,6 +149,39 @@ const CASE_STUDY_FIELDS = [
   { name: 'technologies', label: 'Technologies Used', type: 'array', placeholder: 'MQTT, OPC-UA, TimescaleDB, Python' },
   { name: 'cover_image_url', label: 'Hero Image URL', placeholder: 'https://images.unsplash.com/...' },
   { name: 'pdf_url', label: 'Downloadable PDF / DOCX Case Study URL', placeholder: '/uploads/case-study.pdf' },
+  {
+    name: 'status', label: 'Publishing Status', type: 'select', options: [
+      { label: 'Published (Live on website)', value: 'published' },
+      { label: 'Draft (Admin only)', value: 'draft' },
+      { label: 'Archived', value: 'archived' }
+    ]
+  }
+];
+
+const STAFFING_FIELDS = [
+  { name: 'title', label: 'Engagement Model / Role', required: true, placeholder: 'e.g. Temporary Staffing' },
+  { name: 'slug', label: 'Slug', placeholder: 'temporary-staffing' },
+  { name: 'subtitle', label: 'Subtitle / Tagline', placeholder: 'On-demand specialists for surge capacity and short-term programs.' },
+  { name: 'desc', label: 'Detailed Description', type: 'textarea', rows: 3, required: true },
+  { name: 'bullets', label: 'Key Capabilities / Deliverables', type: 'array', placeholder: '48–72h turnaround, Fully compliant' },
+  {
+    name: 'status', label: 'Publishing Status', type: 'select', options: [
+      { label: 'Published (Live on website)', value: 'published' },
+      { label: 'Draft (Admin only)', value: 'draft' },
+      { label: 'Archived', value: 'archived' }
+    ]
+  }
+];
+
+const LOCATION_FIELDS = [
+  { name: 'name', label: 'Location Name', required: true, placeholder: 'e.g. COIMBATORE HQ' },
+  { name: 'slug', label: 'Slug', placeholder: 'coimbatore-hq' },
+  { name: 'type', label: 'Location Type / Tag', placeholder: 'PRIMARY TECHNOLOGY & DELIVERY CENTER' },
+  { name: 'address', label: 'Full Address', type: 'textarea', rows: 2, required: true, placeholder: 'No. 19, Nataraj Nagar, Koundampalayam, Coimbatore, Tamil Nadu 641030, India' },
+  { name: 'email', label: 'Contact Email', placeholder: 'contact@smrikaam.com' },
+  { name: 'phone', label: 'Contact Phone', placeholder: '+91 91506 84601' },
+  { name: 'description', label: 'Location Description', type: 'textarea', rows: 2 },
+  { name: 'capabilities', label: 'Engineering Capabilities / Divisions', type: 'array', placeholder: 'Industrial IoT Lab, Data Center, AI Lab' },
   {
     name: 'status', label: 'Publishing Status', type: 'select', options: [
       { label: 'Published (Live on website)', value: 'published' },
@@ -235,7 +270,7 @@ function PublicLayout({ children }) {
   }, []);
 
   return (
-    <div className="relative min-h-screen bg-bg text-text selection:bg-accent selection:text-[var(--accent-contrast)]">
+    <div className="app-root-overflow relative min-h-screen bg-bg text-text selection:bg-accent selection:text-[var(--accent-contrast)]">
       {/* 2px Scroll Progress Bar */}
       <div id="scroll-progress-bar" className="scroll-progress-bar" style={{ transform: 'scaleX(0)' }} aria-hidden="true" />
       {/* Ambient Cursor Spotlight Layer */}
@@ -261,7 +296,10 @@ export default function App() {
             <Route path="/" element={<PublicLayout><Home /></PublicLayout>} />
             <Route path="/services" element={<PublicLayout><Services /></PublicLayout>} />
             <Route path="/services/:slug" element={<PublicLayout><ServiceDetail /></PublicLayout>} />
-            <Route path="/accelerators" element={<PublicLayout><Accelerators /></PublicLayout>} />
+            <Route path="/products" element={<PublicLayout><Products /></PublicLayout>} />
+            <Route path="/products/:slug" element={<PublicLayout><ProductDetail /></PublicLayout>} />
+            <Route path="/accelerators" element={<PublicLayout><Products /></PublicLayout>} />
+            <Route path="/accelerators/:slug" element={<PublicLayout><ProductDetail /></PublicLayout>} />
             <Route path="/industries" element={<PublicLayout><Industries /></PublicLayout>} />
             <Route path="/industries/:slug" element={<PublicLayout><IndustryDetail /></PublicLayout>} />
             <Route path="/case-studies" element={<PublicLayout><CaseStudies /></PublicLayout>} />
@@ -303,7 +341,11 @@ export default function App() {
               />
               <Route
                 path="accelerators"
-                element={<AdminContentManager resource="accelerators" title="Accelerators" fields={ACCELERATOR_FIELDS} />}
+                element={<AdminContentManager resource="accelerators" title="Products" fields={ACCELERATOR_FIELDS} />}
+              />
+              <Route
+                path="products"
+                element={<Navigate to={`${ADMIN_ROUTE_BASE}/accelerators`} replace />}
               />
               <Route
                 path="industries"
@@ -312,6 +354,14 @@ export default function App() {
               <Route
                 path="case-studies"
                 element={<AdminContentManager resource="case-studies" title="Case Studies" fields={CASE_STUDY_FIELDS} />}
+              />
+              <Route
+                path="staffing"
+                element={<AdminContentManager resource="staffing" title="Staffing Models & Roles" fields={STAFFING_FIELDS} />}
+              />
+              <Route
+                path="locations"
+                element={<AdminContentManager resource="locations" title="Locations & Facilities" fields={LOCATION_FIELDS} />}
               />
               <Route path="reports" element={<ReportsManagerPage />} />
               <Route path="media" element={<MediaLibraryView />} />

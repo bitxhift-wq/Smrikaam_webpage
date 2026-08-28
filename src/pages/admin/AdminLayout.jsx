@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Link, useNavigate, useLocation, Outlet } from 'react-router-dom';
 import {
   LayoutDashboard, FileText, Cpu, Zap, Factory, Briefcase, FileBarChart,
-  Image as ImageIcon, CheckCircle, Clock, Trash2, Settings, LogOut, Menu, X
+  Image as ImageIcon, CheckCircle, Clock, Trash2, Settings, LogOut, Menu, X,
+  Users, MapPin
 } from 'lucide-react';
 import api from '../../api';
 import Logo from '../../components/Logo';
@@ -54,10 +55,12 @@ export default function AdminLayout() {
       items: [
         { label: 'Blog Articles', path: `${ADMIN_ROUTE_BASE}/blogs`, icon: FileText },
         { label: 'Services', path: `${ADMIN_ROUTE_BASE}/services`, icon: Cpu },
-        { label: 'Accelerators', path: `${ADMIN_ROUTE_BASE}/accelerators`, icon: Zap },
+        { label: 'Products', path: `${ADMIN_ROUTE_BASE}/accelerators`, icon: Zap },
         { label: 'Industries', path: `${ADMIN_ROUTE_BASE}/industries`, icon: Factory },
         { label: 'Case Studies', path: `${ADMIN_ROUTE_BASE}/case-studies`, icon: Briefcase },
-        { label: 'Flash Reports', path: `${ADMIN_ROUTE_BASE}/reports`, icon: FileBarChart }
+        { label: 'Flash Reports', path: `${ADMIN_ROUTE_BASE}/reports`, icon: FileBarChart },
+        { label: 'Staffing', path: `${ADMIN_ROUTE_BASE}/staffing`, icon: Users },
+        { label: 'Locations', path: `${ADMIN_ROUTE_BASE}/locations`, icon: MapPin }
       ]
     },
     {

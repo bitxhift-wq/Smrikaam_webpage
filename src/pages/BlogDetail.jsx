@@ -6,6 +6,7 @@ import BlueprintWrapper from '../components/BlueprintWrapper';
 import ReadingProgressBar from '../components/anim/ReadingProgressBar';
 import TextReveal from '../components/anim/TextReveal';
 import Reveal from '../components/anim/Reveal';
+import RichTextRenderer from '../components/RichTextRenderer';
 
 export default function BlogDetail() {
   const { slug } = useParams();
@@ -47,19 +48,16 @@ export default function BlogDetail() {
     async function loadPost() {
       try {
         const res = await api.get(`/posts/${slug}`);
-        if (res.data) {
+        if (res.data && (res.data.status === 'published' || !res.data.status)) {
           setPost(res.data);
-        } else if (defaultPostsMap[slug]) {
-          setPost(defaultPostsMap[slug]);
+          setError(null);
         } else {
-          setError('Article not found.');
+          setPost(null);
+          setError('The requested article is currently unavailable, in draft, or archived.');
         }
       } catch (err) {
-        if (defaultPostsMap[slug]) {
-          setPost(defaultPostsMap[slug]);
-        } else {
-          setError('Article not found.');
-        }
+        setPost(null);
+        setError('The requested article is currently unavailable, in draft, or archived.');
       } finally {
         setLoading(false);
       }
@@ -125,11 +123,13 @@ export default function BlogDetail() {
           )}
 
           {/* Post Body */}
-          <div id="content" data-scroll-label="INSIGHTS">
-            <Reveal className="prose prose-content max-w-none text-text mb-12 whitespace-pre-line leading-relaxed text-base font-normal">
-              {post.content}
-            </Reveal>
-          </div>
+          {post.content && (
+            <div id="content" data-scroll-label="INSIGHTS">
+              <Reveal className="mb-12">
+                <RichTextRenderer content={post.content} />
+              </Reveal>
+            </div>
+          )}
 
           {/* Keywords / Tags */}
           {((post.tags && post.tags.length > 0) || (post.secondary_keywords && post.secondary_keywords.length > 0)) && (

@@ -153,8 +153,8 @@ a {
 /* Revealed State */
 .reveal-item.is-revealed {
   opacity: 1 !important;
-  transform: translateY(0) scale(1) translateX(0) perspective(600px) rotateX(0deg) !important;
-  clip-path: inset(0 0 0 0) !important;
+  transform: none !important;
+  clip-path: none !important;
 }
 
 /* Micro Interactions & Hover Motion */
@@ -1491,5 +1491,307 @@ html.dark .tech-ribbon-container {
     justify-content: center;
   }
 }
+
+/* ==========================================================================
+   SMRIKAAM — 3D CORE & ARCHITECTURAL SYSTEM (NAMESPACED)
+   ========================================================================== */
+.smrikaam-core-section {
+  position: relative;
+  width: 100%;
+}
+
+.smrikaam-core__grid-bg {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(var(--grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size: 50px 50px;
+  opacity: 0.45;
+  pointer-events: none;
+}
+
+.smrikaam-core__connections {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 5;
+}
+
+/* Left Engineering Capability Nodes (Angular Polygon Geometry) */
+.smrikaam-capability {
+  position: relative;
+  display: grid;
+  grid-template-columns: 26px 1fr;
+  align-items: center;
+  min-height: 44px;
+  padding: 8px 12px;
+  background: linear-gradient(90deg, var(--color-surface-subtle), transparent);
+  border: 1px solid var(--color-border);
+  clip-path: polygon(0 0, 96% 0, 100% 50%, 96% 100%, 0 100%);
+  transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1),
+              border-color 0.28s ease,
+              background-color 0.28s ease,
+              box-shadow 0.28s ease;
+  cursor: pointer;
+  user-select: none;
+}
+
+.smrikaam-capability:hover,
+.smrikaam-capability.active {
+  transform: translateX(6px);
+  border-color: var(--color-accent);
+  background: var(--color-surface-subtle);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+/* Right What We Build Nodes (Mirrored Opposite Angular Polygon) */
+.smrikaam-build-node {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  min-height: 48px;
+  padding: 8px 12px;
+  background: linear-gradient(270deg, var(--color-surface-subtle), transparent);
+  border: 1px solid var(--color-border);
+  clip-path: polygon(4% 0, 100% 0, 100% 100%, 4% 100%, 0 50%);
+  transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1),
+              border-color 0.28s ease,
+              background-color 0.28s ease,
+              box-shadow 0.28s ease;
+  cursor: pointer;
+  user-select: none;
+}
+
+.smrikaam-build-node:hover,
+.smrikaam-build-node.active {
+  transform: translateX(-6px);
+  border-color: var(--color-accent);
+  background: var(--color-surface-subtle);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+/* Purpose Geometric Nodes */
+.smrikaam-purpose-node {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 1px solid var(--color-border-strong);
+  display: grid;
+  place-items: center;
+  background: var(--color-surface-subtle);
+  transition: transform 0.25s ease, border-color 0.25s ease, background-color 0.25s ease;
+}
+
+.group:hover .smrikaam-purpose-node {
+  border-color: var(--color-accent);
+  transform: scale(1.08);
+  background: var(--color-surface);
+}
+
+/* Mobile Adjustments for Clip Path */
+@media (max-width: 768px) {
+  .smrikaam-capability,
+  .smrikaam-build-node {
+    clip-path: none !important;
+    border-radius: var(--radius);
+  }
+
+  .smrikaam-core__connections {
+    display: none;
+  }
+}
+
+/* ==========================================================================
+   SMRIKAAM — 3D CORE SYSTEM (THEME-AWARE & SCOPED)
+   ========================================================================== */
+.smrikaam-core {
+  position: relative;
+  width: 100%;
+  --core-bg: var(--color-bg);
+  --core-fg: var(--color-text);
+  --core-muted: var(--color-text-muted);
+  --core-line: var(--color-border);
+  --core-accent: var(--color-accent);
+}
+
+.smrikaam-core svg text {
+  user-select: none;
+}
+
+@media (max-width: 1024px) {
+  .smrikaam-core svg {
+    display: none;
+  }
+}
+
+/* ==========================================================================
+   SMRIKAAM — GLOBAL CMS CONTENT RENDERER & SCROLLBAR STYLES
+   ========================================================================== */
+
+/* Custom Scrollbar for Dropdowns and Code/Table Wrappers */
+.custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: var(--ribbon-border) transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.25);
+  border-radius: 0px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.45);
+}
+
+/* CMS Content Typography & Hierarchy */
+.cms-content {
+  color: var(--color-text);
+  font-family: var(--font-body);
+}
+
+.cms-content h1,
+.cms-content .cms-h1 {
+  font-family: var(--font-heading);
+  color: var(--color-text);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+  margin-top: 2.5rem;
+  margin-bottom: 1.25rem;
+  border-bottom: 1px solid var(--color-border);
+  padding-bottom: 0.75rem;
+}
+
+.cms-content h2,
+.cms-content .cms-h2 {
+  font-family: var(--font-heading);
+  color: var(--color-text);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+  margin-top: 2.25rem;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid rgba(20, 20, 20, 0.12);
+  padding-bottom: 0.5rem;
+}
+
+html.dark .cms-content h2,
+html.dark .cms-content .cms-h2 {
+  border-bottom-color: rgba(255, 255, 255, 0.12);
+}
+
+.cms-content h3,
+.cms-content .cms-h3 {
+  font-family: var(--font-heading);
+  color: var(--color-text);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  margin-top: 1.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.cms-content h4,
+.cms-content .cms-h4 {
+  font-family: var(--font-heading);
+  color: var(--color-text);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.cms-content p,
+.cms-content .cms-paragraph,
+.product-content p,
+.product-text-justify,
+.text-justify {
+  color: var(--color-text);
+  font-size: 1rem;
+  line-height: 1.75;
+  margin-top: 0.75rem;
+  margin-bottom: 0.75rem;
+  text-align: justify;
+  text-justify: inter-word;
+}
+
+.cms-content h1,
+.cms-content h2,
+.cms-content h3,
+.cms-content h4,
+.cms-content h5,
+.cms-content h6,
+.cms-content .cms-h1,
+.cms-content .cms-h2,
+.cms-content .cms-h3,
+.cms-content .cms-h4,
+.cms-content .cms-h5,
+.product-content h1,
+.product-content h2,
+.product-content h3,
+.product-content h4,
+.product-content h5 {
+  text-align: left;
+}
+
+.cms-content ul,
+.cms-content .cms-ul {
+  margin-top: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.cms-content li,
+.cms-content .cms-li {
+  color: var(--color-text);
+  line-height: 1.7;
+}
+
+.cms-content strong {
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.cms-content em {
+  font-style: italic;
+  color: var(--color-text-secondary);
+}
+
+.cms-content blockquote,
+.cms-content .cms-blockquote {
+  border-left: 2px solid var(--color-accent);
+  padding-left: 1rem;
+  margin: 1.5rem 0;
+  font-style: italic;
+  color: var(--color-text-muted);
+}
+
+.cms-content .cms-table-wrapper {
+  margin: 1.5rem 0;
+  border: 1px solid var(--color-border);
+  overflow-x: auto;
+}
+
+/* Global viewport overflow containment — using overflow-x: clip so it never hijacks the scroll container or breaks position:sticky */
+html, body, .app-root-overflow {
+  overflow-x: clip;
+}
+
+
+
+
 
 

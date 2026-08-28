@@ -1,12 +1,32 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { MapPin, Mail, Phone, ArrowUpRight, Cpu, Database, Cloud, ShieldCheck } from 'lucide-react';
+import { useCMS } from '../context/CMSContext';
 import BlueprintWrapper from '../components/BlueprintWrapper';
 import TextReveal from '../components/anim/TextReveal';
 import BannerDrawBorder from '../components/anim/BannerDrawBorder';
 import Reveal from '../components/anim/Reveal';
+import RichTextRenderer from '../components/RichTextRenderer';
 
 export default function Locations() {
+  const { locations: rawLocations } = useCMS() || {};
+
+  const locations = useMemo(() => {
+    if (!Array.isArray(rawLocations)) return [];
+    return rawLocations;
+  }, [rawLocations]);
+
+  const primaryHQ = locations.length > 0 ? locations[0] : {
+    name: 'COIMBATORE HQ',
+    type: 'PRIMARY TECHNOLOGY & DELIVERY CENTER',
+    address: 'No. 19, Nataraj Nagar, Koundampalayam\nCoimbatore, Tamil Nadu 641030, India',
+    email: 'contact@smrikaam.com',
+    phone: '+91 91506 84601',
+    description: 'Our Coimbatore headquarters houses our core engineering teams, solutions architecture groups, and testing infrastructure for shop-floor IIoT and enterprise AI systems.'
+  };
+
+  const otherLocations = locations.length > 1 ? locations.slice(1) : [];
+
   const hqCapabilities = [
     {
       title: 'Industrial IoT & Edge R&D Lab',
@@ -71,32 +91,33 @@ export default function Locations() {
                 </div>
 
                 <h2 className="font-heading text-3xl font-semibold uppercase text-text mb-3">
-                  COIMBATORE HQ
+                  {primaryHQ.name || 'COIMBATORE HQ'}
                 </h2>
                 <div className="font-mono text-[13px] text-accent uppercase mb-6 font-medium">
-                  PRIMARY TECHNOLOGY &amp; DELIVERY CENTER
+                  {primaryHQ.type || 'PRIMARY TECHNOLOGY & DELIVERY CENTER'}
                 </div>
 
                 <div className="space-y-4 text-[15px] text-text-muted border-t border-border pt-6 leading-[1.55]">
                   <div className="text-text font-medium text-base">
                     SMRIKAAM Technologies LLP
                   </div>
-                  <div>
-                    No. 19, Nataraj Nagar, Koundampalayam<br />
-                    Coimbatore, Tamil Nadu 641030, India
+                  <div className="whitespace-pre-line">
+                    {primaryHQ.address || 'No. 19, Nataraj Nagar, Koundampalayam\nCoimbatore, Tamil Nadu 641030, India'}
                   </div>
-                  <p className="pt-2 text-[14px] text-text-muted font-normal">
-                    Our Coimbatore headquarters houses our core engineering teams, solutions architecture groups, and testing infrastructure for shop-floor IIoT and enterprise AI systems.
-                  </p>
+                  {primaryHQ.description && (
+                    <div className="pt-2 text-[14px] text-text-muted font-normal">
+                      <RichTextRenderer content={primaryHQ.description} />
+                    </div>
+                  )}
                 </div>
               </div>
 
               <div className="pt-6 border-t border-border mt-8 flex flex-wrap items-center justify-between gap-4 font-mono text-[14px]">
-                <a href="mailto:contact@smrikaam.com" className="text-accent font-medium hover:underline flex items-center gap-1.5">
-                  <Mail className="w-4 h-4" /> contact@smrikaam.com
+                <a href={`mailto:${primaryHQ.email || 'contact@smrikaam.com'}`} className="text-accent font-medium hover:underline flex items-center gap-1.5">
+                  <Mail className="w-4 h-4" /> {primaryHQ.email || 'contact@smrikaam.com'}
                 </a>
-                <a href="tel:+919150684601" className="text-accent font-medium hover:underline flex items-center gap-1.5">
-                  <Phone className="w-4 h-4" /> +91 91506 84601
+                <a href={`tel:${(primaryHQ.phone || '+91 91506 84601').replace(/\s+/g, '')}`} className="text-accent font-medium hover:underline flex items-center gap-1.5">
+                  <Phone className="w-4 h-4" /> {primaryHQ.phone || '+91 91506 84601'}
                 </a>
               </div>
             </BlueprintWrapper>
@@ -129,6 +150,57 @@ export default function Locations() {
           </Reveal>
         </div>
       </div>
+
+      {/* Additional Regional Centers if present in CMS */}
+      {otherLocations.length > 0 && (
+        <div className="mb-16">
+          <div className="font-mono text-[13px] text-accent uppercase tracking-[0.18em] mb-2 font-medium">
+            REGIONAL CENTERS // GLOBAL NETWORK
+          </div>
+          <h2 className="font-heading text-2xl md:text-3xl font-semibold uppercase text-text mb-8 border-b border-border pb-4">
+            ADDITIONAL TECHNOLOGY HUBS
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {otherLocations.map((loc, idx) => (
+              <Reveal key={loc.id || idx} index={idx}>
+                <BlueprintWrapper className="p-8 flex flex-col justify-between h-full group hover:border-accent">
+                  <div>
+                    <div className="flex items-center justify-between mb-4">
+                      <div className="flex items-center gap-2">
+                        <MapPin className="w-4 h-4 text-accent shrink-0" strokeWidth={1.5} />
+                        <span className="tag tag-accent font-mono text-[12px]">{loc.type || 'REGIONAL HUB'}</span>
+                      </div>
+                    </div>
+                    <h3 className="font-heading text-2xl font-semibold uppercase text-text mb-2 group-hover:text-accent transition-colors">
+                      {loc.name}
+                    </h3>
+                    {loc.description && (
+                      <div className="text-[15px] text-text-muted leading-[1.55] mb-4">
+                        <RichTextRenderer content={loc.description} />
+                      </div>
+                    )}
+                    <div className="text-[14px] text-text-muted whitespace-pre-line border-t border-border pt-4">
+                      {loc.address}
+                    </div>
+                  </div>
+                  <div className="pt-4 border-t border-border mt-6 flex flex-wrap items-center justify-between gap-4 font-mono text-[13px]">
+                    {loc.email && (
+                      <a href={`mailto:${loc.email}`} className="text-accent font-medium hover:underline flex items-center gap-1">
+                        <Mail className="w-3.5 h-3.5" /> {loc.email}
+                      </a>
+                    )}
+                    {loc.phone && (
+                      <a href={`tel:${loc.phone.replace(/\s+/g, '')}`} className="text-accent font-medium hover:underline flex items-center gap-1">
+                        <Phone className="w-3.5 h-3.5" /> {loc.phone}
+                      </a>
+                    )}
+                  </div>
+                </BlueprintWrapper>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      )}
 
       {/* Engineering Capabilities at HQ */}
       <div className="mb-16">
