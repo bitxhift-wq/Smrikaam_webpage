@@ -1,0 +1,3 @@
+User-agent: *
+Disallow: /api/
+Disallow: /smk-console-x9k2m7/

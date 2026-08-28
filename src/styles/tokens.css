@@ -1,0 +1,191 @@
+:root {
+  /* Core Base Colors (White Theme) */
+  --bg: #F8F8F6;
+  --surface: #FFFFFF;
+  --surface-elevated: #F0F0EE;
+  --surface-subtle: #F1F1EE;
+  --text: #111111;
+  --text-secondary: #222222;
+  --text-muted: #4b5563;
+  --border: rgba(20, 20, 20, 0.16);
+  --border-strong: rgba(20, 20, 20, 0.28);
+  --accent: #111111;
+  --accent-hover: #000000;
+  --accent-contrast: #FFFFFF;
+
+  /* Ribbon Header Specific Tokens (White Theme -> Black Ribbon Surface) */
+  --ribbon-bg: #000000;
+  --ribbon-surface: #111111;
+  --ribbon-surface-subtle: #1a1a1a;
+  --ribbon-text: #FFFFFF;
+  --ribbon-text-secondary: #F0F0F0;
+  --ribbon-text-muted: #C0C0C0;
+  --ribbon-border: rgba(255, 255, 255, 0.25);
+  --ribbon-active: #FFFFFF;
+  --ribbon-icon: #FFFFFF;
+  --ribbon-icon-bg: #111111;
+  --ribbon-icon-border: rgba(255, 255, 255, 0.25);
+  --ribbon-button-bg: #FFFFFF;
+  --ribbon-button-text: #000000;
+  --ribbon-button-border: #FFFFFF;
+
+  /* Ribbon Dropdown Specific Tokens (White Theme -> Black Dropdown + White Text) */
+  --ribbon-dropdown-bg: #000000;
+  --ribbon-dropdown-surface: #111111;
+  --ribbon-dropdown-text: #FFFFFF;
+  --ribbon-dropdown-text-secondary: #F0F0F0;
+  --ribbon-dropdown-text-muted: #E0E0E0;
+  --ribbon-dropdown-border: rgba(255, 255, 255, 0.20);
+  --ribbon-dropdown-hover: #1A1A1A;
+  --ribbon-dropdown-active: #222222;
+
+  /* Explicit --color-* aliases */
+  --color-bg: #F8F8F6;
+  --color-surface: #FFFFFF;
+  --color-surface-elevated: #F0F0EE;
+  --color-surface-subtle: #F1F1EE;
+  --color-text: #111111;
+  --color-text-secondary: #222222;
+  --color-text-muted: #4b5563;
+  --color-border: rgba(20, 20, 20, 0.16);
+  --color-border-strong: rgba(20, 20, 20, 0.28);
+  --color-accent: #111111;
+  --color-accent-hover: #000000;
+  --color-accent-contrast: #FFFFFF;
+  --color-accent-100: #F1F1EE;
+  --color-accent-300: rgba(20, 20, 20, 0.16);
+  --color-accent-600: #111111;
+  --color-accent-800: #111111;
+  --color-accent-900: #000000;
+  --color-neutral-100: #F8F8F6;
+  --color-neutral-200: #F0F0EE;
+  --color-neutral-400: #666666;
+  --color-neutral-700: #333333;
+  --color-neutral-900: #111111;
+
+  /* Button Tokens */
+  --button-bg: #111111;
+  --button-text: #FFFFFF;
+  --button-border: #111111;
+  --button-hover-bg: #000000;
+  --button-hover-text: #FFFFFF;
+  --button-secondary-bg: transparent;
+  --button-secondary-text: #111111;
+  --button-secondary-border: rgba(20, 20, 20, 0.28);
+
+  /* 3D & Grid */
+  --grid: rgba(20, 20, 20, 0.07);
+  --cube-edge: rgba(20, 25, 30, 0.45);
+  --cube-surface: rgba(255, 255, 255, 0.20);
+  --cube-surface-core: rgba(255, 255, 255, 0.45);
+  --glow: rgba(120, 150, 180, 0.20);
+
+  /* Typography, Radii & Spacing */
+  --font-heading: 'Barlow Condensed', 'Inter', system-ui, -apple-system, sans-serif;
+  --font-body: 'Inter', 'Barlow', system-ui, -apple-system, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  --radius: 0px;
+  --space-sm: 0.67rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+  --space-xl: 2.25rem;
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 4px 14px rgba(0, 0, 0, 0.06);
+
+  --admin-bg: #090d16;
+  --admin-surface: #10172a;
+  --admin-border: rgba(255, 255, 255, 0.12);
+  --admin-text-primary: #f8fafc;
+  --admin-text-secondary: #94a3b8;
+  --admin-accent: #ffffff;
+}
+
+html.dark {
+  /* Core Base Colors (Black Theme) */
+  --bg: #030303;
+  --surface: #0D0D0D;
+  --surface-elevated: #151515;
+  --surface-subtle: #151515;
+  --text: #FFFFFF;
+  --text-secondary: #D0D0D0;
+  --text-muted: #969696;
+  --border: rgba(255, 255, 255, 0.16);
+  --border-strong: rgba(255, 255, 255, 0.28);
+  --accent: #FFFFFF;
+  --accent-hover: #E5E5E5;
+  --accent-contrast: #000000;
+
+  /* Ribbon Header Specific Tokens (Black Theme -> White Ribbon Surface with Black Icon for contrast) */
+  --ribbon-bg: #FFFFFF;
+  --ribbon-surface: #F8F8F6;
+  --ribbon-surface-subtle: #EEEEEE;
+  --ribbon-text: #FFFFFF;
+  --ribbon-text-secondary: #FFFFFF;
+  --ribbon-text-muted: #FFFFFF;
+  --ribbon-border: rgba(255, 255, 255, 0.40);
+  --ribbon-active: #FFFFFF;
+  --ribbon-icon: #000000;
+  --ribbon-icon-bg: #F8F8F6;
+  --ribbon-icon-border: rgba(0, 0, 0, 0.20);
+  --ribbon-button-bg: #000000;
+  --ribbon-button-text: #FFFFFF;
+  --ribbon-button-border: #000000;
+
+  /* Ribbon Dropdown Specific Tokens (Black Theme -> White Dropdown + Black Text) */
+  --ribbon-dropdown-bg: #FFFFFF;
+  --ribbon-dropdown-surface: #F8F8F6;
+  --ribbon-dropdown-text: #000000;
+  --ribbon-dropdown-text-secondary: #333333;
+  --ribbon-dropdown-text-muted: #444444;
+  --ribbon-dropdown-border: rgba(0, 0, 0, 0.20);
+  --ribbon-dropdown-hover: #F0F0F0;
+  --ribbon-dropdown-active: #E5E5E5;
+
+  /* Explicit --color-* aliases */
+  --color-bg: #030303;
+  --color-surface: #0D0D0D;
+  --color-surface-elevated: #151515;
+  --color-surface-subtle: #151515;
+  --color-text: #FFFFFF;
+  --color-text-secondary: #D0D0D0;
+  --color-text-muted: #969696;
+  --color-border: rgba(255, 255, 255, 0.16);
+  --color-border-strong: rgba(255, 255, 255, 0.28);
+  --color-accent: #FFFFFF;
+  --color-accent-hover: #E5E5E5;
+  --color-accent-contrast: #000000;
+  --color-accent-100: #151515;
+  --color-accent-300: rgba(255, 255, 255, 0.16);
+  --color-accent-600: #FFFFFF;
+  --color-accent-800: #FFFFFF;
+  --color-accent-900: #E5E5E5;
+  --color-neutral-100: #030303;
+  --color-neutral-200: #151515;
+  --color-neutral-400: #969696;
+  --color-neutral-700: #D0D0D0;
+  --color-neutral-900: #FFFFFF;
+
+  /* Button Tokens */
+  --button-bg: #FFFFFF;
+  --button-text: #000000;
+  --button-border: #FFFFFF;
+  --button-hover-bg: #E5E5E5;
+  --button-hover-text: #000000;
+  --button-secondary-bg: transparent;
+  --button-secondary-text: #FFFFFF;
+  --button-secondary-border: rgba(255, 255, 255, 0.28);
+
+  /* 3D & Grid */
+  --grid: rgba(255, 255, 255, 0.07);
+  --cube-edge: rgba(255, 255, 255, 0.55);
+  --cube-surface: rgba(0, 0, 0, 0.35);
+  --cube-surface-core: rgba(255, 255, 255, 0.15);
+  --glow: rgba(255, 255, 255, 0.25);
+}
+
+
+
+
+
+
+
