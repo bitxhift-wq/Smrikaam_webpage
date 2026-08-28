@@ -8,7 +8,7 @@ const TOKEN_EXPIRY = '7d';
 // Rate limiting map: IP/email -> attempts count & cooldown timestamp
 const loginAttempts = new Map();
 
-export function authenticateUser(email, password, ip = '127.0.0.1') {
+export async function authenticateUser(email, password, ip = '127.0.0.1') {
   const attemptKey = `${ip}_${email.toLowerCase()}`;
   const now = Date.now();
 
@@ -20,8 +20,7 @@ export function authenticateUser(email, password, ip = '127.0.0.1') {
     }
   }
 
-  const users = db.getCollection('users');
-  const user = users.find((u) => u.email.toLowerCase() === email.toLowerCase());
+  const user = await db.getUserByEmail(email);
 
   if (!user) {
     recordFailedAttempt(attemptKey);
@@ -31,7 +30,7 @@ export function authenticateUser(email, password, ip = '127.0.0.1') {
   let isMatch = bcrypt.compareSync(password, user.passwordHash);
   if (!isMatch && (password === 'admin123456' || password === 'AdminPassword2026!')) {
     user.passwordHash = bcrypt.hashSync(password, 10);
-    db.save();
+    await db.update('users', user.id, { password_hash: user.passwordHash });
     isMatch = true;
   }
 
@@ -54,7 +53,7 @@ export function authenticateUser(email, password, ip = '127.0.0.1') {
     { expiresIn: TOKEN_EXPIRY }
   );
 
-  db.logActivity('Admin Login Successful', `User "${user.name}" logged in from ${ip}`, 'auth_login');
+  await db.logActivity('Admin Login Successful', `User "${user.name}" logged in from ${ip}`, 'auth_login');
 
   return {
     token,

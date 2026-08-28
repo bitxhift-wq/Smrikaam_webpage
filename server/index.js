@@ -43,12 +43,18 @@ app.use((req, res) => {
   res.sendFile(path.join(DIST_DIR, 'index.html'));
 });
 
+import { postgres } from './services/postgres.js';
+
 // Start listening if executed directly
 if (process.argv[1] === fileURLToPath(import.meta.url)) {
-  app.listen(PORT, () => {
-    console.log(`SMRIKAAM Central CMS API Server running on port ${PORT}`);
-    console.log(`Persistent File Storage at: ${UPLOADS_DIR}`);
-  });
+  (async () => {
+    await postgres.testConnection();
+    app.listen(PORT, () => {
+      console.log(`SMRIKAAM Central CMS API Server running on port ${PORT}`);
+      console.log(`Persistent File Storage at: ${UPLOADS_DIR}`);
+      console.log(`Database connected: ${postgres.isConnected}`);
+    });
+  })();
 }
 
 export default app;

@@ -1235,30 +1235,6 @@
   ],
   "activityLogs": [
     {
-      "id": "log_1787909953114_u6kw",
-      "date": "28 AUG",
-      "title": "Permanently deleted \"Test PostgreSQL Service\"",
-      "description": "Deleted by Admin",
-      "type": "services_delete_permanent",
-      "timestamp": "2026-08-28T09:39:13.114Z"
-    },
-    {
-      "id": "log_1787909953104_484m",
-      "date": "28 AUG",
-      "title": "Created service: \"Test PostgreSQL Service\"",
-      "description": "Status: draft by Admin",
-      "type": "services_create",
-      "timestamp": "2026-08-28T09:39:13.104Z"
-    },
-    {
-      "id": "log_1787909933706_8e9g",
-      "date": "28 AUG",
-      "title": "Created service: \"Test PostgreSQL Service\"",
-      "description": "Status: draft by Admin",
-      "type": "services_create",
-      "timestamp": "2026-08-28T09:38:53.706Z"
-    },
-    {
       "id": "log_1787900847989_efxq",
       "date": "28 AUG",
       "title": "Updated service: \"Artificial Intelligence & Machine Learning\"",

@@ -1,5 +1,5 @@
--- SMRIKAAM Technologies PostgreSQL Schema
--- Database: smrikaam_db
+-- SMRIKAAM Technologies PostgreSQL / Supabase Schema
+-- Database Schema for all 12 CMS collections
 
 -- 1. Admin Users Table
 CREATE TABLE IF NOT EXISTS admin_users (
@@ -154,6 +154,7 @@ CREATE TABLE IF NOT EXISTS media (
   url TEXT NOT NULL,
   mime_type VARCHAR(128),
   size INT,
+  type VARCHAR(64) DEFAULT 'file',
   uploaded_at TIMESTAMPTZ DEFAULT NOW(),
   metadata JSONB DEFAULT '{}'::jsonb
 );
@@ -168,7 +169,45 @@ CREATE TABLE IF NOT EXISTS activity_logs (
   timestamp TIMESTAMPTZ DEFAULT NOW()
 );
 
--- Indexes for high query performance
+-- 10. Staffing Models Table
+CREATE TABLE IF NOT EXISTS staffing (
+  id VARCHAR(64) PRIMARY KEY,
+  title VARCHAR(500) NOT NULL,
+  slug VARCHAR(500) UNIQUE NOT NULL,
+  subtitle TEXT,
+  "desc" TEXT,
+  bullets JSONB DEFAULT '[]'::jsonb,
+  status VARCHAR(32) DEFAULT 'published',
+  created_at TIMESTAMPTZ DEFAULT NOW(),
+  updated_at TIMESTAMPTZ DEFAULT NOW(),
+  published_at TIMESTAMPTZ
+);
+
+-- 11. Locations Table
+CREATE TABLE IF NOT EXISTS locations (
+  id VARCHAR(64) PRIMARY KEY,
+  name VARCHAR(255) NOT NULL,
+  slug VARCHAR(255) UNIQUE NOT NULL,
+  type VARCHAR(255),
+  address TEXT,
+  email VARCHAR(255),
+  phone VARCHAR(64),
+  description TEXT,
+  capabilities JSONB DEFAULT '[]'::jsonb,
+  status VARCHAR(32) DEFAULT 'published',
+  created_at TIMESTAMPTZ DEFAULT NOW(),
+  updated_at TIMESTAMPTZ DEFAULT NOW(),
+  published_at TIMESTAMPTZ
+);
+
+-- 12. Settings Table
+CREATE TABLE IF NOT EXISTS settings (
+  key VARCHAR(255) PRIMARY KEY,
+  value JSONB DEFAULT '{}'::jsonb,
+  updated_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- Indexes for performance
 CREATE INDEX IF NOT EXISTS idx_posts_slug ON posts (slug);
 CREATE INDEX IF NOT EXISTS idx_posts_status ON posts (status);
 CREATE INDEX IF NOT EXISTS idx_services_slug ON services (slug);
@@ -178,4 +217,6 @@ CREATE INDEX IF NOT EXISTS idx_industries_slug ON industries (slug);
 CREATE INDEX IF NOT EXISTS idx_case_studies_slug ON case_studies (slug);
 CREATE INDEX IF NOT EXISTS idx_reports_slug ON reports (slug);
 CREATE INDEX IF NOT EXISTS idx_reports_status ON reports (status);
+CREATE INDEX IF NOT EXISTS idx_staffing_slug ON staffing (slug);
+CREATE INDEX IF NOT EXISTS idx_locations_slug ON locations (slug);
 CREATE INDEX IF NOT EXISTS idx_activity_logs_time ON activity_logs (timestamp DESC);

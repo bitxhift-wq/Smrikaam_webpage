@@ -51,7 +51,7 @@ export const router = express.Router();
 // 1. AUTHENTICATION ROUTES
 // ============================================================
 
-router.post('/auth/login', (req, res) => {
+router.post('/auth/login', async (req, res) => {
   try {
     const { email, password } = req.body;
     if (!email || !password) {
@@ -59,7 +59,7 @@ router.post('/auth/login', (req, res) => {
     }
 
     const ip = req.ip || req.connection.remoteAddress || '127.0.0.1';
-    const { token, user } = authenticateUser(email, password, ip);
+    const { token, user } = await authenticateUser(email, password, ip);
 
     // Set secure cookie
     res.cookie('token', token, {
@@ -80,7 +80,7 @@ router.post('/auth/logout', (req, res) => {
   res.json({ success: true, message: 'Logged out successfully.' });
 });
 
-router.get('/auth/me', (req, res) => {
+router.get('/auth/me', async (req, res) => {
   let token = null;
   const authHeader = req.headers.authorization;
   if (authHeader && authHeader.startsWith('Bearer ')) {
@@ -98,8 +98,7 @@ router.get('/auth/me', (req, res) => {
     return res.status(401).json({ user: null });
   }
 
-  const users = db.getCollection('users');
-  const user = users.find((u) => u.id === decoded.userId);
+  const user = await db.getUserById(decoded.userId);
 
   if (!user) {
     return res.status(401).json({ user: null });
@@ -115,9 +114,9 @@ router.get('/auth/me', (req, res) => {
   });
 });
 
-router.post('/auth/forgot-password', (req, res) => {
+router.post('/auth/forgot-password', async (req, res) => {
   const { email } = req.body;
-  db.logActivity('Password Reset Requested', `Password reset token generated for ${email}`, 'auth_reset');
+  await db.logActivity('Password Reset Requested', `Password reset token generated for ${email}`, 'auth_reset');
   res.json({
     success: true,
     message: 'If the email exists in our system, a password reset authorization code has been dispatched.'
@@ -130,10 +129,10 @@ router.post('/auth/forgot-password', (req, res) => {
 
 function createResourceRoutes(resourcePath, collectionName) {
   // Public list (Published only)
-  router.get(`/${resourcePath}`, (req, res) => {
+  router.get(`/${resourcePath}`, async (req, res) => {
     try {
       const { category, type, search, limit, sort } = req.query;
-      const items = db.getAll(collectionName, {
+      const items = await db.getAll(collectionName, {
         status: 'published',
         category,
         type,
@@ -148,12 +147,12 @@ function createResourceRoutes(resourcePath, collectionName) {
   });
 
   // Public single item by ID or Slug
-  router.get(`/${resourcePath}/:idOrSlug`, (req, res) => {
+  router.get(`/${resourcePath}/:idOrSlug`, async (req, res) => {
     try {
       const { idOrSlug } = req.params;
-      let item = db.getById(collectionName, idOrSlug);
+      let item = await db.getById(collectionName, idOrSlug);
       if (!item) {
-        item = db.getBySlug(collectionName, idOrSlug);
+        item = await db.getBySlug(collectionName, idOrSlug);
       }
 
       if (!item || item.status !== 'published') {
@@ -167,10 +166,10 @@ function createResourceRoutes(resourcePath, collectionName) {
   });
 
   // Admin: Get all items (all statuses)
-  router.get(`/${resourcePath}/admin/all`, requireAdminAuth, (req, res) => {
+  router.get(`/${resourcePath}/admin/all`, requireAdminAuth, async (req, res) => {
     try {
       const { status, category, type, search, limit, sort } = req.query;
-      const items = db.getAll(collectionName, {
+      const items = await db.getAll(collectionName, {
         status: status || 'all',
         category,
         type,
@@ -185,9 +184,9 @@ function createResourceRoutes(resourcePath, collectionName) {
   });
 
   // Admin: Create item
-  router.post(`/${resourcePath}/admin`, requireAdminAuth, (req, res) => {
+  router.post(`/${resourcePath}/admin`, requireAdminAuth, async (req, res) => {
     try {
-      const created = db.create(collectionName, req.body, req.user);
+      const created = await db.create(collectionName, req.body, req.user);
       res.status(201).json(created);
     } catch (err) {
       res.status(400).json({ error: err.message || `Failed to create ${resourcePath}` });
@@ -195,9 +194,9 @@ function createResourceRoutes(resourcePath, collectionName) {
   });
 
   // Admin: Update item
-  router.put(`/${resourcePath}/admin/:id`, requireAdminAuth, (req, res) => {
+  router.put(`/${resourcePath}/admin/:id`, requireAdminAuth, async (req, res) => {
     try {
-      const updated = db.update(collectionName, req.params.id, req.body, req.user);
+      const updated = await db.update(collectionName, req.params.id, req.body, req.user);
       if (!updated) {
         return res.status(404).json({ error: 'Item not found.' });
       }
@@ -208,13 +207,13 @@ function createResourceRoutes(resourcePath, collectionName) {
   });
 
   // Admin: Change status (Publish / Unpublish / Draft / Trash)
-  router.patch(`/${resourcePath}/admin/:id/status`, requireAdminAuth, (req, res) => {
+  router.patch(`/${resourcePath}/admin/:id/status`, requireAdminAuth, async (req, res) => {
     try {
       const { status } = req.body;
       if (!status) {
         return res.status(400).json({ error: 'Status is required.' });
       }
-      const updated = db.updateStatus(collectionName, req.params.id, status, req.user);
+      const updated = await db.updateStatus(collectionName, req.params.id, status, req.user);
       if (!updated) {
         return res.status(404).json({ error: 'Item not found.' });
       }
@@ -225,10 +224,10 @@ function createResourceRoutes(resourcePath, collectionName) {
   });
 
   // Admin: Delete item (soft delete to trash, or permanent if in trash)
-  router.delete(`/${resourcePath}/admin/:id`, requireAdminAuth, (req, res) => {
+  router.delete(`/${resourcePath}/admin/:id`, requireAdminAuth, async (req, res) => {
     try {
       const { permanent } = req.query;
-      const success = db.delete(collectionName, req.params.id, req.user, permanent === 'true');
+      const success = await db.delete(collectionName, req.params.id, req.user, permanent === 'true');
       if (!success) {
         return res.status(404).json({ error: 'Item not found.' });
       }
@@ -239,9 +238,9 @@ function createResourceRoutes(resourcePath, collectionName) {
   });
 
   // Admin: Restore from trash
-  router.post(`/${resourcePath}/admin/:id/restore`, requireAdminAuth, (req, res) => {
+  router.post(`/${resourcePath}/admin/:id/restore`, requireAdminAuth, async (req, res) => {
     try {
-      const restored = db.restore(collectionName, req.params.id, req.user);
+      const restored = await db.restore(collectionName, req.params.id, req.user);
       if (!restored) {
         return res.status(404).json({ error: 'Item not found in trash.' });
       }
@@ -252,13 +251,13 @@ function createResourceRoutes(resourcePath, collectionName) {
   });
 
   // Admin: Bulk Actions
-  router.post(`/${resourcePath}/admin/bulk`, requireAdminAuth, (req, res) => {
+  router.post(`/${resourcePath}/admin/bulk`, requireAdminAuth, async (req, res) => {
     try {
       const { ids, action } = req.body;
       if (!ids || !Array.isArray(ids) || !action) {
         return res.status(400).json({ error: 'IDs array and action required.' });
       }
-      const affected = db.bulkAction(collectionName, ids, action, req.user);
+      const affected = await db.bulkAction(collectionName, ids, action, req.user);
       res.json({ success: true, affectedCount: affected });
     } catch (err) {
       res.status(500).json({ error: `Failed to execute bulk action` });
@@ -523,39 +522,37 @@ router.post('/documents/upload-pdf', requireAdminAuth, upload.single('file'), (r
 // 5. SYSTEM STATS & ACTIVITY LOGS
 // ============================================================
 
-router.get('/stats', requireAdminAuth, (req, res) => {
+router.get('/stats', requireAdminAuth, async (req, res) => {
   try {
-    const stats = db.getStats();
+    const stats = await db.getStats();
     res.json(stats);
   } catch (err) {
     res.status(500).json({ error: 'Failed to retrieve stats.' });
   }
 });
 
-router.get('/activity-logs', requireAdminAuth, (req, res) => {
+router.get('/activity-logs', requireAdminAuth, async (req, res) => {
   try {
-    const logs = db.getCollection('activityLogs').slice(0, 30);
+    const logs = await db.getActivityLogs(30);
     res.json(logs);
   } catch (err) {
     res.status(500).json({ error: 'Failed to retrieve activity logs.' });
   }
 });
 
-router.get('/settings', requireAdminAuth, (req, res) => {
+router.get('/settings', requireAdminAuth, async (req, res) => {
   try {
-    const settings = db.data.settings || {};
+    const settings = await db.getSettings();
     res.json(settings);
   } catch (err) {
     res.status(500).json({ error: 'Failed to retrieve settings.' });
   }
 });
 
-router.put('/settings', requireAdminAuth, (req, res) => {
+router.put('/settings', requireAdminAuth, async (req, res) => {
   try {
-    db.data.settings = { ...db.data.settings, ...req.body };
-    db.save();
-    db.logActivity('Site Settings Updated', 'System configurations adjusted by Admin', 'settings_update');
-    res.json(db.data.settings);
+    const updated = await db.updateSettings(req.body);
+    res.json(updated);
   } catch (err) {
     res.status(500).json({ error: 'Failed to update settings.' });
   }
