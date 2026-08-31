@@ -78,7 +78,7 @@ export default function CaseStudies() {
                     {/* Challenge */}
                     <div className="subtle-readable-surface p-4 border border-border">
                       <h3 className="font-mono text-xs text-text-muted uppercase font-semibold mb-1">CHALLENGE</h3>
-                      <div className="text-xs text-text-muted leading-relaxed font-normal">
+                      <div className="text-base md:text-[17px] text-text leading-[1.7] font-normal">
                         <RichTextRenderer content={cs.challenge} />
                       </div>
                     </div>
@@ -86,7 +86,7 @@ export default function CaseStudies() {
                     {/* Solution */}
                     <div className="bg-accent/5 p-4 border border-accent/30">
                       <h3 className="font-mono text-xs text-accent uppercase font-semibold mb-1">SMRIKAAM SOLUTION</h3>
-                      <div className="text-xs text-text font-normal leading-relaxed">
+                      <div className="text-base md:text-[17px] text-text font-normal leading-[1.7]">
                         <RichTextRenderer content={cs.solution} />
                       </div>
                     </div>

@@ -131,7 +131,7 @@ export default function Careers() {
               </Link>
             </div>
 
-            <p className="text-[15px] font-normal text-text-muted leading-[1.55] mb-6">
+            <p className="text-base md:text-[17px] font-normal text-text leading-[1.7] mb-6">
               We are looking for IT and Computer Science graduates with strong Python skills and curiosity about Machine Learning and Generative AI. Work on live enterprise projects involving analytics dashboards, data pipelines, and LLM-powered applications.
             </p>
 
@@ -169,7 +169,7 @@ export default function Careers() {
               </Link>
             </div>
 
-            <p className="text-[15px] font-normal text-text-muted leading-[1.55] mb-6">
+            <p className="text-base md:text-[17px] font-normal text-text leading-[1.7] mb-6">
               Lead enterprise AI, data engineering, and cloud transformation projects involving ML systems, Industrial IoT, operational intelligence, and enterprise-scale analytics platforms.
             </p>
 

@@ -800,151 +800,494 @@ Empowered internal compliance and operations teams to automate 80% of document r
     }
 ],
   industries: [
-    {
-      id: 'ind_01',
-      name: 'Manufacturing',
-      slug: 'manufacturing',
-      summary: 'Smart factory telemetry, OEE optimization, machine vision quality inspection, and supply chain visibility for discrete & process manufacturers.',
-      content: 'We empower manufacturing plants to connect shop-floor PLCs, eliminate unplanned downtime with predictive maintenance, and automate production reporting across high-speed assembly lines.',
-      businessProblems: [
-        'Unplanned machine breakdowns and downtime',
-        'Manual paper-based shift tracking',
-        'Supply chain parts stockouts'
-      ],
-      solutions: [
-        'Edge IIoT machine telemetry via BitXhift',
-        'Live floor OEE management wallboards',
-        'Automated quality inspection with computer vision'
-      ],
-      technology: ['OPC-UA', 'MQTT', 'TimescaleDB', 'Python', 'React', 'SAP Connector'],
-      useCases: ['Automotive Assembly Lines', 'CNC Precision Tooling', 'Textile Machinery Telemetry'],
-      cover_image_url: 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?q=80&w=1200&auto=format&fit=crop',
-      status: 'published',
-      created_at: '2026-08-01T00:00:00.000Z',
-      updated_at: '2026-08-01T00:00:00.000Z',
-      published_at: '2026-08-01T00:00:00.000Z'
-    },
-    {
-      id: 'ind_02',
-      name: 'Energy & Utilities',
-      slug: 'energy-utilities',
-      summary: 'Smart grid monitoring, turbine anomaly prediction, load forecasting, and automated environmental compliance auditing.',
-      content: 'Real-time telemetry and predictive models for power distribution networks, renewable generation plants, and municipal utilities.',
-      businessProblems: [
-        'Grid load fluctuation instability',
-        'High cost of field turbine maintenance',
-        'Complex carbon compliance reporting'
-      ],
-      solutions: [
-        'Predictive transformer and turbine vibration models',
-        'Real-time power distribution telemetry',
-        'Automated ESG data aggregation'
-      ],
-      technology: ['SCADA', 'InfluxDB', 'TensorFlow', 'Apache Kafka', 'Grafana'],
-      useCases: ['Solar Farm Monitoring', 'Wind Turbine Health Prediction', 'Smart Meter Grid Telemetry'],
-      cover_image_url: 'https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?q=80&w=1200&auto=format&fit=crop',
-      status: 'published',
-      created_at: '2026-08-01T00:00:00.000Z',
-      updated_at: '2026-08-01T00:00:00.000Z',
-      published_at: '2026-08-01T00:00:00.000Z'
-    },
-    {
-      id: 'ind_03',
-      name: 'Retail & E-Commerce',
-      slug: 'retail-ecommerce',
-      summary: 'Omnichannel inventory sync, dynamic pricing engines, customer lifetime value prediction, and real-time order routing.',
-      content: 'High-throughput data pipelines and predictive engines enabling unified customer journeys and real-time inventory management.',
-      businessProblems: [
-        'Inventory stockouts and overstock costs',
-        'Fragmented customer profile data',
-        'Slow search and recommendation latency'
-      ],
-      solutions: [
-        'Event-driven order and inventory sync via LinkGenX',
-        'Real-time personalization and semantic product search',
-        'Automated demand forecasting pipelines'
-      ],
-      technology: ['Snowflake', 'dbt', 'Redis', 'Elasticsearch', 'AWS Lambda'],
-      useCases: ['Real-Time Omnichannel Inventory', 'Dynamic Price Elasticity', 'Customer Churn Prevention'],
-      cover_image_url: 'https://images.unsplash.com/photo-1556742049-0a67c5574f73?q=80&w=1200&auto=format&fit=crop',
-      status: 'published',
-      created_at: '2026-08-01T00:00:00.000Z',
-      updated_at: '2026-08-01T00:00:00.000Z',
-      published_at: '2026-08-01T00:00:00.000Z'
-    },
-    {
-      id: 'ind_04',
-      name: 'BFSI',
-      slug: 'bfsi',
-      summary: 'Fraud anomaly detection, automated regulatory compliance, core banking ledger sync, and agentic customer verification.',
-      content: 'Engineered for financial institutions requiring sub-millisecond fraud detection, strict DPDP privacy, and resilient transaction processing.',
-      businessProblems: [
-        'Evolving financial fraud patterns',
-        'Strict DPDP compliance reporting pressure',
-        'Legacy core banking data silos'
-      ],
-      solutions: [
-        'Graph-based real-time fraud transaction scoring',
-        'Automated audit logging and data lineage',
-        'Secure core banking integration mesh'
-      ],
-      technology: ['Apache Flink', 'PostgreSQL', 'Kubernetes', 'Python', 'Snowflake'],
-      useCases: ['Instant KYC Document Verification', 'Credit Risk Scoring', 'Anti-Money Laundering Telemetry'],
-      cover_image_url: 'https://images.unsplash.com/photo-1563986768609-322da13575f3?q=80&w=1200&auto=format&fit=crop',
-      status: 'published',
-      created_at: '2026-08-01T00:00:00.000Z',
-      updated_at: '2026-08-01T00:00:00.000Z',
-      published_at: '2026-08-01T00:00:00.000Z'
-    },
-    {
-      id: 'ind_05',
-      name: 'Healthcare',
-      slug: 'healthcare',
-      summary: 'Clinical telemetry ingestion, medical device connectivity, HIPAA/privacy compliance, and AI diagnostic assistant pipelines.',
-      content: 'Connecting medical devices and healthcare systems to deliver secure patient diagnostics and real-time clinical dashboards.',
-      businessProblems: [
-        'Fragmented patient electronic health records',
-        'Strict health data privacy regulations',
-        'Delayed clinical diagnostic feedback'
-      ],
-      solutions: [
-        'FHIR/HL7 streaming integration pipelines',
-        'Automated anonymized data lakehouses',
-        'Grounded clinical decision support models'
-      ],
-      technology: ['HL7/FHIR', 'PostgreSQL', 'FastAPI', 'Qdrant', 'Azure Healthcare'],
-      useCases: ['ICU Bed Telemetry', 'Clinical Trial Patient Matching', 'Medical Imaging Inference'],
-      cover_image_url: 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?q=80&w=1200&auto=format&fit=crop',
-      status: 'published',
-      created_at: '2026-08-01T00:00:00.000Z',
-      updated_at: '2026-08-01T00:00:00.000Z',
-      published_at: '2026-08-01T00:00:00.000Z'
-    },
-    {
-      id: 'ind_06',
-      name: 'Logistics',
-      slug: 'logistics',
-      summary: 'Fleet telemetry tracking, warehouse route optimization, automated freight audit, and predictive delivery ETAs.',
-      content: 'Real-time supply chain intelligence connecting vehicle IoT sensors with central warehouse management systems.',
-      businessProblems: [
-        'Unpredictable freight transit delays',
-        'High fuel consumption inefficiencies',
-        'Manual bill of lading reconciliation'
-      ],
-      solutions: [
-        'GPS and CAN-bus edge telemetry ingestion',
-        'Automated freight document parsing via ParseMaster',
-        'Dynamic dispatch and delivery routing algorithms'
-      ],
-      technology: ['MQTT', 'TimescaleDB', 'Go', 'Docker', 'Google Maps API'],
-      useCases: ['Cold Chain Temperature Monitoring', 'Fleet Fuel Telemetry', 'Automated Freight Invoice Clearing'],
-      cover_image_url: 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?q=80&w=1200&auto=format&fit=crop',
-      status: 'published',
-      created_at: '2026-08-01T00:00:00.000Z',
-      updated_at: '2026-08-01T00:00:00.000Z',
-      published_at: '2026-08-01T00:00:00.000Z'
-    }
-  ],
+  {
+    "id": "ind_01",
+    "name": "Manufacturing",
+    "slug": "manufacturing",
+    "summary": "Smart factory telemetry, OEE optimization, machine vision quality inspection, and supply chain visibility for discrete & process manufacturers.",
+    "content": "We empower manufacturing plants to connect shop-floor PLCs, eliminate unplanned downtime with predictive maintenance, and automate production reporting across high-speed assembly lines.",
+    "businessProblems": [
+      "Unplanned machine breakdowns causing costly factory line stoppages",
+      "Paper-based shift logs and disconnected operational spreadsheets",
+      "Supply chain parts stockouts and unpredicted inventory buffers"
+    ],
+    "solutions": [
+      "Edge IIoT machine telemetry via BitXhift platform",
+      "Live floor OEE management wallboards and real-time alerts",
+      "Edge computer vision defect recognition reducing manual inspection by 80%"
+    ],
+    "capabilities": [
+      "Automotive Assembly Lines",
+      "CNC Precision Tooling",
+      "Textile Machinery Telemetry",
+      "Continuous Process Manufacturing"
+    ],
+    "technology": [
+      "OPC-UA",
+      "MQTT",
+      "BitXhift IIoT",
+      "TimescaleDB",
+      "Python",
+      "React",
+      "SAP S/4HANA"
+    ],
+    "outcomes": [
+      "35% reduction in unplanned downtime and operational latency across facilities.",
+      "Real-time visibility across all connected assets and downstream business systems."
+    ],
+    "acceleratorName": "BitXhift IIoT Platform",
+    "acceleratorSlug": "bitxhift",
+    "caseStudy": "Smart Factory Manufacturing Transformation",
+    "caseStudySlug": "smart-factory-manufacturing-transformation",
+    "cover_image_url": "https://images.unsplash.com/photo-1581092160607-ee22621dd758?q=80&w=1200&auto=format&fit=crop",
+    "status": "published",
+    "created_at": "2026-08-01T00:00:00.000Z",
+    "updated_at": "2026-08-01T00:00:00.000Z",
+    "published_at": "2026-08-01T00:00:00.000Z"
+  },
+  {
+    "id": "ind_02",
+    "name": "Energy & Utilities",
+    "slug": "energy-utilities",
+    "summary": "Smart grid monitoring, turbine anomaly prediction, load forecasting, and automated environmental compliance auditing.",
+    "content": "Real-time telemetry and predictive models for power distribution networks, renewable generation plants, and municipal utilities to optimize load distribution and eliminate blackout risks.",
+    "businessProblems": [
+      "Grid load fluctuation instability during peak demand cycles",
+      "High maintenance overhead and unexpected field turbine component failures",
+      "Complex environmental carbon compliance and ESG data reporting pressure"
+    ],
+    "solutions": [
+      "Predictive transformer and wind/solar turbine vibration models",
+      "Sub-second SCADA and smart meter grid telemetry ingestion",
+      "Automated ESG compliance data aggregation and audit reporting"
+    ],
+    "capabilities": [
+      "Solar Farm Telemetry",
+      "Wind Turbine Health Prediction",
+      "Smart Meter Grid Analytics",
+      "High-Voltage Substation Monitoring"
+    ],
+    "technology": [
+      "Modbus",
+      "SCADA",
+      "InfluxDB",
+      "TensorFlow",
+      "Apache Kafka",
+      "Grafana",
+      "ParseMaster"
+    ],
+    "outcomes": [
+      "22% reduction in unmetered energy loss across distribution networks.",
+      "12-hour advance warning on grid equipment overloads and thermal spikes."
+    ],
+    "acceleratorName": "BitXhift Telemetry Pipeline",
+    "acceleratorSlug": "bitxhift",
+    "caseStudy": "Smart Meter & Thermal Grid Telemetry",
+    "caseStudySlug": "enterprise-database-cloud-migration",
+    "cover_image_url": "https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?q=80&w=1200&auto=format&fit=crop",
+    "status": "published",
+    "created_at": "2026-08-01T00:00:00.000Z",
+    "updated_at": "2026-08-01T00:00:00.000Z",
+    "published_at": "2026-08-01T00:00:00.000Z"
+  },
+  {
+    "id": "ind_03",
+    "name": "Retail & E-Commerce",
+    "slug": "retail-ecommerce",
+    "summary": "Omnichannel inventory sync, dynamic pricing engines, customer lifetime value prediction, and real-time order routing.",
+    "content": "High-throughput data pipelines and predictive engines enabling unified customer journeys, zero-stockout fulfillment, and automated ERP reconciliation across retail networks.",
+    "businessProblems": [
+      "Inventory stockouts and excessive carrying costs in fulfillment centers",
+      "Fragmented customer profile data across legacy POS and web channels",
+      "Slow product search latency and inaccurate demand forecasting"
+    ],
+    "solutions": [
+      "Event-driven order and inventory synchronization via LinkGenX",
+      "Real-time personalization and semantic vector product search",
+      "Automated demand forecasting and restocking recommendation pipelines"
+    ],
+    "capabilities": [
+      "Real-Time Omnichannel Inventory Sync",
+      "Dynamic Price Elasticity Engine",
+      "Predictive Customer Churn Prevention",
+      "B2B POS Ledger Reconciliation"
+    ],
+    "technology": [
+      "Snowflake",
+      "dbt",
+      "Redis",
+      "Elasticsearch",
+      "AWS Lambda",
+      "LinkGenX"
+    ],
+    "outcomes": [
+      "99.4% inventory accuracy across nationwide fulfillment centers.",
+      "15% reduction in inventory carrying costs and 60% faster checkout search."
+    ],
+    "acceleratorName": "LinkGenX Integration Mesh",
+    "acceleratorSlug": "linkgenx",
+    "caseStudy": "Retail Enterprise Supply Chain Transformation",
+    "caseStudySlug": "enterprise-database-cloud-migration",
+    "cover_image_url": "https://images.unsplash.com/photo-1556740758-90de374c12ad?q=80&w=1200&auto=format&fit=crop",
+    "status": "published",
+    "created_at": "2026-08-01T00:00:00.000Z",
+    "updated_at": "2026-08-01T00:00:00.000Z",
+    "published_at": "2026-08-01T00:00:00.000Z"
+  },
+  {
+    "id": "ind_04",
+    "name": "BFSI",
+    "slug": "bfsi",
+    "summary": "Fraud anomaly detection, automated regulatory compliance, core banking ledger sync, and agentic customer verification.",
+    "content": "Engineered for financial institutions requiring sub-millisecond fraud detection, strict DPDP and GDPR privacy compliance, and resilient high-frequency transaction processing.",
+    "businessProblems": [
+      "Evolving financial fraud patterns bypassing legacy rule-based engines",
+      "Strict DPDP and regulatory compliance reporting burden on compliance teams",
+      "Legacy core banking system data isolation and slow loan underwriting cycles"
+    ],
+    "solutions": [
+      "Graph-based real-time fraud transaction scoring and anomaly detection",
+      "Automated DPDP audit logging, PII scrubbing, and column-level data lineage",
+      "Secure core banking integration mesh for sub-second account sync via LinkGenX"
+    ],
+    "capabilities": [
+      "Instant KYC & Loan Document Verification",
+      "Real-Time Fraud Transaction Scoring",
+      "Anti-Money Laundering (AML) Telemetry",
+      "DPDP & GDPR Compliance Safeguards"
+    ],
+    "technology": [
+      "MigrateMax",
+      "ParseMaster",
+      "Apache Flink",
+      "PostgreSQL",
+      "Python ML",
+      "Kubernetes",
+      "LinkGenX"
+    ],
+    "outcomes": [
+      "80% reduction in manual document verification turnaround time.",
+      "100% regulatory compliance audit readiness with zero unscrubbed PII leaks."
+    ],
+    "acceleratorName": "LinkGenX Integration Mesh",
+    "acceleratorSlug": "linkgenx",
+    "caseStudy": "BFSI Intelligent Document Processing",
+    "caseStudySlug": "smart-factory-manufacturing-transformation",
+    "cover_image_url": "https://images.unsplash.com/photo-1563986768609-322da13575f3?q=80&w=1200&auto=format&fit=crop",
+    "status": "published",
+    "created_at": "2026-08-01T00:00:00.000Z",
+    "updated_at": "2026-08-01T00:00:00.000Z",
+    "published_at": "2026-08-01T00:00:00.000Z"
+  },
+  {
+    "id": "ind_05",
+    "name": "Healthcare",
+    "slug": "healthcare",
+    "summary": "Clinical telemetry ingestion, medical device connectivity, HIPAA/privacy compliance, and AI diagnostic assistant pipelines.",
+    "content": "Connecting medical devices, EHR platforms, and laboratory research systems to deliver secure patient diagnostics, real-time clinical dashboards, and compliant data lakehouses.",
+    "businessProblems": [
+      "Fragmented electronic health records (EHR) across hospital networks",
+      "Strict HIPAA, DPDP, and medical data privacy regulatory constraints",
+      "Delayed clinical diagnostic feedback and slow medical document extraction"
+    ],
+    "solutions": [
+      "FHIR/HL7 streaming integration pipelines via ParseMaster",
+      "Automated de-identified patient data lakehouses with zero-trust RBAC",
+      "Grounded clinical decision support and medical document intelligence models"
+    ],
+    "capabilities": [
+      "ICU Bed & Patient Telemetry",
+      "Clinical Trial Patient Matching",
+      "Medical Imaging Inference Pipelines",
+      "HIPAA & FHIR Data Governance"
+    ],
+    "technology": [
+      "HL7/FHIR API",
+      "ParseMaster",
+      "PostgreSQL",
+      "FastAPI",
+      "Qdrant",
+      "Azure Healthcare"
+    ],
+    "outcomes": [
+      "10x faster clinical query response speeds across de-identified patient records.",
+      "Zero data privacy compliance breaches with automated PII masking."
+    ],
+    "acceleratorName": "ParseMaster Streaming Engine",
+    "acceleratorSlug": "parsemaster",
+    "caseStudy": "Healthcare Data Governance & Privacy",
+    "caseStudySlug": "smart-factory-manufacturing-transformation",
+    "cover_image_url": "https://images.unsplash.com/photo-1516549655169-df83a0774514?q=80&w=1200&auto=format&fit=crop",
+    "status": "published",
+    "created_at": "2026-08-01T00:00:00.000Z",
+    "updated_at": "2026-08-01T00:00:00.000Z",
+    "published_at": "2026-08-01T00:00:00.000Z"
+  },
+  {
+    "id": "ind_06",
+    "name": "Logistics",
+    "slug": "logistics",
+    "summary": "Fleet telemetry tracking, warehouse route optimization, automated freight audit, and predictive delivery ETAs.",
+    "content": "Real-time supply chain intelligence connecting vehicle IoT sensors, EDI clearance feeds, and warehouse management systems to maximize delivery throughput and reduce transit delays.",
+    "businessProblems": [
+      "Unpredictable freight transit delays and unmonitored cold-chain excursions",
+      "High fuel consumption and route inefficiencies across multi-regional fleets",
+      "Manual bill of lading and EDI 856 freight document reconciliation"
+    ],
+    "solutions": [
+      "GPS and CAN-bus edge telemetry ingestion with real-time transit alerts",
+      "Automated EDI 850/856 and freight document parsing via ParseMaster",
+      "Dynamic dispatch routing algorithms and predictive delivery ETA engines"
+    ],
+    "capabilities": [
+      "Cold Chain Temperature & GPS Tracking",
+      "Fleet Fuel Telemetry Optimization",
+      "Automated Freight Invoice Clearing",
+      "Warehouse Dock Scheduling Mesh"
+    ],
+    "technology": [
+      "ParseMaster",
+      "MQTT",
+      "TimescaleDB",
+      "Go",
+      "Docker",
+      "Google Maps API",
+      "Kafka"
+    ],
+    "outcomes": [
+      "18% reduction in fleet fuel consumption via intelligent route optimization.",
+      "Sub-second container tracking across regional transit corridors."
+    ],
+    "acceleratorName": "ParseMaster Ingestion Engine",
+    "acceleratorSlug": "parsemaster",
+    "caseStudy": "Global Supply Chain Data Lakehouse",
+    "caseStudySlug": "enterprise-database-cloud-migration",
+    "cover_image_url": "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?q=80&w=1200&auto=format&fit=crop",
+    "status": "published",
+    "created_at": "2026-08-01T00:00:00.000Z",
+    "updated_at": "2026-08-01T00:00:00.000Z",
+    "published_at": "2026-08-01T00:00:00.000Z"
+  },
+  {
+    "id": "ind_07",
+    "name": "Telecom",
+    "slug": "telecom",
+    "summary": "5G tower power telemetry, high-throughput Call Detail Record (CDR) lakehouses, subscriber churn risk scoring, and network SLA monitoring.",
+    "content": "Telecom data engineering architectures handling billions of daily CDR logs, optimizing tower energy consumption, and delivering real-time network performance intelligence.",
+    "businessProblems": [
+      "Escalating 5G cell tower power management costs and unmonitored battery wear",
+      "High subscriber churn rates due to undetected regional network degradation",
+      "Massive Call Detail Record (CDR) volumes overloading traditional relational databases"
+    ],
+    "solutions": [
+      "High-throughput CDR streaming lakehouse built on Apache Spark and ParseMaster",
+      "Tower battery AI energy optimization and predictive maintenance alerts",
+      "Real-time network QoS telemetry and subscriber churn risk scoring"
+    ],
+    "capabilities": [
+      "Cell Tower Power & Thermal Telemetry",
+      "Call Detail Record (CDR) Streaming",
+      "Predictive Churn Risk Analytics",
+      "Network Bandwidth SLA Monitoring"
+    ],
+    "technology": [
+      "ParseMaster",
+      "Apache Spark",
+      "Databricks",
+      "TimescaleDB",
+      "Python ML",
+      "Kafka"
+    ],
+    "outcomes": [
+      "25% reduction in cell tower diesel generator and energy operational costs.",
+      "12% lower customer churn through proactive signal degradation resolution."
+    ],
+    "acceleratorName": "ParseMaster Data Engine",
+    "acceleratorSlug": "parsemaster",
+    "caseStudy": "Telecom Infrastructure CDR Analytics",
+    "caseStudySlug": "enterprise-database-cloud-migration",
+    "cover_image_url": "https://images.unsplash.com/photo-1563770660941-20978e870e26?q=80&w=1200&auto=format&fit=crop",
+    "status": "published",
+    "created_at": "2026-08-01T00:00:00.000Z",
+    "updated_at": "2026-08-01T00:00:00.000Z",
+    "published_at": "2026-08-01T00:00:00.000Z"
+  },
+  {
+    "id": "ind_08",
+    "name": "Infrastructure",
+    "slug": "infrastructure",
+    "summary": "Structural health monitoring, BMS building telemetry, intelligent traffic control, and municipal asset management.",
+    "content": "Smart infrastructure engineering systems connecting building automation systems (BACnet, Modbus), bridge sensors, and urban utility networks for predictive maintenance and energy efficiency.",
+    "businessProblems": [
+      "Aging physical bridge and highway structures lacking real-time strain sensors",
+      "Excessive building HVAC power waste due to unoptimized occupancy schedules",
+      "Disconnected municipal utility infrastructure and slow emergency response"
+    ],
+    "solutions": [
+      "Real-time IoT structural strain and seismic vibration sensor monitoring",
+      "Automated Building Management System (BMS) energy optimization via BitXhift",
+      "Centralized municipal asset wallboards and automated maintenance dispatch"
+    ],
+    "capabilities": [
+      "Structural Bridge Strain Telemetry",
+      "Commercial HVAC Building Automation",
+      "Smart Streetlight Mesh Control",
+      "Municipal Water Supply Telemetry"
+    ],
+    "technology": [
+      "BACnet",
+      "Modbus TCP",
+      "BitXhift IIoT",
+      "TimescaleDB",
+      "Grafana",
+      "React"
+    ],
+    "outcomes": [
+      "28% reduction in commercial building energy footprint.",
+      "Continuous 24/7 structural integrity tracking across critical public assets."
+    ],
+    "acceleratorName": "BitXhift IIoT Platform",
+    "acceleratorSlug": "bitxhift",
+    "caseStudy": "Smart City Infrastructure Monitoring",
+    "caseStudySlug": "smart-factory-manufacturing-transformation",
+    "cover_image_url": "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=1200&auto=format&fit=crop",
+    "status": "published",
+    "created_at": "2026-08-01T00:00:00.000Z",
+    "updated_at": "2026-08-01T00:00:00.000Z",
+    "published_at": "2026-08-01T00:00:00.000Z"
+  },
+  {
+    "id": "ind_09",
+    "name": "Oil & Gas",
+    "slug": "oil-gas",
+    "summary": "Rig telematics, pipeline leak detection, refinery yield optimization, and hazardous environment compliance.",
+    "content": "Edge IoT and predictive analytics platforms for upstream drilling rigs, midstream pipelines, and downstream refineries operating in extreme conditions.",
+    "businessProblems": [
+      "Unplanned offshore drilling rig downtime costing up to  per day",
+      "Pipeline corrosion and unpredicted pressure drops causing environmental risk",
+      "Fragmented refinery SCADA logs preventing real-time yield optimization"
+    ],
+    "solutions": [
+      "High-pressure edge sensor telemetry ingestion via BitXhift",
+      "Acoustic and thermal pipeline leak detection algorithms with instant alerts",
+      "Real-time refinery unit mass balance and yield optimization models"
+    ],
+    "capabilities": [
+      "Offshore Rig Telemetry Ingestion",
+      "Pipeline Pressure Leak Detection",
+      "Refinery Mass-Balance Optimization",
+      "ATEX/Explosion-Proof Sensor Integration"
+    ],
+    "technology": [
+      "OPC-UA",
+      "Modbus RTU",
+      "BitXhift",
+      "TimescaleDB",
+      "Python",
+      "Azure Edge"
+    ],
+    "outcomes": [
+      "40% reduction in unpredicted pump and compressor failures.",
+      "Real-time pipeline pressure anomaly detection within 2 seconds of occurrence."
+    ],
+    "acceleratorName": "BitXhift IIoT Platform",
+    "acceleratorSlug": "bitxhift",
+    "caseStudy": "Refinery & Pipeline Telemetry Engine",
+    "caseStudySlug": "smart-factory-manufacturing-transformation",
+    "cover_image_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShZX5NCDIIsd9IgGb2SEClw4QOSRiptTJ8zENgE2RRIg&s=10",
+    "status": "published",
+    "created_at": "2026-08-01T00:00:00.000Z",
+    "updated_at": "2026-08-01T00:00:00.000Z",
+    "published_at": "2026-08-01T00:00:00.000Z"
+  },
+  {
+    "id": "ind_10",
+    "name": "Media",
+    "slug": "media",
+    "summary": "Multimodal AI content tagging, high-speed digital asset indexing, real-time CDN telemetry, and streaming audience analytics.",
+    "content": "AI-driven media engineering solutions enabling sub-second content discovery, automated metadata extraction from video/audio streams, and streaming CDN performance monitoring.",
+    "businessProblems": [
+      "Millions of unindexed video assets sitting in dark media archives",
+      "Slow manual tagging of broadcast footage causing publication delays",
+      "Unmonitored CDN buffering and video playback quality drops"
+    ],
+    "solutions": [
+      "Multimodal AI asset indexing using vector embeddings and LLMs",
+      "Automated speech-to-text, face, and OCR tagging for video archives",
+      "Real-time CDN edge telemetry monitoring with automatic stream rerouting"
+    ],
+    "capabilities": [
+      "Multimodal Video Asset Indexing",
+      "Automated Broadcast Tagging & OCR",
+      "Real-Time CDN Buffering Telemetry",
+      "Audience Engagement Analytics"
+    ],
+    "technology": [
+      "Gemini API",
+      "LangGraph",
+      "ParseMaster",
+      "Qdrant Vector DB",
+      "AWS CloudFront"
+    ],
+    "outcomes": [
+      "90% faster media asset discovery for newsroom and production teams.",
+      "Sub-second video search indexing across 500,000+ hours of digital archives."
+    ],
+    "acceleratorName": "ParseMaster Data Engine",
+    "acceleratorSlug": "parsemaster",
+    "caseStudy": "Media Enterprise Digital Asset AI Search",
+    "caseStudySlug": "enterprise-database-cloud-migration",
+    "cover_image_url": "https://images.unsplash.com/photo-1478737270239-2f02b77fc618?q=80&w=1200&auto=format&fit=crop",
+    "status": "published",
+    "created_at": "2026-08-01T00:00:00.000Z",
+    "updated_at": "2026-08-01T00:00:00.000Z",
+    "published_at": "2026-08-01T00:00:00.000Z"
+  },
+  {
+    "id": "ind_11",
+    "name": "Electrical",
+    "slug": "electrical",
+    "summary": "PCB automated optical inspection (AOI), transformer test telemetry, component traceability, and high-speed SMT line OEE.",
+    "content": "High-precision electronics manufacturing systems connecting Surface Mount Technology (SMT) lines, automated optical inspection cameras, and component traceability databases.",
+    "businessProblems": [
+      "Micro-solder defect escapes reaching downstream assembly customers",
+      "Manual barcode scanning slowing down high-speed PCB conveyor lines",
+      "Fragmented component batch tracking causing expensive recall exposure"
+    ],
+    "solutions": [
+      "Edge AI optical defect recognition on high-speed SMT inspection cameras",
+      "High-frequency test bench telemetry capture for electrical transformers and relays",
+      "Component-level serial traceability integrated directly with SAP ERP"
+    ],
+    "capabilities": [
+      "SMT Line AOI Defect Inspection",
+      "Transformer & Relay Test Bench Telemetry",
+      "Full Component Serial Traceability",
+      "High-Speed Conveyor Sensor Sync"
+    ],
+    "technology": [
+      "BitXhift IIoT",
+      "OpenCV",
+      "PyTorch Edge",
+      "Modbus",
+      "TimescaleDB",
+      "React"
+    ],
+    "outcomes": [
+      "99.9% solder defect capture rate before final product packaging.",
+      "100% component batch serial traceability across all manufactured units."
+    ],
+    "acceleratorName": "BitXhift IIoT Platform",
+    "acceleratorSlug": "bitxhift",
+    "caseStudy": "Electronics SMT Quality Inspection",
+    "caseStudySlug": "smart-factory-manufacturing-transformation",
+    "cover_image_url": "https://images.unsplash.com/photo-1517077304055-6e89abbf09b0?q=80&w=1200&auto=format&fit=crop",
+    "status": "published",
+    "created_at": "2026-08-01T00:00:00.000Z",
+    "updated_at": "2026-08-01T00:00:00.000Z",
+    "published_at": "2026-08-01T00:00:00.000Z"
+  }
+],
   caseStudies: [
     {
       id: 'cs_01',

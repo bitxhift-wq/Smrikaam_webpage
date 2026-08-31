@@ -48,13 +48,13 @@ function renderBulletText(text) {
     const title = clean.substring(0, colonIdx);
     const rest = clean.substring(colonIdx + 1);
     return (
-      <span className="block text-left">
+      <p className="text-base md:text-[17px] text-text font-normal leading-[1.7] text-left">
         <strong className="text-text font-semibold">{title}:</strong>
-        <span className="text-text-muted font-normal"> {rest}</span>
-      </span>
+        <span className="text-text font-normal"> {rest}</span>
+      </p>
     );
   }
-  return <span className="text-text-muted font-normal text-left">{clean}</span>;
+  return <p className="text-base md:text-[17px] text-text font-normal leading-[1.7] text-left">{clean}</p>;
 }
 
 export default function ProductDetail() {
@@ -182,14 +182,14 @@ export default function ProductDetail() {
                 {problemPoints.length > 1 ? (
                   <ul className="space-y-2">
                     {problemPoints.map((prob, i) => (
-                      <li key={i} className="flex items-start gap-2.5 text-[13px] md:text-[14px] font-normal text-text-muted">
-                        <span className="w-1.5 h-1.5 rounded-full bg-accent mt-2 shrink-0" aria-hidden="true" />
+                      <li key={i} className="flex items-start gap-2.5 text-base md:text-[17px] font-normal text-text leading-[1.7]">
+                        <span className="w-1.5 h-1.5 rounded-full bg-accent mt-2.5 shrink-0" aria-hidden="true" />
                         <div>{renderBulletText(prob)}</div>
                       </li>
                     ))}
                   </ul>
                 ) : (
-                  <div className="text-[13px] md:text-[14px] text-text-muted leading-[1.6] text-left">
+                  <div className="text-base md:text-[17px] text-text font-normal leading-[1.7] text-left">
                     {renderBulletText(product.problem)}
                   </div>
                 )}
@@ -200,7 +200,7 @@ export default function ProductDetail() {
               <h3 className="text-[11px] text-[var(--color-accent)] uppercase tracking-[0.2em] font-semibold mb-3 text-left">
                 SOLUTION PROVIDED
               </h3>
-              <div className="bg-accent/5 p-4 border border-accent/30 text-[13px] md:text-[14px] text-text font-normal leading-[1.6] flex-1 flex flex-col justify-center text-left">
+              <div className="bg-accent/5 p-4 border border-accent/30 text-base md:text-[17px] text-text font-normal leading-[1.7] flex-1 flex flex-col justify-center text-left">
                 <RichTextRenderer content={product.solution || 'Standardized edge intelligence engine delivering sub-second anomaly detection, local protocol normalization, and autonomous offline operations.'} />
               </div>
             </div>

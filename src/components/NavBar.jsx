@@ -22,8 +22,8 @@ export default function NavBar() {
 
   const [theme, setTheme] = useState(() => {
     const saved = localStorage.getItem('smrikaam_theme');
-    if (saved) return saved;
-    return document.documentElement.classList.contains('dark') ? 'dark' : 'light';
+    if (saved === 'light' || saved === 'dark') return saved;
+    return document.documentElement.classList.contains('dark') ? 'dark' : 'dark';
   });
 
   useEffect(() => {
@@ -162,8 +162,8 @@ export default function NavBar() {
       className="nav relative z-50 bg-[var(--ribbon-bg)] backdrop-blur-md border-b border-[var(--ribbon-border)] px-6 md:px-10 h-16 flex items-center justify-between transition-colors duration-200"
     >
       <div className="max-w-7xl mx-auto w-full flex items-center justify-between">
-        <Link to="/" className="nav-brand shrink-0 flex items-center">
-          <Logo height={38} isLightBackground={false} />
+        <Link to="/" className="nav-brand shrink-0 flex items-center" aria-label="SMRIKAAM Technologies home">
+          <Logo height={34} isLightBackground={false} />
         </Link>
 
         {/* Desktop Navigation Links */}

@@ -115,31 +115,31 @@ html.dark {
   --accent-hover: #E5E5E5;
   --accent-contrast: #000000;
 
-  /* Ribbon Header Specific Tokens (Black Theme -> White Ribbon Surface with Black Icon for contrast) */
-  --ribbon-bg: #FFFFFF;
-  --ribbon-surface: #F8F8F6;
-  --ribbon-surface-subtle: #EEEEEE;
+  /* Ribbon Header Specific Tokens (Black Theme -> Dark Ribbon Surface + White Text) */
+  --ribbon-bg: #0D0D0D;
+  --ribbon-surface: #151515;
+  --ribbon-surface-subtle: #1A1A1A;
   --ribbon-text: #FFFFFF;
-  --ribbon-text-secondary: #FFFFFF;
-  --ribbon-text-muted: #FFFFFF;
-  --ribbon-border: rgba(255, 255, 255, 0.40);
+  --ribbon-text-secondary: #D0D0D0;
+  --ribbon-text-muted: #969696;
+  --ribbon-border: rgba(255, 255, 255, 0.20);
   --ribbon-active: #FFFFFF;
-  --ribbon-icon: #000000;
-  --ribbon-icon-bg: #F8F8F6;
-  --ribbon-icon-border: rgba(0, 0, 0, 0.20);
-  --ribbon-button-bg: #000000;
-  --ribbon-button-text: #FFFFFF;
-  --ribbon-button-border: #000000;
+  --ribbon-icon: #FFFFFF;
+  --ribbon-icon-bg: #151515;
+  --ribbon-icon-border: rgba(255, 255, 255, 0.20);
+  --ribbon-button-bg: #FFFFFF;
+  --ribbon-button-text: #000000;
+  --ribbon-button-border: #FFFFFF;
 
-  /* Ribbon Dropdown Specific Tokens (Black Theme -> White Dropdown + Black Text) */
-  --ribbon-dropdown-bg: #FFFFFF;
-  --ribbon-dropdown-surface: #F8F8F6;
-  --ribbon-dropdown-text: #000000;
-  --ribbon-dropdown-text-secondary: #333333;
-  --ribbon-dropdown-text-muted: #444444;
-  --ribbon-dropdown-border: rgba(0, 0, 0, 0.20);
-  --ribbon-dropdown-hover: #F0F0F0;
-  --ribbon-dropdown-active: #E5E5E5;
+  /* Ribbon Dropdown Specific Tokens (Black Theme -> Dark Dropdown + White Text) */
+  --ribbon-dropdown-bg: #151515;
+  --ribbon-dropdown-surface: #1A1A1A;
+  --ribbon-dropdown-text: #FFFFFF;
+  --ribbon-dropdown-text-secondary: #D0D0D0;
+  --ribbon-dropdown-text-muted: #969696;
+  --ribbon-dropdown-border: rgba(255, 255, 255, 0.20);
+  --ribbon-dropdown-hover: #222222;
+  --ribbon-dropdown-active: #2A2A2A;
 
   /* Explicit --color-* aliases */
   --color-bg: #030303;

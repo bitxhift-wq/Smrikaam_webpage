@@ -2,12 +2,15 @@ import React, { useState, useEffect } from 'react';
 
 /**
  * Official SMRIKAAM Technologies Logo Component
- * - 100% Original Official Logo Artwork (745x170px)
- * - 100% Transparent PNG background (zero box/card boundary, zero noise)
- * - Auto-adapts to theme background:
- *   - Dark theme -> Crisp WHITE text
- *   - Light theme -> Crisp BLACK text
- * - Multi-color 3D geometric symbol remains 100% vivid and identical in both themes
+ *
+ * Desktop (>=1024px): Full wordmark (smrikaam-logo-dark/light.png)
+ * Mobile  (<1024px):  Uploaded official icon (smrikaam-logo-icon.png)
+ *
+ * The uploaded icon is the exact file provided by the user:
+ *   C:\Users\mukhe\Downloads\ChatGPT Image Aug 18, 2026, 01_20_46 PM (1).png
+ * Copied to: public/assets/smrikaam-logo-icon.png
+ *
+ * No filter:invert, no recoloring, no recreation. Original asset only.
  */
 export default function Logo({
   className = '',
@@ -17,11 +20,12 @@ export default function Logo({
   const [isDark, setIsDark] = useState(() =>
     typeof document !== 'undefined'
       ? document.documentElement.classList.contains('dark')
-      : false
+      : true
   );
 
   useEffect(() => {
     if (typeof document === 'undefined') return;
+    setIsDark(document.documentElement.classList.contains('dark'));
     const observer = new MutationObserver(() => {
       setIsDark(document.documentElement.classList.contains('dark'));
     });
@@ -36,22 +40,31 @@ export default function Logo({
 
   return (
     <div className={`inline-flex items-center shrink-0 select-none ${className}`}>
+      {/* Mobile: Uploaded official SMRIKAAM geometric icon */}
+      <img
+        src="/assets/smrikaam-logo-icon.png"
+        alt="SMRIKAAM Technologies"
+        className="smrikaam-mobile-logo block lg:hidden shrink-0"
+      />
+      {/* Desktop: Full wordmark — theme-adaptive */}
       {useLight ? (
         <img
           src="/assets/smrikaam-logo-light.png"
-          alt="SMRIKAAM Technologies"
+          alt="SMRIKAAM Technologies — Progress Through Innovation"
           style={{ height: `${height}px` }}
-          className="w-auto object-contain object-left transition-transform duration-200 ease-out hover:scale-[1.02] shrink-0"
+          className="hidden lg:block w-auto object-contain object-left transition-transform duration-200 ease-out hover:scale-[1.02] shrink-0"
         />
       ) : (
         <img
           src="/assets/smrikaam-logo-dark.png"
-          alt="SMRIKAAM Technologies"
+          alt="SMRIKAAM Technologies — Progress Through Innovation"
           style={{ height: `${height}px` }}
-          className="w-auto object-contain object-left transition-transform duration-200 ease-out hover:scale-[1.02] shrink-0"
+          className="hidden lg:block w-auto object-contain object-left transition-transform duration-200 ease-out hover:scale-[1.02] shrink-0"
         />
       )}
     </div>
   );
 }
+
+
 

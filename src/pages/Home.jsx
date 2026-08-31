@@ -123,24 +123,24 @@ export default function Home() {
             </p>
 
             {/* Action Buttons */}
-            <div className="flex flex-wrap items-center gap-3 pt-1">
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 pt-1 w-full sm:w-auto">
               <Link
                 to="/contact"
-                className="px-5 py-2.5 bg-[var(--button-bg)] text-[var(--button-text)] border border-[var(--button-border)] font-mono text-xs font-bold uppercase tracking-wider hover:opacity-90 transition-all flex items-center gap-2 shadow-sm"
+                className="px-5 py-2.5 bg-[var(--button-bg)] text-[var(--button-text)] border border-[var(--button-border)] font-mono text-xs font-bold uppercase tracking-wider hover:opacity-90 transition-all flex items-center justify-center gap-2 shadow-sm w-full sm:w-auto"
               >
                 <span>BOOK STRATEGY CALL</span>
                 <ArrowUpRight className="w-3.5 h-3.5" strokeWidth={2} />
               </Link>
               <Link
                 to="/services"
-                className="px-5 py-2.5 border border-[var(--button-secondary-border)] bg-[var(--button-secondary-bg)] text-[var(--button-secondary-text)] font-mono text-xs font-bold uppercase tracking-wider hover:bg-[var(--color-surface-subtle)] transition-all"
+                className="px-5 py-2.5 border border-[var(--button-secondary-border)] bg-[var(--button-secondary-bg)] text-[var(--button-secondary-text)] font-mono text-xs font-bold uppercase tracking-wider hover:bg-[var(--color-surface-subtle)] transition-all text-center w-full sm:w-auto"
               >
                 EXPLORE CAPABILITIES
               </Link>
             </div>
 
             {/* System Proof Metrics Bar */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 p-3.5 sm:p-4 mt-2 home-card-surface border border-[var(--color-border)] max-w-lg">
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4 p-3.5 sm:p-4 mt-2 home-card-surface border border-[var(--color-border)] w-full max-w-lg">
               <div>
                 <AnimatedMetric
                   targetValue={50}
@@ -154,7 +154,7 @@ export default function Home() {
                   Deployments
                 </div>
               </div>
-              <div className="border-t sm:border-t-0 sm:border-l border-[var(--color-border)] pt-2.5 sm:pt-0 pl-0 sm:pl-3">
+              <div className="border-l border-[var(--color-border)] pl-3">
                 <AnimatedMetric
                   targetValue={17}
                   suffix="M+"
@@ -167,7 +167,7 @@ export default function Home() {
                   Data Points Processed
                 </div>
               </div>
-              <div className="border-t sm:border-t-0 sm:border-l border-[var(--color-border)] pt-2.5 sm:pt-0 pl-0 sm:pl-3">
+              <div className="col-span-2 sm:col-span-1 border-t sm:border-t-0 sm:border-l border-[var(--color-border)] pt-2.5 sm:pt-0 pl-0 sm:pl-3">
                 <AnimatedMetric
                   targetValue={99.999}
                   suffix="%"
@@ -184,8 +184,8 @@ export default function Home() {
           </div>
 
           {/* Right 3D Visual Column */}
-          <div className="lg:col-span-5 flex items-center justify-center relative">
-            <HeroCubeCluster className="w-full max-w-[380px] aspect-square" />
+          <div className="lg:col-span-5 flex items-center justify-center relative w-full overflow-hidden py-4 lg:py-0">
+            <HeroCubeCluster className="w-full max-w-[280px] sm:max-w-[380px] aspect-square mx-auto" />
           </div>
         </div>
       </section>
@@ -393,7 +393,7 @@ export default function Home() {
             </div>
             <Link
               to="/contact"
-              className="px-5 py-2.5 bg-[var(--button-bg)] text-[var(--button-text)] border border-[var(--button-border)] font-mono text-xs font-bold uppercase tracking-wider hover:opacity-90 transition-all flex items-center gap-2 shrink-0 shadow-sm"
+              className="px-5 py-2.5 bg-[var(--button-bg)] text-[var(--button-text)] border border-[var(--button-border)] font-mono text-xs font-bold uppercase tracking-wider hover:opacity-90 transition-all flex items-center justify-center gap-2 shrink-0 shadow-sm w-full sm:w-auto"
             >
               <span>BOOK STRATEGY CALL</span>
               <ArrowUpRight className="w-3.5 h-3.5" strokeWidth={2} />

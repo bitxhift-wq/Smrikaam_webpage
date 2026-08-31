@@ -50,13 +50,13 @@ function renderBulletText(text) {
     const title = clean.substring(0, colonIdx);
     const rest = clean.substring(colonIdx + 1);
     return (
-      <span className="block text-left">
+      <p className="text-base md:text-[17px] text-text font-normal leading-[1.7] text-left">
         <strong className="text-text font-semibold">{title}:</strong>
-        <span className="text-text-muted font-normal"> {rest}</span>
-      </span>
+        <span className="text-text font-normal"> {rest}</span>
+      </p>
     );
   }
-  return <span className="text-text-muted font-normal text-left">{clean}</span>;
+  return <p className="text-base md:text-[17px] text-text font-normal leading-[1.7] text-left">{clean}</p>;
 }
 
 export default function Products() {
@@ -65,6 +65,26 @@ export default function Products() {
   const [mousePos, setMousePos] = useState({ x: 0.5, y: 0.5 });
   const [isHovered, setIsHovered] = useState(false);
   const stageRef = useRef(null);
+  const detailContainerRef = useRef(null);
+  const isFirstRender = useRef(true);
+
+  useEffect(() => {
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+      return;
+    }
+
+    if (detailContainerRef.current) {
+      const rect = detailContainerRef.current.getBoundingClientRect();
+      const navOffset = 85;
+      const targetY = window.pageYOffset + rect.top - navOffset;
+
+      window.scrollTo({
+        top: Math.max(0, targetY),
+        behavior: 'smooth'
+      });
+    }
+  }, [activeIdx]);
 
   const iconMap = {
     bitxhift: Cpu,
@@ -246,7 +266,7 @@ export default function Products() {
 
             {/* Right Column: Active Product Detailed Specification Stage (Normal Document Scroll) */}
             {activeProduct && (
-              <main className="lg:col-span-7 min-w-0">
+              <div ref={detailContainerRef} className="lg:col-span-7 min-w-0">
                 <div
                   key={activeProduct.id}
                   role="tabpanel"
@@ -305,14 +325,14 @@ export default function Products() {
                         {activeProduct.problemPoints && activeProduct.problemPoints.length > 1 ? (
                           <ul className="space-y-2">
                             {activeProduct.problemPoints.map((prob, i) => (
-                              <li key={i} className="flex items-start gap-2.5 text-[13px] md:text-[14px] font-normal text-text-muted">
-                                <span className="w-1.5 h-1.5 rounded-full bg-accent mt-2 shrink-0" aria-hidden="true" />
+                              <li key={i} className="flex items-start gap-2.5 text-base md:text-[17px] font-normal text-text leading-[1.7]">
+                                <span className="w-1.5 h-1.5 rounded-full bg-accent mt-2.5 shrink-0" aria-hidden="true" />
                                 <div>{renderBulletText(prob)}</div>
                               </li>
                             ))}
                           </ul>
                         ) : (
-                          <div className="text-[13px] md:text-[14px] text-text-muted leading-[1.6]">
+                          <div className="text-base md:text-[17px] text-text font-normal leading-[1.7]">
                             {renderBulletText(activeProduct.problem)}
                           </div>
                         )}
@@ -323,7 +343,7 @@ export default function Products() {
                       <h4 className="text-[11px] text-accent font-semibold uppercase tracking-[0.2em] mb-2.5 text-left">
                         SOLUTION PROVIDED
                       </h4>
-                      <div className="bg-accent/5 p-4 border border-accent/30 text-[13px] md:text-[14px] text-text font-normal leading-[1.6] flex-1 flex flex-col justify-center text-left">
+                      <div className="bg-accent/5 p-4 border border-accent/30 text-base md:text-[17px] text-text font-normal leading-[1.7] flex-1 flex flex-col justify-center text-left">
                         <RichTextRenderer content={activeProduct.solution} />
                       </div>
                     </div>
@@ -453,7 +473,7 @@ export default function Products() {
                     </Link>
                   </div>
                 </div>
-              </main>
+              </div>
             )}
           </div>
         )}

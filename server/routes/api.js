@@ -541,10 +541,10 @@ router.get('/activity-logs', requireAdminAuth, async (req, res) => {
   }
 });
 
-router.get('/settings', requireAdminAuth, async (req, res) => {
+router.get('/settings', async (req, res) => {
   try {
     const settings = await db.getSettings();
-    res.json(settings);
+    res.json(settings || {});
   } catch (err) {
     res.status(500).json({ error: 'Failed to retrieve settings.' });
   }

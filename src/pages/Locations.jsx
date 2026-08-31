@@ -135,7 +135,7 @@ export default function Locations() {
               <h3 className="font-heading text-xl font-bold uppercase text-text mb-3">
                 SINGLE-POINT ACCOUNTABILITY
               </h3>
-              <p className="text-[14px] md:text-[15px] text-text-muted leading-[1.55] font-normal">
+              <p className="text-base md:text-[17px] text-text leading-[1.7] font-normal">
                 All client projects—from initial architectural discovery and telemetry pilot runs to production scaling—are engineered, governed, and supported directly by our senior team in Coimbatore.
               </p>
             </BlueprintWrapper>
@@ -147,7 +147,7 @@ export default function Locations() {
               <h3 className="font-heading text-xl font-semibold uppercase text-text mb-3">
                 24 BUSINESS HOUR RESPONSE
               </h3>
-              <p className="text-[15px] text-text-muted leading-[1.55] font-normal">
+              <p className="text-base md:text-[17px] text-text leading-[1.7] font-normal">
                 Submit your business or technical challenge. Our solution architects will conduct a feasibility review and schedule a direct technical strategy session.
               </p>
             </BlueprintWrapper>

@@ -88,6 +88,14 @@ class Database {
   }
 
   getCollection(name) {
+    if (fs.existsSync(DB_FILE)) {
+      try {
+        const raw = fs.readFileSync(DB_FILE, 'utf8');
+        this.data = JSON.parse(raw);
+      } catch (err) {
+        // use existing in-memory data
+      }
+    }
     if (!this.data || !this.data[name]) {
       if (this.data) this.data[name] = [];
       return [];

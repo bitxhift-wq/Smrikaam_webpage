@@ -96,7 +96,7 @@ export default function Staffing() {
                   {m.subtitle}
                 </p>
                 {m.desc && (
-                  <div className="text-text-muted text-[13px] md:text-[14px] font-normal leading-[1.55] mb-6">
+                  <div className="text-text text-base md:text-[17px] font-normal leading-[1.7] mb-6">
                     <RichTextRenderer content={m.desc} />
                   </div>
                 )}
@@ -145,7 +145,7 @@ export default function Staffing() {
           {processSteps.map((step, idx) => (
             <BlueprintWrapper key={idx} className="p-6">
               <div className="font-heading font-bold text-lg uppercase text-text mb-2">{step.name}</div>
-              <p className="text-[14px] font-normal text-text-muted leading-[1.5]">{step.desc}</p>
+              <p className="text-base md:text-[17px] font-normal text-text leading-[1.7]">{step.desc}</p>
             </BlueprintWrapper>
           ))}
         </div>
@@ -168,7 +168,7 @@ export default function Staffing() {
                 {openFaq === idx ? <ChevronUp className="w-5 h-5 text-accent" /> : <ChevronDown className="w-5 h-5 text-text-muted" />}
               </div>
               {openFaq === idx && (
-                <div className="mt-3 pt-3 border-t border-border text-[15px] font-normal text-text-muted leading-[1.55]">
+                <div className="mt-3 pt-3 border-t border-border text-base md:text-[17px] font-normal text-text leading-[1.7]">
                   {faq.a}
                 </div>
               )}

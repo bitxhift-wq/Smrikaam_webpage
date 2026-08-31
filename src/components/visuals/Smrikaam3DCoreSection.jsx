@@ -22,16 +22,12 @@ import {
  * Smrikaam3DCoreSection
  * 
  * High-precision architectural engineering intelligence core visual system.
- * Rebuilt to match the monochrome, high-contrast engineering aesthetic of the reference:
- * - 100% Theme-Aware (Instantly inverts between Dark & Light themes).
- * - Central 3D Isometric Hypercube with internal structural struts, glowing core, and radial coordinate grid.
- * - Left: "WHO WE ARE" editorial block + 6 capsule capability pills with circuit traces.
- * - Right: "WHAT WE BUILD" + 6 circular technical nodes + "EXPLORE SERVICES ↗".
- * - Center: Dynamic SVG neural network connecting all left and right nodes to the 3D Core with flowing data pulses.
- * - Bottom: "OUR GOAL", "OUR MISSION", "OUR VISION" connected purpose cards + "INTELLIGENT SYSTEMS → OPERATIONAL EXCELLENCE → BUSINESS IMPACT" ribbon.
+ * Single unified JSX structure with responsive Tailwind modifiers:
+ * - Desktop (>= 1024px): 100% Original Spatial composition (Left/Center/Right 3-column + SVG Trace network).
+ * - Mobile/Tablet (< 1024px): Content-driven vertical flow (Who We Are -> Capabilities -> 3D Visual -> What We Build -> Purpose Cards).
  */
 export default function Smrikaam3DCoreSection() {
-  const [hoveredNode, setHoveredNode] = useState(null); // 'cap-0'..'cap-5', 'build-0'..'build-5', 'goal', 'mission', 'vision'
+  const [hoveredNode, setHoveredNode] = useState(null);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const [isDark, setIsDark] = useState(() =>
     typeof document !== 'undefined' ? document.documentElement.classList.contains('dark') : true
@@ -142,12 +138,13 @@ export default function Smrikaam3DCoreSection() {
     let time = 0;
 
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
-    let width = canvas.offsetWidth || 420;
-    let height = canvas.offsetHeight || 420;
+    let width = canvas.offsetWidth || 320;
+    let height = canvas.offsetHeight || 320;
 
     const setupCanvas = () => {
-      width = canvas.offsetWidth || 420;
-      height = canvas.offsetHeight || 420;
+      if (!canvas) return;
+      width = canvas.offsetWidth || 320;
+      height = canvas.offsetHeight || 320;
       canvas.width = width * dpr;
       canvas.height = height * dpr;
       ctx.scale(dpr, dpr);
@@ -156,10 +153,8 @@ export default function Smrikaam3DCoreSection() {
     setupCanvas();
     window.addEventListener('resize', setupCanvas);
 
-    // Geometry Dimensions
     const sOuter = 72;
     const sInner = 36;
-
     const makeBoxVertices = (s) => [
       [-s, -s, -s],
       [s, -s, -s],
@@ -174,7 +169,6 @@ export default function Smrikaam3DCoreSection() {
     const outerVertices = makeBoxVertices(sOuter);
     const innerVertices = makeBoxVertices(sInner);
 
-    // 3D Isometric Projection
     const project = (x, y, z, rotX, rotY, cx, cy) => {
       const cosY = Math.cos(rotY);
       const sinY = Math.sin(rotY);
@@ -205,7 +199,6 @@ export default function Smrikaam3DCoreSection() {
       const cy = height / 2;
       const dark = document.documentElement.classList.contains('dark');
 
-      // Theme-Aware Color Mapping
       const strokeMain = dark ? 'rgba(255, 255, 255, 0.75)' : 'rgba(20, 20, 20, 0.75)';
       const strokeCore = dark ? 'rgba(255, 255, 255, 0.95)' : 'rgba(15, 23, 42, 0.95)';
       const strokeFaint = dark ? 'rgba(255, 255, 255, 0.15)' : 'rgba(20, 20, 20, 0.14)';
@@ -218,8 +211,6 @@ export default function Smrikaam3DCoreSection() {
       // 1. Subtle Central Coordinate Axes & Concentric Tick Rings
       ctx.save();
       ctx.translate(cx, cy);
-
-      // Coordinate axes
       ctx.beginPath();
       ctx.moveTo(-160, 0);
       ctx.lineTo(160, 0);
@@ -231,8 +222,7 @@ export default function Smrikaam3DCoreSection() {
       ctx.stroke();
       ctx.setLineDash([]);
 
-      // Concentric Rings with radial tick marks
-      [100, 140, 175].forEach((radius, rIdx) => {
+      [100, 140, 175].forEach((radius) => {
         ctx.beginPath();
         ctx.arc(0, 0, radius, 0, Math.PI * 2);
         ctx.strokeStyle = strokeFaint;
@@ -240,39 +230,33 @@ export default function Smrikaam3DCoreSection() {
         ctx.setLineDash([1, 6]);
         ctx.stroke();
         ctx.setLineDash([]);
-
-        // Orbiting node tick
-        const tickAngle = time * (0.3 - rIdx * 0.08) + rIdx;
-        const tx = Math.cos(tickAngle) * radius;
-        const ty = Math.sin(tickAngle) * radius;
-        ctx.beginPath();
-        ctx.arc(tx, ty, 2, 0, Math.PI * 2);
-        ctx.fillStyle = strokeMain;
-        ctx.fill();
       });
       ctx.restore();
 
-      // 2. Radial Ambient Core Glow
-      const glowGrad = ctx.createRadialGradient(cx, cy, 5, cx, cy, 140);
-      glowGrad.addColorStop(0, glowAura);
-      glowGrad.addColorStop(1, 'transparent');
-      ctx.fillStyle = glowGrad;
-      ctx.fillRect(0, 0, width, height);
+      // Outer Aura Glow
+      const glowRad = 130 + Math.sin(time * 2) * 12;
+      const grad = ctx.createRadialGradient(cx, cy, 10, cx, cy, glowRad);
+      grad.addColorStop(0, glowAura);
+      grad.addColorStop(1, 'transparent');
+      ctx.fillStyle = grad;
+      ctx.beginPath();
+      ctx.arc(cx, cy, glowRad, 0, Math.PI * 2);
+      ctx.fill();
 
-      // 3. 3D Cube Rotation Angles with Mouse Parallax
-      const rotY = 0.62 + time * 0.22 + mousePos.x * 0.4;
-      const rotX = 0.54 + Math.sin(time * 0.28) * 0.03 + mousePos.y * 0.4;
-      const floatY = Math.sin(time * 0.75) * 5;
+      // Rotation angles
+      const rotY = time * 0.4 + mousePos.x * 0.4;
+      const rotX = time * 0.25 + mousePos.y * 0.4;
+      const floatY = Math.sin(time * 1.5) * 6;
 
-      const projOuter = outerVertices.map(([vx, vy, vz]) =>
-        project(vx, vy + floatY, vz, rotX, rotY, cx, cy)
-      );
+      const pOuter = outerVertices.map(([x, y, z]) => project(x, y, z, rotX, rotY, cx, cy + floatY));
+      const pInner = innerVertices.map(([x, y, z]) => project(x, y, z, rotX, rotY, cx, cy + floatY));
 
-      const projInner = innerVertices.map(([vx, vy, vz]) =>
-        project(vx, vy + floatY, vz, -rotX * 1.15, -rotY * 1.25, cx, cy)
-      );
+      const cubeEdges = [
+        [0, 1], [1, 2], [2, 3], [3, 0],
+        [4, 5], [5, 6], [6, 7], [7, 4],
+        [0, 4], [1, 5], [2, 6], [3, 7],
+      ];
 
-      // Faces definitions
       const faces = [
         [0, 1, 2, 3],
         [4, 5, 6, 7],
@@ -282,86 +266,77 @@ export default function Smrikaam3DCoreSection() {
         [1, 2, 6, 5],
       ];
 
-      // Draw Outer Translucent Planes
+      // Draw Outer Box Faces
       faces.forEach((face) => {
         ctx.beginPath();
-        ctx.moveTo(projOuter[face[0]].px, projOuter[face[0]].py);
-        for (let i = 1; i < face.length; i++) {
-          ctx.lineTo(projOuter[face[i]].px, projOuter[face[i]].py);
+        ctx.moveTo(pOuter[face[0]].px, pOuter[face[0]].py);
+        for (let i = 1; i < 4; i++) {
+          ctx.lineTo(pOuter[face[i]].px, pOuter[face[i]].py);
         }
         ctx.closePath();
         ctx.fillStyle = faceOuter;
         ctx.fill();
       });
 
-      // Draw Inner Core Planes
+      // Draw Outer Box Edges
+      cubeEdges.forEach(([i, j]) => {
+        ctx.beginPath();
+        ctx.moveTo(pOuter[i].px, pOuter[i].py);
+        ctx.lineTo(pOuter[j].px, pOuter[j].py);
+        ctx.strokeStyle = strokeMain;
+        ctx.lineWidth = 1.4;
+        ctx.stroke();
+      });
+
+      // Structural Struts
+      for (let i = 0; i < 8; i++) {
+        ctx.beginPath();
+        ctx.moveTo(pOuter[i].px, pOuter[i].py);
+        ctx.lineTo(pInner[i].px, pInner[i].py);
+        ctx.strokeStyle = strokeStrut;
+        ctx.lineWidth = 1.1;
+        ctx.setLineDash([2, 2]);
+        ctx.stroke();
+        ctx.setLineDash([]);
+      }
+
+      // Draw Inner Core Box Faces
       faces.forEach((face) => {
         ctx.beginPath();
-        ctx.moveTo(projInner[face[0]].px, projInner[face[0]].py);
-        for (let i = 1; i < face.length; i++) {
-          ctx.lineTo(projInner[face[i]].px, projInner[face[i]].py);
+        ctx.moveTo(pInner[face[0]].px, pInner[face[0]].py);
+        for (let i = 1; i < 4; i++) {
+          ctx.lineTo(pInner[face[i]].px, pInner[face[i]].py);
         }
         ctx.closePath();
         ctx.fillStyle = faceInner;
         ctx.fill();
       });
 
-      // Cube Edge Pairs
-      const edges = [
-        [0, 1], [1, 2], [2, 3], [3, 0],
-        [4, 5], [5, 6], [6, 7], [7, 4],
-        [0, 4], [1, 5], [2, 6], [3, 7],
-      ];
-
-      // Structural Diagonal Struts between outer and inner cubes
-      ctx.lineWidth = 1;
-      ctx.strokeStyle = strokeStrut;
-      ctx.setLineDash([2, 3]);
-      for (let i = 0; i < 8; i++) {
+      // Draw Inner Core Box Edges
+      cubeEdges.forEach(([i, j]) => {
         ctx.beginPath();
-        ctx.moveTo(projOuter[i].px, projOuter[i].py);
-        ctx.lineTo(projInner[i].px, projInner[i].py);
-        ctx.stroke();
-      }
-      ctx.setLineDash([]);
-
-      // Outer Wireframe Edges
-      ctx.lineWidth = 1.3;
-      ctx.strokeStyle = strokeMain;
-      edges.forEach(([i, j]) => {
-        ctx.beginPath();
-        ctx.moveTo(projOuter[i].px, projOuter[i].py);
-        ctx.lineTo(projOuter[j].px, projOuter[j].py);
+        ctx.moveTo(pInner[i].px, pInner[i].py);
+        ctx.lineTo(pInner[j].px, pInner[j].py);
+        ctx.strokeStyle = strokeCore;
+        ctx.lineWidth = 2.2;
         ctx.stroke();
       });
 
-      // Inner Core Wireframe Edges
-      ctx.lineWidth = 1.6;
-      ctx.strokeStyle = strokeCore;
-      edges.forEach(([i, j]) => {
+      // Corner Nodes & Singularity
+      pOuter.forEach((pt) => {
         ctx.beginPath();
-        ctx.moveTo(projInner[i].px, projInner[i].py);
-        ctx.lineTo(projInner[j].px, projInner[j].py);
-        ctx.stroke();
-      });
-
-      // Outer Vertex Glowing Nodes
-      projOuter.forEach((p) => {
-        ctx.beginPath();
-        ctx.arc(p.px, p.py, 3, 0, Math.PI * 2);
+        ctx.arc(pt.px, pt.py, 2.5, 0, Math.PI * 2);
         ctx.fillStyle = nodeColor;
         ctx.fill();
       });
 
-      // Inner Core Vertex Nodes
-      projInner.forEach((p) => {
+      pInner.forEach((pt) => {
         ctx.beginPath();
-        ctx.arc(p.px, p.py, 2, 0, Math.PI * 2);
+        ctx.arc(pt.px, pt.py, 3, 0, Math.PI * 2);
         ctx.fillStyle = nodeColor;
         ctx.fill();
       });
 
-      // Center Singularity Point
       ctx.beginPath();
       ctx.arc(cx, cy + floatY, 4, 0, Math.PI * 2);
       ctx.fillStyle = nodeColor;
@@ -382,15 +357,12 @@ export default function Smrikaam3DCoreSection() {
     <div
       ref={containerRef}
       onMouseMove={handleMouseMove}
-      className="smrikaam-core relative w-full bg-[var(--color-bg)] text-[var(--color-text)] py-12 md:py-16 px-4 sm:px-6 md:px-10 lg:px-14 overflow-hidden select-none transition-colors duration-300"
+      className="smrikaam-core relative w-full bg-[var(--color-bg)] text-[var(--color-text)] py-8 md:py-16 px-4 sm:px-6 md:px-10 lg:px-14 overflow-hidden select-none transition-colors duration-300"
       aria-label="SMRIKAAM Engineering Intelligence Core"
     >
-      {/* Background Architectural Grid & Subtle Radial Atmosphere */}
+      {/* Background Architectural Grid & Radial Atmosphere */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden" aria-hidden="true">
-        {/* Subtle Radial Glow Layer behind 3D cube */}
         <div className="absolute top-[35%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-[650px] h-[650px] bg-radial from-[var(--color-accent)]/8 to-transparent blur-3xl" />
-        
-        {/* Fine Architectural Grid Pattern */}
         <div
           className="absolute inset-0 opacity-[0.06] dark:opacity-[0.08]"
           style={{
@@ -401,17 +373,16 @@ export default function Smrikaam3DCoreSection() {
         />
       </div>
 
-      {/* Main Responsive Spatial Canvas */}
       <div className="max-w-[1440px] mx-auto w-full relative z-10">
-        
+
         {/* ============================================================ */}
-        {/* TOP / MIDDLE SPATIAL REGION: WHO WE ARE | 3D CORE | WHAT WE BUILD */}
+        {/* UNIFIED SPATIAL REGION: WHO WE ARE | 3D CORE | WHAT WE BUILD */}
+        {/* Desktop (>= 1024px): 3-column absolute composition            */}
+        {/* Mobile/Tablet (< 1024px): Responsive flow layout             */}
         {/* ============================================================ */}
-        <div className="relative min-h-[640px] lg:min-h-[740px] flex flex-col lg:block">
-          
-          {/* ========================================================== */}
-          {/* SVG NEURAL NETWORK TRACES (DESKTOP LAYER) */}
-          {/* ========================================================== */}
+        <div className="relative min-h-0 lg:min-h-[740px] flex flex-col lg:block space-y-8 lg:space-y-0">
+
+          {/* SVG Neural Network Traces (Desktop Only) */}
           <svg
             className="hidden lg:block absolute inset-0 w-full h-full pointer-events-none z-0"
             viewBox="0 0 1440 740"
@@ -419,7 +390,7 @@ export default function Smrikaam3DCoreSection() {
             preserveAspectRatio="none"
             aria-hidden="true"
           >
-            {/* --- LEFT TRACE LINES: CAPABILITIES (01..06) -> 3D CORE --- */}
+            {/* Left Trace Lines */}
             {[
               { id: 'cap-0', dotX: 400, dotY: 380, path: 'M 320 380 L 400 380 L 590 280 L 640 310' },
               { id: 'cap-1', dotX: 400, dotY: 432, path: 'M 320 432 L 400 432 L 585 340 L 630 350' },
@@ -432,7 +403,6 @@ export default function Smrikaam3DCoreSection() {
               const hasAnyHover = hoveredNode !== null;
               return (
                 <g key={trace.id}>
-                  {/* Circuit Trace Path */}
                   <path
                     d={trace.path}
                     stroke={isHovered ? 'var(--color-accent)' : 'var(--color-border-strong)'}
@@ -441,8 +411,6 @@ export default function Smrikaam3DCoreSection() {
                     opacity={hasAnyHover && !isHovered ? 0.2 : 0.85}
                     className="transition-all duration-300"
                   />
-
-                  {/* Intermediate Node Dot */}
                   <circle
                     cx={trace.dotX}
                     cy={trace.dotY}
@@ -450,8 +418,6 @@ export default function Smrikaam3DCoreSection() {
                     fill={isHovered ? 'var(--color-accent)' : 'var(--color-border-strong)'}
                     opacity={hasAnyHover && !isHovered ? 0.25 : 1}
                   />
-
-                  {/* Flowing Data Pulse Dot */}
                   <circle r={isHovered ? 3.5 : 2} fill="var(--color-accent)">
                     <animateMotion
                       path={trace.path}
@@ -463,7 +429,7 @@ export default function Smrikaam3DCoreSection() {
               );
             })}
 
-            {/* --- RIGHT TRACE LINES: 3D CORE -> WHAT WE BUILD (01..06) --- */}
+            {/* Right Trace Lines */}
             {[
               { id: 'build-0', dotX: 1020, dotY: 195, path: 'M 800 310 L 850 280 L 1020 195 L 1080 195' },
               { id: 'build-1', dotX: 1020, dotY: 275, path: 'M 810 350 L 855 340 L 1020 275 L 1080 275' },
@@ -476,7 +442,6 @@ export default function Smrikaam3DCoreSection() {
               const hasAnyHover = hoveredNode !== null;
               return (
                 <g key={trace.id}>
-                  {/* Circuit Trace Path */}
                   <path
                     d={trace.path}
                     stroke={isHovered ? 'var(--color-accent)' : 'var(--color-border-strong)'}
@@ -485,8 +450,6 @@ export default function Smrikaam3DCoreSection() {
                     opacity={hasAnyHover && !isHovered ? 0.2 : 0.85}
                     className="transition-all duration-300"
                   />
-
-                  {/* Intermediate Node Dot */}
                   <circle
                     cx={trace.dotX}
                     cy={trace.dotY}
@@ -494,8 +457,6 @@ export default function Smrikaam3DCoreSection() {
                     fill={isHovered ? 'var(--color-accent)' : 'var(--color-border-strong)'}
                     opacity={hasAnyHover && !isHovered ? 0.25 : 1}
                   />
-
-                  {/* Flowing Data Pulse Dot */}
                   <circle r={isHovered ? 3.5 : 2} fill="var(--color-accent)">
                     <animateMotion
                       path={trace.path}
@@ -507,69 +468,34 @@ export default function Smrikaam3DCoreSection() {
               );
             })}
 
-            {/* --- BOTTOM BRANCH LINES: 3D CORE -> PURPOSE CARDS --- */}
-            <path
-              d="M 720 550 L 720 630"
-              stroke="var(--color-border-strong)"
-              strokeWidth="1.2"
-              strokeDasharray="3 4"
-            />
-            {/* Branch to Goal (Left) */}
-            <path
-              d="M 720 630 C 620 630, 300 630, 270 680"
-              stroke="var(--color-border-strong)"
-              strokeWidth="1.2"
-              strokeDasharray="3 4"
-            />
-            {/* Branch to Mission (Center) */}
-            <path
-              d="M 720 630 L 720 680"
-              stroke="var(--color-border-strong)"
-              strokeWidth="1.2"
-              strokeDasharray="3 4"
-            />
-            {/* Branch to Vision (Right) */}
-            <path
-              d="M 720 630 C 820 630, 1140 630, 1170 680"
-              stroke="var(--color-border-strong)"
-              strokeWidth="1.2"
-              strokeDasharray="3 4"
-            />
+            {/* Bottom Branch Lines */}
+            <path d="M 720 550 L 720 630" stroke="var(--color-border-strong)" strokeWidth="1.2" strokeDasharray="3 4" />
+            <path d="M 720 630 C 620 630, 300 630, 270 680" stroke="var(--color-border-strong)" strokeWidth="1.2" strokeDasharray="3 4" />
+            <path d="M 720 630 L 720 680" stroke="var(--color-border-strong)" strokeWidth="1.2" strokeDasharray="3 4" />
+            <path d="M 720 630 C 820 630, 1140 630, 1170 680" stroke="var(--color-border-strong)" strokeWidth="1.2" strokeDasharray="3 4" />
           </svg>
 
-          {/* ========================================================== */}
-          {/* UPPER-LEFT CONTENT: WHO WE ARE & 6 CAPABILITY PILLS */}
-          {/* ========================================================== */}
-          <div className="lg:absolute lg:top-0 lg:left-0 lg:w-[380px] z-20 space-y-6">
-            
-            {/* Section Header Block */}
+          {/* Upper-Left: Who We Are & Capabilities */}
+          <div className="relative lg:absolute lg:top-0 lg:left-0 w-full lg:w-[380px] z-20 space-y-6">
             <div className="space-y-3">
               <div className="text-[11px] text-[var(--color-text-muted)] uppercase tracking-[0.2em] font-semibold flex items-center gap-2">
                 <span className="w-1.5 h-1.5 bg-[var(--color-accent)]" />
                 <span>WHO WE ARE</span>
               </div>
-
               <h2 className="font-heading text-3xl sm:text-4xl font-bold uppercase text-[var(--color-text)] tracking-tight leading-[1.08]">
                 Engineering Intelligence Across AI, Data, Cloud &amp; <span className="text-amber-400 dark:text-amber-300">IIoT.</span>
               </h2>
-
               <div className="space-y-2.5 text-[15px] sm:text-[16px] md:text-[18px] text-[var(--color-text-secondary)] leading-[1.6] font-normal">
-                <p>
-                  We are a technology development and engineering company helping enterprises build intelligent systems across AI, Data, Cloud, IIoT and Software.
-                </p>
-                <p className="text-[var(--color-text-muted)]">
-                  We combine deep engineering with domain understanding to design, build and scale solutions that create real impact.
-                </p>
+                <p>We are a technology development and engineering company helping enterprises build intelligent systems across AI, Data, Cloud, IIoT and Software.</p>
+                <p className="text-[var(--color-text-muted)]">We combine deep engineering with domain understanding to design, build and scale solutions that create real impact.</p>
               </div>
             </div>
 
-            {/* 6 Engineering Capability Capsule Pills */}
             <div className="space-y-2.5 pt-2">
               <div className="text-[10px] text-[var(--color-text-muted)] uppercase tracking-widest font-semibold flex items-center gap-2">
                 <span className="w-1.5 h-1.5 bg-[var(--color-accent)]" />
                 <span>ENGINEERING CAPABILITIES</span>
               </div>
-
               <div className="space-y-2 max-w-full sm:max-w-[320px]">
                 {capabilities.map((cap) => {
                   const Icon = cap.icon;
@@ -596,13 +522,9 @@ export default function Smrikaam3DCoreSection() {
                           {cap.title}
                         </span>
                       </div>
-
-                      {/* Right Connection Tip Marker */}
                       <span
                         className={`w-1.5 h-1.5 rounded-full transition-all ${
-                          isHovered
-                            ? 'bg-[var(--color-accent)] scale-125'
-                            : 'bg-[var(--color-border-strong)]'
+                          isHovered ? 'bg-[var(--color-accent)] scale-125' : 'bg-[var(--color-border-strong)]'
                         }`}
                       />
                     </div>
@@ -610,40 +532,27 @@ export default function Smrikaam3DCoreSection() {
                 })}
               </div>
             </div>
-
           </div>
 
-          {/* ========================================================== */}
-          {/* CENTER VISUAL: 3D CORE ISOMETRIC HYPERCUBE */}
-          {/* ========================================================== */}
-          <div className="my-8 lg:my-0 lg:absolute lg:top-1/2 lg:left-1/2 lg:-translate-x-1/2 lg:-translate-y-1/2 w-full lg:w-[460px] flex flex-col items-center justify-center z-10 pointer-events-none">
-            {/* Real 3D Hypercube Canvas */}
-            <div className="max-w-full w-[280px] sm:w-[400px] h-[280px] sm:h-[400px] relative flex items-center justify-center overflow-hidden">
-              <canvas
-                ref={canvasRef}
-                className="w-full h-full object-contain"
-              />
+          {/* Center Visual: 3D Core Canvas */}
+          <div className="my-6 lg:my-0 relative lg:absolute lg:top-1/2 lg:left-1/2 lg:-translate-x-1/2 lg:-translate-y-1/2 w-full lg:w-[460px] flex flex-col items-center justify-center z-10 pointer-events-none">
+            <div className="w-[min(82vw,300px)] sm:w-[400px] h-[min(82vw,300px)] sm:h-[400px] relative flex items-center justify-center overflow-hidden mx-auto">
+              <canvas ref={canvasRef} className="w-full h-full object-contain" />
             </div>
           </div>
 
-          {/* ========================================================== */}
-          {/* UPPER-RIGHT CONTENT: WHAT WE BUILD & 6 CIRCULAR NODES */}
-          {/* ========================================================== */}
-          <div className="lg:absolute lg:top-0 lg:right-0 lg:w-[420px] z-20 space-y-5">
-            
-            {/* Header Block */}
+          {/* Upper-Right: What We Build */}
+          <div className="relative lg:absolute lg:top-0 lg:right-0 w-full lg:w-[420px] z-20 space-y-5">
             <div className="space-y-1.5">
               <div className="text-[11px] text-[var(--color-text-muted)] uppercase tracking-[0.2em] font-semibold flex items-center gap-2">
                 <span className="w-1.5 h-1.5 bg-[var(--color-accent)]" />
                 <span>WHAT WE BUILD</span>
               </div>
-
               <h2 className="font-heading text-3xl sm:text-4xl font-bold uppercase text-[var(--color-text)] tracking-tight leading-[1.08]">
                 Technology. Engineered End to End.
               </h2>
             </div>
 
-            {/* 6 What We Build Items with Circular Framed Icons */}
             <div className="space-y-3">
               {buildItems.map((item) => {
                 const Icon = item.icon;
@@ -660,17 +569,12 @@ export default function Smrikaam3DCoreSection() {
                       isHovered ? '-translate-x-1 bg-[var(--color-surface-subtle)]/80' : 'hover:bg-[var(--color-surface-subtle)]/40'
                     }`}
                   >
-                    {/* Circular Technical Icon Frame */}
                     <div
                       className="w-8 h-8 rounded-full border border-[var(--color-border-strong)] shrink-0 flex items-center justify-center bg-[var(--color-surface)] text-[var(--color-text)] transition-transform duration-200"
-                      style={{
-                        transform: isHovered ? 'scale(1.1)' : 'scale(1)',
-                      }}
+                      style={{ transform: isHovered ? 'scale(1.1)' : 'scale(1)' }}
                     >
                       <Icon className="w-4 h-4" strokeWidth={1.8} />
                     </div>
-
-                    {/* Title & Description */}
                     <div className="flex-1 min-w-0">
                       <h3 className="font-heading text-sm font-bold uppercase tracking-wider text-[var(--color-text)] mb-0.5">
                         {item.title}
@@ -684,17 +588,15 @@ export default function Smrikaam3DCoreSection() {
               })}
             </div>
 
-            {/* Explore Services Button (Box Style matching reference) */}
             <div className="pt-2">
               <Link
                 to="/services"
-                className="inline-flex items-center justify-between px-5 py-2.5 border border-[var(--button-secondary-border)] bg-[var(--button-secondary-bg)] text-[var(--button-secondary-text)] hover:border-[var(--color-accent)] hover:bg-[var(--color-surface-subtle)] text-xs font-semibold uppercase tracking-widest transition-all duration-200 group"
+                className="inline-flex items-center justify-between px-5 py-2.5 border border-[var(--button-secondary-border)] bg-[var(--button-secondary-bg)] text-[var(--button-secondary-text)] hover:border-[var(--color-accent)] hover:bg-[var(--color-surface-subtle)] text-xs font-semibold uppercase tracking-widest transition-all duration-200 group w-full lg:w-auto"
               >
                 <span>EXPLORE SERVICES</span>
                 <ArrowUpRight className="w-4 h-4 ml-2 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
               </Link>
             </div>
-
           </div>
 
         </div>
@@ -702,18 +604,13 @@ export default function Smrikaam3DCoreSection() {
         {/* ============================================================ */}
         {/* BOTTOM REGION: OUR GOAL / OUR MISSION / OUR VISION CARDS */}
         {/* ============================================================ */}
-        <div className="mt-14 pt-8 relative z-20">
-          
-          {/* 3 Strategic Purpose Connected Cards */}
+        <div className="mt-10 lg:mt-14 pt-6 relative z-20">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 relative items-center">
-            
             {pillars.map((pillar, idx) => {
               const PillarIcon = pillar.icon;
               const isHovered = hoveredNode === pillar.id;
               return (
                 <div key={pillar.id} className="relative flex items-center">
-                  
-                  {/* Card Body */}
                   <div
                     tabIndex={0}
                     onMouseEnter={() => setHoveredNode(pillar.id)}
@@ -726,43 +623,30 @@ export default function Smrikaam3DCoreSection() {
                         : 'border-[var(--color-border)] bg-[var(--color-surface-subtle)]/70 hover:border-[var(--color-border-strong)]'
                     }`}
                   >
-                    {/* Circular Icon Badge */}
-                    <div
-                      className="w-12 h-12 rounded-full border border-[var(--color-border-strong)] flex items-center justify-center mb-3 bg-[var(--color-surface)] text-[var(--color-accent)] transition-transform duration-200"
-                    >
+                    <div className="w-12 h-12 rounded-full border border-[var(--color-border-strong)] flex items-center justify-center mb-3 bg-[var(--color-surface)] text-[var(--color-accent)] transition-transform duration-200">
                       <PillarIcon className="w-5 h-5" strokeWidth={1.8} />
                     </div>
-
-                    {/* Title */}
                     <h4 className="font-heading text-base font-bold uppercase tracking-wider text-[var(--color-text)] mb-1.5">
                       {pillar.title}
                     </h4>
-
-                    {/* Description */}
                     <p className="text-xs md:text-[13px] text-[var(--color-text-secondary)] leading-[1.5] font-normal">
                       {pillar.desc}
                     </p>
                   </div>
-
-                  {/* Dashed Horizontal Connector Line between cards on desktop */}
                   {idx < 2 && (
                     <div className="hidden md:flex absolute -right-4 top-1/2 -translate-y-1/2 z-30 text-[var(--color-border-strong)]">
                       <span className="text-[10px] tracking-tighter">-----</span>
                     </div>
                   )}
-
                 </div>
               );
             })}
-
           </div>
 
-          {/* Downward Arrow to Strategic Ribbon */}
           <div className="flex flex-col items-center justify-center mt-6 text-[var(--color-text-muted)]">
             <ArrowDown className="w-4 h-4 animate-bounce" />
           </div>
 
-          {/* Strategic Flow Ribbon: INTELLIGENT SYSTEMS -> OPERATIONAL EXCELLENCE -> BUSINESS IMPACT */}
           <div className="mt-3 flex justify-center">
             <div className="inline-flex flex-wrap items-center justify-center gap-2 sm:gap-4 px-6 py-2.5 rounded-full border border-[var(--color-border)] bg-[var(--color-surface)] shadow-sm text-[10px] sm:text-[11px] tracking-widest uppercase text-[var(--color-text)] font-semibold">
               <span>INTELLIGENT SYSTEMS</span>
@@ -772,7 +656,6 @@ export default function Smrikaam3DCoreSection() {
               <span>BUSINESS IMPACT</span>
             </div>
           </div>
-
         </div>
 
       </div>

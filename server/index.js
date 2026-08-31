@@ -2,8 +2,10 @@ import express from 'express';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import path from 'path';
+import fs from 'fs';
 import { fileURLToPath } from 'url';
 import { router as apiRouter } from './routes/api.js';
+import { postgres } from './services/postgres.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -32,18 +34,26 @@ app.get('/health', (req, res) => {
   res.json({ status: 'ok', time: new Date().toISOString() });
 });
 
-// Production: Serve frontend static build
+// Production: Serve frontend static build if dist exists
 const DIST_DIR = path.resolve(__dirname, '../dist');
-app.use(express.static(DIST_DIR));
+const distIndexPath = path.join(DIST_DIR, 'index.html');
 
-app.use((req, res) => {
-  if (req.path.startsWith('/api') || req.path.startsWith('/uploads')) {
-    return res.status(404).json({ error: 'API route not found' });
-  }
-  res.sendFile(path.join(DIST_DIR, 'index.html'));
-});
-
-import { postgres } from './services/postgres.js';
+if (process.env.NODE_ENV === 'production' && fs.existsSync(distIndexPath)) {
+  app.use(express.static(DIST_DIR));
+  app.use((req, res, next) => {
+    if (req.path.startsWith('/api') || req.path.startsWith('/uploads')) {
+      return res.status(404).json({ error: 'API route not found' });
+    }
+    res.sendFile(distIndexPath);
+  });
+} else {
+  app.use((req, res, next) => {
+    if (req.path.startsWith('/api') || req.path.startsWith('/uploads')) {
+      return res.status(404).json({ error: 'API route not found' });
+    }
+    next();
+  });
+}
 
 // Start listening if executed directly
 if (process.argv[1] === fileURLToPath(import.meta.url)) {

@@ -27,13 +27,13 @@ function renderBulletText(text) {
     const title = clean.substring(0, colonIdx);
     const rest = clean.substring(colonIdx + 1);
     return (
-      <span className="block text-left">
+      <p className="text-base md:text-[17px] text-text font-normal leading-[1.7] text-left">
         <strong className="text-text font-semibold">{title}:</strong>
-        <span className="text-text-muted font-normal"> {rest}</span>
-      </span>
+        <span className="text-text font-normal"> {rest}</span>
+      </p>
     );
   }
-  return <span className="text-text-muted font-normal text-left">{clean}</span>;
+  return <p className="text-base md:text-[17px] text-text font-normal leading-[1.7] text-left">{clean}</p>;
 }
 
 export default function IndustryDetail() {
@@ -52,7 +52,12 @@ export default function IndustryDetail() {
     healthcare: { name: 'ParseMaster Streaming Engine', slug: 'parsemaster' },
     'healthcare-life-sciences': { name: 'ParseMaster Streaming Engine', slug: 'parsemaster' },
     logistics: { name: 'ParseMaster Ingestion Engine', slug: 'parsemaster' },
-    'logistics-supply-chain': { name: 'ParseMaster Ingestion Engine', slug: 'parsemaster' }
+    'logistics-supply-chain': { name: 'ParseMaster Ingestion Engine', slug: 'parsemaster' },
+    telecom: { name: 'ParseMaster Data Engine', slug: 'parsemaster' },
+    infrastructure: { name: 'BitXhift IIoT Platform', slug: 'bitxhift' },
+    'oil-gas': { name: 'BitXhift IIoT Platform', slug: 'bitxhift' },
+    media: { name: 'ParseMaster Data Engine', slug: 'parsemaster' },
+    electrical: { name: 'BitXhift IIoT Platform', slug: 'bitxhift' }
   };
 
   useEffect(() => {
@@ -96,32 +101,23 @@ export default function IndustryDetail() {
   }
 
   const slugLower = (industry.slug || '').toLowerCase();
-  const relatedAcc = acceleratorMap[slugLower] || { name: 'BitXhift & LinkGenX', slug: 'bitxhift' };
-  const businessProblems = parseBulletPoints(industry.businessProblems || industry.challenge || industry.problemStatement || [
-    'Unplanned Machine Downtime: High scrap rates and unpredicted machinery faults causing production bottlenecks.',
-    'Manual Production Tracking: Paper-based shift logs and disconnected operational spreadsheets.',
-    'Supply Chain Stockouts: Inability to anticipate inventory buffers across distributed distribution facilities.'
-  ]);
-  const solutions = parseBulletPoints(industry.solutions || industry.solution || industry.key_solutions || [
-    'Edge IIoT Telemetry: Continuous sub-second signal capture from heterogeneous sensors.',
-    'Live OEE Management: Automated calculation and visualization of plant availability, performance, and quality metrics.',
-    'Computer Vision Inspection: Edge-deployed defect recognition reducing visual inspection overhead by 80%.'
-  ]);
-  const capabilities = Array.isArray(industry.useCases) && industry.useCases.length > 0
-    ? industry.useCases
-    : (Array.isArray(industry.key_solutions) ? industry.key_solutions : (Array.isArray(industry.capabilities) ? industry.capabilities : [
-        'Automotive Assembly Lines',
-        'CNC Precision Tooling',
-        'Textile Machinery Telemetry',
-        'Continuous Process Manufacturing'
-      ]));
+  const relatedAcc = industry.acceleratorName && industry.acceleratorSlug
+    ? { name: industry.acceleratorName, slug: industry.acceleratorSlug }
+    : (acceleratorMap[slugLower] || { name: 'BitXhift & LinkGenX', slug: 'bitxhift' });
+
+  const businessProblemsRaw = industry.businessProblems || industry.challenge || industry.problemStatement;
+  const solutionsRaw = industry.solutions || industry.solution || industry.key_solutions;
+  const outcomesRaw = industry.outcomes || industry.outcome || industry.businessOutcomes;
+
+  const businessProblems = businessProblemsRaw ? parseBulletPoints(businessProblemsRaw) : [];
+  const solutions = solutionsRaw ? parseBulletPoints(solutionsRaw) : [];
+  const capabilities = Array.isArray(industry.capabilities) && industry.capabilities.length > 0
+    ? industry.capabilities
+    : (Array.isArray(industry.useCases) ? industry.useCases : (Array.isArray(industry.key_solutions) ? industry.key_solutions : []));
   const techList = Array.isArray(industry.technology) && industry.technology.length > 0
     ? industry.technology
-    : (Array.isArray(industry.techStack) && industry.techStack.length > 0 ? industry.techStack : ['OPC-UA', 'MQTT', 'TimescaleDB', 'Python', 'React', 'SAP Connector']);
-  const outcomes = parseBulletPoints(industry.outcomes || industry.outcome || industry.businessOutcomes || [
-    '35% reduction in unplanned downtime and operational latency across facilities.',
-    'Real-time visibility across all connected assets and downstream business systems.'
-  ]);
+    : (Array.isArray(industry.techStack) ? industry.techStack : []);
+  const outcomes = outcomesRaw ? parseBulletPoints(outcomesRaw) : [];
 
   return (
     <div className="relative z-10 pt-28 pb-24 px-6 md:px-16 max-w-5xl mx-auto">
@@ -145,13 +141,16 @@ export default function IndustryDetail() {
           </p>
 
           {/* Real Photograph with Caption */}
-          {industry.cover_image_url && (
+          {(industry.cover_image_url || industry.image) && (
             <Reveal className="mb-10 overflow-hidden border border-border h-80 relative bg-black/5 dark:bg-white/5">
               <img
-                src={industry.cover_image_url}
+                src={industry.cover_image_url || industry.image}
                 alt={industry.name || industry.title}
+                loading="eager"
+                decoding="async"
                 onError={(e) => {
-                  e.currentTarget.style.display = 'none';
+                  e.currentTarget.onerror = null;
+                  e.currentTarget.src = 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?q=80&w=1200&auto=format&fit=crop';
                 }}
                 className="w-full h-full object-cover"
               />
@@ -178,8 +177,8 @@ export default function IndustryDetail() {
               </h3>
               <ul className="space-y-2">
                 {businessProblems.map((prob, i) => (
-                  <li key={i} className="flex items-start gap-2.5 text-[13px] md:text-[14px] font-normal text-text-muted">
-                    <span className="w-1.5 h-1.5 rounded-full bg-accent mt-2 shrink-0" aria-hidden="true" />
+                  <li key={i} className="flex items-start gap-2.5 text-base md:text-[17px] font-normal text-text leading-[1.7]">
+                    <span className="w-1.5 h-1.5 rounded-full bg-accent mt-2.5 shrink-0" aria-hidden="true" />
                     <div>{renderBulletText(prob)}</div>
                   </li>
                 ))}
@@ -195,8 +194,8 @@ export default function IndustryDetail() {
               </h3>
               <ul className="space-y-2">
                 {solutions.map((sol, i) => (
-                  <li key={i} className="flex items-start gap-2.5 text-[13px] md:text-[14px] font-normal text-text-muted">
-                    <span className="w-1.5 h-1.5 rounded-full bg-accent mt-2 shrink-0" aria-hidden="true" />
+                  <li key={i} className="flex items-start gap-2.5 text-base md:text-[17px] font-normal text-text leading-[1.7]">
+                    <span className="w-1.5 h-1.5 rounded-full bg-accent mt-2.5 shrink-0" aria-hidden="true" />
                     <div>{renderBulletText(sol)}</div>
                   </li>
                 ))}

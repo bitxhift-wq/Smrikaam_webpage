@@ -31,13 +31,13 @@ function renderBulletText(text) {
     const title = clean.substring(0, colonIdx);
     const rest = clean.substring(colonIdx + 1);
     return (
-      <span className="block text-left">
+      <p className="text-base md:text-[17px] text-text font-normal leading-[1.7] text-left">
         <strong className="text-text font-semibold">{title}:</strong>
-        <span className="text-text-muted font-normal"> {rest}</span>
-      </span>
+        <span className="text-text font-normal"> {rest}</span>
+      </p>
     );
   }
-  return <span className="text-text-muted font-normal text-left">{clean}</span>;
+  return <p className="text-base md:text-[17px] text-text font-normal leading-[1.7] text-left">{clean}</p>;
 }
 
 export default function Services() {
@@ -46,6 +46,26 @@ export default function Services() {
   const [mousePos, setMousePos] = useState({ x: 0.5, y: 0.5 });
   const [isHovered, setIsHovered] = useState(false);
   const stageRef = useRef(null);
+  const detailContainerRef = useRef(null);
+  const isFirstRender = useRef(true);
+
+  useEffect(() => {
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+      return;
+    }
+
+    if (detailContainerRef.current) {
+      const rect = detailContainerRef.current.getBoundingClientRect();
+      const navOffset = 85;
+      const targetY = window.pageYOffset + rect.top - navOffset;
+
+      window.scrollTo({
+        top: Math.max(0, targetY),
+        behavior: 'smooth'
+      });
+    }
+  }, [activeIdx]);
 
   const iconMap = {
     'ai-ml': Brain,
@@ -236,7 +256,7 @@ export default function Services() {
 
             {/* Right Column: Active Service Detailed Stage (Normal Document Scroll) */}
             {activeService && (
-              <main className="lg:col-span-7 min-w-0">
+              <div ref={detailContainerRef} className="lg:col-span-7 min-w-0">
                 <div
                   key={activeService.id}
                   role="tabpanel"
@@ -290,8 +310,8 @@ export default function Services() {
                     </h4>
                     <ul className="space-y-2">
                       {activeService.businessProblems.map((prob, i) => (
-                        <li key={i} className="flex items-start gap-2.5 text-[13px] md:text-[14px] font-normal text-text-muted">
-                          <span className="w-1.5 h-1.5 rounded-full bg-accent mt-2 shrink-0" aria-hidden="true" />
+                        <li key={i} className="flex items-start gap-2.5 text-base md:text-[17px] font-normal text-text leading-[1.7]">
+                          <span className="w-1.5 h-1.5 rounded-full bg-accent mt-2.5 shrink-0" aria-hidden="true" />
                           <div>{renderBulletText(prob)}</div>
                         </li>
                       ))}
@@ -391,7 +411,7 @@ export default function Services() {
                     </Link>
                   </div>
                 </div>
-              </main>
+              </div>
             )}
           </div>
         )}

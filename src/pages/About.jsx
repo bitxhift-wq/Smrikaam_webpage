@@ -71,7 +71,7 @@ export default function About() {
           <h2 className="font-heading text-2xl font-semibold uppercase text-text mb-4">
             ENGINEERING + DOMAIN + DELIVERY
           </h2>
-          <p className="text-text-muted text-[15px] font-normal leading-[1.55] mb-4">
+          <p className="text-base md:text-[17px] text-text font-normal leading-[1.7] mb-4">
             <span className="text-text font-normal">SMRIKAAM Technologies LLP</span> delivers high-performance engineering across Data, AI, Cloud, IIoT, and Intelligent Automation. Headquartered in Coimbatore, India, we bridge shop-floor hardware and cloud software with zero-compromise precision.
           </p>
         </BlueprintWrapper>
@@ -81,7 +81,7 @@ export default function About() {
           <h2 className="font-heading text-2xl font-semibold uppercase text-text mb-4">
             PROGRESS THROUGH INNOVATION
           </h2>
-          <p className="text-text-muted text-[15px] font-normal leading-[1.55]">
+          <p className="text-base md:text-[17px] text-text font-normal leading-[1.7]">
             Technology &rarr; Engineering &rarr; Business Outcomes. We turn raw data streams into predictable business velocity and real-time operational intelligence.
           </p>
         </BlueprintWrapper>
@@ -94,7 +94,7 @@ export default function About() {
             <Target className="w-5 h-5 text-accent" strokeWidth={1.5} />
             <h3 className="font-heading text-xl font-semibold uppercase text-text">OUR MISSION</h3>
           </div>
-          <p className="text-[15px] font-normal text-text-muted leading-[1.55]">
+          <p className="text-base md:text-[17px] font-normal text-text leading-[1.7]">
             Transform complex data, legacy systems, and disconnected machines into scalable business value—built with precision and delivered with single-point accountability.
           </p>
         </BlueprintWrapper>
@@ -104,7 +104,7 @@ export default function About() {
             <Eye className="w-5 h-5 text-accent" strokeWidth={1.5} />
             <h3 className="font-heading text-xl font-semibold uppercase text-text">OUR EXPERTISE</h3>
           </div>
-          <p className="text-[15px] font-normal text-text-muted leading-[1.55]">
+          <p className="text-base md:text-[17px] font-normal text-text leading-[1.7]">
             Data Analytics, Industrial IoT, Data Engineering, Generative &amp; Agentic AI, DevOps &amp; Cloud, and Data Governance backed by proprietary accelerators.
           </p>
         </BlueprintWrapper>

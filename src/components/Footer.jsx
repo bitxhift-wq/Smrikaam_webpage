@@ -1,25 +1,74 @@
-import React, { useMemo } from 'react';
+import React, { useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
-import { MapPin, Mail, Phone, Globe, Linkedin, Instagram, Facebook } from 'lucide-react';
+import { MapPin, Mail, Phone, Linkedin, Instagram, Facebook, ChevronDown } from 'lucide-react';
 import Logo from './Logo';
 import { useCMS } from '../context/CMSContext';
 
 export default function Footer() {
   const { services: cmsPublishedServices } = useCMS() || {};
+  const [openSection, setOpenSection] = useState(null);
+
+  const toggleSection = (key) => {
+    setOpenSection((prev) => (prev === key ? null : key));
+  };
+
+  const defaultServices = [
+    { name: 'Artificial Intelligence & Machine Learning', path: '/services/ai-ml' },
+    { name: 'Industrial IoT (IIoT)', path: '/services/iiot-edge' },
+    { name: 'Data Engineering & Modernization', path: '/services/data-engineering' },
+    { name: 'Generative AI & Agentic AI', path: '/services/generative-ai' },
+    { name: 'DevOps & Cloud Infrastructure', path: '/services/devops-cloud' },
+    { name: 'Data Governance & Quality', path: '/services/data-governance' },
+    { name: 'Integration Services', path: '/services/integration' },
+    { name: 'ServiceNow Solutions', path: '/services/servicenow' },
+    { name: 'Advisory Services', path: '/services/advisory' },
+    { name: 'AI Workflow Automation', path: '/services/ai-workflow' },
+    { name: 'Staffing Services', path: '/staffing' }
+  ];
 
   const servicesList = useMemo(() => {
-    const list = Array.isArray(cmsPublishedServices) && cmsPublishedServices.length > 0
-      ? cmsPublishedServices.map((s) => ({
-          name: s.title || s.name,
-          path: `/services/${s.slug}`
-        }))
-      : [];
-    return [...list, { name: 'Staffing Services', path: '/staffing' }];
+    if (Array.isArray(cmsPublishedServices) && cmsPublishedServices.length > 0) {
+      const list = cmsPublishedServices.map((s) => ({
+        name: s.title || s.name,
+        path: `/services/${s.slug}`
+      }));
+      return [...list, { name: 'Staffing Services', path: '/staffing' }];
+    }
+    return defaultServices;
   }, [cmsPublishedServices]);
+
+  const acceleratorsList = [
+    { name: 'BitXhift', path: '/products/bitxhift' },
+    { name: 'MigrateMax', path: '/products/migratemax' },
+    { name: 'ParseMaster', path: '/products/parsemaster' },
+    { name: 'LinkGenX', path: '/products/linkgenx' }
+  ];
+
+  const industriesList = [
+    { name: 'Manufacturing', path: '/industries/manufacturing' },
+    { name: 'Energy & Utilities', path: '/industries/energy-utilities' },
+    { name: 'Retail & E-Commerce', path: '/industries/retail-ecommerce' },
+    { name: 'BFSI', path: '/industries/bfsi' },
+    { name: 'Healthcare', path: '/industries/healthcare' },
+    { name: 'Logistics', path: '/industries/logistics' },
+    { name: 'Telecom', path: '/industries/telecom' },
+    { name: 'Infrastructure', path: '/industries/infrastructure' },
+    { name: 'Oil & Gas', path: '/industries/oil-gas' },
+    { name: 'Media', path: '/industries/media' },
+    { name: 'Electrical', path: '/industries/electrical' }
+  ];
+
+  const companyList = [
+    { name: 'About Us', path: '/about' },
+    { name: 'Case Studies', path: '/case-studies' },
+    { name: 'Careers', path: '/careers' },
+    { name: 'Contact', path: '/contact' }
+  ];
 
   return (
     <footer className="relative z-10 border-t border-[var(--color-border)] bg-[var(--color-bg)]/95 backdrop-blur-md pt-8 pb-8 text-[var(--color-text)]">
       <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-6 mb-6">
+        
         {/* Column 1: Brand + Contact Info */}
         <div className="lg:col-span-4 space-y-3">
           <Link to="/" className="inline-block mb-1">
@@ -60,14 +109,19 @@ export default function Footer() {
         </div>
 
         {/* Column 2: Services Navigation */}
-        <div className="lg:col-span-2">
-          <h4 className="text-xs font-semibold tracking-wider text-[var(--color-text)] uppercase mb-2 border-b border-[var(--color-border)] pb-1">
-            Services
-          </h4>
-          <ul className="space-y-1.5 text-[12px]">
+        <div className="lg:col-span-2 border-b md:border-b-0 border-[var(--color-border)] pb-3 md:pb-0">
+          <button
+            type="button"
+            onClick={() => toggleSection('services')}
+            className="w-full flex items-center justify-between md:cursor-default text-xs font-semibold tracking-wider text-[var(--color-text)] uppercase mb-2 md:border-b md:border-[var(--color-border)] md:pb-1 text-left"
+          >
+            <span>Services</span>
+            <ChevronDown className={`w-4 h-4 md:hidden transition-transform ${openSection === 'services' ? 'rotate-180' : ''}`} />
+          </button>
+          <ul className={`space-y-1.5 text-[12px] ${openSection === 'services' ? 'block' : 'hidden md:block'}`}>
             {servicesList.map((item, idx) => (
               <li key={idx}>
-                <Link to={item.path} className="text-[var(--color-text-secondary)] hover:text-[var(--color-text)] transition-colors">
+                <Link to={item.path} className="text-[var(--color-text-secondary)] hover:text-[var(--color-text)] transition-colors block py-0.5 md:py-0">
                   {item.name}
                 </Link>
               </li>
@@ -76,45 +130,81 @@ export default function Footer() {
         </div>
 
         {/* Column 3: Accelerators Navigation */}
-        <div className="lg:col-span-2">
-          <h4 className="text-xs font-semibold tracking-wider text-[var(--color-text)] uppercase mb-2 border-b border-[var(--color-border)] pb-1">
-            Accelerators
-          </h4>
-          <ul className="space-y-1.5 text-[12px]">
-            <li><Link to="/products" className="text-[var(--color-text-secondary)] hover:text-[var(--color-text)] transition-colors">BitXhift</Link></li>
-            <li><Link to="/products" className="text-[var(--color-text-secondary)] hover:text-[var(--color-text)] transition-colors">MigrateMax</Link></li>
-            <li><Link to="/products" className="text-[var(--color-text-secondary)] hover:text-[var(--color-text)] transition-colors">ParseMaster</Link></li>
-            <li><Link to="/products" className="text-[var(--color-text-secondary)] hover:text-[var(--color-text)] transition-colors">LinkGenX</Link></li>
+        <div className="lg:col-span-2 border-b md:border-b-0 border-[var(--color-border)] pb-3 md:pb-0">
+          <button
+            type="button"
+            onClick={() => toggleSection('accelerators')}
+            className="w-full flex items-center justify-between md:cursor-default text-xs font-semibold tracking-wider text-[var(--color-text)] uppercase mb-2 md:border-b md:border-[var(--color-border)] md:pb-1 text-left"
+          >
+            <span>Accelerators</span>
+            <ChevronDown className={`w-4 h-4 md:hidden transition-transform ${openSection === 'accelerators' ? 'rotate-180' : ''}`} />
+          </button>
+          <ul className={`space-y-1.5 text-[12px] ${openSection === 'accelerators' ? 'block' : 'hidden md:block'}`}>
+            {acceleratorsList.map((item, idx) => (
+              <li key={idx}>
+                <Link to={item.path} className="text-[var(--color-text-secondary)] hover:text-[var(--color-text)] transition-colors block py-0.5 md:py-0">
+                  {item.name}
+                </Link>
+              </li>
+            ))}
           </ul>
         </div>
 
         {/* Column 4: Industries Navigation */}
-        <div className="lg:col-span-2">
-          <h4 className="text-xs font-semibold tracking-wider text-[var(--color-text)] uppercase mb-2 border-b border-[var(--color-border)] pb-1">
-            Industries
-          </h4>
-          <ul className="space-y-1.5 text-[12px]">
-            <li><Link to="/industries" className="text-[var(--color-text-secondary)] hover:text-[var(--color-text)] transition-colors">Manufacturing</Link></li>
-            <li><Link to="/industries" className="text-[var(--color-text-secondary)] hover:text-[var(--color-text)] transition-colors">Energy &amp; Utilities</Link></li>
-            <li><Link to="/industries" className="text-[var(--color-text-secondary)] hover:text-[var(--color-text)] transition-colors">Retail &amp; E-Commerce</Link></li>
-            <li><Link to="/industries" className="text-[var(--color-text-secondary)] hover:text-[var(--color-text)] transition-colors">BFSI</Link></li>
-            <li><Link to="/industries" className="text-[var(--color-text-secondary)] hover:text-[var(--color-text)] transition-colors">Healthcare</Link></li>
-            <li><Link to="/industries" className="text-[var(--color-text-secondary)] hover:text-[var(--color-text)] transition-colors">Logistics</Link></li>
+        <div className="lg:col-span-2 border-b md:border-b-0 border-[var(--color-border)] pb-3 md:pb-0">
+          <button
+            type="button"
+            onClick={() => toggleSection('industries')}
+            className="w-full flex items-center justify-between md:cursor-default text-xs font-semibold tracking-wider text-[var(--color-text)] uppercase mb-2 md:border-b md:border-[var(--color-border)] md:pb-1 text-left"
+          >
+            <span>Industries</span>
+            <ChevronDown className={`w-4 h-4 md:hidden transition-transform ${openSection === 'industries' ? 'rotate-180' : ''}`} />
+          </button>
+          <ul className={`space-y-1 text-[11px] leading-[1.4] ${openSection === 'industries' ? 'block' : 'hidden md:block'}`}>
+            {industriesList.map((item, idx) => (
+              <li key={idx}>
+                <Link to={item.path} className="text-[var(--color-text-secondary)] hover:text-[var(--color-text)] transition-colors block py-0.5 md:py-0">
+                  {item.name}
+                </Link>
+              </li>
+            ))}
           </ul>
         </div>
 
-        {/* Column 5: Social & Company */}
+        {/* Column 5: Company & Cities */}
         <div className="lg:col-span-2 space-y-4">
-          <div>
-            <h4 className="text-xs font-semibold tracking-wider text-[var(--color-text)] uppercase mb-2 border-b border-[var(--color-border)] pb-1">
-              Company
-            </h4>
-            <ul className="space-y-1.5 text-[12px]">
-              <li><Link to="/about" className="text-[var(--color-text-secondary)] hover:text-[var(--color-text)] transition-colors">About Us</Link></li>
-              <li><Link to="/case-studies" className="text-[var(--color-text-secondary)] hover:text-[var(--color-text)] transition-colors">Case Studies</Link></li>
-              <li><Link to="/careers" className="text-[var(--color-text-secondary)] hover:text-[var(--color-text)] transition-colors">Careers</Link></li>
-              <li><Link to="/contact" className="text-[var(--color-text-secondary)] hover:text-[var(--color-text)] transition-colors">Contact</Link></li>
+          <div className="border-b md:border-b-0 border-[var(--color-border)] pb-3 md:pb-0">
+            <button
+              type="button"
+              onClick={() => toggleSection('company')}
+              className="w-full flex items-center justify-between md:cursor-default text-xs font-semibold tracking-wider text-[var(--color-text)] uppercase mb-2 md:border-b md:border-[var(--color-border)] md:pb-1 text-left"
+            >
+              <span>Company</span>
+              <ChevronDown className={`w-4 h-4 md:hidden transition-transform ${openSection === 'company' ? 'rotate-180' : ''}`} />
+            </button>
+            <ul className={`space-y-1 text-[11px] leading-[1.4] ${openSection === 'company' ? 'block' : 'hidden md:block'}`}>
+              {companyList.map((item, idx) => (
+                <li key={idx}>
+                  <Link to={item.path} className="text-[var(--color-text-secondary)] hover:text-[var(--color-text)] transition-colors block py-0.5 md:py-0">
+                    {item.name}
+                  </Link>
+                </li>
+              ))}
             </ul>
+          </div>
+
+          <div className="border-b md:border-b-0 border-[var(--color-border)] pb-3 md:pb-0">
+            <button
+              type="button"
+              onClick={() => toggleSection('cities')}
+              className="w-full flex items-center justify-between md:cursor-default text-[10px] font-semibold text-[var(--color-text-muted)] uppercase tracking-wider mb-1 text-left"
+            >
+              <span>CITIES WE SERVE</span>
+              <ChevronDown className={`w-3.5 h-3.5 md:hidden transition-transform ${openSection === 'cities' ? 'rotate-180' : ''}`} />
+            </button>
+            <div className={`text-[11px] text-[var(--color-text-secondary)] leading-[1.35] ${openSection === 'cities' ? 'block' : 'hidden md:block'}`}>
+              Coimbatore • Chennai • Bangalore • Hyderabad • Mumbai • Pune • Delhi / NCR
+            </div>
           </div>
 
           <div>

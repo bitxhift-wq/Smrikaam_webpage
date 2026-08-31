@@ -181,7 +181,7 @@ export default function CaseStudyDetail() {
               <h2 className="font-mono text-[10px] md:text-[11px] text-[var(--color-accent)] uppercase tracking-[0.2em] font-semibold mb-3 text-left">
                 THE CHALLENGE
               </h2>
-              <div className="text-[14px] md:text-[15px] font-normal text-text-muted leading-[1.6] text-left">
+              <div className="text-base md:text-[17px] font-normal text-text leading-[1.7] text-left">
                 <RichTextRenderer content={caseStudy.challenge} />
               </div>
             </Reveal>
@@ -195,7 +195,7 @@ export default function CaseStudyDetail() {
               <h2 className="font-mono text-[10px] md:text-[11px] text-[var(--color-accent)] uppercase tracking-[0.2em] font-semibold mb-3 text-left">
                 THE SMRIKAAM SOLUTION
               </h2>
-              <div className="text-[14px] md:text-[15px] font-normal text-text-muted leading-[1.6] text-left bg-accent/5 p-6 border border-accent/30">
+              <div className="text-base md:text-[17px] font-normal text-text leading-[1.7] text-left bg-accent/5 p-6 border border-accent/30">
                 <RichTextRenderer content={caseStudy.solution} />
               </div>
             </Reveal>

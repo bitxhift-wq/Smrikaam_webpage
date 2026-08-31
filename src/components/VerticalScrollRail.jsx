@@ -14,6 +14,7 @@ export default function VerticalScrollRail() {
   const [mobileDrawerOpen, setMobileDrawerOpen] = useState(false);
   const observerRef = useRef(null);
   const drawerRef = useRef(null);
+  const sectionsRef = useRef([]);
 
   // Check if current route is admin panel (skip rail on admin routes)
   const isAdminRoute = location.pathname.startsWith('/smrikaam-admin') || location.pathname.startsWith('/smk-console');
@@ -97,11 +98,26 @@ export default function VerticalScrollRail() {
       });
     }
 
-    setSections(discovered);
-    if (discovered.length > 0) {
-      setActiveSection(discovered[0].id);
+    // Only update state if discovered section IDs/titles actually changed
+    const isSame =
+      sectionsRef.current.length === discovered.length &&
+      sectionsRef.current.every(
+        (sec, idx) => sec.id === discovered[idx]?.id && sec.title === discovered[idx]?.title
+      );
+
+    if (!isSame) {
+      sectionsRef.current = discovered;
+      setSections(discovered);
+      if (discovered.length > 0) {
+        setActiveSection((prev) => (discovered.some((s) => s.id === prev) ? prev : discovered[0].id));
+      }
     }
   }, [location.pathname]);
+
+  // Maintain sectionsRef sync
+  useEffect(() => {
+    sectionsRef.current = sections;
+  }, [sections]);
 
   // Re-discover sections on route change and DOM mutations
   useEffect(() => {
@@ -112,16 +128,30 @@ export default function VerticalScrollRail() {
     // Re-check after dynamic content finishes rendering
     const timer = setTimeout(discoverSections, 400);
 
+    let rafId = null;
     // Observe DOM changes (e.g. async CMS data load)
-    const mutationObserver = new MutationObserver(() => {
-      discoverSections();
+    const mutationObserver = new MutationObserver((mutations) => {
+      // Ignore mutations originated from vertical rail elements itself
+      const isRailMutation = mutations.every((m) => {
+        const target = m.target;
+        return target && target.closest && (target.closest('aside') || target.closest('.scroll-progress-bar'));
+      });
+      if (isRailMutation) return;
+
+      if (rafId) cancelAnimationFrame(rafId);
+      rafId = requestAnimationFrame(() => {
+        discoverSections();
+      });
     });
 
     const mainEl = document.querySelector('main') || document.body;
-    mutationObserver.observe(mainEl, { childList: true, subtree: true });
+    if (mainEl) {
+      mutationObserver.observe(mainEl, { childList: true, subtree: true });
+    }
 
     return () => {
       clearTimeout(timer);
+      if (rafId) cancelAnimationFrame(rafId);
       mutationObserver.disconnect();
     };
   }, [location.pathname, isAdminRoute, discoverSections]);

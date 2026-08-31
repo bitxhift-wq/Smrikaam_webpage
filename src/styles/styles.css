@@ -699,6 +699,24 @@ html.dark .service-tab-item.active {
   letter-spacing: 0.08em;
 }
 
+/* Mobile logo: uploaded official SMRIKAAM geometric icon */
+.smrikaam-mobile-logo {
+  display: block;
+  width: auto;
+  height: 36px;
+  max-width: 170px;
+  object-fit: contain;
+  object-position: left center;
+  border-radius: 4px;
+}
+
+@media (max-width: 480px) {
+  .smrikaam-mobile-logo {
+    height: 30px;
+    max-width: 155px;
+  }
+}
+
 /* Animated hover underline for nav links */
 .nav-link {
   position: relative;
@@ -1870,9 +1888,80 @@ html.dark .cms-content .cms-h2 {
   overflow-x: auto;
 }
 
-/* Global viewport overflow containment — using overflow-x: clip so it never hijacks the scroll container or breaks position:sticky */
+/* ============================================================
+   SMRIKAAM RESPONSIVE SYSTEM
+   Desktop >= 1024px remains 100% untouched
+   ============================================================ */
+
+/* Global viewport overflow containment */
 html, body, .app-root-overflow {
   overflow-x: clip;
+  max-width: 100%;
+}
+
+/* MOBILE RESPONSIVE SYSTEM (0px - 767px) */
+@media (max-width: 767px) {
+  #hero {
+    width: 100%;
+    min-height: auto !important;
+    height: auto !important;
+    padding: 24px 16px 32px !important;
+    overflow: hidden;
+  }
+
+  #hero h1 {
+    width: 100%;
+    max-width: 100%;
+    font-size: clamp(30px, 9.5vw, 46px) !important;
+    line-height: 1.02 !important;
+    letter-spacing: -0.02em !important;
+  }
+
+  #hero p {
+    width: 100%;
+    max-width: 100% !important;
+    font-size: 15px !important;
+    line-height: 1.55 !important;
+  }
+
+  /* Prevent horizontal animation offset spillover while keeping GPU reveals 100% active */
+  .reveal-item.reveal-init.reveal-left,
+  .reveal-item.reveal-init.reveal-up,
+  .reveal-item.reveal-init.reveal-scale,
+  .reveal-item.reveal-init.reveal-flip,
+  .reveal-item.reveal-init.reveal-mask {
+    transform: translateY(12px) !important;
+  }
+
+  /* Responsive Canvas & Asset Containers */
+  canvas, img, svg {
+    max-width: 100%;
+  }
+
+  /* Container width containment */
+  .page-title-surface,
+  .service-detail-surface,
+  .home-card-surface,
+  .subtle-readable-surface {
+    max-width: 100% !important;
+    overflow-x: hidden;
+  }
+}
+
+/* TABLET RESPONSIVE SYSTEM (768px - 1023px) */
+@media (min-width: 768px) and (max-width: 1023px) {
+  #hero {
+    min-height: auto !important;
+    height: auto !important;
+    padding: 40px 32px !important;
+  }
+}
+
+/* Touch device pointer overrides */
+@media (hover: none), (pointer: coarse) {
+  .arrow-hover {
+    transform: none !important;
+  }
 }
 
 
