@@ -20,7 +20,7 @@ export default function Careers() {
 
   const techStack = [
     'Python', 'Azure', 'AWS', 'Snowflake', 'LangChain', 'LlamaIndex',
-    'Airflow', 'Grafana', 'Docker', 'Kubernetes', 'TensorFlow', 'PyTorch', 'OpenAI APIs'
+    'Airflow', 'Grafana', 'Docker', 'Kubernetes', 'TensorFlow', 'PyTorch'
   ];
 
   const hiringSteps = [

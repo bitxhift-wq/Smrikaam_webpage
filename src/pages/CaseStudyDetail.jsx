@@ -58,7 +58,7 @@ export default function CaseStudyDetail() {
         { metric: '85%', label: 'Manual Effort Reduction' },
         { metric: '<2s', label: 'Document Processing Time' }
       ],
-      technologies: ['ParseMaster', 'Python', 'Apache Kafka', 'PostgreSQL', 'Docker', 'OpenAI Vision']
+      technologies: ['ParseMaster', 'Python', 'Apache Kafka', 'PostgreSQL', 'Docker']
     },
     'healthcare-data-governance': {
       title: 'Healthcare Data Governance & Privacy Masking Lakehouse',

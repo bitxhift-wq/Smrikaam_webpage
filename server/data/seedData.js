@@ -284,9 +284,7 @@ Empowered internal compliance and operations teams to automate 80% of document r
             "Model-Serving & Agent Workflows"
         ],
         "technology": [
-            "Azure OpenAI",
             "AWS Bedrock",
-            "OpenAI APIs",
             "Anthropic models",
             "RAG",
             "Vector databases",

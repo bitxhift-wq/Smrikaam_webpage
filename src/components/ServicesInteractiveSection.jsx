@@ -52,7 +52,7 @@ export default function ServicesInteractiveSection() {
       tagline: 'Context-aware LLM agents, automated document parsing, and predictive models.',
       description: 'Deploy autonomous AI agents, domain-tuned LLMs, and agentic RAG pipelines that automate complex technical workflows with enterprise guardrails.',
       capabilities: ['Agentic RAG Pipelines', 'Document OCR & NLP', 'Custom Fine-Tuned Models', 'Enterprise Guardrails'],
-      tech: ['LangChain', 'LlamaIndex', 'OpenAI Enterprise', 'Gemini API'],
+      tech: ['LangChain', 'LlamaIndex', 'Gemini API'],
       image: 'https://images.unsplash.com/photo-1531482615713-2afd69097998?q=80&w=1200&auto=format&fit=crop',
       caption: 'HUMAN + ARTIFICIAL INTELLIGENCE — Autonomous Agentic AI Systems',
       link: '/services'

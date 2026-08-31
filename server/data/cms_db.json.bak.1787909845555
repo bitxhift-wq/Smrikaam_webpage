@@ -283,9 +283,7 @@
         "Model-Serving & Agent Workflows"
       ],
       "technology": [
-        "Azure OpenAI",
         "AWS Bedrock",
-        "OpenAI APIs",
         "Anthropic models",
         "RAG",
         "Vector databases",

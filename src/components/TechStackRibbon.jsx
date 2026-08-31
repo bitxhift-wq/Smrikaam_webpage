@@ -18,8 +18,6 @@ export const ENTERPRISE_TECHNOLOGIES = [
   'Python',
   'PyTorch',
   'MLflow',
-  'OpenAI',
-  'Azure OpenAI',
   'AWS Bedrock'
 ];
 
