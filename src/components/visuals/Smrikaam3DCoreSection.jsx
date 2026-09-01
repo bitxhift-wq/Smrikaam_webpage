@@ -483,7 +483,7 @@ export default function Smrikaam3DCoreSection() {
                 <span>WHO WE ARE</span>
               </div>
               <h2 className="font-heading text-3xl sm:text-4xl font-bold uppercase text-[var(--color-text)] tracking-tight leading-[1.08]">
-                Engineering Intelligence Across AI, Data, Cloud &amp; <span className="text-amber-400 dark:text-amber-300">IIoT.</span>
+                Engineering Intelligence Across AI, Data, Cloud &amp; <span className="text-amber-600 dark:text-amber-300">IIoT.</span>
               </h2>
               <div className="space-y-2.5 text-[15px] sm:text-[16px] md:text-[18px] text-[var(--color-text-secondary)] leading-[1.6] font-normal">
                 <p>We are a technology development and engineering company helping enterprises build intelligent systems across AI, Data, Cloud, IIoT and Software.</p>

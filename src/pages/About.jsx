@@ -5,6 +5,7 @@ import BlueprintWrapper from '../components/BlueprintWrapper';
 import TextReveal from '../components/anim/TextReveal';
 import BannerDrawBorder from '../components/anim/BannerDrawBorder';
 import Reveal from '../components/anim/Reveal';
+import DecorativeSideCubes from '../components/visuals/DecorativeSideCubes';
 
 export default function About() {
   const approachSteps = [
@@ -43,10 +44,12 @@ export default function About() {
   return (
     <div className="relative z-10 pt-28 pb-24 px-4 sm:px-6 md:px-16 max-w-7xl mx-auto">
       {/* 1. Header Banner / Hero */}
-      <div id="overview" data-scroll-label="ABOUT US" className="page-title-surface relative border border-border p-6 sm:p-8 md:p-12 mb-12 overflow-hidden">
+      <div id="overview" data-scroll-label="ABOUT US" className="relative mb-12">
+        <DecorativeSideCubes leftSize={120} rightSize={140} leftTop="10%" rightTop="25%" />
+        <div className="page-title-surface relative z-10 border border-border p-6 sm:p-8 md:p-12 overflow-hidden">
         <BannerDrawBorder />
         <div className="flex flex-wrap items-center justify-between gap-2 mb-4">
-          <div className="text-[10px] md:text-[11px] text-[var(--color-accent)] uppercase tracking-[0.2em] font-semibold">
+          <div className="font-mono text-[10px] md:text-[11px] text-[var(--color-accent)] uppercase tracking-[0.2em] font-semibold">
             ABOUT SMRIKAAM TECHNOLOGIES LLP
           </div>
           <div className="text-[10px] md:text-[11px] text-[var(--color-text-muted)] border border-[var(--color-border)] px-3 py-1 bg-black/[0.02] dark:bg-white/[0.03]">
@@ -63,25 +66,26 @@ export default function About() {
           SMRIKAAM is an enterprise technology and engineering company helping organizations modernize technology, operations, data and industrial environments.
         </p>
       </div>
+      </div>
 
       {/* Who We Are & Brand Philosophy */}
       <div id="dna" data-scroll-label="WHO WE ARE" className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 mb-12">
         <BlueprintWrapper className="p-6 md:p-8">
-          <div className="text-[10px] md:text-[11px] text-[var(--color-accent)] uppercase font-semibold tracking-wider mb-2">WHO WE ARE</div>
-          <h2 className="font-heading text-2xl font-semibold uppercase text-text mb-4">
+          <div className="font-mono text-[10px] md:text-[11px] text-[var(--color-accent)] uppercase font-semibold tracking-wider mb-2">WHO WE ARE</div>
+          <h2 className="font-heading text-2xl md:text-3xl font-bold uppercase text-text mb-4">
             ENGINEERING + DOMAIN + DELIVERY
           </h2>
-          <p className="text-base md:text-[17px] text-text font-normal leading-[1.7] mb-4">
+          <p className="text-[14px] md:text-[15px] text-text font-normal leading-[1.7] mb-4">
             <span className="text-text font-normal">SMRIKAAM Technologies LLP</span> delivers high-performance engineering across Data, AI, Cloud, IIoT, and Intelligent Automation. Headquartered in Coimbatore, India, we bridge shop-floor hardware and cloud software with zero-compromise precision.
           </p>
         </BlueprintWrapper>
 
         <BlueprintWrapper className="p-6 md:p-8 border-l-4 border-accent">
-          <div className="text-[10px] md:text-[11px] text-[var(--color-accent)] uppercase font-semibold tracking-wider mb-2">BRAND PHILOSOPHY</div>
-          <h2 className="font-heading text-2xl font-semibold uppercase text-text mb-4">
+          <div className="font-mono text-[10px] md:text-[11px] text-[var(--color-accent)] uppercase font-semibold tracking-wider mb-2">BRAND PHILOSOPHY</div>
+          <h2 className="font-heading text-2xl md:text-3xl font-bold uppercase text-text mb-4">
             PROGRESS THROUGH INNOVATION
           </h2>
-          <p className="text-base md:text-[17px] text-text font-normal leading-[1.7]">
+          <p className="text-[14px] md:text-[15px] text-text font-normal leading-[1.7]">
             Technology &rarr; Engineering &rarr; Business Outcomes. We turn raw data streams into predictable business velocity and real-time operational intelligence.
           </p>
         </BlueprintWrapper>
@@ -92,9 +96,9 @@ export default function About() {
         <BlueprintWrapper className="p-6">
           <div className="flex items-center gap-3 mb-2">
             <Target className="w-5 h-5 text-accent" strokeWidth={1.5} />
-            <h3 className="font-heading text-xl font-semibold uppercase text-text">OUR MISSION</h3>
+            <h3 className="font-heading text-xl font-bold uppercase text-text">OUR MISSION</h3>
           </div>
-          <p className="text-base md:text-[17px] font-normal text-text leading-[1.7]">
+          <p className="text-[14px] md:text-[15px] font-normal text-text leading-[1.7]">
             Transform complex data, legacy systems, and disconnected machines into scalable business value—built with precision and delivered with single-point accountability.
           </p>
         </BlueprintWrapper>
@@ -102,17 +106,17 @@ export default function About() {
         <BlueprintWrapper className="p-6">
           <div className="flex items-center gap-3 mb-2">
             <Eye className="w-5 h-5 text-accent" strokeWidth={1.5} />
-            <h3 className="font-heading text-xl font-semibold uppercase text-text">OUR EXPERTISE</h3>
+            <h3 className="font-heading text-xl font-bold uppercase text-text">OUR EXPERTISE</h3>
           </div>
-          <p className="text-base md:text-[17px] font-normal text-text leading-[1.7]">
+          <p className="text-[14px] md:text-[15px] font-normal text-text leading-[1.7]">
             Data Analytics, Industrial IoT, Data Engineering, Generative &amp; Agentic AI, DevOps &amp; Cloud, and Data Governance backed by proprietary accelerators.
           </p>
         </BlueprintWrapper>
       </div>
 
       {/* Our Approach: UNDERSTAND → ENGINEER → TRANSFORM → SCALE */}
-      <div id="methodology" data-scroll-label="4-STAGE DELIVERY" className="mb-12">
-        <div className="text-[10px] md:text-[11px] text-[var(--color-accent)] uppercase tracking-[0.18em] mb-2 font-semibold">
+      <div id="methodology" data-scroll-label="4-STAGE DELIVERY" className="border-t border-border pt-8 mb-12">
+        <div className="font-mono text-[10px] md:text-[11px] text-[var(--color-accent)] uppercase tracking-[0.18em] mb-2 font-semibold">
           METHODOLOGY &amp; DELIVERY
         </div>
         <h2 className="font-heading text-2xl md:text-3xl font-bold uppercase text-text mb-6 border-b border-border pb-4">
@@ -122,7 +126,7 @@ export default function About() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {approachSteps.map((step, idx) => (
             <BlueprintWrapper key={idx} className="p-6 h-full">
-              <h3 className="font-heading text-xl font-semibold uppercase text-text mb-2">{step.name}</h3>
+              <h3 className="font-heading text-xl font-bold uppercase text-text mb-2">{step.name}</h3>
               <p className="text-[14px] font-normal text-text-muted leading-[1.5]">{step.desc}</p>
             </BlueprintWrapper>
           ))}
@@ -130,11 +134,11 @@ export default function About() {
       </div>
 
       {/* Leadership */}
-      <div id="leadership" data-scroll-label="LEADERSHIP" className="mb-12">
-        <div className="text-[11px] text-accent uppercase tracking-[0.18em] mb-2 font-semibold">
+      <div id="leadership" data-scroll-label="LEADERSHIP" className="border-t border-border pt-8 mb-12">
+        <div className="font-mono text-[11px] text-accent uppercase tracking-[0.18em] mb-2 font-semibold">
           EXECUTIVE TEAM
         </div>
-        <h2 className="font-heading text-2xl md:text-3xl font-semibold uppercase text-text mb-6 border-b border-border pb-4">
+        <h2 className="font-heading text-2xl md:text-3xl font-bold uppercase text-text mb-6 border-b border-border pb-4">
           LEADERSHIP
         </h2>
 
@@ -144,7 +148,7 @@ export default function About() {
               <div className="w-12 h-12 bg-accent/10 border border-accent/30 flex items-center justify-center text-accent mb-6 font-heading font-semibold text-xl">
                 {leader.name[0]}
               </div>
-              <h3 className="font-heading text-2xl font-semibold uppercase text-text group-hover:text-accent transition-colors">
+              <h3 className="font-heading text-2xl font-bold uppercase text-text group-hover:text-accent transition-colors">
                 {leader.name}
               </h3>
               <div className="text-[13px] text-accent uppercase font-medium mb-4">{leader.role}</div>
@@ -157,11 +161,11 @@ export default function About() {
       </div>
 
       {/* Values & Company Facts */}
-      <div id="values" data-scroll-label="VALUES & FACTS" className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 mb-12">
+      <div id="values" data-scroll-label="VALUES & FACTS" className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 border-t border-border pt-8 mb-12">
         {/* Values */}
         <BlueprintWrapper className="p-6 sm:p-8">
-          <div className="text-[11px] text-accent uppercase font-semibold mb-2">VALUES</div>
-          <h2 className="font-heading text-2xl font-semibold uppercase text-text mb-4">
+          <div className="font-mono text-[11px] text-accent uppercase font-semibold mb-2">VALUES</div>
+          <h2 className="font-heading text-2xl font-bold uppercase text-text mb-4">
             ENGINEERING INTEGRITY &amp; EXCELLENCE
           </h2>
           <ul className="space-y-3 font-sans text-[15px] font-normal text-text-muted">
@@ -182,8 +186,8 @@ export default function About() {
 
         {/* Company Facts */}
         <BlueprintWrapper className="p-6 sm:p-8">
-          <div className="text-[11px] text-accent uppercase font-semibold mb-2">COMPANY FACTS</div>
-          <h2 className="font-heading text-2xl font-semibold uppercase text-text mb-4">
+          <div className="font-mono text-[11px] text-accent uppercase font-semibold mb-2">COMPANY FACTS</div>
+          <h2 className="font-heading text-2xl font-bold uppercase text-text mb-4">
             VERIFIED CREDENTIALS
           </h2>
           <div className="space-y-2.5 text-[13px] md:text-[14px]">
@@ -198,12 +202,12 @@ export default function About() {
       </div>
 
       {/* Locations */}
-      <div id="location" data-scroll-label="COIMBATORE HQ" className="mb-12">
-        <div className="text-[11px] text-accent uppercase tracking-[0.18em] mb-2 font-semibold">
+      <div id="location" data-scroll-label="COIMBATORE HQ" className="border-t border-border pt-8 mb-12">
+        <div className="font-mono text-[11px] text-accent uppercase tracking-[0.18em] mb-2 font-semibold">
           HEADQUARTERS
         </div>
         <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2 mb-4 border-b border-border pb-4">
-          <h2 className="font-heading text-2xl md:text-3xl font-semibold uppercase text-text">
+          <h2 className="font-heading text-2xl md:text-3xl font-bold uppercase text-text">
             COIMBATORE HEADQUARTERS
           </h2>
           <Link to="/locations" className="text-accent text-[13px] uppercase flex items-center gap-1 font-semibold hover:underline">
@@ -218,8 +222,8 @@ export default function About() {
       {/* CTA */}
       <div id="cta" data-scroll-label="ENGAGEMENT">
         <BlueprintWrapper className="p-6 sm:p-8 md:p-12 text-center bg-bg/95 backdrop-blur-md">
-          <div className="text-[11px] text-accent uppercase font-semibold mb-2">ENGAGEMENT</div>
-          <h2 className="font-heading text-2xl md:text-3xl font-semibold uppercase text-text mb-4">
+          <div className="font-mono text-[11px] text-accent uppercase font-semibold mb-2">ENGAGEMENT</div>
+          <h2 className="font-heading text-2xl md:text-3xl font-bold uppercase text-text mb-4">
             READY TO WORK WITH SMRIKAAM?
           </h2>
           <p className="text-text-muted text-[15px] font-normal max-w-2xl mx-auto mb-8">

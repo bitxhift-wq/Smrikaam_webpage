@@ -367,7 +367,7 @@ export default function RichTextRenderer({ content, className = '' }) {
       }
 
       elements.push(
-        <p key={`p-${i}`} className="cms-paragraph text-base md:text-[17px] text-text font-normal leading-[1.7] my-4 first:mt-0 last:mb-0">
+        <p key={`p-${i}`} className="cms-paragraph type-body text-[15px] md:text-[16px] text-text font-normal leading-[1.65] my-4 first:mt-0 last:mb-0">
           {parseInlineMarkdown(paraLines.join(' '))}
         </p>
       );

@@ -19,10 +19,11 @@ function ArchitecturalGridBlocks({ isDark = false, onContextLost }) {
     const boxGeom = new THREE.BoxGeometry(0.85, 0.85, 0.85);
     const edgesGeom = new THREE.EdgesGeometry(boxGeom);
 
-    return Array.from({ length: 42 }, () => {
-      const x = (Math.random() - 0.5) * 14;
-      const y = (Math.random() - 0.5) * 14;
-      const z = (Math.random() - 0.5) * 10;
+    return Array.from({ length: 36 }, () => {
+      const side = Math.random() > 0.5 ? 1 : -1;
+      const x = side * (4.8 + Math.random() * 4.2);
+      const y = (Math.random() - 0.5) * 16;
+      const z = (Math.random() - 0.5) * 8;
       const speed = 0.003 + Math.random() * 0.007;
       const axis = Math.random() > 0.5 ? 'y' : 'x';
       return {
@@ -174,7 +175,7 @@ export default function FixedScene3D() {
   return (
     <div
       className={`fixed inset-0 -z-10 pointer-events-none overflow-hidden transition-opacity duration-300 ${
-        isDark ? 'opacity-80' : 'opacity-65'
+        isDark ? 'opacity-30' : 'opacity-20'
       }`}
       aria-hidden="true"
     >

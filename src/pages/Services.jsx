@@ -9,6 +9,7 @@ import TextReveal from '../components/anim/TextReveal';
 import BannerDrawBorder from '../components/anim/BannerDrawBorder';
 import Reveal from '../components/anim/Reveal';
 import RichTextRenderer from '../components/RichTextRenderer';
+import DecorativeSideCubes from '../components/visuals/DecorativeSideCubes';
 
 function parseBulletPoints(data) {
   if (!data) return [];
@@ -31,13 +32,13 @@ function renderBulletText(text) {
     const title = clean.substring(0, colonIdx);
     const rest = clean.substring(colonIdx + 1);
     return (
-      <p className="text-base md:text-[17px] text-text font-normal leading-[1.7] text-left">
+      <p className="text-[15px] md:text-[15px] text-text font-normal leading-[1.7] text-left">
         <strong className="text-text font-semibold">{title}:</strong>
         <span className="text-text font-normal"> {rest}</span>
       </p>
     );
   }
-  return <p className="text-base md:text-[17px] text-text font-normal leading-[1.7] text-left">{clean}</p>;
+  return <p className="text-[15px] md:text-[15px] text-text font-normal leading-[1.7] text-left">{clean}</p>;
 }
 
 export default function Services() {
@@ -161,8 +162,9 @@ export default function Services() {
   return (
     <div className="relative z-10 pt-28 pb-24 text-text">
       {/* SECTION 01 — SERVICES HERO */}
-      <section id="overview" data-scroll-label="SERVICES" className="px-6 md:px-16 max-w-7xl mx-auto mb-16">
-        <div className="page-title-surface relative border border-border p-8 md:p-12 overflow-hidden">
+      <section id="overview" data-scroll-label="SERVICES" className="relative px-6 md:px-16 max-w-7xl mx-auto mb-16">
+        <DecorativeSideCubes leftSize={120} rightSize={140} leftTop="10%" rightTop="25%" />
+        <div className="page-title-surface relative z-10 border border-border p-8 md:p-12 overflow-hidden">
           <BannerDrawBorder />
           <div className="flex items-center justify-between mb-4">
             <div className="font-mono text-[10px] md:text-[11px] text-[var(--color-accent)] uppercase tracking-[0.2em] font-semibold">
@@ -274,7 +276,7 @@ export default function Services() {
 
                   {/* Service Detailed Narrative */}
                   {activeService.description && (
-                    <div className="text-[14px] md:text-[15px] font-normal text-text-muted leading-[1.6] text-left">
+                    <div className="type-body text-[15px] md:text-[16px] font-normal text-text-muted leading-[1.7] text-justify">
                       <RichTextRenderer content={activeService.description} />
                     </div>
                   )}
@@ -304,13 +306,13 @@ export default function Services() {
                   </div>
 
                   {/* Business Problems Solved */}
-                  <div>
-                    <h4 className="text-[11px] text-accent font-semibold uppercase tracking-[0.2em] mb-2.5 text-left">
+                  <div className="border-t border-border/70 pt-6">
+                    <h3 className="font-heading text-base md:text-lg font-bold tracking-tight uppercase text-accent mb-2.5 text-left">
                       BUSINESS PROBLEMS SOLVED
-                    </h4>
+                    </h3>
                     <ul className="space-y-2">
                       {activeService.businessProblems.map((prob, i) => (
-                        <li key={i} className="flex items-start gap-2.5 text-base md:text-[17px] font-normal text-text leading-[1.7]">
+                        <li key={i} className="flex items-start gap-2.5 text-[15px] md:text-[15px] font-normal text-text leading-[1.7]">
                           <span className="w-1.5 h-1.5 rounded-full bg-accent mt-2.5 shrink-0" aria-hidden="true" />
                           <div>{renderBulletText(prob)}</div>
                         </li>
@@ -319,10 +321,10 @@ export default function Services() {
                   </div>
 
                   {/* Core Capabilities */}
-                  <div>
-                    <h4 className="text-[11px] text-accent font-semibold uppercase tracking-[0.2em] mb-3 text-left">
+                  <div className="border-t border-border/70 pt-6">
+                    <h3 className="font-heading text-base md:text-lg font-bold tracking-tight uppercase text-accent mb-3 text-left">
                       CORE CAPABILITIES
-                    </h4>
+                    </h3>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                       {activeService.capabilities.map((cap, i) => (
                         <div
@@ -336,10 +338,10 @@ export default function Services() {
                   </div>
 
                   {/* Technology Stack */}
-                  <div>
-                    <h4 className="text-[11px] text-accent font-semibold uppercase tracking-[0.2em] mb-3 text-left">
+                  <div className="border-t border-border/70 pt-6">
+                    <h3 className="font-heading text-base md:text-lg font-bold tracking-tight uppercase text-accent mb-3 text-left">
                       MODERN TECHNOLOGY STACK
-                    </h4>
+                    </h3>
                     <div className="flex flex-wrap gap-2.5">
                       {activeService.technology.map((tech, i) => (
                         <span
@@ -353,13 +355,15 @@ export default function Services() {
                   </div>
 
                   {/* Business Outcome */}
-                  <div className="p-4 bg-black/[0.02] dark:bg-white/[0.03] border-l-2 border-accent">
-                    <div className="text-[11px] text-accent uppercase tracking-[0.2em] font-semibold mb-1 text-left">
-                      BUSINESS OUTCOME
+                  <div className="border-t border-border/70 pt-6">
+                    <div className="p-4 bg-black/[0.02] dark:bg-white/[0.03] border-l-2 border-accent">
+                      <div className="font-heading text-base md:text-lg font-bold tracking-tight uppercase text-accent mb-1.5 text-left">
+                        BUSINESS OUTCOME
+                      </div>
+                      <p className="text-[14px] md:text-[15px] text-text font-normal leading-[1.5] text-left">
+                        {activeService.outcomes}
+                      </p>
                     </div>
-                    <p className="text-[14px] md:text-[15px] text-text font-normal leading-[1.5] text-left">
-                      {activeService.outcomes}
-                    </p>
                   </div>
 
                   {/* Accelerator & Case Study Links */}
@@ -368,7 +372,7 @@ export default function Services() {
                       <span className="text-[11px] text-text-muted font-normal uppercase tracking-wider mb-1.5 text-left">
                         ENGINEERED PRODUCT / ASSET
                       </span>
-                      <Link to="/products" className="text-text font-semibold hover:text-accent transition-colors inline-flex items-center gap-1.5 group/acc">
+                      <Link to={`/products/${activeService.acceleratorSlug || 'bitxhift'}`} className="text-text font-semibold hover:text-accent transition-colors inline-flex items-center gap-1.5 group/acc">
                         <span>{activeService.accelerator}</span>
                         <span className="text-accent transition-transform duration-200 group-hover/acc:translate-x-1" aria-hidden="true">→</span>
                       </Link>
@@ -377,16 +381,7 @@ export default function Services() {
                       <span className="text-[11px] text-text-muted font-normal uppercase tracking-wider mb-1.5 text-left">
                         CASE STUDY / WORKBENCH
                       </span>
-                      <Link to="/products" className="text-text font-medium hover:text-accent transition-colors inline-flex items-center gap-1.5 group/acc">
-                        <span>{activeService.accelerator}</span>
-                        <span className="text-accent transition-transform duration-200 group-hover/acc:translate-x-1" aria-hidden="true">→</span>
-                      </Link>
-                    </div>
-                    <div className="p-3.5 border border-border/70 flex flex-col justify-between">
-                      <span className="text-[11px] text-text-muted font-medium uppercase tracking-wider mb-1.5 text-left">
-                        CASE STUDY / WORKBENCH
-                      </span>
-                      <Link to="/case-studies" className="text-text font-medium hover:text-accent transition-colors inline-flex items-center gap-1.5 group/cs">
+                      <Link to={`/case-studies/${activeService.caseStudySlug || ''}`} className="text-text font-medium hover:text-accent transition-colors inline-flex items-center gap-1.5 group/cs">
                         <span className="line-clamp-1">{activeService.caseStudy}</span>
                         <span className="text-accent transition-transform duration-200 group-hover/cs:translate-x-1 shrink-0" aria-hidden="true">→</span>
                       </Link>
@@ -397,7 +392,7 @@ export default function Services() {
                   <div className="pt-2 flex flex-col sm:flex-row gap-3">
                     <Link
                       to={`/services/${activeService.slug}`}
-                      className="admin-btn flex-1 py-3 text-xs font-semibold uppercase tracking-wider inline-flex items-center justify-center gap-2 text-text hover:text-accent"
+                      className="btn btn-secondary flex-1 py-3 text-xs font-semibold uppercase tracking-wider inline-flex items-center justify-center gap-2"
                     >
                       <span>VIEW FULL SPECIFICATION</span>
                       <ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />

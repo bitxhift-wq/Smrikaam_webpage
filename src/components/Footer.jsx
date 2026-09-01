@@ -109,16 +109,16 @@ export default function Footer() {
         </div>
 
         {/* Column 2: Services Navigation */}
-        <div className="lg:col-span-2 border-b md:border-b-0 border-[var(--color-border)] pb-3 md:pb-0">
+        <div className="lg:col-span-2 lg:border-l lg:border-[var(--color-border)] lg:pl-6 border-b md:border-b-0 border-[var(--color-border)] pb-3 md:pb-0">
           <button
             type="button"
             onClick={() => toggleSection('services')}
-            className="w-full flex items-center justify-between md:cursor-default text-xs font-semibold tracking-wider text-[var(--color-text)] uppercase mb-2 md:border-b md:border-[var(--color-border)] md:pb-1 text-left"
+            className="w-full flex items-center justify-between md:cursor-default font-heading text-base font-bold tracking-tight text-[var(--color-text)] uppercase mb-3 md:border-b md:border-[var(--color-border)] md:pb-1.5 text-left"
           >
             <span>Services</span>
             <ChevronDown className={`w-4 h-4 md:hidden transition-transform ${openSection === 'services' ? 'rotate-180' : ''}`} />
           </button>
-          <ul className={`space-y-1.5 text-[12px] ${openSection === 'services' ? 'block' : 'hidden md:block'}`}>
+          <ul className={`space-y-1.5 font-body text-[13px] md:text-sm ${openSection === 'services' ? 'block' : 'hidden md:block'}`}>
             {servicesList.map((item, idx) => (
               <li key={idx}>
                 <Link to={item.path} className="text-[var(--color-text-secondary)] hover:text-[var(--color-text)] transition-colors block py-0.5 md:py-0">
@@ -130,16 +130,16 @@ export default function Footer() {
         </div>
 
         {/* Column 3: Accelerators Navigation */}
-        <div className="lg:col-span-2 border-b md:border-b-0 border-[var(--color-border)] pb-3 md:pb-0">
+        <div className="lg:col-span-2 lg:border-l lg:border-[var(--color-border)] lg:pl-6 border-b md:border-b-0 border-[var(--color-border)] pb-3 md:pb-0">
           <button
             type="button"
             onClick={() => toggleSection('accelerators')}
-            className="w-full flex items-center justify-between md:cursor-default text-xs font-semibold tracking-wider text-[var(--color-text)] uppercase mb-2 md:border-b md:border-[var(--color-border)] md:pb-1 text-left"
+            className="w-full flex items-center justify-between md:cursor-default font-heading text-base font-bold tracking-tight text-[var(--color-text)] uppercase mb-3 md:border-b md:border-[var(--color-border)] md:pb-1.5 text-left"
           >
-            <span>Accelerators</span>
+            <span>Products</span>
             <ChevronDown className={`w-4 h-4 md:hidden transition-transform ${openSection === 'accelerators' ? 'rotate-180' : ''}`} />
           </button>
-          <ul className={`space-y-1.5 text-[12px] ${openSection === 'accelerators' ? 'block' : 'hidden md:block'}`}>
+          <ul className={`space-y-1.5 font-body text-[13px] md:text-sm ${openSection === 'accelerators' ? 'block' : 'hidden md:block'}`}>
             {acceleratorsList.map((item, idx) => (
               <li key={idx}>
                 <Link to={item.path} className="text-[var(--color-text-secondary)] hover:text-[var(--color-text)] transition-colors block py-0.5 md:py-0">
@@ -151,16 +151,16 @@ export default function Footer() {
         </div>
 
         {/* Column 4: Industries Navigation */}
-        <div className="lg:col-span-2 border-b md:border-b-0 border-[var(--color-border)] pb-3 md:pb-0">
+        <div className="lg:col-span-2 lg:border-l lg:border-[var(--color-border)] lg:pl-6 border-b md:border-b-0 border-[var(--color-border)] pb-3 md:pb-0">
           <button
             type="button"
             onClick={() => toggleSection('industries')}
-            className="w-full flex items-center justify-between md:cursor-default text-xs font-semibold tracking-wider text-[var(--color-text)] uppercase mb-2 md:border-b md:border-[var(--color-border)] md:pb-1 text-left"
+            className="w-full flex items-center justify-between md:cursor-default font-heading text-base font-bold tracking-tight text-[var(--color-text)] uppercase mb-3 md:border-b md:border-[var(--color-border)] md:pb-1.5 text-left"
           >
             <span>Industries</span>
             <ChevronDown className={`w-4 h-4 md:hidden transition-transform ${openSection === 'industries' ? 'rotate-180' : ''}`} />
           </button>
-          <ul className={`space-y-1 text-[11px] leading-[1.4] ${openSection === 'industries' ? 'block' : 'hidden md:block'}`}>
+          <ul className={`space-y-1.5 font-body text-[13px] md:text-sm ${openSection === 'industries' ? 'block' : 'hidden md:block'}`}>
             {industriesList.map((item, idx) => (
               <li key={idx}>
                 <Link to={item.path} className="text-[var(--color-text-secondary)] hover:text-[var(--color-text)] transition-colors block py-0.5 md:py-0">
@@ -171,18 +171,18 @@ export default function Footer() {
           </ul>
         </div>
 
-        {/* Column 5: Company & Cities */}
-        <div className="lg:col-span-2 space-y-4">
+        {/* Column 5: Company & Follow Us */}
+        <div className="lg:col-span-2 lg:border-l lg:border-[var(--color-border)] lg:pl-6 space-y-4">
           <div className="border-b md:border-b-0 border-[var(--color-border)] pb-3 md:pb-0">
             <button
               type="button"
               onClick={() => toggleSection('company')}
-              className="w-full flex items-center justify-between md:cursor-default text-xs font-semibold tracking-wider text-[var(--color-text)] uppercase mb-2 md:border-b md:border-[var(--color-border)] md:pb-1 text-left"
+              className="w-full flex items-center justify-between md:cursor-default font-heading text-base font-bold tracking-tight text-[var(--color-text)] uppercase mb-3 md:border-b md:border-[var(--color-border)] md:pb-1.5 text-left"
             >
               <span>Company</span>
               <ChevronDown className={`w-4 h-4 md:hidden transition-transform ${openSection === 'company' ? 'rotate-180' : ''}`} />
             </button>
-            <ul className={`space-y-1 text-[11px] leading-[1.4] ${openSection === 'company' ? 'block' : 'hidden md:block'}`}>
+            <ul className={`space-y-1.5 font-body text-[13px] md:text-sm ${openSection === 'company' ? 'block' : 'hidden md:block'}`}>
               {companyList.map((item, idx) => (
                 <li key={idx}>
                   <Link to={item.path} className="text-[var(--color-text-secondary)] hover:text-[var(--color-text)] transition-colors block py-0.5 md:py-0">
@@ -193,22 +193,8 @@ export default function Footer() {
             </ul>
           </div>
 
-          <div className="border-b md:border-b-0 border-[var(--color-border)] pb-3 md:pb-0">
-            <button
-              type="button"
-              onClick={() => toggleSection('cities')}
-              className="w-full flex items-center justify-between md:cursor-default text-[10px] font-semibold text-[var(--color-text-muted)] uppercase tracking-wider mb-1 text-left"
-            >
-              <span>CITIES WE SERVE</span>
-              <ChevronDown className={`w-3.5 h-3.5 md:hidden transition-transform ${openSection === 'cities' ? 'rotate-180' : ''}`} />
-            </button>
-            <div className={`text-[11px] text-[var(--color-text-secondary)] leading-[1.35] ${openSection === 'cities' ? 'block' : 'hidden md:block'}`}>
-              Coimbatore • Chennai • Bangalore • Hyderabad • Mumbai • Pune • Delhi / NCR
-            </div>
-          </div>
-
           <div>
-            <div className="text-[10px] font-semibold text-[var(--color-text-muted)] uppercase tracking-wider mb-1.5">
+            <div className="font-mono text-[11px] font-semibold text-[var(--color-accent)] uppercase tracking-[0.18em] mb-2">
               FOLLOW US
             </div>
             <div className="flex items-center gap-1.5">
@@ -256,11 +242,11 @@ export default function Footer() {
       </div>
 
       {/* Bottom Legal & Copyright Strip */}
-      <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-16 pt-4 border-t border-[var(--color-border)] flex flex-col sm:flex-row items-center justify-between text-[11px] text-[var(--color-text-muted)] gap-2">
+      <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-16 pt-4 border-t border-[var(--color-border)] flex flex-col sm:flex-row items-center justify-between font-mono text-[11px] text-[var(--color-text-muted)] gap-2">
         <div>
           &copy; 2026 SMRIKAAM Technologies LLP. All rights reserved.
         </div>
-        <div className="flex gap-4">
+        <div className="flex gap-4 font-mono text-[11px]">
           <Link to="/contact" className="hover:text-[var(--color-text)] transition-colors">Privacy Policy</Link>
           <Link to="/contact" className="hover:text-[var(--color-text)] transition-colors">Terms of Service</Link>
           <Link to="/contact" className="hover:text-[var(--color-text)] transition-colors">Security</Link>
@@ -269,6 +255,3 @@ export default function Footer() {
     </footer>
   );
 }
-
-
-

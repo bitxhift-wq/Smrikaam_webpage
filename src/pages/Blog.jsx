@@ -7,6 +7,7 @@ import TextReveal from '../components/anim/TextReveal';
 import BannerDrawBorder from '../components/anim/BannerDrawBorder';
 import Reveal from '../components/anim/Reveal';
 import RichTextRenderer from '../components/RichTextRenderer';
+import DecorativeSideCubes from '../components/visuals/DecorativeSideCubes';
 
 export default function Blog() {
   const { posts: rawPosts, isLoaded } = useCMS() || {};
@@ -21,7 +22,9 @@ export default function Blog() {
   return (
     <div className="relative z-10 pt-28 pb-32 px-6 md:px-16 max-w-7xl mx-auto">
       {/* Header Banner */}
-      <div id="overview" data-scroll-label="INSIGHTS" className="page-title-surface relative border border-border p-8 md:p-12 mb-16 overflow-hidden">
+      <div id="overview" data-scroll-label="INSIGHTS" className="relative mb-16">
+        <DecorativeSideCubes leftSize={120} rightSize={140} leftTop="10%" rightTop="25%" />
+        <div className="page-title-surface relative z-10 border border-border p-8 md:p-12 overflow-hidden">
         <BannerDrawBorder />
         <div className="flex items-center justify-between mb-4">
           <div className="font-mono text-[10px] md:text-[11px] text-[var(--color-accent)] uppercase tracking-[0.2em] font-semibold">
@@ -40,6 +43,7 @@ export default function Blog() {
         <p className="text-[15px] sm:text-[16px] md:text-[18px] text-[var(--color-text-secondary)] max-w-3xl border-l-2 border-[var(--color-accent)] pl-4 font-normal leading-[1.6]">
           Deep-dives into IIoT telemetry architectures, zero-downtime database migrations, deterministic LLM pipelines, and production engineering best practices.
         </p>
+      </div>
       </div>
 
       {loading ? (

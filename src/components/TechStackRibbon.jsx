@@ -90,7 +90,7 @@ export default function TechStackRibbon({ className = '' }) {
   };
 
   return (
-    <div id="tech-ribbon" className={`w-full overflow-hidden ${className}`}>
+    <div className={`tech-ribbon-root w-full overflow-hidden ${className}`}>
       {/* Ribbon Header Label */}
       <div className="flex items-center justify-center px-6 md:px-12 lg:px-16 max-w-7xl mx-auto mb-2">
         <div className="text-[12px] sm:text-[13px] md:text-[15px] text-[var(--color-text-muted)] uppercase tracking-[0.2em] font-semibold flex items-center gap-2.5">

@@ -126,7 +126,7 @@ export default function BlogDetail() {
           {post.content && (
             <div id="content" data-scroll-label="INSIGHTS">
               <Reveal className="mb-12">
-                <div className="text-[14px] md:text-[15px] font-normal text-text-muted leading-[1.6] text-left">
+                <div className="type-body text-[15px] md:text-[15px] font-normal text-text-muted leading-[1.65] text-justify">
                   <RichTextRenderer content={post.content} />
                 </div>
               </Reveal>

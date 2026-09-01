@@ -92,7 +92,7 @@ export default function ServiceDetail() {
         {/* Content Body */}
         {(service.content || service.description) && (
           <Reveal className="mb-12">
-            <div className="text-[14px] md:text-[15px] font-normal text-text-muted leading-[1.6] text-left">
+            <div className="type-body text-[15px] md:text-[16px] font-normal text-text-muted leading-[1.65] text-justify">
               <RichTextRenderer content={service.content || service.description} />
             </div>
           </Reveal>
@@ -102,7 +102,7 @@ export default function ServiceDetail() {
         {service.capabilities && service.capabilities.length > 0 && (
           <div id="capabilities" data-scroll-label="CAPABILITIES">
             <Reveal className="border-t border-border pt-8 mb-12">
-              <h3 className="font-mono text-[10px] md:text-[11px] text-[var(--color-accent)] uppercase tracking-[0.2em] font-semibold mb-4 text-left">
+              <h3 className="font-heading text-base md:text-lg font-bold tracking-tight uppercase text-accent mb-4 text-left">
                 CORE CAPABILITIES &amp; INTEGRATIONS
               </h3>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -121,7 +121,7 @@ export default function ServiceDetail() {
         {service.technology && service.technology.length > 0 && (
           <div id="technology" data-scroll-label="TECH STACK">
             <Reveal className="border-t border-border pt-8 mb-12">
-              <h3 className="text-[10px] md:text-[11px] text-[var(--color-accent)] uppercase tracking-[0.2em] font-semibold mb-4 text-left">
+              <h3 className="font-heading text-base md:text-lg font-bold tracking-tight uppercase text-accent mb-4 text-left">
                 MODERN TECHNOLOGY STACK
               </h3>
               <div className="flex flex-wrap gap-2.5">

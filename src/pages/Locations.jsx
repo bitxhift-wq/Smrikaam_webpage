@@ -7,6 +7,7 @@ import TextReveal from '../components/anim/TextReveal';
 import BannerDrawBorder from '../components/anim/BannerDrawBorder';
 import Reveal from '../components/anim/Reveal';
 import RichTextRenderer from '../components/RichTextRenderer';
+import DecorativeSideCubes from '../components/visuals/DecorativeSideCubes';
 
 export default function Locations() {
   const { locations: rawLocations } = useCMS() || {};
@@ -53,13 +54,15 @@ export default function Locations() {
   return (
     <div className="relative z-10 pt-28 pb-32 px-6 md:px-16 max-w-7xl mx-auto">
       {/* Header Banner */}
-      <div className="page-title-surface relative border border-border p-8 md:p-12 mb-12 overflow-hidden">
+      <div className="relative mb-12">
+        <DecorativeSideCubes leftSize={120} rightSize={140} leftTop="10%" rightTop="25%" />
+        <div className="page-title-surface relative z-10 border border-border p-8 md:p-12 overflow-hidden">
         <BannerDrawBorder />
         <div className="flex items-center justify-between mb-4">
-          <div className="text-[10px] md:text-[11px] text-[var(--color-accent)] uppercase tracking-[0.2em] font-semibold">
+          <div className="label-accent">
             GLOBAL HEADQUARTERS
           </div>
-          <div className="text-[10px] md:text-[11px] text-[var(--color-text-muted)] border border-[var(--color-border)] px-3 py-1 bg-black/[0.02] dark:bg-white/[0.03]">
+          <div className="type-meta border border-[var(--color-border)] px-3 py-1 bg-black/[0.02] dark:bg-white/[0.03]">
             COIMBATORE, INDIA
           </div>
         </div>
@@ -72,6 +75,7 @@ export default function Locations() {
         <p className="text-[15px] sm:text-[16px] md:text-[18px] text-[var(--color-text-secondary)] max-w-3xl border-l-2 border-[var(--color-accent)] pl-4 font-normal leading-[1.6]">
           Headquartered in Coimbatore, Tamil Nadu, India, SMRIKAAM Technologies LLP delivers production-grade Data, AI, Industrial IoT, and Cloud engineering solutions to enterprise clients worldwide.
         </p>
+      </div>
       </div>
 
       {/* Primary HQ Card & Contact Details */}
@@ -90,7 +94,7 @@ export default function Locations() {
                 <h2 className="font-heading text-2xl md:text-3xl font-bold uppercase text-text mb-3">
                   {primaryHQ.name || 'COIMBATORE HQ'}
                 </h2>
-                <div className="text-[11px] text-accent uppercase mb-6 font-semibold tracking-wider">
+                <div className="label-accent mb-6">
                   {primaryHQ.type || 'PRIMARY TECHNOLOGY & DELIVERY CENTER'}
                 </div>
 
@@ -109,7 +113,7 @@ export default function Locations() {
                     Koundampalayam, Coimbatore, Tamil Nadu 641030, India
                   </div>
                   {primaryHQ.description && (
-                    <div className="pt-2 text-[13px] md:text-[14px] text-text-muted font-normal">
+                    <div className="pt-2 text-[14px] md:text-[15px] text-text-muted font-normal">
                       <RichTextRenderer content={primaryHQ.description} />
                     </div>
                   )}
@@ -131,11 +135,11 @@ export default function Locations() {
         <div className="lg:col-span-5 flex flex-col justify-between gap-6">
           <Reveal index={1}>
             <BlueprintWrapper className="p-8 bg-bg/95 backdrop-blur-md">
-              <div className="font-mono text-[10px] md:text-[11px] text-accent uppercase tracking-[0.2em] mb-2 font-semibold">ENTERPRISE DELIVERY</div>
+              <div className="label-accent mb-2">ENTERPRISE DELIVERY</div>
               <h3 className="font-heading text-xl font-bold uppercase text-text mb-3">
                 SINGLE-POINT ACCOUNTABILITY
               </h3>
-              <p className="text-base md:text-[17px] text-text leading-[1.7] font-normal">
+              <p className="text-[15px] text-text-muted leading-[1.65] font-normal">
                 All client projects—from initial architectural discovery and telemetry pilot runs to production scaling—are engineered, governed, and supported directly by our senior team in Coimbatore.
               </p>
             </BlueprintWrapper>
@@ -143,11 +147,11 @@ export default function Locations() {
 
           <Reveal index={2}>
             <BlueprintWrapper className="p-8 bg-bg/95 backdrop-blur-md">
-              <div className="font-mono text-[13px] text-accent uppercase tracking-widest mb-2 font-medium">ENGAGEMENT SLA</div>
-              <h3 className="font-heading text-xl font-semibold uppercase text-text mb-3">
+              <div className="label-accent mb-2">ENGAGEMENT SLA</div>
+              <h3 className="font-heading text-xl font-bold uppercase text-text mb-3">
                 24 BUSINESS HOUR RESPONSE
               </h3>
-              <p className="text-base md:text-[17px] text-text leading-[1.7] font-normal">
+              <p className="text-[15px] text-text-muted leading-[1.65] font-normal">
                 Submit your business or technical challenge. Our solution architects will conduct a feasibility review and schedule a direct technical strategy session.
               </p>
             </BlueprintWrapper>
@@ -158,10 +162,10 @@ export default function Locations() {
       {/* Additional Regional Centers if present in CMS */}
       {otherLocations.length > 0 && (
         <div className="mb-16">
-          <div className="font-mono text-[13px] text-accent uppercase tracking-[0.18em] mb-2 font-medium">
+          <div className="label-accent mb-2">
             REGIONAL CENTERS
           </div>
-          <h2 className="font-heading text-2xl md:text-3xl font-semibold uppercase text-text mb-8 border-b border-border pb-4">
+          <h2 className="font-heading text-2xl md:text-3xl font-bold uppercase text-text mb-8 border-b border-border pb-4">
             ADDITIONAL TECHNOLOGY HUBS
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -175,27 +179,27 @@ export default function Locations() {
                         <span className="tag tag-accent font-mono text-[12px]">{loc.type || 'REGIONAL HUB'}</span>
                       </div>
                     </div>
-                    <h3 className="font-heading text-2xl font-semibold uppercase text-text mb-2 group-hover:text-accent transition-colors">
+                    <h3 className="font-heading text-2xl font-bold uppercase text-text mb-2 group-hover:text-accent transition-colors">
                       {loc.name}
                     </h3>
+                    <p className="text-[15px] font-normal text-text-muted mb-4 whitespace-pre-line">
+                      {loc.address}
+                    </p>
                     {loc.description && (
-                      <div className="text-[15px] text-text-muted leading-[1.55] mb-4">
+                      <div className="text-[15px] font-normal text-text-muted leading-[1.65] mb-6">
                         <RichTextRenderer content={loc.description} />
                       </div>
                     )}
-                    <div className="text-[14px] text-text-muted whitespace-pre-line border-t border-border pt-4">
-                      {loc.address}
-                    </div>
                   </div>
-                  <div className="pt-4 border-t border-border mt-6 flex flex-wrap items-center justify-between gap-4 font-mono text-[13px]">
+                  <div className="pt-4 border-t border-border flex flex-wrap items-center justify-between gap-4 font-mono text-[13px]">
                     {loc.email && (
-                      <a href={`mailto:${loc.email}`} className="text-accent font-medium hover:underline flex items-center gap-1">
-                        <Mail className="w-3.5 h-3.5" /> {loc.email}
+                      <a href={`mailto:${loc.email}`} className="text-accent font-semibold hover:underline flex items-center gap-1.5">
+                        <Mail className="w-4 h-4" /> {loc.email}
                       </a>
                     )}
                     {loc.phone && (
-                      <a href={`tel:${loc.phone.replace(/\s+/g, '')}`} className="text-accent font-medium hover:underline flex items-center gap-1">
-                        <Phone className="w-3.5 h-3.5" /> {loc.phone}
+                      <a href={`tel:${loc.phone.replace(/\s+/g, '')}`} className="text-accent font-semibold hover:underline flex items-center gap-1.5">
+                        <Phone className="w-4 h-4" /> {loc.phone}
                       </a>
                     )}
                   </div>
@@ -206,55 +210,51 @@ export default function Locations() {
         </div>
       )}
 
-      {/* Engineering Capabilities at HQ */}
+      {/* Primary HQ Core Capabilities */}
       <div className="mb-16">
-        <div className="font-mono text-[13px] text-accent uppercase tracking-[0.18em] mb-2 font-medium">
-          FACILITIES &amp; LABS
+        <div className="label-accent mb-2">
+          COIMBATORE HUB LABS
         </div>
-        <h2 className="font-heading text-2xl md:text-3xl font-semibold uppercase text-text mb-8 border-b border-border pb-4">
-          COIMBATORE ENGINEERING DIVISIONS
+        <h2 className="font-heading text-2xl md:text-3xl font-bold uppercase text-text mb-8 border-b border-border pb-4">
+          ENGINEERING &amp; R&amp;D CENTERS
         </h2>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {hqCapabilities.map((cap, idx) => {
             const Icon = cap.icon;
             return (
-              <Reveal key={idx} index={idx}>
-                <BlueprintWrapper className="p-6 h-full flex flex-col justify-between group hover:border-accent transition-colors">
-                  <div>
-                    <div className="w-10 h-10 bg-accent/10 border border-accent/30 flex items-center justify-center text-accent mb-4">
-                      <Icon className="w-5 h-5" strokeWidth={1.5} />
-                    </div>
-                    <h3 className="font-heading text-lg font-semibold uppercase text-text mb-2 group-hover:text-accent transition-colors">
-                      {cap.title}
-                    </h3>
-                    <p className="text-[15px] font-normal text-text-muted leading-[1.55]">
-                      {cap.desc}
-                    </p>
-                  </div>
-                </BlueprintWrapper>
-              </Reveal>
+              <BlueprintWrapper key={idx} className="p-6">
+                <div className="w-10 h-10 bg-accent/10 border border-accent/30 flex items-center justify-center text-accent mb-4">
+                  <Icon className="w-5 h-5" strokeWidth={1.5} />
+                </div>
+                <h3 className="font-heading text-base md:text-lg font-bold tracking-tight uppercase text-accent mb-2 text-left">
+                  {cap.title}
+                </h3>
+                <p className="text-[13px] md:text-sm font-normal text-text-muted leading-[1.5]">
+                  {cap.desc}
+                </p>
+              </BlueprintWrapper>
             );
           })}
         </div>
       </div>
 
-      {/* CTA Box */}
+      {/* CTA */}
       <Reveal index={4}>
+      <div id="cta" data-scroll-label="STRATEGY CALL">
         <BlueprintWrapper className="p-8 md:p-12 text-center bg-bg/95 backdrop-blur-md">
-          <h2 className="font-heading text-2xl md:text-4xl font-semibold uppercase text-text mb-4">
-            CONNECT WITH OUR ENGINEERING LEADS
+          <div className="label-accent mb-2">ENGAGE ENGINEERS</div>
+          <h2 className="font-heading text-2xl md:text-3xl font-bold uppercase text-text mb-4">
+            VISIT OR CONNECT WITH OUR COIMBATORE TEAM
           </h2>
-          <p className="text-text-muted max-w-2xl mx-auto mb-6 text-[15px] font-normal leading-[1.55]">
-            Discuss your system architecture, industrial machine telemetry, or data platform transformation directly with our Coimbatore team.
+          <p className="text-text-muted text-[15px] font-normal max-w-xl mx-auto mb-8 leading-[1.65]">
+            Whether you want to test hardware in our IIoT lab or plan an enterprise cloud data lakehouse, our engineering leads are ready.
           </p>
           <Link to="/contact" className="btn btn-primary font-semibold uppercase tracking-wider text-[14px]">
-            Book Strategy Call <ArrowUpRight className="w-4 h-4 ml-1 inline" strokeWidth={1.5} />
+            SCHEDULE A SESSION <ArrowUpRight className="w-4 h-4 ml-1" strokeWidth={1.5} />
           </Link>
         </BlueprintWrapper>
-      </Reveal>
+      </div>  </Reveal>
     </div>
   );
 }
-
-

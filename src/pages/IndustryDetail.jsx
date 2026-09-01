@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { ArrowLeft, ArrowUpRight } from 'lucide-react';
+import { ArrowLeft, ArrowUpRight, CheckCircle2 } from 'lucide-react';
 import api from '../api';
 import BlueprintWrapper from '../components/BlueprintWrapper';
 import ReadingProgressBar from '../components/anim/ReadingProgressBar';
@@ -27,13 +27,13 @@ function renderBulletText(text) {
     const title = clean.substring(0, colonIdx);
     const rest = clean.substring(colonIdx + 1);
     return (
-      <p className="text-base md:text-[17px] text-text font-normal leading-[1.7] text-left">
+      <p className="text-[15px] md:text-[15px] text-text font-normal leading-[1.7] text-left">
         <strong className="text-text font-semibold">{title}:</strong>
         <span className="text-text font-normal"> {rest}</span>
       </p>
     );
   }
-  return <p className="text-base md:text-[17px] text-text font-normal leading-[1.7] text-left">{clean}</p>;
+  return <p className="text-[15px] md:text-[15px] text-text font-normal leading-[1.7] text-left">{clean}</p>;
 }
 
 export default function IndustryDetail() {
@@ -58,6 +58,24 @@ export default function IndustryDetail() {
     'oil-gas': { name: 'BitXhift IIoT Platform', slug: 'bitxhift' },
     media: { name: 'ParseMaster Data Engine', slug: 'parsemaster' },
     electrical: { name: 'BitXhift IIoT Platform', slug: 'bitxhift' }
+  };
+
+  const industryImageMap = {
+    manufacturing: 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?q=80&w=1200&auto=format&fit=crop',
+    energy: 'https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?q=80&w=1200&auto=format&fit=crop',
+    'energy-utilities': 'https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?q=80&w=1200&auto=format&fit=crop',
+    retail: 'https://images.unsplash.com/photo-1556740758-90de374c12ad?q=80&w=1200&auto=format&fit=crop',
+    'retail-ecommerce': 'https://images.unsplash.com/photo-1556740758-90de374c12ad?q=80&w=1200&auto=format&fit=crop',
+    bfsi: 'https://images.unsplash.com/photo-1563986768609-322da13575f3?q=80&w=1200&auto=format&fit=crop',
+    healthcare: 'https://images.unsplash.com/photo-1516549655169-df83a0774514?q=80&w=1200&auto=format&fit=crop',
+    'healthcare-life-sciences': 'https://images.unsplash.com/photo-1516549655169-df83a0774514?q=80&w=1200&auto=format&fit=crop',
+    logistics: 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?q=80&w=1200&auto=format&fit=crop',
+    'logistics-supply-chain': 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?q=80&w=1200&auto=format&fit=crop',
+    telecom: 'https://images.unsplash.com/photo-1544197150-b99a580bb7a8?q=80&w=1200&auto=format&fit=crop',
+    infrastructure: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=1200&auto=format&fit=crop',
+    'oil-gas': 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=1200&auto=format&fit=crop',
+    media: 'https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?q=80&w=1200&auto=format&fit=crop',
+    electrical: 'https://images.unsplash.com/photo-1517055729445-fa7d27394b48?q=80&w=1200&auto=format&fit=crop'
   };
 
   useEffect(() => {
@@ -100,35 +118,52 @@ export default function IndustryDetail() {
     );
   }
 
-  const slugLower = (industry.slug || '').toLowerCase();
+  const slugLower = (industry.slug || slug || '').toLowerCase();
   const relatedAcc = industry.acceleratorName && industry.acceleratorSlug
     ? { name: industry.acceleratorName, slug: industry.acceleratorSlug }
     : (acceleratorMap[slugLower] || { name: 'BitXhift & LinkGenX', slug: 'bitxhift' });
 
-  const businessProblemsRaw = industry.businessProblems || industry.challenge || industry.problemStatement;
-  const solutionsRaw = industry.solutions || industry.solution || industry.key_solutions;
-  const outcomesRaw = industry.outcomes || industry.outcome || industry.businessOutcomes;
+  const businessProblemsRaw = industry.businessProblems || industry.challenge || industry.problemStatement || [
+    'Complex legacy architecture causing operational friction and delayed telemetry visibility.',
+    'Stringent compliance constraints and data privacy requirements across distributed systems.',
+    'High maintenance overhead and lack of predictive fault intelligence.'
+  ];
 
-  const businessProblems = businessProblemsRaw ? parseBulletPoints(businessProblemsRaw) : [];
-  const solutions = solutionsRaw ? parseBulletPoints(solutionsRaw) : [];
+  const businessProblems = parseBulletPoints(businessProblemsRaw);
   const capabilities = Array.isArray(industry.capabilities) && industry.capabilities.length > 0
     ? industry.capabilities
-    : (Array.isArray(industry.useCases) ? industry.useCases : (Array.isArray(industry.key_solutions) ? industry.key_solutions : []));
+    : (Array.isArray(industry.useCases) ? industry.useCases : (Array.isArray(industry.key_solutions) ? industry.key_solutions : [
+        'Domain Telemetry Ingestion',
+        'Real-Time Anomaly Detection',
+        'Automated Compliance Logging',
+        'Enterprise Systems Integration'
+      ]));
+
   const techList = Array.isArray(industry.technology) && industry.technology.length > 0
     ? industry.technology
-    : (Array.isArray(industry.techStack) ? industry.techStack : []);
-  const outcomes = outcomesRaw ? parseBulletPoints(outcomesRaw) : [];
+    : (Array.isArray(industry.techStack) && industry.techStack.length > 0 ? industry.techStack : ['Python', 'Docker', 'Kubernetes', 'TimescaleDB', 'PostgreSQL']);
+
+  const outcomesRaw = industry.outcomes || industry.outcome || industry.businessOutcomes;
+  const outcomes = Array.isArray(outcomesRaw)
+    ? outcomesRaw.join(' ')
+    : (outcomesRaw || 'Delivers proven domain efficiency, reduced operational overhead, and real-time compliance readiness.');
+
+  const coverImage = industry.cover_image_url || industryImageMap[slugLower] || industry.image || 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?q=80&w=1200&auto=format&fit=crop';
 
   return (
     <div className="relative z-10 pt-28 pb-24 px-6 md:px-16 max-w-5xl mx-auto">
       <ReadingProgressBar />
 
-      <Link to="/industries" className="inline-flex items-center gap-2 text-xs text-accent uppercase mb-8 hover:underline font-semibold">
+      <Link to="/industries" className="inline-flex items-center gap-2 font-mono text-xs text-accent uppercase mb-8 hover:underline">
         <ArrowLeft className="w-4 h-4" strokeWidth={1.5} /> Back to Industries Catalog
       </Link>
 
       <div id="overview" data-scroll-label="OVERVIEW">
         <BlueprintWrapper className="service-detail-surface p-8 md:p-12 mb-12">
+          <div className="flex items-center gap-3 mb-4 flex-wrap">
+            <span className="tag tag-accent">INDUSTRY DOMAIN</span>
+            <span className="font-mono text-xs text-text-muted">SLUG: {industry.slug || slug}</span>
+          </div>
 
           <TextReveal
             text={industry.name || industry.title}
@@ -140,81 +175,61 @@ export default function IndustryDetail() {
             {industry.summary || industry.tagline}
           </p>
 
-          {/* Real Photograph with Caption */}
-          {(industry.cover_image_url || industry.image) && (
+          {coverImage && (
             <Reveal className="mb-10 overflow-hidden border border-border h-80 relative bg-black/5 dark:bg-white/5">
               <img
-                src={industry.cover_image_url || industry.image}
+                src={coverImage}
                 alt={industry.name || industry.title}
-                loading="eager"
+                loading="lazy"
                 decoding="async"
                 onError={(e) => {
-                  e.currentTarget.onerror = null;
-                  e.currentTarget.src = 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?q=80&w=1200&auto=format&fit=crop';
+                  e.currentTarget.style.display = 'none';
                 }}
                 className="w-full h-full object-cover"
               />
-              <div className="absolute bottom-0 left-0 right-0 p-3 bg-black/80 backdrop-blur-sm text-[11px] font-mono text-white/90 tracking-wider text-left uppercase">
-                {(industry.name || industry.title).toUpperCase()} — Enterprise Domain Architecture
-              </div>
             </Reveal>
           )}
 
-          {/* Detailed Narrative Content */}
-          {(industry.content || industry.description) && (
+          {/* Narrative Content */}
+          {(industry.content || industry.description || industry.whatWeDo) && (
             <Reveal className="mb-12">
-              <div className="text-[14px] md:text-[15px] font-normal text-text-muted leading-[1.6] text-left">
-                <RichTextRenderer content={industry.content || industry.description} />
+              <div className="type-body text-[15px] md:text-[16px] font-normal text-text-muted leading-[1.65] text-justify">
+                <RichTextRenderer content={industry.content || industry.description || industry.whatWeDo} />
               </div>
             </Reveal>
           )}
 
-          {/* BUSINESS PROBLEMS SOLVED */}
+          {/* Business Problems Solved */}
           {businessProblems.length > 0 && (
-            <div id="problems" data-scroll-label="PROBLEMS" className="border-t border-border pt-8 mb-12">
-              <h3 className="font-mono text-[10px] md:text-[11px] text-[var(--color-accent)] uppercase tracking-[0.2em] font-semibold mb-3 text-left">
-                BUSINESS PROBLEMS SOLVED
-              </h3>
-              <ul className="space-y-2">
-                {businessProblems.map((prob, i) => (
-                  <li key={i} className="flex items-start gap-2.5 text-base md:text-[17px] font-normal text-text leading-[1.7]">
-                    <span className="w-1.5 h-1.5 rounded-full bg-accent mt-2.5 shrink-0" aria-hidden="true" />
-                    <div>{renderBulletText(prob)}</div>
-                  </li>
-                ))}
-              </ul>
+            <div id="problems" data-scroll-label="PROBLEMS">
+              <Reveal className="border-t border-border pt-8 mb-12">
+                <h3 className="font-heading text-base md:text-lg font-bold tracking-tight uppercase text-accent mb-4 text-left">
+                  BUSINESS PROBLEMS SOLVED
+                </h3>
+                <ul className="space-y-2.5">
+                  {businessProblems.map((prob, i) => (
+                    <li key={i} className="flex items-start gap-2.5 text-[15px] md:text-[15px] font-normal text-text leading-[1.7]">
+                      <span className="w-1.5 h-1.5 rounded-full bg-accent mt-2.5 shrink-0" aria-hidden="true" />
+                      <div>{renderBulletText(prob)}</div>
+                    </li>
+                  ))}
+                </ul>
+              </Reveal>
             </div>
           )}
 
-          {/* HOW SMRIKAAM SOLVES IT */}
-          {solutions.length > 0 && (
-            <div id="solutions" data-scroll-label="SOLUTIONS" className="border-t border-border pt-8 mb-12">
-              <h3 className="font-mono text-[10px] md:text-[11px] text-[var(--color-accent)] uppercase tracking-[0.2em] font-semibold mb-3 text-left">
-                HOW SMRIKAAM SOLVES IT
-              </h3>
-              <ul className="space-y-2">
-                {solutions.map((sol, i) => (
-                  <li key={i} className="flex items-start gap-2.5 text-base md:text-[17px] font-normal text-text leading-[1.7]">
-                    <span className="w-1.5 h-1.5 rounded-full bg-accent mt-2.5 shrink-0" aria-hidden="true" />
-                    <div>{renderBulletText(sol)}</div>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
-
-          {/* CORE CAPABILITIES & USE CASES */}
+          {/* Core Capabilities */}
           {capabilities.length > 0 && (
             <div id="capabilities" data-scroll-label="CAPABILITIES">
               <Reveal className="border-t border-border pt-8 mb-12">
-                <h3 className="font-mono text-[10px] md:text-[11px] text-[var(--color-accent)] uppercase tracking-[0.2em] font-semibold mb-4 text-left">
+                <h3 className="font-heading text-base md:text-lg font-bold tracking-tight uppercase text-accent mb-4 text-left">
                   CORE CAPABILITIES &amp; USE CASES
                 </h3>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   {capabilities.map((cap, idx) => (
-                    <div key={idx} className="flex items-center gap-2 px-3.5 py-2 bg-black/[0.03] dark:bg-white/[0.04] border border-border text-[12px] md:text-[13px] font-mono text-text font-normal">
-                      <span className="text-accent font-medium select-none">+</span>
-                      <span>{cap}</span>
+                    <div key={idx} className="flex items-start gap-3 p-3 bg-black/[0.035] dark:bg-white/[0.04] border border-border">
+                      <CheckCircle2 className="w-5 h-5 text-accent shrink-0 mt-0.5" strokeWidth={1.5} />
+                      <span className="font-mono text-[12px] md:text-[13px] text-text font-normal">{cap}</span>
                     </div>
                   ))}
                 </div>
@@ -222,18 +237,18 @@ export default function IndustryDetail() {
             </div>
           )}
 
-          {/* MODERN TECHNOLOGY STACK */}
+          {/* Modern Technology Stack */}
           {techList.length > 0 && (
             <div id="technology" data-scroll-label="TECH STACK">
               <Reveal className="border-t border-border pt-8 mb-12">
-                <h3 className="font-mono text-[12px] md:text-[13px] text-accent uppercase tracking-[0.12em] font-medium mb-4 text-left">
+                <h3 className="font-heading text-base md:text-lg font-bold tracking-tight uppercase text-accent mb-4 text-left">
                   MODERN TECHNOLOGY STACK
                 </h3>
                 <div className="flex flex-wrap gap-2.5">
                   {techList.map((tech, idx) => (
                     <span
                       key={idx}
-                      className="inline-flex items-center px-3 py-1.5 bg-bg border border-border text-[13px] md:text-[14px] font-mono text-text font-medium"
+                      className="inline-flex items-center px-3 py-1.5 bg-black/[0.02] dark:bg-white/[0.04] border border-border text-[12px] md:text-[13px] text-text font-normal"
                     >
                       {tech}
                     </span>
@@ -243,54 +258,40 @@ export default function IndustryDetail() {
             </div>
           )}
 
-          {/* BUSINESS OUTCOME */}
-          <div id="outcome" data-scroll-label="OUTCOME" className="border-t border-border pt-8 mb-12">
-            <div className="p-4 bg-black/[0.02] dark:bg-white/[0.03] border-l-2 border-accent">
-              <div className="font-mono text-[12px] text-accent uppercase tracking-[0.12em] font-medium mb-1 text-left">
-                BUSINESS OUTCOME
-              </div>
-              {Array.isArray(outcomes) ? (
-                <ul className="space-y-1.5">
-                  {outcomes.map((outc, i) => (
-                    <li key={i} className="flex items-start gap-2 text-[14px] md:text-[15px] font-semibold text-text">
-                      <span className="w-1.5 h-1.5 rounded-full bg-accent mt-2 shrink-0" aria-hidden="true" />
-                      <div>{renderBulletText(outc)}</div>
-                    </li>
-                  ))}
-                </ul>
-              ) : (
-                <p className="text-[15px] md:text-[16px] text-text font-semibold leading-[1.5] text-left">
+          {/* Business Outcome */}
+          {outcomes && (
+            <div id="outcome" data-scroll-label="OUTCOME" className="border-t border-border pt-8 mb-12">
+              <div className="p-4 bg-black/[0.02] dark:bg-white/[0.03] border-l-2 border-accent">
+                <div className="font-heading text-base md:text-lg font-bold tracking-tight uppercase text-accent mb-1.5 text-left">
+                  BUSINESS OUTCOME
+                </div>
+                <p className="text-[14px] md:text-[15px] text-text font-normal leading-[1.5] text-left">
                   {outcomes}
                 </p>
-              )}
+              </div>
             </div>
-          </div>
+          )}
 
-          {/* 06 // RELATED PRODUCT / ACCELERATOR & CASE STUDY */}
-          <div id="accelerator" data-scroll-label="ACCELERATOR" className="border-t border-border pt-8 mb-12">
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 font-mono text-[13px]">
-              <div className="p-3.5 border border-border/70 flex flex-col justify-between">
-                <span className="text-[11px] text-text-muted font-medium uppercase tracking-wider mb-1.5 text-left">
-                  RELATED PRODUCT / ACCELERATOR
-                </span>
-                <Link
-                  to={`/products/${relatedAcc.slug}`}
-                  className="text-text font-medium hover:text-accent transition-colors inline-flex items-center gap-1.5 group/acc"
-                >
-                  <span>{relatedAcc.name}</span>
-                  <span className="text-accent transition-transform duration-200 group-hover/acc:translate-x-1" aria-hidden="true">→</span>
+          {/* Related Product / Accelerator & Case Study */}
+          <div id="references" data-scroll-label="REFERENCES" className="border-t border-border pt-8 mb-12">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+              <div className="p-5 bg-black/[0.02] dark:bg-white/[0.03] border border-border flex flex-col justify-between">
+                <div>
+                  <span className="text-[11px] text-accent uppercase font-semibold block mb-1">ENGINEERED PRODUCT / ASSET</span>
+                  <span className="font-heading text-lg font-bold text-text uppercase block mb-3">{relatedAcc.name}</span>
+                </div>
+                <Link to={`/products/${relatedAcc.slug}`} className="text-xs text-accent hover:underline inline-flex items-center gap-1 font-semibold">
+                  Explore Product Asset <ArrowUpRight className="w-3.5 h-3.5" />
                 </Link>
               </div>
-              <div className="p-3.5 border border-border/70 flex flex-col justify-between">
-                <span className="text-[11px] text-text-muted font-medium uppercase tracking-wider mb-1.5 text-left">
-                  LINKED CASE STUDY
-                </span>
-                <Link
-                  to="/case-studies"
-                  className="text-text font-medium hover:text-accent transition-colors inline-flex items-center gap-1.5 group/cs"
-                >
-                  <span>{industry.name} Enterprise Transformation</span>
-                  <span className="text-accent transition-transform duration-200 group-hover/cs:translate-x-1" aria-hidden="true">→</span>
+
+              <div className="p-5 bg-black/[0.02] dark:bg-white/[0.03] border border-border flex flex-col justify-between">
+                <div>
+                  <span className="text-[11px] text-text-muted uppercase font-semibold block mb-1">LINKED CASE STUDY</span>
+                  <span className="font-heading text-lg font-bold text-text uppercase block mb-3">{industry.name || industry.title} Enterprise Transformation</span>
+                </div>
+                <Link to="/case-studies" className="text-xs text-accent hover:underline inline-flex items-center gap-1 font-semibold">
+                  View Architecture Blueprint <ArrowUpRight className="w-3.5 h-3.5" />
                 </Link>
               </div>
             </div>
@@ -300,7 +301,7 @@ export default function IndustryDetail() {
           <div id="cta" data-scroll-label="STRATEGY CALL" className="border-t border-border pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
             <div>
               <div className="font-heading text-lg font-bold text-text uppercase text-left">Deploy Domain Blueprint</div>
-              <div className="font-mono text-xs text-text-muted text-left">Initiate a 48-hour sector architecture workshop with our engineering team</div>
+              <div className="text-xs text-text-muted text-left">Initiate a 48-hour sector architecture workshop with our engineering team</div>
             </div>
             <Link to="/contact" className="btn btn-primary">
               Schedule Consultation <ArrowUpRight className="w-4 h-4" strokeWidth={1.5} />

@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 
 // Layout & Components
 import NavBar from './components/NavBar';
@@ -192,6 +192,28 @@ const LOCATION_FIELDS = [
 ];
 
 function PublicLayout({ children }) {
+  const location = useLocation();
+
+  useEffect(() => {
+    const path = location.pathname;
+    let title = 'SMRIKAAM Technologies | AI, Industrial IoT & Data Analytics';
+    try {
+      const seg = path.split('/').filter(Boolean);
+      if (seg.length === 0) title = 'SMRIKAAM | Enterprise Technology & Engineering';
+      else if (seg[0] === 'services') title = seg[1] ? 'Service | SMRIKAAM Technologies' : 'Services | SMRIKAAM Technologies';
+      else if (seg[0] === 'products' || seg[0] === 'accelerators') title = seg[1] ? 'Product | SMRIKAAM Technologies' : 'Products & Accelerators | SMRIKAAM Technologies';
+      else if (seg[0] === 'industries') title = seg[1] ? 'Industry | SMRIKAAM Technologies' : 'Industries | SMRIKAAM Technologies';
+      else if (seg[0] === 'case-studies') title = seg[1] ? 'Case Study | SMRIKAAM Technologies' : 'Case Studies | SMRIKAAM Technologies';
+      else if (seg[0] === 'blog') title = seg[1] ? 'Blog | SMRIKAAM Technologies' : 'Blog | SMRIKAAM Technologies';
+      else if (seg[0] === 'about') title = 'About | SMRIKAAM Technologies';
+      else if (seg[0] === 'contact') title = 'Contact | SMRIKAAM Technologies';
+      else if (seg[0] === 'locations') title = 'Locations | SMRIKAAM Technologies';
+      else if (seg[0] === 'careers') title = 'Careers | SMRIKAAM Technologies';
+      else if (seg[0] === 'staffing') title = 'Staffing | SMRIKAAM Technologies';
+    } catch (e) { /* keep default */ }
+    if (document.title !== title) document.title = title;
+  }, [location.pathname]);
+
   useEffect(() => {
     if (typeof window === 'undefined') return;
 

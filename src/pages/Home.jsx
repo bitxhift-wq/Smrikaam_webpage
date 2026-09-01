@@ -206,6 +206,7 @@ export default function Home() {
         id="overview"
         data-scroll-label="WHO WE ARE & WHAT WE BUILD"
         aria-label="Who We Are and What We Build"
+        className="relative border-b border-[var(--color-border)]"
       >
         <Smrikaam3DCoreSection />
       </section>
@@ -381,22 +382,22 @@ export default function Home() {
           {/* ======================================================== */}
           <div className="border border-[var(--color-border)] p-6 md:p-8 home-card-surface flex flex-col sm:flex-row items-center justify-between gap-4">
             <div className="space-y-1 text-center sm:text-left">
-              <div className="font-mono text-[10px] text-[var(--color-accent)] font-bold uppercase tracking-widest">
+              <div className="label-accent mb-1">
                 ENTERPRISE TRANSFORMATION • STRATEGY CONSULTATION
               </div>
               <h3 className="font-heading text-lg md:text-xl font-bold uppercase text-[var(--color-text)]">
                 Ready to engineer your next intelligent system?
               </h3>
-              <p className="text-[14px] sm:text-[15px] md:text-[17px] text-[var(--color-text-secondary)] font-normal max-w-xl leading-[1.6]">
+              <p className="text-[15px] md:text-[16px] text-[var(--color-text-secondary)] font-normal max-w-xl leading-[1.65]">
                 Connect with our technical leads in Coimbatore to review architecture blueprints and project roadmaps.
               </p>
             </div>
             <Link
               to="/contact"
-              className="px-5 py-2.5 bg-[var(--button-bg)] text-[var(--button-text)] border border-[var(--button-border)] font-mono text-xs font-bold uppercase tracking-wider hover:opacity-90 transition-all flex items-center justify-center gap-2 shrink-0 shadow-sm w-full sm:w-auto"
+              className="btn btn-primary text-xs font-semibold uppercase tracking-wider shrink-0 w-full sm:w-auto"
             >
               <span>BOOK STRATEGY CALL</span>
-              <ArrowUpRight className="w-3.5 h-3.5" strokeWidth={2} />
+              <ArrowUpRight className="w-4 h-4 ml-1" strokeWidth={1.5} />
             </Link>
           </div>
 

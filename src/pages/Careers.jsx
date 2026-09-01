@@ -5,6 +5,7 @@ import BlueprintWrapper from '../components/BlueprintWrapper';
 import TextReveal from '../components/anim/TextReveal';
 import BannerDrawBorder from '../components/anim/BannerDrawBorder';
 import Reveal from '../components/anim/Reveal';
+import DecorativeSideCubes from '../components/visuals/DecorativeSideCubes';
 
 export default function Careers() {
   const perks = [
@@ -34,25 +35,28 @@ export default function Careers() {
   return (
     <div className="relative z-10 pt-28 pb-32 px-6 md:px-16 max-w-7xl mx-auto">
       {/* Header Banner */}
-      <div className="page-title-surface relative border border-border p-8 md:p-12 mb-16 overflow-hidden">
-        <BannerDrawBorder />
-        <div className="flex items-center justify-between mb-4">
-          <div className="font-mono text-[10px] md:text-[11px] text-[var(--color-accent)] uppercase tracking-[0.2em] font-semibold">
-            CAREERS &amp; ENGINEERING OPPORTUNITIES
+      <div className="relative mb-16">
+        <DecorativeSideCubes leftSize={120} rightSize={140} leftTop="10%" rightTop="25%" />
+        <div className="page-title-surface relative z-10 border border-border p-8 md:p-12 overflow-hidden">
+          <BannerDrawBorder />
+          <div className="flex items-center justify-between mb-4">
+            <div className="label-accent">
+              CAREERS &amp; ENGINEERING OPPORTUNITIES
+            </div>
+            <div className="type-meta border border-[var(--color-border)] px-3 py-1 bg-black/[0.02] dark:bg-white/[0.03]">
+              COIMBATORE &amp; REMOTE
+            </div>
           </div>
-          <div className="font-mono text-[10px] md:text-[11px] text-[var(--color-text-muted)] border border-[var(--color-border)] px-3 py-1 bg-black/[0.02] dark:bg-white/[0.03]">
-            COIMBATORE &amp; REMOTE
-          </div>
-        </div>
 
-        <TextReveal
-          text="BUILD WHAT'S NEXT WITH SMRIKAAM."
-          as="h1"
-          className="font-heading text-3xl sm:text-5xl lg:text-6xl font-bold uppercase tracking-tight text-[var(--color-text)] leading-[0.96] mb-4"
-        />
-        <p className="text-[15px] sm:text-[16px] md:text-[18px] text-[var(--color-text-secondary)] max-w-3xl border-l-2 border-[var(--color-accent)] pl-4 font-normal leading-[1.6]">
-          Work on Industrial IoT platforms, enterprise AI systems, cloud analytics, machine learning pipelines, and next-generation operational intelligence solutions for real-world clients.
-        </p>
+          <TextReveal
+            text="BUILD WHAT'S NEXT WITH SMRIKAAM."
+            as="h1"
+            className="font-heading text-3xl sm:text-5xl lg:text-6xl font-bold uppercase tracking-tight text-[var(--color-text)] leading-[0.96] mb-4"
+          />
+          <p className="text-[15px] sm:text-[16px] md:text-[18px] text-[var(--color-text-secondary)] max-w-3xl border-l-2 border-[var(--color-accent)] pl-4 font-normal leading-[1.6]">
+            Work on Industrial IoT platforms, enterprise AI systems, cloud analytics, machine learning pipelines, and next-generation operational intelligence solutions for real-world clients.
+          </p>
+        </div>
       </div>
 
       {/* Live Operations Widget */}
@@ -60,29 +64,29 @@ export default function Careers() {
         <div className="flex items-center justify-between border-b border-border pb-4 mb-6 font-mono text-xs">
           <div className="flex items-center gap-2">
             <Activity className="w-4 h-4 text-accent" />
-            <span className="font-semibold text-text">OPERATIONS DEMO</span>
+            <span className="font-semibold text-text uppercase">OPERATIONS METRICS</span>
           </div>
           <div className="flex gap-4 text-text-muted">
-            <span>UPTIME: <strong className="text-accent font-bold">99.9%</strong></span>
-            <span>LATENCY: <strong className="text-accent font-bold">142ms</strong></span>
+            <span>UPTIME: <span className="text-accent font-bold">99.9%</span></span>
+            <span>LATENCY: <span className="text-accent font-bold">142ms</span></span>
           </div>
         </div>
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center font-mono">
           <div className="p-4 subtle-readable-surface border border-border">
-            <div className="text-xs text-text-muted mb-1 font-semibold">OEE INDEX</div>
+            <div className="type-meta mb-1 font-semibold">OEE INDEX</div>
             <div className="font-heading font-bold text-3xl text-accent">92.4%</div>
           </div>
           <div className="p-4 subtle-readable-surface border border-border">
-            <div className="text-xs text-text-muted mb-1 font-semibold">ACTIVE MODELS</div>
+            <div className="type-meta mb-1 font-semibold">ACTIVE MODELS</div>
             <div className="font-heading font-bold text-3xl text-text">27</div>
           </div>
           <div className="p-4 subtle-readable-surface border border-border">
-            <div className="text-xs text-text-muted mb-1 font-semibold">DATA STREAMS</div>
+            <div className="type-meta mb-1 font-semibold">DATA STREAMS</div>
             <div className="font-heading font-bold text-3xl text-text">1.2k/s</div>
           </div>
           <div className="p-4 subtle-readable-surface border border-border">
-            <div className="text-xs text-text-muted mb-1 font-semibold">CLUSTER</div>
+            <div className="type-meta mb-1 font-semibold">CLUSTER</div>
             <div className="font-heading font-bold text-3xl text-accent">LIVE</div>
           </div>
         </div>
@@ -90,10 +94,10 @@ export default function Careers() {
 
       {/* Why Engineers Choose SMRIKAAM */}
       <div className="mb-16">
-        <div className="font-mono text-[13px] text-accent uppercase tracking-[0.18em] mb-2 font-medium">
+        <div className="label-accent mb-2">
           CULTURE &amp; GROWTH
         </div>
-        <h2 className="font-heading text-3xl font-semibold uppercase text-text mb-8 border-b border-border pb-4">
+        <h2 className="font-heading text-2xl md:text-3xl font-bold uppercase text-text mb-8 border-b border-border pb-4">
           WHY ENGINEERS CHOOSE SMRIKAAM
         </h2>
 
@@ -101,7 +105,7 @@ export default function Careers() {
           {perks.map((perk, idx) => (
             <BlueprintWrapper key={idx} className="p-4 flex items-center gap-3">
               <CheckCircle2 className="w-5 h-5 text-accent shrink-0" strokeWidth={1.5} />
-              <span className="font-sans text-[14px] font-medium text-text uppercase">{perk}</span>
+              <span className="font-sans text-[13px] md:text-sm font-medium text-text uppercase">{perk}</span>
             </BlueprintWrapper>
           ))}
         </div>
@@ -109,10 +113,10 @@ export default function Careers() {
 
       {/* Open Positions */}
       <div className="mb-16">
-        <div className="font-mono text-[13px] text-accent uppercase tracking-[0.18em] mb-2 font-medium">
+        <div className="label-accent mb-2">
           JOIN US • OPEN POSITIONS
         </div>
-        <h2 className="font-heading text-3xl font-semibold uppercase text-text mb-8 border-b border-border pb-4">
+        <h2 className="font-heading text-2xl md:text-3xl font-bold uppercase text-text mb-8 border-b border-border pb-4">
           ACTIVE OPPORTUNITIES
         </h2>
 
@@ -121,8 +125,8 @@ export default function Careers() {
           <BlueprintWrapper className="p-8">
             <div className="flex flex-wrap items-center justify-between gap-4 mb-4">
               <div>
-                <span className="tag tag-accent mb-2 text-[13px] font-normal">FULL-TIME · COIMBATORE / REMOTE</span>
-                <h3 className="font-heading text-2xl font-semibold uppercase text-text">
+                <span className="tag tag-accent mb-2 text-[12px] font-normal">FULL-TIME · COIMBATORE / REMOTE</span>
+                <h3 className="font-heading text-2xl font-bold uppercase text-text">
                   Data &amp; AI Engineer (Fresher)
                 </h3>
               </div>
@@ -131,24 +135,24 @@ export default function Careers() {
               </Link>
             </div>
 
-            <p className="text-base md:text-[17px] font-normal text-text leading-[1.7] mb-6">
+            <p className="text-[15px] font-normal text-text-muted leading-[1.65] mb-6">
               We are looking for IT and Computer Science graduates with strong Python skills and curiosity about Machine Learning and Generative AI. Work on live enterprise projects involving analytics dashboards, data pipelines, and LLM-powered applications.
             </p>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 p-4 bg-bg border border-border font-mono text-[14px]">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 p-4 bg-bg border border-border font-mono text-[13px]">
               <div>
-                <div className="text-accent font-medium mb-2">MUST HAVE:</div>
+                <div className="text-accent font-medium mb-2 uppercase">MUST HAVE:</div>
                 <div className="flex flex-wrap gap-1.5">
                   {['Python', 'ML fundamentals', 'Pandas / NumPy', 'SQL basics', 'Git'].map((s, i) => (
-                    <span key={i} className="tag tag-neutral text-[13px] font-normal">+ {s}</span>
+                    <span key={i} className="tag tag-neutral text-[12px] font-normal">+ {s}</span>
                   ))}
                 </div>
               </div>
               <div>
-                <div className="text-text font-medium mb-2">GOOD TO HAVE:</div>
+                <div className="text-text font-medium mb-2 uppercase">GOOD TO HAVE:</div>
                 <div className="flex flex-wrap gap-1.5">
                   {['ChatGPT APIs', 'Azure / AWS basics', 'Streamlit', 'Jupyter'].map((s, i) => (
-                    <span key={i} className="tag tag-neutral text-[13px] font-normal">+ {s}</span>
+                    <span key={i} className="tag tag-neutral text-[12px] font-normal">+ {s}</span>
                   ))}
                 </div>
               </div>
@@ -159,8 +163,8 @@ export default function Careers() {
           <BlueprintWrapper className="p-8">
             <div className="flex flex-wrap items-center justify-between gap-4 mb-4">
               <div>
-                <span className="tag tag-accent mb-2 text-[13px] font-normal">FULL-TIME · COIMBATORE / REMOTE</span>
-                <h3 className="font-heading text-2xl font-semibold uppercase text-text">
+                <span className="tag tag-accent mb-2 text-[12px] font-normal">FULL-TIME · COIMBATORE / REMOTE</span>
+                <h3 className="font-heading text-2xl font-bold uppercase text-text">
                   Senior Data &amp; AI Engineer
                 </h3>
               </div>
@@ -169,24 +173,24 @@ export default function Careers() {
               </Link>
             </div>
 
-            <p className="text-base md:text-[17px] font-normal text-text leading-[1.7] mb-6">
+            <p className="text-[15px] font-normal text-text-muted leading-[1.65] mb-6">
               Lead enterprise AI, data engineering, and cloud transformation projects involving ML systems, Industrial IoT, operational intelligence, and enterprise-scale analytics platforms.
             </p>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 p-4 bg-bg border border-border font-mono text-[14px]">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 p-4 bg-bg border border-border font-mono text-[13px]">
               <div>
-                <div className="text-accent font-medium mb-2">MUST HAVE:</div>
+                <div className="text-accent font-medium mb-2 uppercase">MUST HAVE:</div>
                 <div className="flex flex-wrap gap-1.5">
                   {['Production-grade Python', 'ML/DL frameworks', 'LangChain / RAG', 'SQL', 'ETL pipelines', 'Cloud platforms'].map((s, i) => (
-                    <span key={i} className="tag tag-neutral text-[13px] font-normal">+ {s}</span>
+                    <span key={i} className="tag tag-neutral text-[12px] font-normal">+ {s}</span>
                   ))}
                 </div>
               </div>
               <div>
-                <div className="text-text font-medium mb-2">GOOD TO HAVE:</div>
+                <div className="text-text font-medium mb-2 uppercase">GOOD TO HAVE:</div>
                 <div className="flex flex-wrap gap-1.5">
                   {['Docker', 'Kubernetes', 'Grafana', 'MQTT / Modbus', 'FastAPI'].map((s, i) => (
-                    <span key={i} className="tag tag-neutral text-[13px] font-normal">+ {s}</span>
+                    <span key={i} className="tag tag-neutral text-[12px] font-normal">+ {s}</span>
                   ))}
                 </div>
               </div>
@@ -197,16 +201,16 @@ export default function Careers() {
 
       {/* Tech Stack Pills */}
       <div className="mb-16">
-        <div className="font-mono text-[13px] text-accent uppercase tracking-[0.18em] mb-2 font-medium">
-          TOOLING & TECHNOLOGIES
+        <div className="label-accent mb-2">
+          TOOLING &amp; TECHNOLOGIES
         </div>
-        <h2 className="font-heading text-2xl font-semibold uppercase text-text mb-6">
+        <h2 className="font-heading text-2xl md:text-3xl font-bold uppercase text-text mb-6">
           MODERN TECH STACK
         </h2>
 
         <div className="flex flex-wrap gap-2">
           {techStack.map((tech, i) => (
-            <span key={i} className="tag tag-accent text-[13px] font-normal py-1.5 px-3">
+            <span key={i} className="tag tag-accent text-[12px] font-normal py-1.5 px-3">
               {tech}
             </span>
           ))}
@@ -215,10 +219,10 @@ export default function Careers() {
 
       {/* 5-Step Hiring Process */}
       <div className="mb-16">
-        <div className="font-mono text-[13px] text-accent uppercase tracking-[0.18em] mb-2 font-medium">
+        <div className="label-accent mb-2">
           HIRING FLOW
         </div>
-        <h2 className="font-heading text-3xl font-semibold uppercase text-text mb-8 border-b border-border pb-4">
+        <h2 className="font-heading text-2xl md:text-3xl font-bold uppercase text-text mb-8 border-b border-border pb-4">
           OUR HIRING PROCESS
         </h2>
 
@@ -226,8 +230,8 @@ export default function Careers() {
           {hiringSteps.map((step, idx) => (
             <BlueprintWrapper key={idx} className="p-6 text-center">
               <div className="font-heading font-bold text-3xl text-accent mb-2">{step.num}</div>
-              <div className="font-heading font-semibold text-base uppercase text-text mb-1">{step.name}</div>
-              <div className="font-mono text-[13px] font-normal text-text-muted">{step.desc}</div>
+              <div className="font-heading font-bold text-base uppercase text-text mb-1">{step.name}</div>
+              <div className="type-meta">{step.desc}</div>
             </BlueprintWrapper>
           ))}
         </div>
@@ -235,10 +239,10 @@ export default function Careers() {
 
       {/* CTA */}
       <BlueprintWrapper className="p-8 md:p-12 text-center bg-bg/95 backdrop-blur-md">
-        <h2 className="font-heading text-3xl font-semibold uppercase text-text mb-4">
+        <h2 className="font-heading text-2xl md:text-3xl font-bold uppercase text-text mb-4">
           READY TO BUILD WHAT'S NEXT?
         </h2>
-        <p className="text-text-muted text-[15px] font-normal max-w-2xl mx-auto mb-8">
+        <p className="text-text-muted text-[15px] font-normal max-w-xl mx-auto mb-8 leading-[1.65]">
           Join SMRIKAAM Technologies and help shape the future of Industrial AI, operational intelligence, and enterprise automation.
         </p>
         <Link to="/contact" className="btn btn-primary font-semibold uppercase tracking-wider text-[14px]">

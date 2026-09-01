@@ -83,7 +83,7 @@
   /* Typography, Radii & Spacing */
   --font-heading: 'Barlow Condensed', 'Inter', system-ui, -apple-system, sans-serif;
   --font-body: 'Inter', 'Barlow', system-ui, -apple-system, sans-serif;
-  --font-mono: 'Inter', 'Barlow', system-ui, -apple-system, sans-serif;
+  --font-mono: ui-monospace, 'SF Mono', 'Cascadia Code', 'Roboto Mono', Consolas, Menlo, monospace;
   --radius: 0px;
   --space-sm: 0.67rem;
   --space-md: 1rem;

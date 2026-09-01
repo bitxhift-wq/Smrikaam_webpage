@@ -1192,7 +1192,7 @@ Empowered internal compliance and operations teams to automate 80% of document r
     "acceleratorSlug": "bitxhift",
     "caseStudy": "Refinery & Pipeline Telemetry Engine",
     "caseStudySlug": "smart-factory-manufacturing-transformation",
-    "cover_image_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShZX5NCDIIsd9IgGb2SEClw4QOSRiptTJ8zENgE2RRIg&s=10",
+    "cover_image_url": "https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?q=80&w=1200&auto=format&fit=crop",
     "status": "published",
     "created_at": "2026-08-01T00:00:00.000Z",
     "updated_at": "2026-08-01T00:00:00.000Z",

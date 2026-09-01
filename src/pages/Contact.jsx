@@ -5,6 +5,7 @@ import BlueprintWrapper from '../components/BlueprintWrapper';
 import TextReveal from '../components/anim/TextReveal';
 import BannerDrawBorder from '../components/anim/BannerDrawBorder';
 import Reveal from '../components/anim/Reveal';
+import DecorativeSideCubes from '../components/visuals/DecorativeSideCubes';
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -81,10 +82,12 @@ export default function Contact() {
   return (
     <div className="relative z-10 pt-28 pb-24 px-6 md:px-16 max-w-7xl mx-auto">
       {/* Header Banner */}
-      <div id="overview" data-scroll-label="CONTACT" className="page-title-surface relative border border-border p-6 sm:p-8 md:p-12 mb-12 overflow-hidden">
+      <div id="overview" data-scroll-label="CONTACT" className="relative mb-12">
+        <DecorativeSideCubes leftSize={120} rightSize={140} leftTop="10%" rightTop="25%" />
+        <div className="page-title-surface relative z-10 border border-border p-6 sm:p-8 md:p-12 overflow-hidden">
         <BannerDrawBorder />
         <div className="flex flex-wrap items-center justify-between gap-2 mb-4">
-          <div className="text-[10px] md:text-[11px] text-[var(--color-accent)] uppercase tracking-[0.2em] font-semibold">
+          <div className="font-mono text-[10px] md:text-[11px] text-[var(--color-accent)] uppercase tracking-[0.2em] font-semibold">
             ENGAGEMENT &amp; GET IN TOUCH
           </div>
           <div className="text-[10px] md:text-[11px] text-[var(--color-text-muted)] border border-[var(--color-border)] px-3 py-1 bg-black/[0.02] dark:bg-white/[0.03]">
@@ -100,13 +103,14 @@ export default function Contact() {
           Connect directly with SMRIKAAM engineering leads in Coimbatore. Select your engagement path below to start a conversation.
         </p>
       </div>
+      </div>
 
       {/* 4 Clear Engagement Paths */}
-      <div id="paths" data-scroll-label="ENGAGEMENT PATHS" className="mb-12">
-        <div className="text-xs text-accent uppercase tracking-[0.2em] mb-2 font-semibold">
+      <div id="paths" data-scroll-label="ENGAGEMENT PATHS" className="border-t border-border pt-8 mb-12">
+        <div className="label-accent mb-2">
           FOUR PATHS TO ENGAGE
         </div>
-        <h2 className="font-heading text-2xl font-bold uppercase text-text mb-6">
+        <h2 className="font-heading text-2xl md:text-3xl font-bold uppercase text-text mb-6">
           SELECT YOUR ENGAGEMENT MODEL
         </h2>
 
@@ -128,8 +132,7 @@ export default function Contact() {
                 <h3 className="font-heading text-lg font-bold uppercase text-text mb-1">
                   {path.title}
                 </h3>
-                <div className="text-[10px] text-accent font-semibold mb-2">{path.subtitle}</div>
-                <p className="text-xs text-text-muted leading-relaxed">{path.desc}</p>
+                <div className="text-[10px] text-accent font-semibold mb-2">{path.subtitle}</div>                <p className="text-xs text-text-muted leading-relaxed">{path.desc}</p>
               </BlueprintWrapper>
             );
           })}
@@ -137,26 +140,26 @@ export default function Contact() {
       </div>
 
       {/* Form & Sidebar Grid */}
-      <div id="form" data-scroll-label="INQUIRY FORM" className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
+      <div id="form" data-scroll-label="INQUIRY FORM" className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 border-t border-border pt-8">
         {/* Contact Form */}
         <div className="lg:col-span-7">
           <Reveal>
             <BlueprintWrapper pulseCorners={true} className="p-6 sm:p-8 md:p-12 bg-bg/95 backdrop-blur-md">
-              <h2 className="font-heading text-2xl font-bold uppercase text-text mb-6">
+              <h2 className="font-heading text-2xl md:text-3xl font-bold uppercase text-text mb-6">
                 ENGAGEMENT FORM
               </h2>
 
               {successMsg && (
-                <div className="mb-6 p-4 border border-emerald-500 bg-emerald-50 text-emerald-800 text-xs flex items-center gap-3 font-normal">
-                  <CheckCircle2 className="w-5 h-5 text-emerald-600 shrink-0" />
-                  <span>{successMsg}</span>
+                <div className="mb-6 p-4 border-l-2 border-emerald-500 bg-black/[0.02] dark:bg-white/[0.03] text-text text-xs flex items-center gap-3 font-normal">
+                  <CheckCircle2 className="w-5 h-5 text-emerald-600 dark:text-emerald-400 shrink-0" />
+                  <span className="text-emerald-900 dark:text-emerald-300">{successMsg}</span>
                 </div>
               )}
 
               {errorMsg && (
-                <div className="mb-6 p-4 border border-rose-500 bg-rose-50 text-rose-800 text-xs flex items-center gap-3 font-normal">
-                  <AlertTriangle className="w-5 h-5 text-rose-600 shrink-0" />
-                  <span>{errorMsg}</span>
+                <div className="mb-6 p-4 border-l-2 border-rose-500 bg-black/[0.02] dark:bg-white/[0.03] text-text text-xs flex items-center gap-3 font-normal">
+                  <AlertTriangle className="w-5 h-5 text-rose-600 dark:text-rose-400 shrink-0" />
+                  <span className="text-rose-900 dark:text-rose-300">{errorMsg}</span>
                 </div>
               )}
 
@@ -267,8 +270,8 @@ export default function Contact() {
         <div className="lg:col-span-5 space-y-8">
           <Reveal index={1}>
             <BlueprintWrapper className="p-6 sm:p-8 bg-bg/95 backdrop-blur-md">
-              <div className="text-[11px] text-accent uppercase tracking-widest mb-2 font-semibold">HEADQUARTERS</div>
-              <h3 className="font-heading text-2xl font-semibold uppercase text-text mb-4">COIMBATORE HQ</h3>
+              <div className="font-mono text-[11px] text-accent uppercase tracking-widest mb-2 font-semibold">HEADQUARTERS</div>
+              <h3 className="font-heading text-2xl font-bold uppercase text-text mb-4">COIMBATORE HQ</h3>
 
               <div className="space-y-4 text-[15px] text-text-muted leading-[1.55]">
                 <a
@@ -316,8 +319,8 @@ export default function Contact() {
 
           <Reveal index={2}>
             <BlueprintWrapper className="p-6 sm:p-8 bg-bg/90">
-              <div className="text-[11px] text-accent uppercase tracking-widest mb-2 font-semibold">GUARANTEED SLA</div>
-              <h4 className="font-heading text-xl font-semibold text-text mb-2">24 BUSINESS HOUR RESPONSE</h4>
+              <div className="font-mono text-[11px] text-accent uppercase tracking-widest mb-2 font-semibold">GUARANTEED SLA</div>
+              <h4 className="font-heading text-xl font-bold uppercase text-text mb-2">24 BUSINESS HOUR RESPONSE</h4>
               <p className="text-[15px] font-normal text-text-muted leading-[1.55]">
                 Our engineering lead will evaluate your requirement details and prepare an initial technical architecture feasibility report prior to our first call.
               </p>
