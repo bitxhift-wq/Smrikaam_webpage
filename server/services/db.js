@@ -30,7 +30,8 @@ const tableMap = {
   activity_logs: 'activity_logs',
   staffing: 'staffing',
   locations: 'locations',
-  settings: 'settings'
+  settings: 'settings',
+  engagements: 'engagements'
 };
 
 function safeParseJson(val, defaultVal = []) {
@@ -906,6 +907,71 @@ class Database {
         ]
       );
     }
+  }
+
+  async createEngagement(payload) {
+    const id = `eng_${Date.now()}_${Math.random().toString(36).substr(2, 6)}`;
+    const now = new Date().toISOString();
+
+    const record = {
+      id,
+      full_name: payload.full_name,
+      company_name: payload.company_name,
+      email: payload.email,
+      phone: payload.phone || '',
+      requirement_type: payload.requirement_type || 'Technology Transformation',
+      message: payload.message,
+      status: 'unread',
+      created_at: now
+    };
+
+    const engagements = this.getCollection('engagements');
+    engagements.unshift(record);
+    this.saveLocalSnapshot();
+
+    if (postgres.isConnected) {
+      try {
+        await postgres.query(
+          `INSERT INTO engagements (id, full_name, company_name, email, phone, requirement_type, message, status, created_at)
+           VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)`,
+          [record.id, record.full_name, record.company_name, record.email, record.phone, record.requirement_type, record.message, record.status, record.created_at]
+        );
+      } catch (err) {
+        console.warn('Postgres createEngagement write warning:', err.message);
+      }
+    }
+
+    return record;
+  }
+
+  async getEngagements() {
+    if (postgres.isConnected) {
+      try {
+        const res = await postgres.query('SELECT * FROM engagements ORDER BY created_at DESC');
+        return res.rows;
+      } catch (err) {
+        console.warn('Postgres getEngagements query warning:', err.message);
+      }
+    }
+    return this.getCollection('engagements');
+  }
+
+  async deleteEngagement(id) {
+    const engagements = this.getCollection('engagements');
+    const idx = engagements.findIndex((e) => String(e.id) === String(id));
+    if (idx !== -1) {
+      engagements.splice(idx, 1);
+      this.saveLocalSnapshot();
+    }
+
+    if (postgres.isConnected) {
+      try {
+        await postgres.query('DELETE FROM engagements WHERE id = $1', [id]);
+      } catch (err) {
+        console.warn('Postgres deleteEngagement query warning:', err.message);
+      }
+    }
+    return true;
   }
 }
 

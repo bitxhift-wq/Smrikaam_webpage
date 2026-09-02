@@ -174,7 +174,7 @@ export default function FixedScene3D() {
 
   return (
     <div
-      className={`fixed inset-0 -z-10 pointer-events-none overflow-hidden transition-opacity duration-300 ${
+      className={`hidden md:block fixed inset-0 -z-10 pointer-events-none overflow-hidden transition-opacity duration-300 ${
         isDark ? 'opacity-30' : 'opacity-20'
       }`}
       aria-hidden="true"

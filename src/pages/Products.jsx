@@ -10,6 +10,7 @@ import BannerDrawBorder from '../components/anim/BannerDrawBorder';
 import Reveal from '../components/anim/Reveal';
 import RichTextRenderer from '../components/RichTextRenderer';
 import DecorativeSideCubes from '../components/visuals/DecorativeSideCubes';
+import MobileTabSelector from '../components/MobileTabSelector';
 
 function parseBulletPoints(data) {
   if (!data) return [];
@@ -56,16 +57,16 @@ export default function Products() {
       return;
     }
 
-    if (detailContainerRef.current) {
-      const rect = detailContainerRef.current.getBoundingClientRect();
-      const navOffset = 85;
-      const targetY = window.pageYOffset + rect.top - navOffset;
+    const frameId = requestAnimationFrame(() => {
+      if (detailContainerRef.current) {
+        detailContainerRef.current.scrollIntoView({
+          behavior: 'auto',
+          block: 'start'
+        });
+      }
+    });
 
-      window.scrollTo({
-        top: Math.max(0, targetY),
-        behavior: 'smooth'
-      });
-    }
+    return () => cancelAnimationFrame(frameId);
   }, [activeIdx]);
 
   const iconMap = {
@@ -149,11 +150,11 @@ export default function Products() {
   const translateY = isHovered ? (mousePos.y - 0.5) * 10 : 0;
 
   return (
-    <div className="relative z-10 pt-28 pb-24 text-text">
+    <div className="relative z-10 pt-20 sm:pt-28 pb-16 sm:pb-24 text-text">
       {/* SECTION 01 — PRODUCTS HERO */}
-      <section id="overview" data-scroll-label="PRODUCTS" className="relative px-6 md:px-16 max-w-7xl mx-auto mb-16">
+      <section id="overview" data-scroll-label="PRODUCTS" className="relative px-4 sm:px-6 md:px-16 max-w-7xl mx-auto mb-12 sm:mb-16">
         <DecorativeSideCubes leftSize={120} rightSize={140} leftTop="10%" rightTop="25%" />
-        <div className="page-title-surface relative z-10 border border-border p-8 md:p-12 overflow-hidden">
+        <div className="page-title-surface relative z-10 border border-border p-5 sm:p-8 md:p-12 overflow-hidden">
           <BannerDrawBorder />
           <div className="flex items-center justify-between mb-4">
             <div className="font-mono text-[10px] md:text-[11px] text-[var(--color-accent)] uppercase tracking-[0.2em] font-semibold">
@@ -177,7 +178,7 @@ export default function Products() {
       </section>
 
       {/* SECTION 02 — THE PRODUCT SYSTEM (Interactive Master-Detail Architecture) */}
-      <section id="capabilities" data-scroll-label="PRODUCT SYSTEM" className="px-6 md:px-16 max-w-7xl mx-auto mb-20">
+      <section id="capabilities" data-scroll-label="PRODUCT SYSTEM" className="px-4 sm:px-6 md:px-16 max-w-7xl mx-auto mb-16 sm:mb-20">
         {products.length === 0 ? (
           <div className="page-title-surface border border-border p-12 text-center my-12">
             <div className="font-mono text-xs text-accent uppercase mb-2">SYSTEM STATUS</div>
@@ -185,72 +186,78 @@ export default function Products() {
             <p className="text-text-muted text-sm max-w-md mx-auto">All products are currently in draft, undergoing maintenance, or archived.</p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-start border-t border-border/70 pt-10">
+          <div>
+            {/* Mobile Selector Dropdown (Active on Mobile ONLY <768px, sits ABOVE detail panel) */}
+            <MobileTabSelector
+              items={products}
+              activeIdx={activeIdx}
+              setActiveIdx={setActiveIdx}
+              tabIdPrefix="product"
+              ariaLabel="Enterprise Products"
+            />
 
-            {/* Left Column: Products Selector List (Sticky Desktop Navigation) */}
-            <aside className="lg:col-span-5 lg:sticky lg:top-20 self-start z-20">
-              <div
-                role="tablist"
-                aria-label="Enterprise Products"
-                className="page-title-surface border border-border overflow-hidden flex flex-col divide-y divide-border/70"
-              >
-                {products.map((prod, idx) => {
-                  const isActive = activeIdx === idx;
-                  return (
-                    <div
-                      key={prod.id}
-                      role="tab"
-                      id={`product-tab-${prod.id}`}
-                      aria-selected={isActive}
-                      aria-controls={`product-panel-${prod.id}`}
-                      tabIndex={0}
-                      onClick={() => setActiveIdx(idx)}
-                      onKeyDown={(e) => {
-                        if (e.key === 'Enter' || e.key === ' ') {
-                          e.preventDefault();
-                          setActiveIdx(idx);
-                        }
-                      }}
-                      onMouseEnter={() => setActiveIdx(idx)}
-                      className={`service-tab-item group py-4 px-4 cursor-pointer flex items-start justify-between gap-4 outline-none focus-visible:ring-1 focus-visible:ring-accent ${isActive
-                          ? 'active -ml-[1px]'
-                          : 'hover:bg-black/[0.02] dark:hover:bg-white/[0.015]'
-                        }`}
-                    >
-                      <div className="flex items-start justify-between gap-4 w-full">
-                        <div>
-                          <h3 className={`font-heading text-base md:text-lg font-bold tracking-tight transition-colors uppercase ${isActive ? 'text-accent' : 'text-text/90 group-hover:text-accent'
-                            }`}>
-                            {prod.title}
-                          </h3>
-                          <p className="text-[13px] md:text-sm text-text-muted font-normal leading-[1.4] mt-1 line-clamp-1 max-w-md">
-                            {prod.tagline}
-                          </p>
+            <div className="grid grid-cols-12 gap-3 sm:gap-6 lg:gap-12 items-start border-t border-border/70 pt-6 sm:pt-10">
+
+              {/* Left Column: Products Selector List (Active on Desktop ONLY >=768px) */}
+              <aside className="hidden md:block col-span-5 lg:col-span-4 sticky top-16 sm:top-20 self-start z-20">
+                <div
+                  role="tablist"
+                  aria-label="Enterprise Products"
+                  className="page-title-surface border border-border overflow-hidden flex flex-col divide-y divide-border/70"
+                >
+                  {products.map((prod, idx) => {
+                    const isActive = activeIdx === idx;
+                    return (
+                      <div
+                        key={prod.id}
+                        role="tab"
+                        id={`product-tab-${prod.id}`}
+                        aria-selected={isActive}
+                        aria-controls={`product-panel-${prod.id}`}
+                        tabIndex={0}
+                        onClick={() => setActiveIdx(idx)}
+                        onKeyDown={(e) => {
+                          if (e.key === 'Enter' || e.key === ' ') {
+                            e.preventDefault();
+                            setActiveIdx(idx);
+                          }
+                        }}
+                        className={`service-tab-item group py-2 sm:py-4 px-2 sm:px-4 cursor-pointer flex items-start justify-between gap-1 sm:gap-4 outline-none focus-visible:ring-1 focus-visible:ring-accent ${isActive
+                            ? 'active -ml-[1px]'
+                            : 'hover:bg-black/[0.02] dark:hover:bg-white/[0.015]'
+                          }`}
+                      >
+                        <div className="flex items-start justify-between gap-1 sm:gap-4 w-full min-w-0">
+                          <div className="min-w-0 flex-1">
+                            <h3 className={`font-heading text-[10px] sm:text-base md:text-lg font-bold tracking-tight transition-colors uppercase truncate ${isActive ? 'text-accent' : 'text-text/90 group-hover:text-accent'
+                              }`}>
+                              {prod.title}
+                            </h3>
+                          </div>
+
+                          <span
+                            className={`text-[10px] sm:text-sm shrink-0 mt-0.5 transition-transform duration-200 ${isActive ? 'text-accent translate-x-0.5' : 'text-text-muted/40 group-hover:translate-x-0.5 group-hover:text-text-muted'
+                              }`}
+                            aria-hidden="true"
+                          >
+                            →
+                          </span>
                         </div>
-
-                        <span
-                          className={`text-sm shrink-0 mt-1 transition-transform duration-200 ${isActive ? 'text-accent translate-x-1' : 'text-text-muted/40 group-hover:translate-x-1 group-hover:text-text-muted'
-                            }`}
-                          aria-hidden="true"
-                        >
-                          →
-                        </span>
                       </div>
-                    </div>
-                  );
-                })}
-              </div>
-            </aside>
+                    );
+                  })}
+                </div>
+              </aside>
 
-            {/* Right Column: Active Product Detailed Stage (Normal Document Scroll) */}
-            {activeProduct && (
-              <div ref={detailContainerRef} className="lg:col-span-7 min-w-0">
+              {/* Right Column: Active Product Detailed Stage */}
+              {activeProduct && (
+                <div ref={detailContainerRef} className="col-span-12 md:col-span-7 lg:col-span-8 min-w-0 w-full">
                 <div
                   key={activeProduct.id}
                   role="tabpanel"
                   id={`product-panel-${activeProduct.id}`}
                   aria-labelledby={`product-tab-${activeProduct.id}`}
-                  className="service-detail-panel p-6 md:p-8 space-y-6"
+                  className="service-detail-panel p-2.5 sm:p-6 md:p-8 space-y-4 sm:space-y-6"
                 >
 
                   {/* Header: Title */}
@@ -262,7 +269,7 @@ export default function Products() {
 
                   {/* Product Detailed Narrative */}
                   {activeProduct.description && (
-                    <div className="type-body text-[15px] md:text-[16px] font-normal text-text-muted leading-[1.7] text-justify">
+                    <div className="type-body text-[15px] md:text-[16px] font-normal text-text-muted leading-[1.7] text-left md:text-justify">
                       <RichTextRenderer content={activeProduct.description} />
                     </div>
                   )}
@@ -395,12 +402,13 @@ export default function Products() {
               </div>
             )}
           </div>
-        )}
-      </section>
+        </div>
+      )}
+    </section>
 
       {/* SECTION 03 — END CTA BAND */}
-      <section id="cta" data-scroll-label="STRATEGY CALL" className="px-6 md:px-16 max-w-7xl mx-auto mt-24">
-        <Reveal variant="scale" className="border border-border p-10 md:p-14 text-center bg-bg/95 backdrop-blur-md">
+      <section id="cta" data-scroll-label="STRATEGY CALL" className="px-4 sm:px-6 md:px-16 max-w-7xl mx-auto mt-16 sm:mt-24">
+        <Reveal variant="scale" className="border border-border p-6 sm:p-10 md:p-14 text-center bg-bg/95 backdrop-blur-md">
           <div className="font-mono text-[12px] md:text-[13px] text-accent uppercase tracking-[0.14em] font-medium mb-3">
             ACCELERATE TRANSFORMATION • 48-HOUR PILOT
           </div>

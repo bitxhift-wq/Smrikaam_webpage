@@ -558,3 +558,151 @@ router.put('/settings', requireAdminAuth, async (req, res) => {
     res.status(500).json({ error: 'Failed to update settings.' });
   }
 });
+
+// ============================================================
+// 6. ENGAGEMENT & CONTACT SUBMISSION ROUTES
+// ============================================================
+
+router.post('/contact', async (req, res) => {
+  try {
+    const { full_name, company_name, email, phone, requirement_type, message } = req.body;
+
+    if (!full_name || typeof full_name !== 'string' || !full_name.trim()) {
+      return res.status(400).json({ error: 'Full name is required.' });
+    }
+    if (!company_name || typeof company_name !== 'string' || !company_name.trim()) {
+      return res.status(400).json({ error: 'Company name is required.' });
+    }
+    if (!email || typeof email !== 'string' || !email.trim() || !email.includes('@')) {
+      return res.status(400).json({ error: 'A valid work email address is required.' });
+    }
+    if (!message || typeof message !== 'string' || !message.trim()) {
+      return res.status(400).json({ error: 'Requirement details are required.' });
+    }
+
+    const payload = {
+      full_name: full_name.trim(),
+      company_name: company_name.trim(),
+      email: email.trim().toLowerCase(),
+      phone: phone ? String(phone).trim() : '',
+      requirement_type: requirement_type ? String(requirement_type).trim() : 'Technology Transformation',
+      message: message.trim()
+    };
+
+    const record = await db.createEngagement(payload);
+    await db.logActivity(
+      `New Engagement Inquiry: ${payload.company_name}`,
+      `${payload.full_name} (${payload.email}) - ${payload.requirement_type}`,
+      'engagement'
+    );
+
+    return res.status(201).json({
+      success: true,
+      message: 'Thank you. Our engineering leads will connect with you shortly.',
+      id: record.id
+    });
+  } catch (err) {
+    console.error('Contact submission error:', err);
+    return res.status(500).json({ error: 'Failed to process engagement submission. Please try again.' });
+  }
+});
+
+router.post('/engagements', async (req, res) => {
+  try {
+    const { full_name, company_name, email, phone, requirement_type, message } = req.body;
+
+    if (!full_name || typeof full_name !== 'string' || !full_name.trim()) {
+      return res.status(400).json({ error: 'Full name is required.' });
+    }
+    if (!company_name || typeof company_name !== 'string' || !company_name.trim()) {
+      return res.status(400).json({ error: 'Company name is required.' });
+    }
+    if (!email || typeof email !== 'string' || !email.trim() || !email.includes('@')) {
+      return res.status(400).json({ error: 'A valid work email address is required.' });
+    }
+    if (!message || typeof message !== 'string' || !message.trim()) {
+      return res.status(400).json({ error: 'Requirement details are required.' });
+    }
+
+    const payload = {
+      full_name: full_name.trim(),
+      company_name: company_name.trim(),
+      email: email.trim().toLowerCase(),
+      phone: phone ? String(phone).trim() : '',
+      requirement_type: requirement_type ? String(requirement_type).trim() : 'Technology Transformation',
+      message: message.trim()
+    };
+
+    const record = await db.createEngagement(payload);
+    await db.logActivity(
+      `New Engagement Inquiry: ${payload.company_name}`,
+      `${payload.full_name} (${payload.email}) - ${payload.requirement_type}`,
+      'engagement'
+    );
+
+    return res.status(201).json({
+      success: true,
+      message: 'Thank you. Our engineering leads will connect with you shortly.',
+      id: record.id
+    });
+  } catch (err) {
+    console.error('Engagement submission error:', err);
+    return res.status(500).json({ error: 'Failed to process engagement submission. Please try again.' });
+  }
+});
+
+router.get('/engagements', requireAdminAuth, async (req, res) => {
+  try {
+    const records = await db.getEngagements();
+    res.json(records);
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to fetch engagement submissions.' });
+  }
+});
+
+router.get('/contact/admin/all', requireAdminAuth, async (req, res) => {
+  try {
+    const records = await db.getEngagements();
+    res.json(records);
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to fetch engagement submissions.' });
+  }
+});
+
+router.patch('/contact/admin/:id/read', requireAdminAuth, async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { is_read } = req.body;
+    const status = is_read ? 'read' : 'unread';
+
+    const engagements = db.getCollection('engagements');
+    const item = engagements.find((e) => String(e.id) === String(id));
+    if (item) {
+      item.status = status;
+      item.is_read = is_read;
+      db.save();
+    }
+
+    if (postgres.isConnected) {
+      try {
+        await postgres.query('UPDATE engagements SET status = $1 WHERE id = $2', [status, id]);
+      } catch (e) {
+        console.warn('Postgres status update warning:', e.message);
+      }
+    }
+
+    res.json({ success: true, status });
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to update read state.' });
+  }
+});
+
+router.delete('/engagements/:id', requireAdminAuth, async (req, res) => {
+  try {
+    const { id } = req.params;
+    await db.deleteEngagement(id);
+    res.json({ success: true, message: 'Engagement record deleted.' });
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to delete engagement record.' });
+  }
+});

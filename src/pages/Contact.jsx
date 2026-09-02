@@ -54,14 +54,36 @@ export default function Contact() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setSubmitting(true);
     setSuccessMsg('');
     setErrorMsg('');
 
+    if (!formData.full_name || !formData.full_name.trim()) {
+      setErrorMsg('Please enter your full name.');
+      return;
+    }
+    if (!formData.company_name || !formData.company_name.trim()) {
+      setErrorMsg('Please enter your company name.');
+      return;
+    }
+    if (!formData.email || !formData.email.trim() || !formData.email.includes('@')) {
+      setErrorMsg('Please enter a valid work email address.');
+      return;
+    }
+    if (!formData.message || !formData.message.trim()) {
+      setErrorMsg('Please provide requirement details for your inquiry.');
+      return;
+    }
+
+    setSubmitting(true);
+
     try {
       const res = await api.post('/contact', {
-        ...formData,
-        service_of_interest: formData.requirement_type
+        full_name: formData.full_name.trim(),
+        company_name: formData.company_name.trim(),
+        email: formData.email.trim(),
+        phone: formData.phone ? formData.phone.trim() : '',
+        requirement_type: formData.requirement_type || 'Technology Transformation',
+        message: formData.message.trim()
       });
       setSuccessMsg(res.data.message || 'Thank you. Our engineering leads will connect with you shortly.');
       setFormData({
@@ -73,18 +95,18 @@ export default function Contact() {
         message: ''
       });
     } catch (err) {
-      setErrorMsg(err.response?.data?.error || 'Failed to submit inquiry. Please try again.');
+      setErrorMsg(err.response?.data?.error || err.message || 'Failed to submit inquiry. Please try again.');
     } finally {
       setSubmitting(false);
     }
   };
 
   return (
-    <div className="relative z-10 pt-28 pb-24 px-6 md:px-16 max-w-7xl mx-auto">
+    <div className="relative z-10 pt-20 sm:pt-28 pb-16 sm:pb-24 px-4 sm:px-6 md:px-16 max-w-7xl mx-auto">
+      <DecorativeSideCubes leftSize={140} rightSize={160} leftTop="12%" rightTop="45%" />
       {/* Header Banner */}
       <div id="overview" data-scroll-label="CONTACT" className="relative mb-12">
-        <DecorativeSideCubes leftSize={120} rightSize={140} leftTop="10%" rightTop="25%" />
-        <div className="page-title-surface relative z-10 border border-border p-6 sm:p-8 md:p-12 overflow-hidden">
+        <div className="page-title-surface relative z-10 border border-border p-5 sm:p-8 md:p-12 overflow-hidden">
         <BannerDrawBorder />
         <div className="flex flex-wrap items-center justify-between gap-2 mb-4">
           <div className="font-mono text-[10px] md:text-[11px] text-[var(--color-accent)] uppercase tracking-[0.2em] font-semibold">
@@ -114,25 +136,26 @@ export default function Contact() {
           SELECT YOUR ENGAGEMENT MODEL
         </h2>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6">
           {engagementPaths.map((path, idx) => {
             const Icon = path.icon;
             const isSelected = formData.requirement_type === path.title;
             return (
               <BlueprintWrapper
                 key={idx}
-                className={`p-6 cursor-pointer transition-all ${
+                className={`p-3.5 sm:p-6 cursor-pointer transition-all ${
                   isSelected ? 'border-accent bg-accent/5' : 'hover:border-accent/50'
                 }`}
                 onClick={() => setFormData({ ...formData, requirement_type: path.title })}
               >
-                <div className="w-10 h-10 bg-accent/10 border border-accent/30 flex items-center justify-center text-accent mb-4">
-                  <Icon className="w-5 h-5" strokeWidth={1.5} />
+                <div className="w-8 h-8 sm:w-10 sm:h-10 bg-accent/10 border border-accent/30 flex items-center justify-center text-accent mb-2 sm:mb-4">
+                  <Icon className="w-4 h-4 sm:w-5 sm:h-5" strokeWidth={1.5} />
                 </div>
-                <h3 className="font-heading text-lg font-bold uppercase text-text mb-1">
+                <h3 className="font-heading text-xs sm:text-lg font-bold uppercase text-text mb-0.5 sm:mb-1 truncate">
                   {path.title}
                 </h3>
-                <div className="text-[10px] text-accent font-semibold mb-2">{path.subtitle}</div>                <p className="text-xs text-text-muted leading-relaxed">{path.desc}</p>
+                <div className="text-[9px] sm:text-[10px] text-accent font-semibold mb-1 sm:mb-2 truncate">{path.subtitle}</div>
+                <p className="text-[10px] sm:text-xs text-text-muted leading-tight sm:leading-relaxed line-clamp-3 sm:line-clamp-none">{path.desc}</p>
               </BlueprintWrapper>
             );
           })}
@@ -144,7 +167,7 @@ export default function Contact() {
         {/* Contact Form */}
         <div className="lg:col-span-7">
           <Reveal>
-            <BlueprintWrapper pulseCorners={true} className="p-6 sm:p-8 md:p-12 bg-bg/95 backdrop-blur-md">
+            <BlueprintWrapper pulseCorners={true} className="p-5 sm:p-8 md:p-12 bg-bg/95 backdrop-blur-md">
               <h2 className="font-heading text-2xl md:text-3xl font-bold uppercase text-text mb-6">
                 ENGAGEMENT FORM
               </h2>
@@ -164,7 +187,7 @@ export default function Contact() {
               )}
 
               <form onSubmit={handleSubmit}>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="grid grid-cols-2 gap-2.5 sm:gap-4">
                   <div className="field">
                     <label htmlFor="full_name">Name *</label>
                     <input
@@ -194,7 +217,7 @@ export default function Contact() {
                   </div>
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="grid grid-cols-2 gap-2.5 sm:gap-4">
                   <div className="field">
                     <label htmlFor="email">Work Email *</label>
                     <input
@@ -269,7 +292,7 @@ export default function Contact() {
         {/* Contact Info Sidebar */}
         <div className="lg:col-span-5 space-y-8">
           <Reveal index={1}>
-            <BlueprintWrapper className="p-6 sm:p-8 bg-bg/95 backdrop-blur-md">
+            <BlueprintWrapper className="p-5 sm:p-8 bg-bg/95 backdrop-blur-md">
               <div className="font-mono text-[11px] text-accent uppercase tracking-widest mb-2 font-semibold">HEADQUARTERS</div>
               <h3 className="font-heading text-2xl font-bold uppercase text-text mb-4">COIMBATORE HQ</h3>
 

@@ -52,11 +52,11 @@ export default function Locations() {
   ];
 
   return (
-    <div className="relative z-10 pt-28 pb-32 px-6 md:px-16 max-w-7xl mx-auto">
+    <div className="relative z-10 pt-20 sm:pt-28 pb-20 sm:pb-32 px-4 sm:px-6 md:px-16 max-w-7xl mx-auto">
       {/* Header Banner */}
       <div className="relative mb-12">
         <DecorativeSideCubes leftSize={120} rightSize={140} leftTop="10%" rightTop="25%" />
-        <div className="page-title-surface relative z-10 border border-border p-8 md:p-12 overflow-hidden">
+        <div className="page-title-surface relative z-10 border border-border p-6 sm:p-8 md:p-12 overflow-hidden">
         <BannerDrawBorder />
         <div className="flex items-center justify-between mb-4">
           <div className="label-accent">
@@ -219,18 +219,18 @@ export default function Locations() {
           ENGINEERING &amp; R&amp;D CENTERS
         </h2>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6">
           {hqCapabilities.map((cap, idx) => {
             const Icon = cap.icon;
             return (
-              <BlueprintWrapper key={idx} className="p-6">
-                <div className="w-10 h-10 bg-accent/10 border border-accent/30 flex items-center justify-center text-accent mb-4">
-                  <Icon className="w-5 h-5" strokeWidth={1.5} />
+              <BlueprintWrapper key={idx} className="p-3.5 sm:p-6">
+                <div className="w-8 h-8 sm:w-10 sm:h-10 bg-accent/10 border border-accent/30 flex items-center justify-center text-accent mb-2 sm:mb-4">
+                  <Icon className="w-4 h-4 sm:w-5 sm:h-5" strokeWidth={1.5} />
                 </div>
-                <h3 className="font-heading text-base md:text-lg font-bold tracking-tight uppercase text-accent mb-2 text-left">
+                <h3 className="font-heading text-xs sm:text-base md:text-lg font-bold tracking-tight uppercase text-accent mb-1 sm:mb-2 text-left truncate">
                   {cap.title}
                 </h3>
-                <p className="text-[13px] md:text-sm font-normal text-text-muted leading-[1.5]">
+                <p className="text-[10px] sm:text-[13px] md:text-sm font-normal text-text-muted leading-tight sm:leading-[1.5] line-clamp-3 sm:line-clamp-none">
                   {cap.desc}
                 </p>
               </BlueprintWrapper>
@@ -241,20 +241,21 @@ export default function Locations() {
 
       {/* CTA */}
       <Reveal index={4}>
-      <div id="cta" data-scroll-label="STRATEGY CALL">
-        <BlueprintWrapper className="p-8 md:p-12 text-center bg-bg/95 backdrop-blur-md">
-          <div className="label-accent mb-2">ENGAGE ENGINEERS</div>
-          <h2 className="font-heading text-2xl md:text-3xl font-bold uppercase text-text mb-4">
-            VISIT OR CONNECT WITH OUR COIMBATORE TEAM
-          </h2>
-          <p className="text-text-muted text-[15px] font-normal max-w-xl mx-auto mb-8 leading-[1.65]">
-            Whether you want to test hardware in our IIoT lab or plan an enterprise cloud data lakehouse, our engineering leads are ready.
-          </p>
-          <Link to="/contact" className="btn btn-primary font-semibold uppercase tracking-wider text-[14px]">
-            SCHEDULE A SESSION <ArrowUpRight className="w-4 h-4 ml-1" strokeWidth={1.5} />
-          </Link>
-        </BlueprintWrapper>
-      </div>  </Reveal>
+        <div id="cta" data-scroll-label="STRATEGY CALL">
+          <BlueprintWrapper className="p-6 sm:p-8 md:p-12 text-center bg-bg/95 backdrop-blur-md">
+            <div className="label-accent mb-2">ENGAGE ENGINEERS</div>
+            <h2 className="font-heading text-2xl md:text-3xl font-bold uppercase text-text mb-4">
+              VISIT OR CONNECT WITH OUR COIMBATORE TEAM
+            </h2>
+            <p className="text-text-muted text-[15px] font-normal max-w-xl mx-auto mb-8 leading-[1.65]">
+              Whether you want to test hardware in our IIoT lab or plan an enterprise cloud data lakehouse, our engineering leads are ready.
+            </p>
+            <Link to="/contact" className="btn btn-primary font-semibold uppercase tracking-wider text-[14px]">
+              SCHEDULE A SESSION <ArrowUpRight className="w-4 h-4 ml-1" strokeWidth={1.5} />
+            </Link>
+          </BlueprintWrapper>
+        </div>
+      </Reveal>
     </div>
   );
 }

@@ -33,11 +33,11 @@ export default function Careers() {
   ];
 
   return (
-    <div className="relative z-10 pt-28 pb-32 px-6 md:px-16 max-w-7xl mx-auto">
+    <div className="relative z-10 pt-20 sm:pt-28 pb-20 sm:pb-32 px-4 sm:px-6 md:px-16 max-w-7xl mx-auto">
       {/* Header Banner */}
       <div className="relative mb-16">
         <DecorativeSideCubes leftSize={120} rightSize={140} leftTop="10%" rightTop="25%" />
-        <div className="page-title-surface relative z-10 border border-border p-8 md:p-12 overflow-hidden">
+        <div className="page-title-surface relative z-10 border border-border p-6 sm:p-8 md:p-12 overflow-hidden">
           <BannerDrawBorder />
           <div className="flex items-center justify-between mb-4">
             <div className="label-accent">
@@ -60,7 +60,7 @@ export default function Careers() {
       </div>
 
       {/* Live Operations Widget */}
-      <BlueprintWrapper className="p-8 mb-16 shadow-lg">
+      <BlueprintWrapper className="p-4 sm:p-8 mb-12 sm:mb-16 shadow-lg">
         <div className="flex items-center justify-between border-b border-border pb-4 mb-6 font-mono text-xs">
           <div className="flex items-center gap-2">
             <Activity className="w-4 h-4 text-accent" />
@@ -72,22 +72,22 @@ export default function Careers() {
           </div>
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center font-mono">
-          <div className="p-4 subtle-readable-surface border border-border">
-            <div className="type-meta mb-1 font-semibold">OEE INDEX</div>
-            <div className="font-heading font-bold text-3xl text-accent">92.4%</div>
+        <div className="grid grid-cols-4 gap-2 sm:gap-4 text-center font-mono">
+          <div className="p-2 sm:p-4 subtle-readable-surface border border-border">
+            <div className="text-[8px] sm:text-[10px] md:text-xs mb-0.5 sm:mb-1 font-semibold truncate">OEE INDEX</div>
+            <div className="font-heading font-bold text-base sm:text-2xl md:text-3xl text-accent">92.4%</div>
           </div>
-          <div className="p-4 subtle-readable-surface border border-border">
-            <div className="type-meta mb-1 font-semibold">ACTIVE MODELS</div>
-            <div className="font-heading font-bold text-3xl text-text">27</div>
+          <div className="p-2 sm:p-4 subtle-readable-surface border border-border">
+            <div className="text-[8px] sm:text-[10px] md:text-xs mb-0.5 sm:mb-1 font-semibold truncate">ACTIVE MODELS</div>
+            <div className="font-heading font-bold text-base sm:text-2xl md:text-3xl text-text">27</div>
           </div>
-          <div className="p-4 subtle-readable-surface border border-border">
-            <div className="type-meta mb-1 font-semibold">DATA STREAMS</div>
-            <div className="font-heading font-bold text-3xl text-text">1.2k/s</div>
+          <div className="p-2 sm:p-4 subtle-readable-surface border border-border">
+            <div className="text-[8px] sm:text-[10px] md:text-xs mb-0.5 sm:mb-1 font-semibold truncate">DATA STREAMS</div>
+            <div className="font-heading font-bold text-base sm:text-2xl md:text-3xl text-text">1.2k/s</div>
           </div>
-          <div className="p-4 subtle-readable-surface border border-border">
-            <div className="type-meta mb-1 font-semibold">CLUSTER</div>
-            <div className="font-heading font-bold text-3xl text-accent">LIVE</div>
+          <div className="p-2 sm:p-4 subtle-readable-surface border border-border">
+            <div className="text-[8px] sm:text-[10px] md:text-xs mb-0.5 sm:mb-1 font-semibold truncate">CLUSTER</div>
+            <div className="font-heading font-bold text-base sm:text-2xl md:text-3xl text-accent">LIVE</div>
           </div>
         </div>
       </BlueprintWrapper>
@@ -226,19 +226,19 @@ export default function Careers() {
           OUR HIRING PROCESS
         </h2>
 
-        <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
+        <div className="grid grid-cols-5 gap-1.5 sm:gap-3 lg:gap-4">
           {hiringSteps.map((step, idx) => (
-            <BlueprintWrapper key={idx} className="p-6 text-center">
-              <div className="font-heading font-bold text-3xl text-accent mb-2">{step.num}</div>
-              <div className="font-heading font-bold text-base uppercase text-text mb-1">{step.name}</div>
-              <div className="type-meta">{step.desc}</div>
+            <BlueprintWrapper key={idx} className="p-2 sm:p-4 lg:p-6 text-center">
+              <div className="font-heading font-bold text-base sm:text-2xl lg:text-3xl text-accent mb-0.5 sm:mb-2">{step.num}</div>
+              <div className="font-heading font-bold text-[8px] sm:text-xs lg:text-base uppercase text-text mb-0.5 sm:mb-1 truncate">{step.name}</div>
+              <div className="hidden sm:block text-[8px] sm:text-[10px] lg:text-xs text-text-muted leading-tight">{step.desc}</div>
             </BlueprintWrapper>
           ))}
         </div>
       </div>
 
       {/* CTA */}
-      <BlueprintWrapper className="p-8 md:p-12 text-center bg-bg/95 backdrop-blur-md">
+      <BlueprintWrapper className="p-6 sm:p-8 md:p-12 text-center bg-bg/95 backdrop-blur-md">
         <h2 className="font-heading text-2xl md:text-3xl font-bold uppercase text-text mb-4">
           READY TO BUILD WHAT'S NEXT?
         </h2>

@@ -57,15 +57,15 @@ export default function CaseStudyDetail() {
   const outcomes = Array.isArray(caseStudy.outcomes) ? caseStudy.outcomes : [];
 
   return (
-    <div className="relative z-10 pt-28 pb-24 px-6 md:px-16 max-w-5xl mx-auto">
+    <div className="relative z-10 pt-20 sm:pt-28 pb-16 sm:pb-24 px-4 sm:px-6 md:px-16 max-w-5xl mx-auto">
       <ReadingProgressBar />
 
-      <Link to="/case-studies" className="inline-flex items-center gap-2 font-mono text-xs text-accent uppercase mb-8 hover:underline">
+      <Link to="/case-studies" className="inline-flex items-center gap-2 font-mono text-xs text-accent uppercase mb-6 sm:mb-8 hover:underline min-h-[44px]">
         <ArrowLeft className="w-4 h-4" strokeWidth={1.5} /> Back to Case Studies
       </Link>
 
       <div id="overview" data-scroll-label="OVERVIEW">
-        <BlueprintWrapper className="service-detail-surface p-8 md:p-12 mb-12">
+        <BlueprintWrapper className="service-detail-surface p-5 sm:p-8 md:p-12 mb-12">
           <div className="flex flex-wrap items-center justify-between gap-2 mb-4">
             <div className="flex items-center gap-3 text-xs text-text-muted">
               <span className="tag tag-accent">{caseStudy.industry || 'CASE STUDY'}</span>
@@ -81,11 +81,11 @@ export default function CaseStudyDetail() {
           <TextReveal
             text={caseStudy.title}
             as="h1"
-            className="font-heading text-3xl sm:text-5xl lg:text-6xl font-bold uppercase tracking-tight text-[var(--color-text)] mb-6 leading-[0.96]"
+            className="font-heading text-2xl sm:text-4xl lg:text-5xl font-bold uppercase tracking-tight text-[var(--color-text)] mb-6 leading-[1.02]"
           />
 
           {caseStudy.cover_image_url && (
-            <Reveal className="mb-10 overflow-hidden border border-border h-80 relative bg-black/5 dark:bg-white/5">
+            <Reveal className="mb-10 overflow-hidden border border-border h-48 sm:h-64 md:h-80 relative bg-black/5 dark:bg-white/5">
               <img src={caseStudy.cover_image_url} alt={caseStudy.title} className="w-full h-full object-cover" />
             </Reveal>
           )}
@@ -93,12 +93,12 @@ export default function CaseStudyDetail() {
           {/* Quantified Outcomes Banner */}
           {outcomes.length > 0 && (
             <div id="metrics" data-scroll-label="METRICS">
-              <Reveal className="mb-12 p-6 subtle-readable-surface border border-border">
-                <div className="font-mono text-[10px] md:text-[11px] text-accent uppercase tracking-[0.2em] mb-4 font-semibold">VERIFIED MEASURABLE METRICS</div>
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+              <Reveal className="mb-12 p-4 sm:p-6 subtle-readable-surface border border-border">
+                <div className="font-mono text-[10px] md:text-[11px] text-accent uppercase tracking-[0.2em] mb-4 font-semibold text-left">VERIFIED MEASURABLE METRICS</div>
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
                   {outcomes.map((out, idx) => (
-                    <div key={idx} className="border-l-2 border-accent pl-4">
-                      <div className="font-heading font-bold text-3xl md:text-4xl text-accent">
+                    <div key={idx} className="border-l-2 border-accent pl-4 text-left">
+                      <div className="font-heading font-bold text-2xl sm:text-3xl md:text-4xl text-accent">
                         {out.metric}
                       </div>
                       <div className="font-mono text-xs text-text-muted uppercase mt-1 font-normal">
@@ -118,7 +118,7 @@ export default function CaseStudyDetail() {
                 <h3 className="font-heading text-base md:text-lg font-bold tracking-tight uppercase text-accent mb-3 text-left">
                   THE CHALLENGE
                 </h3>
-                <div className="text-[14px] md:text-[15px] font-normal text-text-muted leading-[1.6] text-justify">
+                <div className="text-[14px] md:text-[15px] font-normal text-text-muted leading-[1.6] text-left md:text-justify">
                   <RichTextRenderer content={caseStudy.challenge} />
                 </div>
               </Reveal>
@@ -132,7 +132,7 @@ export default function CaseStudyDetail() {
                 <h3 className="font-heading text-base md:text-lg font-bold tracking-tight uppercase text-accent mb-3 text-left">
                   THE SMRIKAAM SOLUTION
                 </h3>
-                <div className="text-[14px] md:text-[15px] font-normal text-text leading-[1.6] text-justify bg-accent/5 p-6 border border-accent/30">
+                <div className="text-[14px] md:text-[15px] font-normal text-text leading-[1.6] text-left md:text-justify bg-accent/5 p-4 sm:p-6 border border-accent/30">
                   <RichTextRenderer content={caseStudy.solution} />
                 </div>
               </Reveal>
@@ -171,13 +171,13 @@ export default function CaseStudyDetail() {
             </div>
           )}
 
-          <div id="cta" data-scroll-label="STRATEGY CALL" className="border-t border-border pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
-            <div>
-              <div className="font-heading text-lg font-bold text-text uppercase">Achieve Similar Outcomes</div>
-              <div className="font-mono text-xs text-text-muted font-normal">Speak with our technical solution architects today</div>
+          <div id="cta" data-scroll-label="STRATEGY CALL" className="border-t border-border pt-6 sm:pt-8 flex flex-row items-center justify-between gap-2 sm:gap-4">
+            <div className="min-w-0 flex-1">
+              <div className="font-heading text-xs sm:text-lg font-bold text-text uppercase truncate">Achieve Similar Outcomes</div>
+              <div className="font-mono text-[10px] sm:text-xs text-text-muted font-normal truncate">Speak with our technical solution architects</div>
             </div>
-            <Link to="/contact" className="btn btn-primary">
-              Request Case Study Review <ArrowUpRight className="w-4 h-4" strokeWidth={1.5} />
+            <Link to="/contact" className="btn btn-primary text-[10px] sm:text-sm py-2 px-3 shrink-0 whitespace-nowrap">
+              Review Study <ArrowUpRight className="w-3.5 h-3.5 ml-1" strokeWidth={1.5} />
             </Link>
           </div>
         </BlueprintWrapper>

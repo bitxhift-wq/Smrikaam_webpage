@@ -17,6 +17,22 @@ export default function NavBar() {
   const [caseStudiesDropdown, setCaseStudiesDropdown] = useState(false);
   const [companyDropdown, setCompanyDropdown] = useState(false);
 
+  // Mobile accordion drawer state
+  const [mobileAccordions, setMobileAccordions] = useState({
+    services: false,
+    products: false,
+    industries: false,
+    caseStudies: false,
+    company: false
+  });
+
+  const toggleMobileAccordion = (key) => {
+    setMobileAccordions(prev => ({
+      ...prev,
+      [key]: !prev[key]
+    }));
+  };
+
   const navContainerRef = useRef(null);
   const location = useLocation();
 
@@ -159,7 +175,7 @@ export default function NavBar() {
   return (
     <nav
       ref={navContainerRef}
-      className="nav relative z-50 bg-[var(--ribbon-bg)] backdrop-blur-md border-b border-[var(--ribbon-border)] px-6 md:px-10 h-16 flex items-center justify-between transition-colors duration-200"
+      className="nav relative z-50 bg-[var(--ribbon-bg)] backdrop-blur-md border-b border-[var(--ribbon-border)] px-4 sm:px-6 md:px-10 h-16 flex items-center justify-between transition-colors duration-200"
     >
       <div className="max-w-7xl mx-auto w-full flex items-center justify-between">
         <Link to="/" className="nav-brand shrink-0 flex items-center" aria-label="SMRIKAAM Technologies home">
@@ -514,7 +530,7 @@ export default function NavBar() {
           <button
             type="button"
             onClick={toggleTheme}
-            className="h-9 w-9 border border-[var(--ribbon-icon-border)] bg-[var(--ribbon-icon-bg)] hover:opacity-85 text-[var(--ribbon-icon)] transition-colors flex items-center justify-center cursor-pointer"
+            className="w-11 h-11 min-h-[44px] min-w-[44px] border border-[var(--ribbon-icon-border)] bg-[var(--ribbon-icon-bg)] hover:opacity-85 text-[var(--ribbon-icon)] transition-colors flex items-center justify-center cursor-pointer"
             title={theme === 'dark' ? 'Switch to White Theme' : 'Switch to Black Theme'}
             aria-label={theme === 'dark' ? 'Switch to White Theme' : 'Switch to Black Theme'}
           >
@@ -527,156 +543,240 @@ export default function NavBar() {
 
           <button
             onClick={() => setMobileOpen(!mobileOpen)}
-            className="h-9 w-9 border border-[var(--ribbon-icon-border)] bg-[var(--ribbon-icon-bg)] hover:opacity-85 text-[var(--ribbon-icon)] transition-colors flex items-center justify-center cursor-pointer"
-            aria-label="Toggle Navigation Menu"
+            className="w-11 h-11 min-h-[44px] min-w-[44px] border border-[var(--ribbon-icon-border)] bg-[var(--ribbon-icon-bg)] hover:opacity-85 text-[var(--ribbon-icon)] transition-colors flex items-center justify-center cursor-pointer"
+            aria-label={mobileOpen ? 'Close Navigation Menu' : 'Open Navigation Menu'}
+            aria-expanded={mobileOpen}
           >
             {mobileOpen ? <X className="w-5 h-5 text-[var(--ribbon-icon)]" strokeWidth={1.5} aria-hidden="true" /> : <Menu className="w-5 h-5 text-[var(--ribbon-icon)]" strokeWidth={1.5} aria-hidden="true" />}
           </button>
         </div>
       </div>
 
-      {/* Mobile Drawer */}
+      {/* Mobile Drawer (Accessible, Accordion-Based, Safe-Area Constrained) */}
       {mobileOpen && (
-        <div className="lg:hidden fixed inset-x-0 top-[4rem] bg-[var(--ribbon-bg)] border-b border-[var(--ribbon-border)] p-6 shadow-2xl flex flex-col gap-3 max-h-[85vh] overflow-y-auto z-50 text-[var(--ribbon-text)]">
-          <Link
-            to="/"
+        <>
+          <div
+            className="lg:hidden fixed inset-0 top-16 bg-black/50 backdrop-blur-[2px] z-40 transition-opacity"
             onClick={() => setMobileOpen(false)}
-            className={`text-sm uppercase tracking-wider py-2 border-b border-[var(--ribbon-border)] transition-colors ${
-              isActive('/') ? 'text-[var(--ribbon-text)] font-bold border-l-2 border-[var(--ribbon-active)] pl-2' : 'text-[var(--ribbon-text-secondary)] hover:text-[var(--ribbon-text)]'
-            }`}
-          >
-            HOME
-          </Link>
-
-          {/* Mobile Services Section */}
-          <div className="pt-2">
+            aria-hidden="true"
+          />
+          <div className="lg:hidden fixed inset-x-0 top-16 bg-[var(--ribbon-bg)] border-b border-[var(--ribbon-border)] p-5 shadow-2xl flex flex-col gap-2 max-h-[calc(100dvh-4rem)] overflow-y-auto z-50 text-[var(--ribbon-text)] pb-8">
             <Link
-              to="/services"
+              to="/"
               onClick={() => setMobileOpen(false)}
-              className="text-xs text-[var(--ribbon-active)] uppercase tracking-widest mb-2 font-bold block hover:underline"
+              className={`text-xs uppercase tracking-widest min-h-[44px] flex items-center px-2 border-b border-[var(--ribbon-border)] transition-colors ${
+                isActive('/') ? 'text-[var(--ribbon-text)] font-bold border-l-2 border-[var(--ribbon-active)] pl-3' : 'text-[var(--ribbon-text-secondary)] hover:text-[var(--ribbon-text)]'
+              }`}
             >
-              SERVICES
+              HOME
             </Link>
-            <div className="pl-3 flex flex-col gap-2 border-l-2 border-[var(--ribbon-border)]">
-              {servicesSubLinks.map((sub) => (
-                <Link
-                  key={sub.path}
-                  to={sub.path}
-                  onClick={() => setMobileOpen(false)}
-                  className={`text-xs uppercase tracking-wider py-1 transition-colors ${
-                    isActive(sub.path) ? 'text-[var(--ribbon-text)] font-bold' : 'text-[var(--ribbon-text-secondary)] hover:text-[var(--ribbon-text)]'
+
+            {/* Mobile Services Accordion */}
+            <div className="border-b border-[var(--ribbon-border)] pb-1">
+              <button
+                type="button"
+                onClick={() => toggleMobileAccordion('services')}
+                className="w-full min-h-[44px] flex items-center justify-between text-xs text-[var(--ribbon-active)] uppercase tracking-widest font-bold px-2 hover:opacity-90"
+                aria-expanded={mobileAccordions.services}
+              >
+                <span>SERVICES</span>
+                <ChevronDown
+                  className={`w-4 h-4 transition-transform duration-200 ${
+                    mobileAccordions.services ? 'rotate-180 text-[var(--ribbon-text)]' : 'text-[var(--ribbon-text-muted)]'
                   }`}
-                >
-                  {sub.name}
-                </Link>
-              ))}
+                />
+              </button>
+              {mobileAccordions.services && (
+                <div className="pl-3 pr-1 pb-3 flex flex-col gap-1 border-l-2 border-[var(--ribbon-border)] ml-2 animate-in fade-in duration-150">
+                  <Link
+                    to="/services"
+                    onClick={() => setMobileOpen(false)}
+                    className="text-xs uppercase tracking-wider py-2 px-1 text-[var(--ribbon-active)] font-bold hover:underline flex items-center justify-between"
+                  >
+                    <span>ALL SERVICES</span>
+                    <span>→</span>
+                  </Link>
+                  {servicesSubLinks.map((sub) => (
+                    <Link
+                      key={sub.path}
+                      to={sub.path}
+                      onClick={() => setMobileOpen(false)}
+                      className={`text-xs uppercase tracking-wider min-h-[38px] flex items-center px-1 transition-colors ${
+                        isActive(sub.path) ? 'text-[var(--ribbon-text)] font-bold' : 'text-[var(--ribbon-text-secondary)] hover:text-[var(--ribbon-text)]'
+                      }`}
+                    >
+                      {sub.name}
+                    </Link>
+                  ))}
+                </div>
+              )}
             </div>
-          </div>
 
-          {/* Mobile Accelerators Section */}
-          <div className="pt-2">
-            <Link
-              to="/products"
-              onClick={() => setMobileOpen(false)}
-              className="text-xs text-[var(--ribbon-active)] uppercase tracking-widest mb-2 font-bold block hover:underline"
-            >
-              PRODUCTS
-            </Link>
-            <div className="pl-3 flex flex-col gap-2 border-l-2 border-[var(--ribbon-border)]">
-              {acceleratorsSubLinks.map((sub) => (
-                <Link
-                  key={sub.name}
-                  to={sub.path}
-                  onClick={() => setMobileOpen(false)}
-                  className="text-xs uppercase tracking-wider py-1 text-[var(--ribbon-text-secondary)] hover:text-[var(--ribbon-text)] transition-colors"
-                >
-                  {sub.name}
-                </Link>
-              ))}
-            </div>
-          </div>
-
-          {/* Mobile Industries Section */}
-          <div className="pt-2">
-            <Link
-              to="/industries"
-              onClick={() => setMobileOpen(false)}
-              className="text-xs text-[var(--ribbon-active)] uppercase tracking-widest mb-2 font-bold block hover:underline"
-            >
-              INDUSTRIES
-            </Link>
-            <div className="pl-3 flex flex-col gap-2 border-l-2 border-[var(--ribbon-border)]">
-              {industriesSubLinks.map((sub) => (
-                <Link
-                  key={sub.path}
-                  to={sub.path}
-                  onClick={() => setMobileOpen(false)}
-                  className={`text-xs uppercase tracking-wider py-1 transition-colors ${
-                    isActive(sub.path) ? 'text-[var(--ribbon-text)] font-bold' : 'text-[var(--ribbon-text-secondary)] hover:text-[var(--ribbon-text)]'
+            {/* Mobile Products Accordion */}
+            <div className="border-b border-[var(--ribbon-border)] pb-1">
+              <button
+                type="button"
+                onClick={() => toggleMobileAccordion('products')}
+                className="w-full min-h-[44px] flex items-center justify-between text-xs text-[var(--ribbon-active)] uppercase tracking-widest font-bold px-2 hover:opacity-90"
+                aria-expanded={mobileAccordions.products}
+              >
+                <span>PRODUCTS</span>
+                <ChevronDown
+                  className={`w-4 h-4 transition-transform duration-200 ${
+                    mobileAccordions.products ? 'rotate-180 text-[var(--ribbon-text)]' : 'text-[var(--ribbon-text-muted)]'
                   }`}
-                >
-                  {sub.name}
-                </Link>
-              ))}
+                />
+              </button>
+              {mobileAccordions.products && (
+                <div className="pl-3 pr-1 pb-3 flex flex-col gap-1 border-l-2 border-[var(--ribbon-border)] ml-2 animate-in fade-in duration-150">
+                  <Link
+                    to="/products"
+                    onClick={() => setMobileOpen(false)}
+                    className="text-xs uppercase tracking-wider py-2 px-1 text-[var(--ribbon-active)] font-bold hover:underline flex items-center justify-between"
+                  >
+                    <span>ALL PRODUCTS</span>
+                    <span>→</span>
+                  </Link>
+                  {acceleratorsSubLinks.map((sub) => (
+                    <Link
+                      key={sub.name}
+                      to={sub.path}
+                      onClick={() => setMobileOpen(false)}
+                      className="text-xs uppercase tracking-wider min-h-[38px] flex items-center px-1 text-[var(--ribbon-text-secondary)] hover:text-[var(--ribbon-text)] transition-colors"
+                    >
+                      {sub.name}
+                    </Link>
+                  ))}
+                </div>
+              )}
             </div>
-          </div>
 
-          {/* Mobile Case Studies Section */}
-          <div className="pt-2">
-            <Link
-              to="/case-studies"
-              onClick={() => setMobileOpen(false)}
-              className="text-xs text-[var(--ribbon-active)] uppercase tracking-widest mb-2 font-bold block hover:underline"
-            >
-              CASE STUDIES
-            </Link>
-            <div className="pl-3 flex flex-col gap-2 border-l-2 border-[var(--ribbon-border)]">
-              {caseStudiesSubLinks.map((sub) => (
-                <Link
-                  key={sub.path}
-                  to={sub.path}
-                  onClick={() => setMobileOpen(false)}
-                  className={`text-xs uppercase tracking-wider py-1 transition-colors ${
-                    isActive(sub.path) ? 'text-[var(--ribbon-text)] font-bold' : 'text-[var(--ribbon-text-secondary)] hover:text-[var(--ribbon-text)]'
+            {/* Mobile Industries Accordion */}
+            <div className="border-b border-[var(--ribbon-border)] pb-1">
+              <button
+                type="button"
+                onClick={() => toggleMobileAccordion('industries')}
+                className="w-full min-h-[44px] flex items-center justify-between text-xs text-[var(--ribbon-active)] uppercase tracking-widest font-bold px-2 hover:opacity-90"
+                aria-expanded={mobileAccordions.industries}
+              >
+                <span>INDUSTRIES</span>
+                <ChevronDown
+                  className={`w-4 h-4 transition-transform duration-200 ${
+                    mobileAccordions.industries ? 'rotate-180 text-[var(--ribbon-text)]' : 'text-[var(--ribbon-text-muted)]'
                   }`}
-                >
-                  {sub.name}
-                </Link>
-              ))}
+                />
+              </button>
+              {mobileAccordions.industries && (
+                <div className="pl-3 pr-1 pb-3 flex flex-col gap-1 border-l-2 border-[var(--ribbon-border)] ml-2 animate-in fade-in duration-150">
+                  <Link
+                    to="/industries"
+                    onClick={() => setMobileOpen(false)}
+                    className="text-xs uppercase tracking-wider py-2 px-1 text-[var(--ribbon-active)] font-bold hover:underline flex items-center justify-between"
+                  >
+                    <span>ALL INDUSTRIES</span>
+                    <span>→</span>
+                  </Link>
+                  {industriesSubLinks.map((sub) => (
+                    <Link
+                      key={sub.path}
+                      to={sub.path}
+                      onClick={() => setMobileOpen(false)}
+                      className={`text-xs uppercase tracking-wider min-h-[38px] flex items-center px-1 transition-colors ${
+                        isActive(sub.path) ? 'text-[var(--ribbon-text)] font-bold' : 'text-[var(--ribbon-text-secondary)] hover:text-[var(--ribbon-text)]'
+                      }`}
+                    >
+                      {sub.name}
+                    </Link>
+                  ))}
+                </div>
+              )}
             </div>
-          </div>
 
-          {/* Mobile Company Section */}
-          <div className="pt-2">
-            <div className="text-xs text-[var(--ribbon-active)] uppercase tracking-widest mb-2 font-bold">
-              COMPANY
-            </div>
-            <div className="pl-3 flex flex-col gap-2 border-l-2 border-[var(--ribbon-border)]">
-              {companySubLinks.map((sub) => (
-                <Link
-                  key={sub.path}
-                  to={sub.path}
-                  onClick={() => setMobileOpen(false)}
-                  className={`text-xs uppercase tracking-wider py-1 transition-colors ${
-                    isActive(sub.path) ? 'text-[var(--ribbon-text)] font-bold' : 'text-[var(--ribbon-text-secondary)] hover:text-[var(--ribbon-text)]'
+            {/* Mobile Case Studies Accordion */}
+            <div className="border-b border-[var(--ribbon-border)] pb-1">
+              <button
+                type="button"
+                onClick={() => toggleMobileAccordion('caseStudies')}
+                className="w-full min-h-[44px] flex items-center justify-between text-xs text-[var(--ribbon-active)] uppercase tracking-widest font-bold px-2 hover:opacity-90"
+                aria-expanded={mobileAccordions.caseStudies}
+              >
+                <span>CASE STUDIES</span>
+                <ChevronDown
+                  className={`w-4 h-4 transition-transform duration-200 ${
+                    mobileAccordions.caseStudies ? 'rotate-180 text-[var(--ribbon-text)]' : 'text-[var(--ribbon-text-muted)]'
                   }`}
-                >
-                  {sub.name}
-                </Link>
-              ))}
+                />
+              </button>
+              {mobileAccordions.caseStudies && (
+                <div className="pl-3 pr-1 pb-3 flex flex-col gap-1 border-l-2 border-[var(--ribbon-border)] ml-2 animate-in fade-in duration-150">
+                  <Link
+                    to="/case-studies"
+                    onClick={() => setMobileOpen(false)}
+                    className="text-xs uppercase tracking-wider py-2 px-1 text-[var(--ribbon-active)] font-bold hover:underline flex items-center justify-between"
+                  >
+                    <span>All Case Studies</span>
+                    <span>→</span>
+                  </Link>
+                  {caseStudiesSubLinks.map((sub) => (
+                    <Link
+                      key={sub.path}
+                      to={sub.path}
+                      onClick={() => setMobileOpen(false)}
+                      className={`text-xs uppercase tracking-wider min-h-[38px] flex items-center px-1 transition-colors ${
+                        isActive(sub.path) ? 'text-[var(--ribbon-text)] font-bold' : 'text-[var(--ribbon-text-secondary)] hover:text-[var(--ribbon-text)]'
+                      }`}
+                    >
+                      {sub.name}
+                    </Link>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {/* Mobile Company Accordion */}
+            <div className="border-b border-[var(--ribbon-border)] pb-1">
+              <button
+                type="button"
+                onClick={() => toggleMobileAccordion('company')}
+                className="w-full min-h-[44px] flex items-center justify-between text-xs text-[var(--ribbon-active)] uppercase tracking-widest font-bold px-2 hover:opacity-90"
+                aria-expanded={mobileAccordions.company}
+              >
+                <span>COMPANY</span>
+                <ChevronDown
+                  className={`w-4 h-4 transition-transform duration-200 ${
+                    mobileAccordions.company ? 'rotate-180 text-[var(--ribbon-text)]' : 'text-[var(--ribbon-text-muted)]'
+                  }`}
+                />
+              </button>
+              {mobileAccordions.company && (
+                <div className="pl-3 pr-1 pb-3 flex flex-col gap-1 border-l-2 border-[var(--ribbon-border)] ml-2 animate-in fade-in duration-150">
+                  {companySubLinks.map((sub) => (
+                    <Link
+                      key={sub.path}
+                      to={sub.path}
+                      onClick={() => setMobileOpen(false)}
+                      className={`text-xs uppercase tracking-wider min-h-[38px] flex items-center px-1 transition-colors ${
+                        isActive(sub.path) ? 'text-[var(--ribbon-text)] font-bold' : 'text-[var(--ribbon-text-secondary)] hover:text-[var(--ribbon-text)]'
+                      }`}
+                    >
+                      {sub.name}
+                    </Link>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            <div className="pt-3 mt-1 flex flex-col gap-2">
+              <Link
+                to="/contact"
+                onClick={() => setMobileOpen(false)}
+                className="bg-[var(--ribbon-button-bg)] text-[var(--ribbon-button-text)] border border-[var(--ribbon-button-border)] min-h-[44px] py-2.5 px-4 text-xs font-semibold uppercase tracking-wider flex items-center justify-center gap-2"
+              >
+                Book Strategy Call <ArrowUpRight className="w-4 h-4" strokeWidth={2} />
+              </Link>
             </div>
           </div>
-
-          <div className="pt-4 border-t border-[var(--ribbon-border)] mt-2 flex flex-col gap-2">
-            <Link
-              to="/contact"
-              onClick={() => setMobileOpen(false)}
-              className="bg-[var(--ribbon-button-bg)] text-[var(--ribbon-button-text)] border border-[var(--ribbon-button-border)] py-3 px-4 text-xs font-semibold uppercase tracking-wider flex items-center justify-center gap-2"
-            >
-              Book Strategy Call <ArrowUpRight className="w-4 h-4" strokeWidth={2} />
-            </Link>
-          </div>
-        </div>
+        </>
       )}
     </nav>
   );

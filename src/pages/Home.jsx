@@ -93,22 +93,22 @@ export default function Home() {
       <section
         id="hero"
         data-scroll-label="HERO"
-        className="relative flex flex-col justify-center px-6 md:px-12 lg:px-16 py-8 md:py-12 border-b border-[var(--color-border)] bg-[var(--color-bg)]/80 backdrop-blur-[2px] overflow-hidden"
+        className="relative flex flex-col justify-center px-4 sm:px-8 md:px-12 lg:px-16 py-6 sm:py-8 md:py-12 border-b border-[var(--color-border)] bg-[var(--color-bg)]/80 backdrop-blur-[2px] overflow-hidden"
       >
         {/* Subtle architectural background perspective grid */}
         <div className="smk-perspective-grid opacity-25" aria-hidden="true" />
 
-        <div className="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center relative z-10">
+        <div className="max-w-7xl mx-auto w-full grid grid-cols-12 gap-3 sm:gap-6 lg:gap-10 items-center relative z-10">
           {/* Left Content Column */}
-          <div className="lg:col-span-7 flex flex-col justify-center space-y-4">
+          <div className="col-span-7 flex flex-col justify-center space-y-3 sm:space-y-4">
             {/* Technical Eyebrow */}
-            <div className="inline-flex items-center gap-2 font-mono text-[10px] md:text-[11px] text-[var(--color-text-secondary)] uppercase tracking-[0.16em] border border-[var(--color-border)] px-2.5 py-1 home-card-surface self-start">
-              <span className="w-1.5 h-1.5 bg-[var(--color-accent)] animate-pulse" />
-              <span>AI • DATA • CLOUD • IIoT • INTELLIGENT AUTOMATION</span>
+            <div className="inline-flex items-center gap-1.5 sm:gap-2 font-mono text-[9px] sm:text-[10px] md:text-[11px] text-[var(--color-text-secondary)] uppercase tracking-[0.14em] sm:tracking-[0.16em] border border-[var(--color-border)] px-2 sm:px-2.5 py-0.5 sm:py-1 home-card-surface self-start truncate max-w-full">
+              <span className="w-1.5 h-1.5 bg-[var(--color-accent)] animate-pulse shrink-0" />
+              <span className="truncate">AI • DATA • CLOUD • IIoT • INTELLIGENT AUTOMATION</span>
             </div>
 
             {/* Main Headline */}
-            <h1 className="font-heading text-3xl sm:text-5xl lg:text-6xl font-bold uppercase tracking-tight text-[var(--color-text)] leading-[0.96]">
+            <h1 className="font-heading text-xl sm:text-4xl md:text-5xl lg:text-6xl font-bold uppercase tracking-tight text-[var(--color-text)] leading-[0.96]">
               ENGINEERING
               <br />
               INTELLIGENCE
@@ -117,75 +117,75 @@ export default function Home() {
             </h1>
 
             {/* Description */}
-            <p className="text-[15px] sm:text-[16px] md:text-[18px] text-[var(--color-text-secondary)] max-w-xl leading-[1.6] font-normal">
+            <p className="text-xs sm:text-[15px] md:text-[18px] text-[var(--color-text-secondary)] max-w-xl leading-snug sm:leading-[1.6] font-normal">
               We build intelligent, secure, and scalable technology solutions
               that help enterprises modernize, automate and grow.
             </p>
 
             {/* Action Buttons */}
-            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 pt-1 w-full sm:w-auto">
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 sm:gap-3 pt-1 w-full sm:w-auto">
               <Link
                 to="/contact"
-                className="px-5 py-2.5 bg-[var(--button-bg)] text-[var(--button-text)] border border-[var(--button-border)] font-mono text-xs font-bold uppercase tracking-wider hover:opacity-90 transition-all flex items-center justify-center gap-2 shadow-sm w-full sm:w-auto"
+                className="px-3 sm:px-5 py-2 sm:py-2.5 bg-[var(--button-bg)] text-[var(--button-text)] border border-[var(--button-border)] font-mono text-[10px] sm:text-xs font-bold uppercase tracking-wider hover:opacity-90 transition-all flex items-center justify-center gap-1.5 sm:gap-2 shadow-sm min-h-[38px] sm:min-h-[44px]"
               >
                 <span>BOOK STRATEGY CALL</span>
-                <ArrowUpRight className="w-3.5 h-3.5" strokeWidth={2} />
+                <ArrowUpRight className="w-3 sm:w-3.5 h-3 sm:h-3.5" strokeWidth={2} />
               </Link>
               <Link
                 to="/services"
-                className="px-5 py-2.5 border border-[var(--button-secondary-border)] bg-[var(--button-secondary-bg)] text-[var(--button-secondary-text)] font-mono text-xs font-bold uppercase tracking-wider hover:bg-[var(--color-surface-subtle)] transition-all text-center w-full sm:w-auto"
+                className="px-3 sm:px-5 py-2 sm:py-2.5 border border-[var(--button-secondary-border)] bg-[var(--button-secondary-bg)] text-[var(--button-secondary-text)] font-mono text-[10px] sm:text-xs font-bold uppercase tracking-wider hover:bg-[var(--color-surface-subtle)] transition-all text-center min-h-[38px] sm:min-h-[44px] flex items-center justify-center truncate"
               >
                 EXPLORE CAPABILITIES
               </Link>
             </div>
-
-            {/* System Proof Metrics Bar */}
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4 p-3.5 sm:p-4 mt-2 home-card-surface border border-[var(--color-border)] w-full max-w-lg">
-              <div>
-                <AnimatedMetric
-                  targetValue={50}
-                  suffix="+"
-                  decimals={0}
-                  duration={1800}
-                  className="font-heading text-2xl md:text-3xl font-bold text-[var(--color-text)] tracking-tight"
-                  ariaLabel="50+ Deployments"
-                />
-                <div className="text-[10px] sm:text-[11px] text-[var(--color-text-muted)] uppercase tracking-wider mt-0.5 font-normal">
-                  Deployments
-                </div>
-              </div>
-              <div className="border-l border-[var(--color-border)] pl-3">
-                <AnimatedMetric
-                  targetValue={17}
-                  suffix="M+"
-                  decimals={0}
-                  duration={1800}
-                  className="font-heading text-2xl md:text-3xl font-bold text-[var(--color-text)] tracking-tight"
-                  ariaLabel="17M+ Data Points Processed"
-                />
-                <div className="text-[10px] sm:text-[11px] text-[var(--color-text-muted)] uppercase tracking-wider mt-0.5 font-normal">
-                  Data Points Processed
-                </div>
-              </div>
-              <div className="col-span-2 sm:col-span-1 border-t sm:border-t-0 sm:border-l border-[var(--color-border)] pt-2.5 sm:pt-0 pl-0 sm:pl-3">
-                <AnimatedMetric
-                  targetValue={99.999}
-                  suffix="%"
-                  decimals={3}
-                  duration={1800}
-                  className="font-heading text-2xl md:text-3xl font-bold text-[var(--color-text)] tracking-tight"
-                  ariaLabel="99.999% System Uptime"
-                />
-                <div className="text-[10px] sm:text-[11px] text-[var(--color-text-muted)] uppercase tracking-wider mt-0.5 font-normal">
-                  System Uptime
-                </div>
-              </div>
-            </div>
           </div>
 
           {/* Right 3D Visual Column */}
-          <div className="lg:col-span-5 flex items-center justify-center relative w-full overflow-hidden py-4 lg:py-0">
-            <HeroCubeCluster className="w-full max-w-[280px] sm:max-w-[380px] aspect-square mx-auto" />
+          <div className="col-span-5 flex items-center justify-center relative w-full overflow-hidden py-2 sm:py-4 lg:py-0">
+            <HeroCubeCluster className="w-full max-w-[160px] sm:max-w-[280px] lg:max-w-[380px] aspect-square mx-auto pointer-events-none select-none" />
+          </div>
+
+          {/* System Proof Metrics Bar (Full Width Below 2-Column Canvas) */}
+          <div className="col-span-12 grid grid-cols-3 gap-2 sm:gap-4 p-2.5 sm:p-4 mt-2 home-card-surface border border-[var(--color-border)] w-full">
+            <div>
+              <AnimatedMetric
+                targetValue={50}
+                suffix="+"
+                decimals={0}
+                duration={1800}
+                className="font-heading text-lg sm:text-2xl md:text-3xl font-bold text-[var(--color-text)] tracking-tight"
+                ariaLabel="50+ Deployments"
+              />
+              <div className="text-[9px] sm:text-[11px] text-[var(--color-text-muted)] uppercase tracking-wider mt-0.5 font-normal truncate">
+                Deployments
+              </div>
+            </div>
+            <div className="border-l border-[var(--color-border)] pl-2 sm:pl-3">
+              <AnimatedMetric
+                targetValue={17}
+                suffix="M+"
+                decimals={0}
+                duration={1800}
+                className="font-heading text-lg sm:text-2xl md:text-3xl font-bold text-[var(--color-text)] tracking-tight"
+                ariaLabel="17M+ Data Points Processed"
+              />
+              <div className="text-[9px] sm:text-[11px] text-[var(--color-text-muted)] uppercase tracking-wider mt-0.5 font-normal truncate">
+                Data Streamed
+              </div>
+            </div>
+            <div className="border-l border-[var(--color-border)] pl-2 sm:pl-3">
+              <AnimatedMetric
+                targetValue={99.999}
+                suffix="%"
+                decimals={3}
+                duration={1800}
+                className="font-heading text-lg sm:text-2xl md:text-3xl font-bold text-[var(--color-text)] tracking-tight"
+                ariaLabel="99.999% System Uptime"
+              />
+              <div className="text-[9px] sm:text-[11px] text-[var(--color-text-muted)] uppercase tracking-wider mt-0.5 font-normal truncate">
+                Uptime SLA
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -218,7 +218,7 @@ export default function Home() {
         id="problems"
         data-scroll-label="SERVICES & BUSINESS PROBLEMS"
         aria-label="Services and Business Problems We Solve"
-        className="relative py-10 md:py-14 px-6 md:px-12 lg:px-16 border-b border-[var(--color-border)] bg-[var(--color-bg)]/85 backdrop-blur-sm overflow-hidden"
+        className="relative py-8 sm:py-10 md:py-14 px-4 sm:px-6 md:px-12 lg:px-16 border-b border-[var(--color-border)] bg-[var(--color-bg)]/85 backdrop-blur-sm overflow-hidden"
       >
         <div className="max-w-7xl mx-auto w-full relative z-10 space-y-6">
           
@@ -277,11 +277,11 @@ export default function Home() {
           {/* ======================================================== */}
           {/* 3. BUSINESS PROBLEMS CARDS */}
           {/* ======================================================== */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-4">
             {problems.map((prob) => (
               <div
                 key={prob.title}
-                className="p-4 border border-[var(--color-border)] home-card-surface hover:border-[var(--color-border-strong)] transition-all duration-300 flex flex-col justify-between"
+                className="p-3 sm:p-4 border border-[var(--color-border)] home-card-surface hover:border-[var(--color-border-strong)] transition-all duration-300 flex flex-col justify-between"
               >
                 <h3 className="font-heading text-sm sm:text-base font-bold uppercase tracking-tight text-[var(--color-text)] mb-3">
                   {prob.title}

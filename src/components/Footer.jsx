@@ -67,10 +67,10 @@ export default function Footer() {
 
   return (
     <footer className="relative z-10 border-t border-[var(--color-border)] bg-[var(--color-bg)]/95 backdrop-blur-md pt-8 pb-8 text-[var(--color-text)]">
-      <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-6 mb-6">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-12 lg:px-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-6 mb-6">
         
         {/* Column 1: Brand + Contact Info */}
-        <div className="lg:col-span-4 space-y-3">
+        <div className="lg:col-span-3 space-y-3">
           <Link to="/" className="inline-block mb-1">
             <Logo height={38} />
           </Link>
@@ -109,7 +109,7 @@ export default function Footer() {
         </div>
 
         {/* Column 2: Services Navigation */}
-        <div className="lg:col-span-2 lg:border-l lg:border-[var(--color-border)] lg:pl-6 border-b md:border-b-0 border-[var(--color-border)] pb-3 md:pb-0">
+        <div className="lg:col-span-3 lg:border-l lg:border-[var(--color-border)] lg:pl-6 border-b md:border-b-0 border-[var(--color-border)] pb-3 md:pb-0">
           <button
             type="button"
             onClick={() => toggleSection('services')}
@@ -118,10 +118,10 @@ export default function Footer() {
             <span>Services</span>
             <ChevronDown className={`w-4 h-4 md:hidden transition-transform ${openSection === 'services' ? 'rotate-180' : ''}`} />
           </button>
-          <ul className={`space-y-1.5 font-body text-[13px] md:text-sm ${openSection === 'services' ? 'block' : 'hidden md:block'}`}>
+          <ul className={`service-footer-list space-y-1.5 font-body text-[13px] md:text-sm ${openSection === 'services' ? 'block' : 'hidden md:block'}`}>
             {servicesList.map((item, idx) => (
               <li key={idx}>
-                <Link to={item.path} className="text-[var(--color-text-secondary)] hover:text-[var(--color-text)] transition-colors block py-0.5 md:py-0">
+                <Link to={item.path} className="text-[var(--color-text-secondary)] hover:text-[var(--color-text)] transition-colors block py-0.5 md:py-0 whitespace-nowrap overflow-hidden text-ellipsis max-w-full">
                   {item.name}
                 </Link>
               </li>
@@ -242,7 +242,7 @@ export default function Footer() {
       </div>
 
       {/* Bottom Legal & Copyright Strip */}
-      <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-16 pt-4 border-t border-[var(--color-border)] flex flex-col sm:flex-row items-center justify-between font-mono text-[11px] text-[var(--color-text-muted)] gap-2">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-12 lg:px-16 pt-4 border-t border-[var(--color-border)] flex flex-col sm:flex-row items-center justify-between font-mono text-[11px] text-[var(--color-text-muted)] gap-2">
         <div>
           &copy; 2026 SMRIKAAM Technologies LLP. All rights reserved.
         </div>

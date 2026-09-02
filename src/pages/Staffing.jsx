@@ -44,11 +44,11 @@ export default function Staffing() {
   ];
 
   return (
-    <div className="relative z-10 pt-28 pb-32 px-6 md:px-16 max-w-7xl mx-auto">
+    <div className="relative z-10 pt-20 sm:pt-28 pb-20 sm:pb-32 px-4 sm:px-6 md:px-16 max-w-7xl mx-auto">
       {/* Header Banner */}
       <div id="overview" data-scroll-label="STAFFING" className="relative mb-16">
         <DecorativeSideCubes leftSize={120} rightSize={140} leftTop="10%" rightTop="25%" />
-        <div className="page-title-surface relative z-10 border border-border p-8 md:p-12 overflow-hidden">
+        <div className="page-title-surface relative z-10 border border-border p-6 sm:p-8 md:p-12 overflow-hidden">
         <BannerDrawBorder />
         <div className="flex items-center justify-between mb-4">
           <div className="label-accent">
@@ -70,12 +70,12 @@ export default function Staffing() {
       </div>
       </div>
 
-      {/* Key Stats */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-16">
+      {/* Key Stats (Preserved 4-Column Strip) */}
+      <div className="grid grid-cols-4 gap-2 sm:gap-4 lg:gap-6 mb-12">
         {stats.map((s, idx) => (
-          <BlueprintWrapper key={idx} className="p-6 text-center">
-            <div className="font-heading font-bold text-3xl md:text-4xl text-accent mb-1">{s.num}</div>
-            <div className="type-meta">{s.label}</div>
+          <BlueprintWrapper key={idx} className="p-2 sm:p-4 lg:p-6 text-center">
+            <div className="font-heading font-bold text-base sm:text-2xl md:text-4xl text-accent mb-0.5 sm:mb-1">{s.num}</div>
+            <div className="text-[8px] sm:text-[10px] md:text-xs uppercase font-mono text-text-muted truncate">{s.label}</div>
           </BlueprintWrapper>
         ))}
       </div>
@@ -89,18 +89,18 @@ export default function Staffing() {
           ENGAGEMENT OPTIONS
         </h2>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div className="grid grid-cols-2 gap-3 sm:gap-6 lg:gap-8">
           {displayModels.map((m, idx) => (
-            <BlueprintWrapper key={idx} className="p-8 flex flex-col justify-between group hover:border-accent">
+            <BlueprintWrapper key={idx} className="p-3.5 sm:p-6 lg:p-8 flex flex-col justify-between group hover:border-accent">
               <div>
-                <h3 className="font-heading text-2xl font-bold uppercase text-text mb-2 group-hover:text-accent transition-colors">
+                <h3 className="font-heading text-xs sm:text-xl lg:text-2xl font-bold uppercase text-text mb-1 sm:mb-2 group-hover:text-accent transition-colors truncate">
                   {m.title}
                 </h3>
-                <p className="text-[15px] font-normal text-text-muted mb-4">
+                <p className="text-[10px] sm:text-xs lg:text-[15px] font-normal text-text-muted mb-2 sm:mb-4 line-clamp-2 sm:line-clamp-none">
                   {m.subtitle}
                 </p>
                 {m.desc && (
-                  <div className="text-[15px] font-normal text-text-muted leading-[1.65] mb-6">
+                  <div className="text-[10px] sm:text-xs lg:text-[15px] font-normal text-text-muted leading-relaxed sm:leading-[1.65] mb-3 sm:mb-6 line-clamp-3 sm:line-clamp-none">
                     <RichTextRenderer content={m.desc} />
                   </div>
                 )}
@@ -145,11 +145,11 @@ export default function Staffing() {
           FROM BRIEF TO ONBOARDED — IN 4 STEPS
         </h2>
 
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6">
           {processSteps.map((step, idx) => (
-            <BlueprintWrapper key={idx} className="p-6">
-              <div className="font-heading font-bold text-lg uppercase text-text mb-2">{step.name}</div>
-              <p className="text-[14px] md:text-[15px] font-normal text-text-muted leading-[1.6]">{step.desc}</p>
+            <BlueprintWrapper key={idx} className="p-3.5 sm:p-6">
+              <div className="font-heading font-bold text-xs sm:text-lg uppercase text-text mb-1 sm:mb-2 truncate">{step.name}</div>
+              <p className="text-[10px] sm:text-[14px] md:text-[15px] font-normal text-text-muted leading-tight sm:leading-[1.6] line-clamp-3 sm:line-clamp-none">{step.desc}</p>
             </BlueprintWrapper>
           ))}
         </div>

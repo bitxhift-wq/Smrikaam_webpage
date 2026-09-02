@@ -219,17 +219,42 @@ p.type-body {
 }
 
 /* =========================================================
-   JUSTIFIED EDITORIAL CONTENT
+   JUSTIFIED EDITORIAL CONTENT (DESKTOP MASTER)
+   LEFT-ALIGNED ON MOBILE (ELIMINATE GAPS & OVERFLOW)
    ========================================================= */
 
-.body-narrative,
-.detail-narrative,
-.cms-content p,
-.cms-paragraph,
-.editorial-copy,
-.prose p {
-  text-align: justify !important;
-  text-justify: inter-word;
+@media (min-width: 768px) {
+  .body-narrative,
+  .detail-narrative,
+  .cms-content p,
+  .cms-paragraph,
+  .editorial-copy,
+  .prose p {
+    text-align: justify !important;
+    text-justify: inter-word;
+  }
+}
+
+@media (max-width: 767px) {
+  .body-narrative,
+  .detail-narrative,
+  .cms-content p,
+  .cms-paragraph,
+  .editorial-copy,
+  .prose p,
+  .product-content p,
+  .product-text-justify,
+  .box-body,
+  .narrative-justified,
+  .service-narrative,
+  .product-narrative,
+  .industry-narrative,
+  .case-study-narrative {
+    text-align: left !important;
+    text-justify: auto !important;
+    word-break: break-word;
+    overflow-wrap: break-word;
+  }
 }
 
 /* Keep short content left aligned */
@@ -2370,12 +2395,6 @@ html.dark .tech-ribbon-container {
   user-select: none;
 }
 
-@media (max-width: 1024px) {
-  .smrikaam-core svg {
-    display: none;
-  }
-}
-
 /* ==========================================================================
    SMRIKAAM — GLOBAL CMS CONTENT RENDERER & SCROLLBAR STYLES
    ========================================================================== */
@@ -2599,28 +2618,36 @@ html.dark .section-separator {
   text-align: justify;
 }
 
-/* Universal Long-Form Descriptive Paragraph Justification */
-.cms-content p,
-.cms-paragraph,
-.body-narrative,
-.detail-narrative,
-.narrative-justified,
-.service-narrative,
-.product-narrative,
-.industry-narrative,
-.case-study-narrative {
-  text-align: justify;
-  text-justify: inter-word;
+/* Universal Long-Form Descriptive Paragraph Justification (Desktop Master) */
+@media (min-width: 768px) {
+  .cms-content p,
+  .cms-paragraph,
+  .body-narrative,
+  .detail-narrative,
+  .narrative-justified,
+  .service-narrative,
+  .product-narrative,
+  .industry-narrative,
+  .case-study-narrative {
+    text-align: justify;
+    text-justify: inter-word;
+  }
+
+  .problem-solution-copy p,
+  .problem-solution-copy .cms-content p,
+  .problem-solution-copy .cms-content .cms-paragraph {
+    font-size: 0.875rem;  /* 14px */
+    text-align: justify;
+  }
 }
 
-/* Uniform Problem/Solution content body */
-.problem-solution-copy p,
-.problem-solution-copy .cms-content p,
-.problem-solution-copy .cms-content .cms-paragraph {
-  font-size: 0.8125rem;  /* 13px */
-  line-height: 1.6;
-  font-weight: 400;
-  text-align: justify;
+@media (max-width: 767px) {
+  .problem-solution-copy p,
+  .problem-solution-copy .cms-content p,
+  .problem-solution-copy .cms-content .cms-paragraph {
+    font-size: 0.875rem;  /* 14px */
+    text-align: left !important;
+  }
 }
 
 @media (min-width: 768px) {
@@ -2692,9 +2719,11 @@ html, body, .app-root-overflow {
   #hero h1 {
     width: 100%;
     max-width: 100%;
-    font-size: clamp(30px, 9.5vw, 46px) !important;
-    line-height: 1.02 !important;
+    font-size: clamp(28px, 8.5vw, 42px) !important;
+    line-height: 1.04 !important;
     letter-spacing: -0.02em !important;
+    word-break: break-word;
+    overflow-wrap: break-word;
   }
 
   #hero p {
@@ -2702,6 +2731,17 @@ html, body, .app-root-overflow {
     max-width: 100% !important;
     font-size: 15px !important;
     line-height: 1.55 !important;
+  }
+
+  /* Form inputs: 16px prevents iOS Safari auto-zoom */
+  input[type="text"],
+  input[type="email"],
+  input[type="tel"],
+  input[type="password"],
+  input[type="number"],
+  select,
+  textarea {
+    font-size: 16px !important;
   }
 
   /* Prevent horizontal animation offset spillover while keeping GPU reveals 100% active */
@@ -2725,7 +2765,80 @@ html, body, .app-root-overflow {
   .subtle-readable-surface {
     max-width: 100% !important;
     overflow-x: hidden;
+    padding: 1.25rem !important;
   }
+}
+
+/* Fluid Detail Page Cover Images */
+.detail-cover-image {
+  height: 13rem;
+  width: 100%;
+  object-fit: cover;
+}
+@media (min-width: 640px) {
+  .detail-cover-image {
+    height: 17rem;
+  }
+}
+@media (min-width: 768px) {
+  .detail-cover-image {
+    height: 20rem;
+  }
+}
+
+/* Technical Section Label Standard Treatment (Services Reference Standard) */
+.tech-section-title,
+.smrikaam-section-title {
+  font-family: var(--sm-font-heading);
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  text-align: left;
+  margin-bottom: 0.75rem;
+}
+@media (min-width: 768px) {
+  .tech-section-title,
+  .smrikaam-section-title {
+    font-size: 1.125rem;
+  }
+}
+
+/* Mobile Horizontal Pill Scroller for Master-Detail Selector */
+.mobile-pill-scroll {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-border) transparent;
+  gap: 0.5rem;
+  padding-bottom: 0.5rem;
+  padding-right: 1.5rem;
+}
+.mobile-pill-scroll::-webkit-scrollbar {
+  height: 3px;
+}
+.mobile-pill-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+.mobile-pill-scroll::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: 2px;
+}
+.mobile-pill-scroll > * {
+  scroll-snap-align: start;
+  flex-shrink: 0;
+}
+
+/* Responsive Table & Code Block Wrappers */
+.cms-table-wrapper,
+.table-responsive {
+  max-width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  display: block;
 }
 
 /* TABLET RESPONSIVE SYSTEM (768px - 1023px) */
@@ -2743,6 +2856,183 @@ html, body, .app-root-overflow {
     transform: none !important;
   }
 }
+
+/* =========================================================
+   INTERNAL PAGES MOBILE TAB SELECTOR DROPDOWN (Products, Industries, Services)
+   Scoped strictly to .page-mobile-selector hierarchy — ZERO impact on Home
+   ========================================================= */
+
+.page-mobile-selector {
+  position: relative;
+  width: 100%;
+  box-sizing: border-box;
+  z-index: 40;
+  margin-bottom: 1.25rem;
+}
+
+.page-mobile-selector-trigger {
+  width: 100%;
+  min-height: 54px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px;
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  color: var(--color-text);
+  cursor: pointer;
+  box-sizing: border-box;
+  text-align: left;
+  border-radius: 0;
+  transition: border-color 180ms ease, background-color 180ms ease;
+}
+
+.page-mobile-selector-trigger:hover,
+.page-mobile-selector-trigger:focus-visible {
+  border-color: var(--color-border-strong);
+}
+
+.page-mobile-selector-current {
+  min-width: 0;
+  flex: 1;
+}
+
+.page-mobile-selector-title {
+  font-family: var(--sm-font-heading, 'Barlow Condensed', 'Inter', sans-serif);
+  font-size: 15px;
+  line-height: 1.15;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--color-text);
+  margin: 0;
+}
+
+.page-mobile-selector-description {
+  margin-top: 3px;
+  font-family: var(--sm-font-body, 'Inter', sans-serif);
+  font-size: 11px;
+  line-height: 1.35;
+  font-weight: 400;
+  color: var(--color-text-muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  margin-bottom: 0;
+}
+
+.page-mobile-selector-icon {
+  flex: 0 0 auto;
+  margin-left: 12px;
+  color: var(--color-accent);
+  transition: transform 180ms ease;
+}
+
+.page-mobile-selector.is-open .page-mobile-selector-icon {
+  transform: rotate(180deg);
+}
+
+.page-mobile-selector-menu {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  box-shadow: 0 14px 35px rgba(0, 0, 0, 0.16);
+  max-height: 55vh;
+  overflow-y: auto;
+  z-index: 100;
+  animation: pageMobileSelectorFade 180ms ease forwards;
+  box-sizing: border-box;
+}
+
+@keyframes pageMobileSelectorFade {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.page-mobile-selector-option {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 11px 14px;
+  border: 0;
+  border-bottom: 1px solid var(--color-border);
+  background: transparent;
+  color: var(--color-text);
+  text-align: left;
+  cursor: pointer;
+  box-sizing: border-box;
+  transition: background-color 150ms ease;
+}
+
+.page-mobile-selector-option:last-child {
+  border-bottom: 0;
+}
+
+.page-mobile-selector-option:hover,
+.page-mobile-selector-option:focus-visible {
+  background: var(--color-surface-subtle);
+}
+
+.page-mobile-selector-option[aria-selected="true"] {
+  background: color-mix(in srgb, var(--color-accent) 7%, transparent);
+}
+
+.page-mobile-selector-option[aria-selected="true"] .page-mobile-selector-option-title {
+  color: var(--color-accent);
+}
+
+.page-mobile-selector-option-title {
+  font-family: var(--sm-font-heading, 'Barlow Condensed', 'Inter', sans-serif);
+  font-size: 14px;
+  line-height: 1.15;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--color-text);
+  margin: 0;
+}
+
+.page-mobile-selector-option-description {
+  margin-top: 3px;
+  font-family: var(--sm-font-body, 'Inter', sans-serif);
+  font-size: 10px;
+  line-height: 1.35;
+  color: var(--color-text-muted);
+  margin-bottom: 0;
+}
+
+.page-mobile-selector-option-arrow {
+  flex: 0 0 auto;
+  font-size: 12px;
+  color: var(--color-accent);
+}
+
+/* Services list single-line nowrap rule */
+.service-footer-list a {
+  white-space: nowrap;
+  display: block;
+  width: max-content;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Detail Panel Scroll Offset (Accounts for Sticky Header) */
+.service-detail-panel {
+  scroll-margin-top: 96px;
+}
+
+
 
 
 

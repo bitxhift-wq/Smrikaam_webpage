@@ -174,7 +174,7 @@ export default function AdminLayout() {
       </aside>
 
       {/* Main Content Workspace */}
-      <main className="flex-grow p-6 md:p-10 overflow-y-auto bg-[#0b0e14] min-w-0">
+      <main className="flex-grow p-4 sm:p-6 md:p-10 overflow-y-auto bg-[#0b0e14] min-w-0 w-full max-w-full">
         <Outlet />
       </main>
     </div>

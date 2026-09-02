@@ -85,15 +85,15 @@ export default function BlogDetail() {
   }
 
   return (
-    <div className="relative z-10 pt-28 pb-24 px-6 md:px-16 max-w-4xl mx-auto">
+    <div className="relative z-10 pt-20 sm:pt-28 pb-16 sm:pb-24 px-4 sm:px-6 md:px-16 max-w-4xl mx-auto">
       <ReadingProgressBar />
 
-      <Link to="/blog" className="inline-flex items-center gap-2 text-xs text-accent uppercase mb-8 hover:underline font-semibold">
+      <Link to="/blog" className="inline-flex items-center gap-2 text-xs text-accent uppercase mb-6 sm:mb-8 hover:underline font-semibold min-h-[44px]">
         <ArrowLeft className="w-4 h-4" strokeWidth={1.5} /> Back to Journal
       </Link>
 
       <article id="overview" data-scroll-label="ARTICLE">
-        <BlueprintWrapper className="service-detail-surface p-8 md:p-12 mb-12">
+        <BlueprintWrapper className="service-detail-surface p-5 sm:p-8 md:p-12 mb-12">
           <div className="flex flex-wrap items-center gap-3 mb-4">
             {(post.category || post.category_id) && (
               <span className="tag tag-accent">{post.category || post.category_id}</span>
@@ -107,17 +107,17 @@ export default function BlogDetail() {
           <TextReveal
             text={post.title}
             as="h1"
-            className="font-heading text-3xl sm:text-5xl lg:text-6xl font-bold uppercase tracking-tight text-[var(--color-text)] mb-6 leading-[0.96]"
+            className="font-heading text-2xl sm:text-4xl lg:text-5xl font-bold uppercase tracking-tight text-[var(--color-text)] mb-6 leading-[1.02]"
           />
 
           {post.excerpt && (
-            <p className="text-[15px] sm:text-[16px] md:text-[18px] text-[var(--color-text-secondary)] font-normal border-l-2 border-[var(--color-accent)] pl-4 mb-8 leading-[1.6]">
+            <p className="text-[15px] sm:text-[16px] md:text-[18px] text-[var(--color-text-secondary)] font-normal border-l-2 border-[var(--color-accent)] pl-4 mb-8 text-left leading-[1.6]">
               {post.excerpt}
             </p>
           )}
 
           {post.cover_image_url && (
-            <Reveal className="mb-10 overflow-hidden border border-border h-80 relative bg-black/5 dark:bg-white/5">
+            <Reveal className="mb-10 overflow-hidden border border-border h-48 sm:h-64 md:h-80 relative bg-black/5 dark:bg-white/5">
               <img src={post.cover_image_url} alt={post.title} className="w-full h-full object-cover" />
             </Reveal>
           )}
@@ -126,7 +126,7 @@ export default function BlogDetail() {
           {post.content && (
             <div id="content" data-scroll-label="INSIGHTS">
               <Reveal className="mb-12">
-                <div className="type-body text-[15px] md:text-[15px] font-normal text-text-muted leading-[1.65] text-justify">
+                <div className="type-body text-[15px] md:text-[15px] font-normal text-text-muted leading-[1.65] text-left md:text-justify">
                   <RichTextRenderer content={post.content} />
                 </div>
               </Reveal>

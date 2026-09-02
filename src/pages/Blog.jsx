@@ -20,11 +20,11 @@ export default function Blog() {
   const loading = !isLoaded;
 
   return (
-    <div className="relative z-10 pt-28 pb-32 px-6 md:px-16 max-w-7xl mx-auto">
+    <div className="relative z-10 pt-20 sm:pt-28 pb-20 sm:pb-32 px-4 sm:px-6 md:px-16 max-w-7xl mx-auto">
       {/* Header Banner */}
       <div id="overview" data-scroll-label="INSIGHTS" className="relative mb-16">
         <DecorativeSideCubes leftSize={120} rightSize={140} leftTop="10%" rightTop="25%" />
-        <div className="page-title-surface relative z-10 border border-border p-8 md:p-12 overflow-hidden">
+        <div className="page-title-surface relative z-10 border border-border p-6 sm:p-8 md:p-12 overflow-hidden">
         <BannerDrawBorder />
         <div className="flex items-center justify-between mb-4">
           <div className="font-mono text-[10px] md:text-[11px] text-[var(--color-accent)] uppercase tracking-[0.2em] font-semibold">
@@ -51,35 +51,35 @@ export default function Blog() {
       ) : posts.length === 0 ? (
         <div className="font-mono text-sm text-text-muted py-12 text-center">NO_PUBLISHED_POSTS_FOUND</div>
       ) : (
-        <div id="articles" data-scroll-label="ARTICLES" className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div id="articles" data-scroll-label="ARTICLES" className="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-8">
           {posts.map((post, idx) => (
             <Reveal key={post.id} index={idx}>
-              <BlueprintWrapper className="card group hover:border-accent h-full">
+              <BlueprintWrapper className="card group hover:border-accent h-full p-3.5 sm:p-6">
                 {post.cover_image_url && (
-                  <div className="overflow-hidden border-b border-border mb-6 -mx-6 -mt-6 h-56 relative bg-black/5 dark:bg-white/5">
+                  <div className="overflow-hidden border-b border-border mb-3 sm:mb-6 -mx-3.5 -mt-3.5 sm:-mx-6 sm:-mt-6 h-32 sm:h-56 relative bg-black/5 dark:bg-white/5">
                     <img src={post.cover_image_url} alt={post.title} className="w-full h-full object-cover duotone" />
                     {post.category_id && (
-                      <div className="absolute top-4 left-4 bg-white/90 dark:bg-bg/90 border border-border px-3 py-1 font-mono text-[13px] text-accent font-medium backdrop-blur-sm">
+                      <div className="absolute top-2 left-2 sm:top-4 sm:left-4 bg-white/90 dark:bg-bg/90 border border-border px-1.5 sm:px-3 py-0.5 sm:py-1 font-mono text-[9px] sm:text-[13px] text-accent font-medium backdrop-blur-sm">
                         {post.category_id}
                       </div>
                     )}
                   </div>
                 )}
-                <div className="card-kicker font-mono text-[13px] font-medium text-accent uppercase tracking-[0.18em]">ARTICLE • {post.slug}</div>
-                <h2 className="card-title text-xl md:text-2xl font-semibold uppercase group-hover:text-accent transition-colors">
+                <div className="card-kicker font-mono text-[9px] sm:text-[13px] font-medium text-accent uppercase tracking-[0.18em] truncate">ARTICLE • {post.slug}</div>
+                <h2 className="card-title text-xs sm:text-xl md:text-2xl font-semibold uppercase group-hover:text-accent transition-colors line-clamp-2 mt-1">
                   {post.title}
                 </h2>
                 {post.excerpt && (
-                  <div className="card-body text-[15px] font-normal text-text-muted leading-[1.55] mb-6">
+                  <div className="card-body text-[10px] sm:text-[15px] font-normal text-text-muted leading-tight sm:leading-[1.55] mb-2 sm:mb-6 line-clamp-2">
                     <RichTextRenderer content={post.excerpt} />
                   </div>
                 )}
 
-                <div className="card-meta text-[14px]">
-                  <Link to={`/blog/${post.slug}`} className="btn btn-ghost p-0 text-accent font-mono text-[14px] uppercase font-medium flex items-center gap-1">
-                    Read Article <ArrowRight className="w-3.5 h-3.5" strokeWidth={1.5} />
+                <div className="card-meta text-[10px] sm:text-[14px] flex items-center justify-between mt-auto pt-2 border-t border-border">
+                  <Link to={`/blog/${post.slug}`} className="btn btn-ghost p-0 text-accent font-mono text-[10px] sm:text-[14px] uppercase font-medium flex items-center gap-1">
+                    Read <ArrowRight className="w-3 h-3 sm:w-3.5 sm:h-3.5" strokeWidth={1.5} />
                   </Link>
-                  <span className="font-normal text-text-muted">{post.published_at ? new Date(post.published_at).toLocaleDateString() : 'RECENT'}</span>
+                  <span className="font-normal text-text-muted text-[9px] sm:text-xs">{post.published_at ? new Date(post.published_at).toLocaleDateString() : 'RECENT'}</span>
                 </div>
               </BlueprintWrapper>
             </Reveal>

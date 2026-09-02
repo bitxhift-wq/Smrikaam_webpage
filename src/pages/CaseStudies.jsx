@@ -20,11 +20,11 @@ export default function CaseStudies() {
   const loading = !isLoaded;
 
   return (
-    <div className="relative z-10 pt-28 pb-32 px-6 md:px-16 max-w-7xl mx-auto">
+    <div className="relative z-10 pt-20 sm:pt-28 pb-20 sm:pb-32 px-4 sm:px-6 md:px-16 max-w-7xl mx-auto">
       {/* Header Banner */}
       <div id="overview" data-scroll-label="CASE STUDIES" className="relative mb-16">
         <DecorativeSideCubes leftSize={120} rightSize={140} leftTop="10%" rightTop="25%" />
-        <div className="page-title-surface relative z-10 border border-border p-8 md:p-12 overflow-hidden">
+        <div className="page-title-surface relative z-10 border border-border p-6 sm:p-8 md:p-12 overflow-hidden">
         <BannerDrawBorder />
         <div className="flex items-center justify-between mb-4">
           <div className="font-mono text-[10px] md:text-[11px] text-[var(--color-accent)] uppercase tracking-[0.2em] font-semibold">
@@ -56,7 +56,7 @@ export default function CaseStudies() {
 
             return (
               <Reveal key={cs.id || cs.slug || idx} index={idx}>
-                <BlueprintWrapper className="p-8 hover:border-accent transition-colors">
+                <BlueprintWrapper className="p-4 sm:p-8 hover:border-accent transition-colors">
                   <div className="flex flex-wrap items-center justify-between gap-4 mb-6 border-b border-border pb-4">
                     <div>
                       <span className="tag tag-accent mb-2">{cs.industry || 'MANUFACTURING'}</span>
@@ -71,7 +71,7 @@ export default function CaseStudies() {
                     )}
                   </div>
 
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                  <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6 mb-8">
                     {/* Industry & Client */}
                     <div className="subtle-readable-surface p-5 border border-border flex flex-col justify-between">
                       <div>
@@ -88,7 +88,7 @@ export default function CaseStudies() {
                       <h3 className="font-heading text-base md:text-lg font-bold tracking-tight uppercase text-accent mb-2 text-left">
                         CHALLENGE
                       </h3>
-                      <div className="text-[14px] md:text-[15px] text-text-muted leading-[1.65] font-normal text-justify">
+                      <div className="text-[14px] md:text-[15px] text-text-muted leading-[1.65] font-normal text-left md:text-justify">
                         <RichTextRenderer content={cs.challenge} />
                       </div>
                     </div>
@@ -98,7 +98,7 @@ export default function CaseStudies() {
                       <h3 className="font-heading text-base md:text-lg font-bold tracking-tight uppercase text-accent mb-2 text-left">
                         SMRIKAAM SOLUTION
                       </h3>
-                      <div className="text-[14px] md:text-[15px] text-text font-normal leading-[1.65] text-justify">
+                      <div className="text-[14px] md:text-[15px] text-text font-normal leading-[1.65] text-left md:text-justify">
                         <RichTextRenderer content={cs.solution} />
                       </div>
                     </div>

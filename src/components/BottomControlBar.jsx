@@ -59,7 +59,7 @@ export default function BottomControlBar() {
 
   return (
     <aside
-      className="fixed bottom-4 right-4 sm:bottom-6 sm:right-8 z-40"
+      className="hidden sm:block fixed bottom-4 right-4 sm:bottom-6 sm:right-8 z-40"
       aria-label="Social Media Links"
     >
       <div className="flex items-center gap-1 p-1.5 rounded-full bg-white/92 dark:bg-[#0f0f0f]/92 backdrop-blur-md border border-black/10 dark:border-white/15 shadow-xl transition-all duration-300">

@@ -1515,6 +1515,14 @@
   ],
   "activityLogs": [
     {
+      "id": "log_1788347089462_63bx",
+      "date": "2 SEP",
+      "title": "New Engagement Inquiry: APEX",
+      "description": "MUKHESH S (smukhesh11@gmail.com) - Technology Transformation",
+      "type": "engagement",
+      "timestamp": "2026-09-02T11:04:49.462Z"
+    },
+    {
       "id": "log_1788169814536_zegz",
       "date": "31 AUG",
       "title": "Updated industrie: \"Oil & Gas\"",
@@ -1940,5 +1948,6 @@
       "updated_at": "2026-08-01T00:00:00.000Z",
       "published_at": "2026-08-01T00:00:00.000Z"
     }
-  ]
+  ],
+  "engagements": []
 }

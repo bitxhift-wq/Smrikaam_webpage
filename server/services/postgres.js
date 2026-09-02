@@ -276,6 +276,18 @@ class PostgresService {
           value JSONB DEFAULT '{}'::jsonb,
           updated_at TIMESTAMPTZ DEFAULT NOW()
         );
+
+        CREATE TABLE IF NOT EXISTS engagements (
+          id VARCHAR(64) PRIMARY KEY,
+          full_name VARCHAR(255) NOT NULL,
+          company_name VARCHAR(255) NOT NULL,
+          email VARCHAR(255) NOT NULL,
+          phone VARCHAR(64),
+          requirement_type VARCHAR(255) NOT NULL,
+          message TEXT NOT NULL,
+          status VARCHAR(32) DEFAULT 'unread',
+          created_at TIMESTAMPTZ DEFAULT NOW()
+        );
       `);
 
       console.log('✓ PostgreSQL tables initialization complete.');

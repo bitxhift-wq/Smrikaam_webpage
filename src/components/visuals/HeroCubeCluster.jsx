@@ -70,8 +70,9 @@ export default function HeroCubeCluster({ className = '' }) {
       let x3 = x1 * cosZ - y2 * sinZ;
       let y3 = x1 * sinZ + y2 * cosZ;
 
-      // Perspective Projection
-      const fov = 450;
+      // Perspective Projection with Responsive Viewport Scaling
+      const viewportFactor = Math.min(1, Math.max(0.65, Math.min(width, height) / 480));
+      const fov = 450 * viewportFactor;
       const distance = 400;
       const scale = fov / (distance + z2);
 
