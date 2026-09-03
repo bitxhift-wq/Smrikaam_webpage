@@ -132,7 +132,7 @@ export default function CaseStudyDetail() {
                 <h3 className="font-heading text-base md:text-lg font-bold tracking-tight uppercase text-accent mb-3 text-left">
                   THE SMRIKAAM SOLUTION
                 </h3>
-                <div className="text-[14px] md:text-[15px] font-normal text-text leading-[1.6] text-left md:text-justify bg-accent/5 p-4 sm:p-6 border border-accent/30">
+                <div className="text-[14px] md:text-[15px] font-normal text-text leading-[1.6] text-left md:text-justify">
                   <RichTextRenderer content={caseStudy.solution} />
                 </div>
               </Reveal>

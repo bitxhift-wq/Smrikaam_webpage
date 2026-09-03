@@ -71,57 +71,66 @@ export default function CaseStudies() {
                     )}
                   </div>
 
-                  <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6 mb-8">
-                    {/* Industry & Client */}
-                    <div className="subtle-readable-surface p-5 border border-border flex flex-col justify-between">
+                  {/* Inline Editorial Specification Layout */}
+                  <div className="mb-6 border-b border-border">
+                    {/* Row 1: INDUSTRY & DOMAIN */}
+                    <div className="grid grid-cols-1 md:grid-cols-[220px_1fr] gap-3 md:gap-8 py-5 border-t border-border">
+                      <h3 className="font-heading text-base md:text-lg font-bold tracking-tight uppercase text-accent text-left">
+                        INDUSTRY &amp; DOMAIN
+                      </h3>
                       <div>
-                        <h3 className="font-heading text-base md:text-lg font-bold tracking-tight uppercase text-accent mb-2 text-left">
-                          INDUSTRY &amp; DOMAIN
-                        </h3>
-                        <p className="text-[15px] font-medium text-text">{cs.client_name || 'Enterprise Client'}</p>
+                        <p className="text-[15px] md:text-[16px] font-medium text-text">
+                          {cs.client_name || 'Enterprise Client'}
+                        </p>
+                        <span className="text-[13px] text-text-muted font-normal">
+                          {cs.industry}
+                        </span>
                       </div>
-                      <span className="text-[13px] text-text-muted font-normal mt-2">{cs.industry}</span>
                     </div>
 
-                    {/* Challenge */}
-                    <div className="subtle-readable-surface p-5 border border-border">
-                      <h3 className="font-heading text-base md:text-lg font-bold tracking-tight uppercase text-accent mb-2 text-left">
+                    {/* Row 2: CHALLENGE */}
+                    <div className="grid grid-cols-1 md:grid-cols-[220px_1fr] gap-3 md:gap-8 py-5 border-t border-border">
+                      <h3 className="font-heading text-base md:text-lg font-bold tracking-tight uppercase text-accent text-left">
                         CHALLENGE
                       </h3>
-                      <div className="text-[14px] md:text-[15px] text-text-muted leading-[1.65] font-normal text-left md:text-justify">
+                      <div className="text-[15px] md:text-[16px] text-text font-normal leading-[1.65] text-left md:text-justify">
                         <RichTextRenderer content={cs.challenge} />
                       </div>
                     </div>
 
-                    {/* Solution */}
-                    <div className="bg-accent/5 p-5 border border-accent/30">
-                      <h3 className="font-heading text-base md:text-lg font-bold tracking-tight uppercase text-accent mb-2 text-left">
+                    {/* Row 3: SMRIKAAM SOLUTION */}
+                    <div className="grid grid-cols-1 md:grid-cols-[220px_1fr] gap-3 md:gap-8 py-5 border-t border-border">
+                      <h3 className="font-heading text-base md:text-lg font-bold tracking-tight uppercase text-accent text-left">
                         SMRIKAAM SOLUTION
                       </h3>
-                      <div className="text-[14px] md:text-[15px] text-text font-normal leading-[1.65] text-left md:text-justify">
+                      <div className="text-[15px] md:text-[16px] text-text font-normal leading-[1.65] text-left md:text-justify">
                         <RichTextRenderer content={cs.solution} />
                       </div>
                     </div>
 
-                    {/* Result */}
-                    <div className="subtle-readable-surface p-5 border border-border flex flex-col justify-between">
+                    {/* Row 4: RESULT & METRICS */}
+                    <div className="grid grid-cols-1 md:grid-cols-[220px_1fr] gap-3 md:gap-8 py-5 border-t border-border">
+                      <h3 className="font-heading text-base md:text-lg font-bold tracking-tight uppercase text-accent text-left">
+                        RESULT &amp; METRICS
+                      </h3>
                       <div>
-                        <h3 className="font-heading text-base md:text-lg font-bold tracking-tight uppercase text-accent mb-2 text-left">
-                          RESULT &amp; METRICS
-                        </h3>
                         {rawOutcomes.length > 0 ? (
-                          <div className="space-y-2 mt-1">
+                          <div className="flex flex-wrap items-baseline gap-x-6 gap-y-2">
                             {rawOutcomes.map((out, i) => (
-                              <div key={i} className="border-l-2 border-accent pl-2.5">
-                                <div className="font-heading text-lg md:text-xl font-bold text-accent">{out.metric}</div>
-                                <div className="text-[12px] text-text-muted font-normal leading-tight">{out.label}</div>
+                              <div key={i} className="flex flex-wrap items-baseline gap-x-2 gap-y-1">
+                                <span className="font-heading text-lg md:text-xl font-bold text-accent">{out.metric}</span>
+                                <span className="text-[13px] text-text-muted font-normal">{out.label}</span>
+                                {i < rawOutcomes.length - 1 && (
+                                  <span className="text-text-muted font-normal text-xs select-none ml-3" aria-hidden="true">·</span>
+                                )}
                               </div>
                             ))}
                           </div>
                         ) : (
-                          <div className="border-l-2 border-accent pl-2.5 mt-1">
-                            <div className="font-heading text-lg font-bold text-accent">35% Downtime Reduction</div>
-                            <div className="text-[12px] text-text-muted font-normal">99.999% Platform Uptime SLA</div>
+                          <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
+                            <span className="font-heading text-lg md:text-xl font-bold text-accent">35% Downtime Reduction</span>
+                            <span className="text-text-muted font-normal text-xs select-none" aria-hidden="true">·</span>
+                            <span className="text-[13px] text-text-muted font-normal">99.999% Platform Uptime SLA</span>
                           </div>
                         )}
                       </div>
@@ -129,7 +138,7 @@ export default function CaseStudies() {
                   </div>
 
                   {/* 5. Technology & Links */}
-                  <div className="pt-4 border-t border-border flex flex-wrap items-center justify-between gap-4">
+                  <div className="pt-4 flex flex-wrap items-center justify-between gap-4">
                     <div className="flex flex-wrap items-center gap-2">
                       <span className="font-mono text-[11px] font-semibold uppercase tracking-[0.18em] text-accent">STACK:</span>
                       {technologies.map((tech, i) => (
@@ -138,9 +147,9 @@ export default function CaseStudies() {
                         </span>
                       ))}
                     </div>
-                    <Link to={`/case-studies/${cs.slug || cs.id}`} className="btn btn-primary text-xs font-semibold uppercase tracking-wider">
+                    <Link to={`/case-studies/${cs.slug || cs.id}`} className="btn btn-primary text-xs font-semibold uppercase tracking-wider shrink-0 w-full sm:w-auto text-center justify-center">
                       <span>View Full Specification</span>
-                      <ArrowUpRight className="w-4 h-4 ml-1" />
+                      <ArrowUpRight className="w-4 h-4 ml-1 inline" />
                     </Link>
                   </div>
                 </BlueprintWrapper>
