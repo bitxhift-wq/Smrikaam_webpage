@@ -211,7 +211,7 @@ export default function BookCallModal() {
                       required
                       value={formData.company}
                       onChange={handleChange}
-                      placeholder="e.g. Apex Enterprise Systems"
+                      placeholder="e.g. Apex Enterprise"
                       className="input has-icon-left h-10 w-full text-xs bg-[var(--color-bg)] border border-[var(--color-border)] text-[var(--color-text)] focus:border-[var(--color-accent)] focus:outline-none transition-colors"
                     />
                   </div>
@@ -231,7 +231,7 @@ export default function BookCallModal() {
                       required
                       value={formData.email}
                       onChange={handleChange}
-                      placeholder="ananya@apexenterprise.com"
+                      placeholder="ananya@company.com"
                       className="input has-icon-left h-10 w-full text-xs bg-[var(--color-bg)] border border-[var(--color-border)] text-[var(--color-text)] focus:border-[var(--color-accent)] focus:outline-none transition-colors"
                     />
                   </div>
@@ -269,7 +269,7 @@ export default function BookCallModal() {
                       name="jobTitle"
                       value={formData.jobTitle}
                       onChange={handleChange}
-                      placeholder="VP Engineering / CTO / Head of Data"
+                      placeholder="e.g. CTO / Lead Architect"
                       className="input has-icon-left h-10 w-full text-xs bg-[var(--color-bg)] border border-[var(--color-border)] text-[var(--color-text)] focus:border-[var(--color-accent)] focus:outline-none transition-colors"
                     />
                   </div>
