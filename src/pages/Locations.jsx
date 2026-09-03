@@ -7,6 +7,7 @@ import TextReveal from '../components/anim/TextReveal';
 import BannerDrawBorder from '../components/anim/BannerDrawBorder';
 import Reveal from '../components/anim/Reveal';
 import RichTextRenderer from '../components/RichTextRenderer';
+import PageCTA from '../components/PageCTA';
 import DecorativeSideCubes from '../components/visuals/DecorativeSideCubes';
 
 export default function Locations() {
@@ -59,21 +60,21 @@ export default function Locations() {
         <div className="page-title-surface relative z-10 border border-border p-6 sm:p-8 md:p-12 overflow-hidden">
         <BannerDrawBorder />
         <div className="flex items-center justify-between mb-4">
-          <div className="label-accent">
-            GLOBAL HEADQUARTERS
+          <div className="font-mono text-[10px] md:text-[11px] text-[var(--color-accent)] uppercase tracking-[0.2em] font-semibold">
+            GLOBAL DELIVERY CENTERS
           </div>
-          <div className="type-meta border border-[var(--color-border)] px-3 py-1 bg-black/[0.02] dark:bg-white/[0.03]">
-            COIMBATORE, INDIA
+          <div className="font-mono text-[10px] md:text-[11px] text-[var(--color-text-muted)] border border-[var(--color-border)] px-3 py-1 bg-black/[0.02] dark:bg-white/[0.03]">
+            COIMBATORE HQ
           </div>
         </div>
 
         <TextReveal
-          text="ENGINEERING INTELLIGENCE FROM COIMBATORE."
+          text="HEADQUARTERS & ENGINEERING LABS."
           as="h1"
           className="font-heading text-3xl sm:text-5xl lg:text-6xl font-bold uppercase tracking-tight text-[var(--color-text)] leading-[0.96] mb-4"
         />
         <p className="text-[15px] sm:text-[16px] md:text-[18px] text-[var(--color-text-secondary)] max-w-3xl border-l-2 border-[var(--color-accent)] pl-4 font-normal leading-[1.6]">
-          Headquartered in Coimbatore, Tamil Nadu, India, SMRIKAAM Technologies LLP delivers production-grade Data, AI, Industrial IoT, and Cloud engineering solutions to enterprise clients worldwide.
+          Our engineering headquarters houses core technology teams, R&D labs, and testing infrastructure for IIoT and enterprise AI systems.
         </p>
       </div>
       </div>
@@ -240,22 +241,13 @@ export default function Locations() {
       </div>
 
       {/* CTA */}
-      <Reveal index={4}>
-        <div id="cta" data-scroll-label="STRATEGY CALL">
-          <BlueprintWrapper className="p-6 sm:p-8 md:p-12 text-center bg-bg/95 backdrop-blur-md">
-            <div className="label-accent mb-2">ENGAGE ENGINEERS</div>
-            <h2 className="font-heading text-2xl md:text-3xl font-bold uppercase text-text mb-4">
-              VISIT OR CONNECT WITH OUR COIMBATORE TEAM
-            </h2>
-            <p className="text-text-muted text-[15px] font-normal max-w-xl mx-auto mb-8 leading-[1.65]">
-              Whether you want to test hardware in our IIoT lab or plan an enterprise cloud data lakehouse, our engineering leads are ready.
-            </p>
-            <Link to="/contact" className="btn btn-primary font-semibold uppercase tracking-wider text-[14px]">
-              SCHEDULE A SESSION <ArrowUpRight className="w-4 h-4 ml-1" strokeWidth={1.5} />
-            </Link>
-          </BlueprintWrapper>
-        </div>
-      </Reveal>
+      <PageCTA
+        eyebrow="DELIVERY CENTERS"
+        title="VISIT OR CONNECT WITH OUR COIMBATORE TEAM"
+        description="Whether you want to test hardware in our IIoT lab or plan an enterprise cloud data lakehouse, our engineering leads are ready."
+        buttonText="SCHEDULE A SESSION"
+        buttonLink="/contact"
+      />
     </div>
   );
 }

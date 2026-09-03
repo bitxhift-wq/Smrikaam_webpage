@@ -27,12 +27,12 @@ export default function PageHeaderSurface({
       {(eyebrow || badge) && (
         <div className="flex flex-wrap items-center justify-between gap-3 mb-4">
           {eyebrow && (
-            <div className="text-[10px] md:text-[11px] text-[var(--color-accent)] uppercase tracking-[0.2em] font-semibold">
+            <div className="font-mono text-[10px] md:text-[11px] text-[var(--color-accent)] uppercase tracking-[0.2em] font-semibold">
               {eyebrow}
             </div>
           )}
           {badge && (
-            <div className="text-[10px] md:text-[11px] text-[var(--color-text-muted)] border border-[var(--color-border)] px-3 py-1 bg-black/[0.02] dark:bg-white/[0.03] font-normal">
+            <div className="font-mono text-[10px] md:text-[11px] text-[var(--color-text-muted)] border border-[var(--color-border)] px-3 py-1 bg-black/[0.02] dark:bg-white/[0.03] font-normal">
               {badge}
             </div>
           )}

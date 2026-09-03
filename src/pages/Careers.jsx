@@ -6,6 +6,7 @@ import TextReveal from '../components/anim/TextReveal';
 import BannerDrawBorder from '../components/anim/BannerDrawBorder';
 import Reveal from '../components/anim/Reveal';
 import DecorativeSideCubes from '../components/visuals/DecorativeSideCubes';
+import PageCTA from '../components/PageCTA';
 
 export default function Careers() {
   const perks = [
@@ -40,21 +41,21 @@ export default function Careers() {
         <div className="page-title-surface relative z-10 border border-border p-6 sm:p-8 md:p-12 overflow-hidden">
           <BannerDrawBorder />
           <div className="flex items-center justify-between mb-4">
-            <div className="label-accent">
-              CAREERS &amp; ENGINEERING OPPORTUNITIES
+            <div className="font-mono text-[10px] md:text-[11px] text-[var(--color-accent)] uppercase tracking-[0.2em] font-semibold">
+              BUILD WITH US
             </div>
-            <div className="type-meta border border-[var(--color-border)] px-3 py-1 bg-black/[0.02] dark:bg-white/[0.03]">
+            <div className="font-mono text-[10px] md:text-[11px] text-[var(--color-text-muted)] border border-[var(--color-border)] px-3 py-1 bg-black/[0.02] dark:bg-white/[0.03]">
               COIMBATORE &amp; REMOTE
             </div>
           </div>
 
           <TextReveal
-            text="BUILD WHAT'S NEXT WITH SMRIKAAM."
+            text="ENGINEERS. ARCHITECTS. PROBLEM SOLVERS."
             as="h1"
             className="font-heading text-3xl sm:text-5xl lg:text-6xl font-bold uppercase tracking-tight text-[var(--color-text)] leading-[0.96] mb-4"
           />
           <p className="text-[15px] sm:text-[16px] md:text-[18px] text-[var(--color-text-secondary)] max-w-3xl border-l-2 border-[var(--color-accent)] pl-4 font-normal leading-[1.6]">
-            Work on Industrial IoT platforms, enterprise AI systems, cloud analytics, machine learning pipelines, and next-generation operational intelligence solutions for real-world clients.
+            Join a technology organization building production-grade systems across data, AI, cloud, IIoT, and security.
           </p>
         </div>
       </div>
@@ -238,17 +239,13 @@ export default function Careers() {
       </div>
 
       {/* CTA */}
-      <BlueprintWrapper className="p-6 sm:p-8 md:p-12 text-center bg-bg/95 backdrop-blur-md">
-        <h2 className="font-heading text-2xl md:text-3xl font-bold uppercase text-text mb-4">
-          READY TO BUILD WHAT'S NEXT?
-        </h2>
-        <p className="text-text-muted text-[15px] font-normal max-w-xl mx-auto mb-8 leading-[1.65]">
-          Join SMRIKAAM Technologies and help shape the future of Industrial AI, operational intelligence, and enterprise automation.
-        </p>
-        <Link to="/contact" className="btn btn-primary font-semibold uppercase tracking-wider text-[14px]">
-          Apply Now <ArrowUpRight className="w-4 h-4 ml-1" strokeWidth={1.5} />
-        </Link>
-      </BlueprintWrapper>
+      <PageCTA
+        eyebrow="CAREERS &amp; OPPORTUNITIES"
+        title="READY TO BUILD WHAT'S NEXT?"
+        description="Join SMRIKAAM Technologies and help shape the future of Industrial AI, operational intelligence, and enterprise automation."
+        buttonText="APPLY NOW"
+        buttonLink="/contact"
+      />
     </div>
   );
 }

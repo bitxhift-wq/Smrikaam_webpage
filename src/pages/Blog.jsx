@@ -8,6 +8,7 @@ import BannerDrawBorder from '../components/anim/BannerDrawBorder';
 import Reveal from '../components/anim/Reveal';
 import RichTextRenderer from '../components/RichTextRenderer';
 import DecorativeSideCubes from '../components/visuals/DecorativeSideCubes';
+import PageCTA from '../components/PageCTA';
 
 export default function Blog() {
   const { posts: rawPosts, isLoaded } = useCMS() || {};
@@ -28,7 +29,7 @@ export default function Blog() {
         <BannerDrawBorder />
         <div className="flex items-center justify-between mb-4">
           <div className="font-mono text-[10px] md:text-[11px] text-[var(--color-accent)] uppercase tracking-[0.2em] font-semibold">
-            JOURNAL &amp; ENGINEERING ARCHITECTURE
+            TECHNOLOGY INSIGHTS
           </div>
           <div className="font-mono text-[10px] md:text-[11px] text-[var(--color-text-muted)] border border-[var(--color-border)] px-3 py-1 bg-black/[0.02] dark:bg-white/[0.03]">
             ARTICLES
@@ -86,6 +87,15 @@ export default function Blog() {
           ))}
         </div>
       )}
+
+      {/* End CTA */}
+      <PageCTA
+        eyebrow="TECHNOLOGY INSIGHTS"
+        title="WANT TO DISCUSS AN ARCHITECTURE PATTERN?"
+        description="Book a technical session to discuss system blueprints, IIoT telemetry, and enterprise AI implementations."
+        buttonText="BOOK STRATEGY CALL"
+        buttonLink="/contact"
+      />
     </div>
   );
 }

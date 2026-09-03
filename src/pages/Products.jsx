@@ -11,6 +11,7 @@ import Reveal from '../components/anim/Reveal';
 import RichTextRenderer from '../components/RichTextRenderer';
 import DecorativeSideCubes from '../components/visuals/DecorativeSideCubes';
 import MobileTabSelector from '../components/MobileTabSelector';
+import PageCTA from '../components/PageCTA';
 
 function parseBulletPoints(data) {
   if (!data) return [];
@@ -158,21 +159,21 @@ export default function Products() {
           <BannerDrawBorder />
           <div className="flex items-center justify-between mb-4">
             <div className="font-mono text-[10px] md:text-[11px] text-[var(--color-accent)] uppercase tracking-[0.2em] font-semibold">
-              CORE ASSETS
+              PROPRIETARY ENGINEERING ASSETS
             </div>
             <div className="font-mono text-[10px] md:text-[11px] text-[var(--color-text-muted)] border border-[var(--color-border)] px-3 py-1 bg-black/[0.02] dark:bg-white/[0.03]">
-              ENGINEERED PRODUCTS
+              ACCELERATOR ASSETS
             </div>
           </div>
 
           <TextReveal
-            text="ENGINEERED PRODUCTS &amp; REUSABLE ASSETS"
+            text="REUSABLE SYSTEMS. ACCELERATED DELIVERY."
             as="h1"
             className="font-heading text-3xl sm:text-5xl lg:text-6xl font-bold uppercase tracking-tight text-[var(--color-text)] leading-[0.96] mb-4 max-w-5xl"
           />
 
           <p className="text-[15px] sm:text-[16px] md:text-[18px] text-[var(--color-text-secondary)] max-w-3xl font-normal leading-[1.6] border-l-2 border-[var(--color-accent)] pl-4 text-left">
-            SMRIKAAM proprietary engineering assets and reusable accelerators reduce enterprise deployment timelines by up to 60%.
+            Production-grade accelerators designed to reduce engineering effort, lower risk, and accelerate enterprise transformation.
           </p>
         </div>
       </section>
@@ -407,22 +408,14 @@ export default function Products() {
     </section>
 
       {/* SECTION 03 — END CTA BAND */}
-      <section id="cta" data-scroll-label="STRATEGY CALL" className="px-4 sm:px-6 md:px-16 max-w-7xl mx-auto mt-16 sm:mt-24">
-        <Reveal variant="scale" className="border border-border p-6 sm:p-10 md:p-14 text-center bg-bg/95 backdrop-blur-md">
-          <div className="font-mono text-[12px] md:text-[13px] text-accent uppercase tracking-[0.14em] font-medium mb-3">
-            ACCELERATE TRANSFORMATION • 48-HOUR PILOT
-          </div>
-          <h2 className="font-heading text-3xl md:text-4xl font-bold uppercase text-text mb-4">
-            DEPLOY AN ENGINEERED PRODUCT IN YOUR ENTERPRISE
-          </h2>
-          <p className="text-text-muted text-[15px] md:text-[16px] font-normal max-w-xl mx-auto mb-8 leading-[1.6]">
-            Our solutions engineering team can conduct a 48-hour pilot setup using BitXhift, MigrateMax, ParseMaster, or LinkGenX.
-          </p>
-          <Link to="/contact" className="btn btn-primary text-sm font-semibold uppercase tracking-wider inline-flex items-center gap-2">
-            <span>BOOK STRATEGY CALL</span>
-            <span className="arrow-hover" aria-hidden="true">→</span>
-          </Link>
-        </Reveal>
+      <section id="cta" data-scroll-label="STRATEGY CALL" className="px-4 sm:px-6 md:px-16 max-w-7xl mx-auto">
+        <PageCTA
+          eyebrow="DELIVERY ACCELERATION"
+          title="WANT TO ACCELERATE DELIVERY?"
+          description="Let's identify which engineering assets can reduce implementation time and delivery risk for your organization."
+          buttonText="EXPLORE ACCELERATORS"
+          buttonLink="/contact"
+        />
       </section>
     </div>
   );

@@ -8,6 +8,7 @@ import BannerDrawBorder from '../components/anim/BannerDrawBorder';
 import Reveal from '../components/anim/Reveal';
 import RichTextRenderer from '../components/RichTextRenderer';
 import DecorativeSideCubes from '../components/visuals/DecorativeSideCubes';
+import PageCTA from '../components/PageCTA';
 
 export default function Staffing() {
   const [openFaq, setOpenFaq] = useState(null);
@@ -51,10 +52,10 @@ export default function Staffing() {
         <div className="page-title-surface relative z-10 border border-border p-6 sm:p-8 md:p-12 overflow-hidden">
         <BannerDrawBorder />
         <div className="flex items-center justify-between mb-4">
-          <div className="label-accent">
+          <div className="font-mono text-[10px] md:text-[11px] text-[var(--color-accent)] uppercase tracking-[0.2em] font-semibold">
             ENTERPRISE TALENT &amp; SPECIALISED STAFFING
           </div>
-          <div className="type-meta border border-[var(--color-border)] px-3 py-1 bg-black/[0.02] dark:bg-white/[0.03]">
+          <div className="font-mono text-[10px] md:text-[11px] text-[var(--color-text-muted)] border border-[var(--color-border)] px-3 py-1 bg-black/[0.02] dark:bg-white/[0.03]">
             ENGAGEMENT MODELS
           </div>
         </div>
@@ -183,23 +184,13 @@ export default function Staffing() {
 
       {/* CTA Section */}
       <div id="cta" data-scroll-label="CONTACT">
-        <BlueprintWrapper className="p-8 md:p-12 text-center bg-bg/95 backdrop-blur-md">
-          <div className="label-accent mb-2">ENGAGE TALENT</div>
-          <h2 className="font-heading text-2xl md:text-3xl font-bold uppercase text-text mb-4">
-            READY TO HIRE SPECIALISED TALENT?
-          </h2>
-          <p className="text-text-muted text-[15px] font-normal max-w-xl mx-auto mb-8 leading-[1.65]">
-            Contact our talent solutions team in Coimbatore. We'll share pre-screened profiles within 48 to 72 hours.
-          </p>
-          <div className="flex flex-wrap justify-center gap-4">
-            <Link to="/contact" className="btn btn-primary font-semibold uppercase tracking-wider text-[14px]">
-              REQUEST TALENT SHORTLIST <ArrowUpRight className="w-4 h-4 ml-1" strokeWidth={1.5} />
-            </Link>
-            <a href="tel:+919150684601" className="btn btn-secondary text-[14px] font-medium">
-              Call +91-9150684601
-            </a>
-          </div>
-        </BlueprintWrapper>
+        <PageCTA
+          eyebrow="ENTERPRISE TALENT"
+          title="READY TO HIRE SPECIALISED TALENT?"
+          description="Contact our talent solutions team in Coimbatore. We'll share pre-screened profiles within 48 to 72 hours."
+          buttonText="REQUEST TALENT SHORTLIST"
+          buttonLink="/contact"
+        />
       </div>
     </div>
   );

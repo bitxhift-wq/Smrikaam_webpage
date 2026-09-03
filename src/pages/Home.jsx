@@ -18,6 +18,7 @@ import Smrikaam3DCoreSection from '../components/visuals/Smrikaam3DCoreSection';
 import TechStackRibbon from '../components/TechStackRibbon';
 import AnimatedMetric from '../components/AnimatedMetric';
 import { useCMS } from '../context/CMSContext';
+import PageCTA from '../components/PageCTA';
 
 export default function Home() {
   const { services: rawServices, caseStudies: rawCaseStudies } = useCMS() || {};
@@ -377,29 +378,14 @@ export default function Home() {
             </div>
           </div>
 
-          {/* ======================================================== */}
           {/* 5. BOOK STRATEGY CALL (END CTA BAND) */}
-          {/* ======================================================== */}
-          <div className="border border-[var(--color-border)] p-6 md:p-8 home-card-surface flex flex-col sm:flex-row items-center justify-between gap-4">
-            <div className="space-y-1 text-center sm:text-left">
-              <div className="label-accent mb-1">
-                ENTERPRISE TRANSFORMATION • STRATEGY CONSULTATION
-              </div>
-              <h3 className="font-heading text-lg md:text-xl font-bold uppercase text-[var(--color-text)]">
-                Ready to engineer your next intelligent system?
-              </h3>
-              <p className="text-[15px] md:text-[16px] text-[var(--color-text-secondary)] font-normal max-w-xl leading-[1.65]">
-                Connect with our technical leads in Coimbatore to review architecture blueprints and project roadmaps.
-              </p>
-            </div>
-            <Link
-              to="/contact"
-              className="btn btn-primary text-xs font-semibold uppercase tracking-wider shrink-0 w-full sm:w-auto"
-            >
-              <span>BOOK STRATEGY CALL</span>
-              <ArrowUpRight className="w-4 h-4 ml-1" strokeWidth={1.5} />
-            </Link>
-          </div>
+          <PageCTA
+            eyebrow="ENTERPRISE TRANSFORMATION"
+            title="READY TO ENGINEER YOUR NEXT INTELLIGENT SYSTEM?"
+            description="Connect with our technical leads in Coimbatore to review architecture blueprints and project roadmaps."
+            buttonText="BOOK STRATEGY CALL"
+            buttonLink="/contact"
+          />
 
         </div>
       </section>

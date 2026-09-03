@@ -6,6 +6,7 @@ import TextReveal from '../components/anim/TextReveal';
 import BannerDrawBorder from '../components/anim/BannerDrawBorder';
 import Reveal from '../components/anim/Reveal';
 import DecorativeSideCubes from '../components/visuals/DecorativeSideCubes';
+import PageCTA from '../components/PageCTA';
 
 export default function About() {
   const approachSteps = [
@@ -47,25 +48,25 @@ export default function About() {
       <div id="overview" data-scroll-label="ABOUT US" className="relative mb-12">
         <DecorativeSideCubes leftSize={120} rightSize={140} leftTop="10%" rightTop="25%" />
         <div className="page-title-surface relative z-10 border border-border p-6 sm:p-8 md:p-12 overflow-hidden">
-        <BannerDrawBorder />
-        <div className="flex flex-wrap items-center justify-between gap-2 mb-4">
-          <div className="font-mono text-[10px] md:text-[11px] text-[var(--color-accent)] uppercase tracking-[0.2em] font-semibold">
-            ABOUT SMRIKAAM TECHNOLOGIES LLP
+          <BannerDrawBorder />
+          <div className="flex flex-wrap items-center justify-between gap-2 mb-4">
+            <div className="font-mono text-[10px] md:text-[11px] text-[var(--color-accent)] uppercase tracking-[0.2em] font-semibold">
+              ENGINEERING ORGANIZATION
+            </div>
+            <div className="font-mono text-[10px] md:text-[11px] text-[var(--color-text-muted)] border border-[var(--color-border)] px-3 py-1 bg-black/[0.02] dark:bg-white/[0.03]">
+              COIMBATORE, INDIA
+            </div>
           </div>
-          <div className="text-[10px] md:text-[11px] text-[var(--color-text-muted)] border border-[var(--color-border)] px-3 py-1 bg-black/[0.02] dark:bg-white/[0.03]">
-            COIMBATORE, INDIA
-          </div>
-        </div>
 
-        <TextReveal
-          text="WE ENGINEER THE TECHNOLOGY BEHIND BUSINESS TRANSFORMATION."
-          as="h1"
-          className="font-heading text-3xl sm:text-5xl lg:text-6xl font-bold uppercase tracking-tight text-[var(--color-text)] leading-[0.96] mb-4"
-        />
-        <p className="text-[15px] sm:text-[16px] md:text-[18px] text-[var(--color-text-secondary)] max-w-3xl border-l-2 border-[var(--color-accent)] pl-4 font-normal leading-[1.6]">
-          SMRIKAAM is an enterprise technology and engineering company helping organizations modernize technology, operations, data and industrial environments.
-        </p>
-      </div>
+          <TextReveal
+            text="ENGINEERING THINKING. MEASURABLE IMPACT."
+            as="h1"
+            className="font-heading text-3xl sm:text-5xl lg:text-6xl font-bold uppercase tracking-tight text-[var(--color-text)] leading-[0.96] mb-4"
+          />
+          <p className="text-[15px] sm:text-[16px] md:text-[18px] text-[var(--color-text-secondary)] max-w-3xl border-l-2 border-[var(--color-accent)] pl-4 font-normal leading-[1.6]">
+            SMRIKAAM builds technology systems that connect architecture, engineering, intelligence, and business outcomes.
+          </p>
+        </div>
       </div>
 
       {/* Who We Are & Brand Philosophy (Side-by-Side 2-Column Canvas) */}
@@ -221,18 +222,13 @@ export default function About() {
 
       {/* CTA */}
       <div id="cta" data-scroll-label="ENGAGEMENT">
-        <BlueprintWrapper className="p-6 sm:p-8 md:p-12 text-center bg-bg/95 backdrop-blur-md">
-          <div className="font-mono text-[11px] text-accent uppercase font-semibold mb-2">ENGAGEMENT</div>
-          <h2 className="font-heading text-2xl md:text-3xl font-bold uppercase text-text mb-4">
-            READY TO WORK WITH SMRIKAAM?
-          </h2>
-          <p className="text-text-muted text-[15px] font-normal max-w-2xl mx-auto mb-8">
-            Let's turn your data, operations and technology into measurable business outcomes.
-          </p>
-          <Link to="/contact" className="btn btn-primary font-semibold uppercase tracking-wider text-[14px]">
-            BOOK STRATEGY CALL <ArrowUpRight className="w-4 h-4 ml-1" strokeWidth={1.5} />
-          </Link>
-        </BlueprintWrapper>
+        <PageCTA
+          eyebrow="ENGINEERING ORGANIZATION"
+          title="READY TO WORK WITH SMRIKAAM?"
+          description="Let's turn your data, operations, and technology into measurable business outcomes."
+          buttonText="BOOK STRATEGY CALL"
+          buttonLink="/contact"
+        />
       </div>
     </div>
   );
