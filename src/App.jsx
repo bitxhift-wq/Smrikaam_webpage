@@ -45,6 +45,7 @@ import PublishingLifecyclePage from './pages/admin/PublishingLifecyclePage';
 import SettingsPage from './pages/admin/SettingsPage';
 import InboxPage from './pages/admin/InboxPage';
 import AdminBookCallPage from './pages/admin/AdminBookCallPage';
+import AdminBlogManager from './pages/admin/AdminBlogManager';
 import AdminContentManager from './components/admin/AdminContentManager';
 import RequireAuth from './components/RequireAuth';
 
@@ -411,7 +412,7 @@ export default function App() {
               <Route path="dashboard" element={<DashboardPage />} />
               <Route path="book-a-call" element={<AdminBookCallPage />} />
               <Route path="enquiries" element={<AdminBookCallPage />} />
-              <Route path="blogs" element={<AdminContentManager resource="posts" title="Blog Articles" fields={BLOG_FIELDS} />} />
+              <Route path="blogs" element={<AdminBlogManager />} />
               <Route path="services" element={<AdminContentManager resource="services" title="Services" fields={SERVICE_FIELDS} />} />
               <Route path="accelerators" element={<AdminContentManager resource="accelerators" title="Products" fields={ACCELERATOR_FIELDS} />} />
               <Route path="products" element={<Navigate to="/admin/accelerators" replace />} />
