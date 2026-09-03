@@ -77,13 +77,14 @@ export default function Contact() {
     setSubmitting(true);
 
     try {
-      const res = await api.post('/contact', {
-        full_name: formData.full_name.trim(),
-        company_name: formData.company_name.trim(),
+      const res = await api.post('/book-a-call', {
+        name: formData.full_name.trim(),
+        company: formData.company_name.trim(),
         email: formData.email.trim(),
         phone: formData.phone ? formData.phone.trim() : '',
-        requirement_type: formData.requirement_type || 'Technology Transformation',
-        message: formData.message.trim()
+        service: formData.requirement_type || 'Technology Transformation',
+        message: formData.message.trim(),
+        source: 'Contact Page'
       });
       setSuccessMsg(res.data.message || 'Thank you. Our engineering leads will connect with you shortly.');
       setFormData({

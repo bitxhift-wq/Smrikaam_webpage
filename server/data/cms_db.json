@@ -1474,6 +1474,30 @@
   ],
   "activityLogs": [
     {
+      "id": "log_1788426398165_elwj",
+      "date": "3 SEP",
+      "title": "New Book a Call Request: Titan Manufacturing Corp",
+      "description": "Vikram Malhotra (vikram.m@titanmfg.in) requested session for Industrial IoT (IIoT)",
+      "type": "engagement",
+      "timestamp": "2026-09-03T09:06:38.165Z"
+    },
+    {
+      "id": "log_1788426378303_v7bs",
+      "date": "3 SEP",
+      "title": "New Book a Call Request: Titan Manufacturing Corp",
+      "description": "Vikram Malhotra (vikram.m@titanmfg.in) requested session for Industrial IoT (IIoT)",
+      "type": "engagement",
+      "timestamp": "2026-09-03T09:06:18.303Z"
+    },
+    {
+      "id": "log_1788426358694_wr03",
+      "date": "3 SEP",
+      "title": "New Book a Call Request: Titan Manufacturing Corp",
+      "description": "Vikram Malhotra (vikram.m@titanmfg.in) requested session for Industrial IoT (IIoT)",
+      "type": "engagement",
+      "timestamp": "2026-09-03T09:05:58.694Z"
+    },
+    {
       "id": "log_1788347089462_63bx",
       "date": "2 SEP",
       "title": "New Engagement Inquiry: APEX",
@@ -1908,5 +1932,66 @@
       "published_at": "2026-08-01T00:00:00.000Z"
     }
   ],
-  "engagements": []
+  "engagements": [
+    {
+      "id": "eng_1788426398160_mlc391",
+      "full_name": "Vikram Malhotra",
+      "company_name": "Titan Manufacturing Corp",
+      "email": "vikram.m@titanmfg.in",
+      "phone": "+91 98765 12345",
+      "job_title": "VP Operations",
+      "requirement_type": "Industrial IoT (IIoT)",
+      "message": "We operate 450 CNC machining centers in Hosur and need real-time edge telemetry and OEE tracking.",
+      "preferred_date": "2026-09-10",
+      "preferred_time": "11:00 AM - 01:00 PM",
+      "source": "E2E Test Script",
+      "status": "CONTACTED",
+      "priority": "HIGH",
+      "assigned_to": "Ramesh Kumar - Lead Solution Architect",
+      "admin_notes": "Initial discovery call scheduled for Sept 10th at 11:00 AM IST.",
+      "is_read": true,
+      "created_at": "2026-09-03T09:06:38.160Z",
+      "updated_at": "2026-09-03T09:06:38.258Z"
+    },
+    {
+      "id": "eng_1788426378299_ffy88x",
+      "full_name": "Vikram Malhotra",
+      "company_name": "Titan Manufacturing Corp",
+      "email": "vikram.m@titanmfg.in",
+      "phone": "+91 98765 12345",
+      "job_title": "VP Operations",
+      "requirement_type": "Industrial IoT (IIoT)",
+      "message": "We operate 450 CNC machining centers in Hosur and need real-time edge telemetry and OEE tracking.",
+      "preferred_date": "2026-09-10",
+      "preferred_time": "11:00 AM - 01:00 PM",
+      "source": "E2E Test Script",
+      "status": "NEW",
+      "priority": "MEDIUM",
+      "assigned_to": "",
+      "admin_notes": "",
+      "is_read": false,
+      "created_at": "2026-09-03T09:06:18.299Z",
+      "updated_at": "2026-09-03T09:06:18.299Z"
+    },
+    {
+      "id": "eng_1788426358688_3b4scd",
+      "full_name": "Vikram Malhotra",
+      "company_name": "Titan Manufacturing Corp",
+      "email": "vikram.m@titanmfg.in",
+      "phone": "+91 98765 12345",
+      "job_title": "VP Operations",
+      "requirement_type": "Industrial IoT (IIoT)",
+      "message": "We operate 450 CNC machining centers in Hosur and need real-time edge telemetry and OEE tracking.",
+      "preferred_date": "2026-09-10",
+      "preferred_time": "11:00 AM - 01:00 PM",
+      "source": "E2E Test Script",
+      "status": "NEW",
+      "priority": "MEDIUM",
+      "assigned_to": "",
+      "admin_notes": "",
+      "is_read": false,
+      "created_at": "2026-09-03T09:05:58.688Z",
+      "updated_at": "2026-09-03T09:05:58.688Z"
+    }
+  ]
 }

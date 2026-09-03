@@ -3,6 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, ArrowUpRight, ChevronDown, Sun, Moon } from 'lucide-react';
 import Logo from './Logo';
 import { useCMS } from '../context/CMSContext';
+import { openBookCallModal } from './BookCallModal';
 
 export default function NavBar() {
   const {
@@ -516,13 +517,14 @@ export default function NavBar() {
             )}
           </button>
 
-          <Link
-            to="/contact"
-            className="h-9 px-4 bg-[var(--ribbon-button-bg)] text-[var(--ribbon-button-text)] border border-[var(--ribbon-button-border)] hover:opacity-90 text-xs font-semibold uppercase tracking-wider inline-flex items-center gap-1.5 transition-all shadow-sm"
+          <button
+            type="button"
+            onClick={() => openBookCallModal({ source: 'Navbar Ribbon' })}
+            className="h-9 px-4 bg-[var(--ribbon-button-bg)] text-[var(--ribbon-button-text)] border border-[var(--ribbon-button-border)] hover:opacity-90 text-xs font-semibold uppercase tracking-wider inline-flex items-center gap-1.5 transition-all shadow-sm cursor-pointer"
           >
             <span>BOOK A CALL</span>
             <ArrowUpRight className="w-3.5 h-3.5 stroke-current" strokeWidth={1.5} aria-hidden="true" focusable="false" />
-          </Link>
+          </button>
         </div>
 
         {/* Mobile Actions: Theme Toggle + Menu */}
@@ -767,13 +769,16 @@ export default function NavBar() {
             </div>
 
             <div className="pt-3 mt-1 flex flex-col gap-2">
-              <Link
-                to="/contact"
-                onClick={() => setMobileOpen(false)}
-                className="bg-[var(--ribbon-button-bg)] text-[var(--ribbon-button-text)] border border-[var(--ribbon-button-border)] min-h-[44px] py-2.5 px-4 text-xs font-semibold uppercase tracking-wider flex items-center justify-center gap-2"
+              <button
+                type="button"
+                onClick={() => {
+                  setMobileOpen(false);
+                  openBookCallModal({ source: 'Mobile Nav Drawer' });
+                }}
+                className="bg-[var(--ribbon-button-bg)] text-[var(--ribbon-button-text)] border border-[var(--ribbon-button-border)] min-h-[44px] py-2.5 px-4 text-xs font-semibold uppercase tracking-wider flex items-center justify-center gap-2 cursor-pointer w-full"
               >
                 Book Strategy Call <ArrowUpRight className="w-4 h-4" strokeWidth={2} />
-              </Link>
+              </button>
             </div>
           </div>
         </>

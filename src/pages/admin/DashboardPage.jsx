@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import {
   FileText, Cpu, Zap, Factory, Briefcase, FileBarChart,
-  Plus, CheckCircle, Clock, Trash2, ArrowUpRight, Activity, Image as ImageIcon
+  Plus, CheckCircle, Clock, Trash2, ArrowUpRight, Activity, Image as ImageIcon, PhoneCall
 } from 'lucide-react';
 import { useCMS } from '../../context/CMSContext';
 import { ADMIN_ROUTE_BASE } from './AdminLayout';
@@ -20,7 +20,13 @@ export default function DashboardPage() {
     totalMedia: 0,
     published: 0,
     drafts: 0,
-    trash: 0
+    trash: 0,
+    totalBookCalls: 0,
+    newBookCalls: 0,
+    contactedBookCalls: 0,
+    inProgressBookCalls: 0,
+    convertedBookCalls: 0,
+    closedBookCalls: 0
   });
 
   const [activityLogs, setActivityLogs] = useState([]);
@@ -87,6 +93,85 @@ export default function DashboardPage() {
           </Link>
           <Link to={`${ADMIN_ROUTE_BASE}/media`} className="admin-btn text-xs py-2 px-3">
             <ImageIcon className="w-3.5 h-3.5 mr-1" /> Upload Media
+          </Link>
+        </div>
+      </div>
+      {/* Book a Call & Lead KPI Section */}
+      <div className="bg-[#141924] border border-[#4fd1c5]/30 p-5 rounded-sm">
+        <div className="flex items-center justify-between border-b border-[rgba(255,255,255,0.1)] pb-3 mb-4">
+          <div className="flex items-center gap-2">
+            <PhoneCall className="w-5 h-5 text-[#4fd1c5]" />
+            <span className="font-heading text-lg font-bold uppercase text-[#f4f4f4]">
+              BOOK A CALL &amp; ENQUIRY METRICS
+            </span>
+          </div>
+          <Link
+            to={`${ADMIN_ROUTE_BASE}/book-a-call`}
+            className="font-mono text-xs text-[#4fd1c5] hover:underline flex items-center gap-1"
+          >
+            Manage Enquiries &rarr;
+          </Link>
+        </div>
+
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
+          <Link
+            to={`${ADMIN_ROUTE_BASE}/book-a-call`}
+            className="bg-[#0b0e14] border border-[rgba(255,255,255,0.1)] p-3 hover:border-[#4fd1c5] transition-colors"
+          >
+            <div className="font-mono text-[10px] text-gray-400 uppercase">TOTAL REQUESTS</div>
+            <div className="font-heading text-2xl font-bold text-[#f4f4f4] mt-1">
+              {loading ? '—' : stats.totalBookCalls || 0}
+            </div>
+          </Link>
+
+          <Link
+            to={`${ADMIN_ROUTE_BASE}/book-a-call`}
+            className="bg-[#0b0e14] border border-rose-500/30 p-3 hover:border-rose-400 transition-colors"
+          >
+            <div className="font-mono text-[10px] text-rose-400 uppercase">NEW / UNREAD</div>
+            <div className="font-heading text-2xl font-bold text-rose-300 mt-1">
+              {loading ? '—' : stats.newBookCalls || 0}
+            </div>
+          </Link>
+
+          <Link
+            to={`${ADMIN_ROUTE_BASE}/book-a-call`}
+            className="bg-[#0b0e14] border border-blue-500/30 p-3 hover:border-blue-400 transition-colors"
+          >
+            <div className="font-mono text-[10px] text-blue-400 uppercase">CONTACTED</div>
+            <div className="font-heading text-2xl font-bold text-blue-300 mt-1">
+              {loading ? '—' : stats.contactedBookCalls || 0}
+            </div>
+          </Link>
+
+          <Link
+            to={`${ADMIN_ROUTE_BASE}/book-a-call`}
+            className="bg-[#0b0e14] border border-amber-500/30 p-3 hover:border-amber-400 transition-colors"
+          >
+            <div className="font-mono text-[10px] text-amber-400 uppercase">IN PROGRESS</div>
+            <div className="font-heading text-2xl font-bold text-amber-300 mt-1">
+              {loading ? '—' : stats.inProgressBookCalls || 0}
+            </div>
+          </Link>
+
+          <Link
+            to={`${ADMIN_ROUTE_BASE}/book-a-call`}
+            className="bg-[#0b0e14] border border-emerald-500/30 p-3 hover:border-emerald-400 transition-colors"
+          >
+            <div className="font-mono text-[10px] text-emerald-400 uppercase">CONVERTED / QUALIFIED</div>
+            <div className="font-heading text-2xl font-bold text-emerald-300 mt-1">
+              {loading ? '—' : (stats.convertedBookCalls || 0) + (stats.qualifiedBookCalls || 0)}
+            </div>
+          </Link>
+
+          <Link
+            to={`${ADMIN_ROUTE_BASE}/book-a-call`}
+            className="bg-[#0b0e14] border border-gray-600/30 p-3 hover:border-gray-400 transition-colors"
+          >
+            <div className="font-mono text-[10px] text-gray-400 uppercase">CLOSED</div>
+            <div className="font-heading text-2xl font-bold text-gray-400 mt-1">
+              {loading ? '—' : stats.closedBookCalls || 0}
+            </div>
           </Link>
         </div>
       </div>

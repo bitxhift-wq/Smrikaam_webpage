@@ -3,7 +3,7 @@ import { Link, useNavigate, useLocation, Outlet } from 'react-router-dom';
 import {
   LayoutDashboard, FileText, Cpu, Zap, Factory, Briefcase, FileBarChart,
   Image as ImageIcon, CheckCircle, Clock, Trash2, Settings, LogOut, Menu, X,
-  Users, MapPin
+  Users, MapPin, PhoneCall, Inbox
 } from 'lucide-react';
 import api from '../../api';
 import Logo from '../../components/Logo';
@@ -12,24 +12,33 @@ export const ADMIN_ROUTE_BASE = '/smrikaam-admin';
 
 export default function AdminLayout() {
   const [user, setUser] = useState(null);
+  const [unreadCount, setUnreadCount] = useState(0);
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
 
   useEffect(() => {
-    async function fetchUser() {
+    async function fetchData() {
       try {
-        const res = await api.get('/auth/me');
-        if (res.data?.user) {
-          setUser(res.data.user);
+        const [userRes, statsRes] = await Promise.all([
+          api.get('/auth/me').catch(() => null),
+          api.get('/stats').catch(() => null)
+        ]);
+
+        if (userRes?.data?.user) {
+          setUser(userRes.data.user);
         } else {
           setUser(null);
+        }
+
+        if (statsRes?.data?.newBookCalls !== undefined) {
+          setUnreadCount(statsRes.data.newBookCalls);
         }
       } catch (err) {
         setUser(null);
       }
     }
-    fetchUser();
+    fetchData();
   }, [location.pathname]);
 
   const handleLogout = async () => {
@@ -48,6 +57,13 @@ export default function AdminLayout() {
       title: 'OVERVIEW',
       items: [
         { label: 'Dashboard', path: `${ADMIN_ROUTE_BASE}/dashboard`, icon: LayoutDashboard }
+      ]
+    },
+    {
+      title: 'LEADS & ENQUIRIES',
+      items: [
+        { label: 'Book a Call', path: `${ADMIN_ROUTE_BASE}/book-a-call`, icon: PhoneCall, badge: unreadCount },
+        { label: 'All Enquiries', path: `${ADMIN_ROUTE_BASE}/enquiries`, icon: Inbox }
       ]
     },
     {
@@ -139,14 +155,21 @@ export default function AdminLayout() {
                         key={item.path}
                         to={item.path}
                         onClick={() => setMobileNavOpen(false)}
-                        className={`flex items-center gap-3 px-3 py-2 text-xs font-mono uppercase tracking-wider transition-colors ${
+                        className={`flex items-center justify-between px-3 py-2 text-xs font-mono uppercase tracking-wider transition-colors ${
                           active
                             ? 'bg-[#1c2333] text-[#4fd1c5] border-l-4 border-[#4fd1c5] font-bold'
                             : 'text-[#9aa3b5] hover:text-[#f4f4f4] hover:bg-[#1c2333]'
                         }`}
                       >
-                        <Icon className="w-4 h-4 shrink-0" strokeWidth={1.5} />
-                        <span>{item.label}</span>
+                        <div className="flex items-center gap-3">
+                          <Icon className="w-4 h-4 shrink-0" strokeWidth={1.5} />
+                          <span>{item.label}</span>
+                        </div>
+                        {item.badge > 0 && (
+                          <span className="px-1.5 py-0.5 text-[10px] font-bold bg-rose-500 text-white rounded-full font-sans">
+                            {item.badge}
+                          </span>
+                        )}
                       </Link>
                     );
                   })}

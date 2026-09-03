@@ -621,6 +621,19 @@ class Database {
             (SELECT count(*) FROM reports WHERE status = 'draft') AS total_draft`
         );
 
+        const engRes = await postgres.query(`
+          SELECT
+            count(*) AS total,
+            count(*) FILTER (WHERE status = 'NEW' OR status = 'unread' OR status IS NULL) AS count_new,
+            count(*) FILTER (WHERE status = 'CONTACTED') AS count_contacted,
+            count(*) FILTER (WHERE status = 'IN_PROGRESS') AS count_in_progress,
+            count(*) FILTER (WHERE status = 'QUALIFIED') AS count_qualified,
+            count(*) FILTER (WHERE status = 'CONVERTED') AS count_converted,
+            count(*) FILTER (WHERE status = 'CLOSED') AS count_closed
+          FROM engagements
+        `);
+        const engRow = engRes.rows[0] || {};
+
         return {
           totalPosts: counts['posts'] || 0,
           totalServices: counts['services'] || 0,
@@ -632,6 +645,13 @@ class Database {
           published: parseInt(pubRes.rows[0]?.total_pub || '0', 10),
           drafts: parseInt(draftRes.rows[0]?.total_draft || '0', 10),
           trash: 0,
+          totalBookCalls: parseInt(engRow.total || '0', 10),
+          newBookCalls: parseInt(engRow.count_new || '0', 10),
+          contactedBookCalls: parseInt(engRow.count_contacted || '0', 10),
+          inProgressBookCalls: parseInt(engRow.count_in_progress || '0', 10),
+          qualifiedBookCalls: parseInt(engRow.count_qualified || '0', 10),
+          convertedBookCalls: parseInt(engRow.count_converted || '0', 10),
+          closedBookCalls: parseInt(engRow.count_closed || '0', 10),
           postgresStatus: postgres.getStatus()
         };
       } catch (err) {
@@ -640,6 +660,7 @@ class Database {
     }
 
     // Fallback
+    const localEng = this.getCollection('engagements') || [];
     return {
       totalPosts: this.getCollection('posts').length,
       totalServices: this.getCollection('services').length,
@@ -651,6 +672,13 @@ class Database {
       published: 0,
       drafts: 0,
       trash: 0,
+      totalBookCalls: localEng.length,
+      newBookCalls: localEng.filter(e => e.status === 'NEW' || e.status === 'unread' || !e.status).length,
+      contactedBookCalls: localEng.filter(e => e.status === 'CONTACTED').length,
+      inProgressBookCalls: localEng.filter(e => e.status === 'IN_PROGRESS').length,
+      qualifiedBookCalls: localEng.filter(e => e.status === 'QUALIFIED').length,
+      convertedBookCalls: localEng.filter(e => e.status === 'CONVERTED').length,
+      closedBookCalls: localEng.filter(e => e.status === 'CLOSED').length,
       postgresStatus: postgres.getStatus()
     };
   }
@@ -915,14 +943,23 @@ class Database {
 
     const record = {
       id,
-      full_name: payload.full_name,
-      company_name: payload.company_name,
+      full_name: payload.full_name || payload.name,
+      company_name: payload.company_name || payload.company || '',
       email: payload.email,
       phone: payload.phone || '',
-      requirement_type: payload.requirement_type || 'Technology Transformation',
-      message: payload.message,
-      status: 'unread',
-      created_at: now
+      job_title: payload.job_title || payload.jobTitle || '',
+      requirement_type: payload.requirement_type || payload.service || 'Technology Transformation',
+      message: payload.message || '',
+      preferred_date: payload.preferred_date || payload.preferredDate || '',
+      preferred_time: payload.preferred_time || payload.preferredTime || '',
+      source: payload.source || 'Public Website',
+      status: payload.status || 'NEW',
+      priority: payload.priority || 'MEDIUM',
+      assigned_to: payload.assigned_to || payload.assignedTo || '',
+      admin_notes: payload.admin_notes || payload.adminNotes || '',
+      is_read: false,
+      created_at: now,
+      updated_at: now
     };
 
     const engagements = this.getCollection('engagements');
@@ -932,9 +969,14 @@ class Database {
     if (postgres.isConnected) {
       try {
         await postgres.query(
-          `INSERT INTO engagements (id, full_name, company_name, email, phone, requirement_type, message, status, created_at)
-           VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)`,
-          [record.id, record.full_name, record.company_name, record.email, record.phone, record.requirement_type, record.message, record.status, record.created_at]
+          `INSERT INTO engagements (id, full_name, company_name, email, phone, job_title, requirement_type, message, preferred_date, preferred_time, source, status, priority, assigned_to, admin_notes, is_read, created_at, updated_at)
+           VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18)`,
+          [
+            record.id, record.full_name, record.company_name, record.email, record.phone,
+            record.job_title, record.requirement_type, record.message, record.preferred_date,
+            record.preferred_time, record.source, record.status, record.priority,
+            record.assigned_to, record.admin_notes, record.is_read, record.created_at, record.updated_at
+          ]
         );
       } catch (err) {
         console.warn('Postgres createEngagement write warning:', err.message);
@@ -954,6 +996,61 @@ class Database {
       }
     }
     return this.getCollection('engagements');
+  }
+
+  async updateEngagement(id, updates) {
+    const now = new Date().toISOString();
+    const engagements = this.getCollection('engagements');
+    const idx = engagements.findIndex((e) => String(e.id) === String(id));
+
+    let updatedRecord = null;
+    if (idx !== -1) {
+      engagements[idx] = {
+        ...engagements[idx],
+        ...updates,
+        updated_at: now
+      };
+      if (updates.status) {
+        engagements[idx].is_read = updates.status !== 'NEW' && updates.status !== 'unread';
+      }
+      updatedRecord = engagements[idx];
+      this.saveLocalSnapshot();
+    }
+
+    if (postgres.isConnected) {
+      try {
+        const fields = [];
+        const values = [];
+        let paramIdx = 1;
+
+        const allowedKeys = [
+          'full_name', 'company_name', 'email', 'phone', 'job_title',
+          'requirement_type', 'message', 'preferred_date', 'preferred_time',
+          'source', 'status', 'priority', 'assigned_to', 'admin_notes', 'is_read'
+        ];
+
+        for (const key of allowedKeys) {
+          if (updates[key] !== undefined) {
+            fields.push(`${key} = $${paramIdx++}`);
+            values.push(updates[key]);
+          }
+        }
+
+        if (fields.length > 0) {
+          fields.push(`updated_at = $${paramIdx++}`);
+          values.push(now);
+          values.push(id);
+
+          const query = `UPDATE engagements SET ${fields.join(', ')} WHERE id = $${paramIdx} RETURNING *`;
+          const res = await postgres.query(query, values);
+          if (res.rows[0]) updatedRecord = res.rows[0];
+        }
+      } catch (err) {
+        console.warn('Postgres updateEngagement warning:', err.message);
+      }
+    }
+
+    return updatedRecord;
   }
 
   async deleteEngagement(id) {

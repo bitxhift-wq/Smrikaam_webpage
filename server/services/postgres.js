@@ -283,11 +283,31 @@ class PostgresService {
           company_name VARCHAR(255) NOT NULL,
           email VARCHAR(255) NOT NULL,
           phone VARCHAR(64),
+          job_title VARCHAR(255),
           requirement_type VARCHAR(255) NOT NULL,
           message TEXT NOT NULL,
-          status VARCHAR(32) DEFAULT 'unread',
-          created_at TIMESTAMPTZ DEFAULT NOW()
+          preferred_date VARCHAR(64),
+          preferred_time VARCHAR(64),
+          source VARCHAR(255),
+          status VARCHAR(32) DEFAULT 'NEW',
+          priority VARCHAR(32) DEFAULT 'MEDIUM',
+          assigned_to VARCHAR(255),
+          admin_notes TEXT,
+          is_read BOOLEAN DEFAULT false,
+          created_at TIMESTAMPTZ DEFAULT NOW(),
+          updated_at TIMESTAMPTZ DEFAULT NOW()
         );
+
+        -- Safe column migrations for existing tables
+        ALTER TABLE engagements ADD COLUMN IF NOT EXISTS job_title VARCHAR(255);
+        ALTER TABLE engagements ADD COLUMN IF NOT EXISTS preferred_date VARCHAR(64);
+        ALTER TABLE engagements ADD COLUMN IF NOT EXISTS preferred_time VARCHAR(64);
+        ALTER TABLE engagements ADD COLUMN IF NOT EXISTS source VARCHAR(255);
+        ALTER TABLE engagements ADD COLUMN IF NOT EXISTS priority VARCHAR(32) DEFAULT 'MEDIUM';
+        ALTER TABLE engagements ADD COLUMN IF NOT EXISTS assigned_to VARCHAR(255);
+        ALTER TABLE engagements ADD COLUMN IF NOT EXISTS admin_notes TEXT;
+        ALTER TABLE engagements ADD COLUMN IF NOT EXISTS is_read BOOLEAN DEFAULT false;
+        ALTER TABLE engagements ADD COLUMN IF NOT EXISTS updated_at TIMESTAMPTZ DEFAULT NOW();
       `);
 
       console.log('✓ PostgreSQL tables initialization complete.');

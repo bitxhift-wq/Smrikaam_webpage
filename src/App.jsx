@@ -8,6 +8,7 @@ import BottomControlBar from './components/BottomControlBar';
 import FixedScene3D from './components/FixedScene3D';
 import IntroLoader from './components/IntroLoader';
 import VerticalScrollRail from './components/VerticalScrollRail';
+import BookCallModal from './components/BookCallModal';
 
 // Animation System Imports
 import PageTransition from './components/anim/PageTransition';
@@ -43,6 +44,7 @@ import MediaLibraryView from './components/admin/MediaLibraryView';
 import PublishingLifecyclePage from './pages/admin/PublishingLifecyclePage';
 import SettingsPage from './pages/admin/SettingsPage';
 import InboxPage from './pages/admin/InboxPage';
+import AdminBookCallPage from './pages/admin/AdminBookCallPage';
 import AdminContentManager from './components/admin/AdminContentManager';
 import RequireAuth from './components/RequireAuth';
 
@@ -392,6 +394,8 @@ export default function App() {
               <Route path="trash" element={<PublishingLifecyclePage viewType="trash" />} />
               <Route path="settings" element={<SettingsPage />} />
               <Route path="inbox" element={<InboxPage />} />
+              <Route path="book-a-call" element={<AdminBookCallPage />} />
+              <Route path="enquiries" element={<AdminBookCallPage />} />
             </Route>
 
             {/* Fallback route */}
@@ -399,6 +403,7 @@ export default function App() {
           </Routes>
         </PageTransition>
       </BrowserRouter>
+      <BookCallModal />
     </CMSProvider>
   );
 }
