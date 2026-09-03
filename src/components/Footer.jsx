@@ -101,7 +101,7 @@ export default function Footer() {
             >
               <MapPin className="w-3.5 h-3.5 text-[var(--color-text)] shrink-0 mt-0.5 group-hover/footermap:scale-110 transition-transform" strokeWidth={1.5} aria-hidden="true" />
               <div className="leading-[1.4]">
-                <span className="font-semibold block text-[var(--color-text)]">SMRIKAAM Technologies LLP</span>
+                <span className="font-semibold block text-[var(--color-text)]">SMRIKAAM Technologies</span>
                 <span className="text-[var(--color-text-secondary)] group-hover/footermap:text-[var(--color-text)] transition-colors">Coimbatore, Tamil Nadu, India</span>
               </div>
             </a>
@@ -244,7 +244,7 @@ export default function Footer() {
       {/* Bottom Legal & Copyright Strip */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-12 lg:px-16 pt-4 border-t border-[var(--color-border)] flex flex-col sm:flex-row items-center justify-between font-mono text-[11px] text-[var(--color-text-muted)] gap-2">
         <div>
-          &copy; 2026 SMRIKAAM Technologies LLP. All rights reserved.
+          &copy; 2026 SMRIKAAM Technologies. All rights reserved.
         </div>
         <div className="flex gap-4 font-mono text-[11px]">
           <Link to="/contact" className="hover:text-[var(--color-text)] transition-colors">Privacy Policy</Link>

@@ -307,7 +307,7 @@ export default function Contact() {
                 >
                   <MapPin className="w-5 h-5 text-accent shrink-0 mt-1 group-hover/map:scale-110 transition-transform" strokeWidth={1.5} />
                   <div>
-                    <div className="font-semibold text-text group-hover/map:text-accent transition-colors">SMRIKAAM Technologies LLP</div>
+                    <div className="font-semibold text-text group-hover/map:text-accent transition-colors">SMRIKAAM Technologies</div>
                     <div className="text-text-muted group-hover/map:text-text transition-colors">2WVM+H7X, Nataraj Nagar, P and T Colony</div>
                     <div className="text-text-muted group-hover/map:text-text transition-colors">Koundampalayam, Coimbatore, Tamil Nadu 641030, India</div>
                   </div>

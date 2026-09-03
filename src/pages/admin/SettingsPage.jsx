@@ -5,7 +5,7 @@ import api from '../../api';
 
 export default function SettingsPage() {
   const [settings, setSettings] = useState({
-    siteName: 'SMRIKAAM Technologies LLP',
+    siteName: 'SMRIKAAM Technologies',
     contactEmail: 'contact@smrikaam.com',
     contactPhone: '+91-9150684601',
     address: 'Coimbatore, Tamil Nadu, India'

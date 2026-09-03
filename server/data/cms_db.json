@@ -12,24 +12,6 @@
   ],
   "posts": [
     {
-      "title": "it_blog_article",
-      "slug": "it-blog-article",
-      "category": "",
-      "excerpt": "",
-      "content": "",
-      "cover_image_url": "",
-      "tags": [],
-      "author": "",
-      "meta_title": "",
-      "meta_description": "",
-      "status": "trash",
-      "pdf_url": "/uploads/it_blog_article_1788428101087_he3p4m.pdf",
-      "id": "pos_1788428105812_ewh6",
-      "created_at": "2026-09-03T09:35:05.812Z",
-      "updated_at": "2026-09-03T09:37:53.726Z",
-      "published_at": "2026-09-03T09:35:05.812Z"
-    },
-    {
       "title": "High-Throughput Time-Series Architecture for Discrete Manufacturing",
       "slug": "high-throughput-time-series-manufacturing",
       "category": "Industrial IoT",
@@ -1417,6 +1399,26 @@
   ],
   "media": [
     {
+      "id": "med_pdf_1788428569816_2rh2",
+      "filename": "it_blog_article_1788428569814_p7skpv.pdf",
+      "originalName": "it_blog_article.pdf",
+      "url": "/uploads/it_blog_article_1788428569814_p7skpv.pdf",
+      "mimetype": "application/pdf",
+      "size": 54021,
+      "type": "pdf",
+      "created_at": "2026-09-03T09:42:49.816Z"
+    },
+    {
+      "id": "med_pdf_1788428470103_dez8",
+      "filename": "it_blog_article_1788428470097_oq57nt.pdf",
+      "originalName": "it_blog_article.pdf",
+      "url": "/uploads/it_blog_article_1788428470097_oq57nt.pdf",
+      "mimetype": "application/pdf",
+      "size": 54021,
+      "type": "pdf",
+      "created_at": "2026-09-03T09:41:10.103Z"
+    },
+    {
       "id": "med_pdf_1788428101090_unj4",
       "filename": "it_blog_article_1788428101087_he3p4m.pdf",
       "originalName": "it_blog_article.pdf",
@@ -1428,6 +1430,38 @@
     }
   ],
   "activityLogs": [
+    {
+      "id": "log_1788428580056_dzsn",
+      "date": "3 SEP",
+      "title": "Created post: \"it_blog_article\"",
+      "description": "Status: published by BitXhift SuperAdmin",
+      "type": "posts_create",
+      "timestamp": "2026-09-03T09:43:00.056Z"
+    },
+    {
+      "id": "log_1788428569820_3s8i",
+      "date": "3 SEP",
+      "title": "Uploaded PDF Document: \"it_blog_article.pdf\"",
+      "description": "Saved as /uploads/it_blog_article_1788428569814_p7skpv.pdf",
+      "type": "pdf_upload",
+      "timestamp": "2026-09-03T09:42:49.820Z"
+    },
+    {
+      "id": "log_1788428481613_66s2",
+      "date": "3 SEP",
+      "title": "Created staffin: \"it_blog_article\"",
+      "description": "Status: published by BitXhift SuperAdmin",
+      "type": "staffing_create",
+      "timestamp": "2026-09-03T09:41:21.613Z"
+    },
+    {
+      "id": "log_1788428470108_y5kt",
+      "date": "3 SEP",
+      "title": "Uploaded PDF Document: \"it_blog_article.pdf\"",
+      "description": "Saved as /uploads/it_blog_article_1788428470097_oq57nt.pdf",
+      "type": "pdf_upload",
+      "timestamp": "2026-09-03T09:41:10.108Z"
+    },
     {
       "id": "log_1788428105815_vto8",
       "date": "3 SEP",
@@ -1838,7 +1872,7 @@
     }
   ],
   "settings": {
-    "siteName": "SMRIKAAM Technologies LLP",
+    "siteName": "SMRIKAAM Technologies",
     "contactEmail": "contact@smrikaam.com",
     "contactPhone": "+91-9150684601",
     "address": "Coimbatore, Tamil Nadu, India",
@@ -1846,6 +1880,19 @@
     "maintenanceMode": false
   },
   "staffing": [
+    {
+      "title": "it_blog_article",
+      "slug": "it-blog-article",
+      "subtitle": "",
+      "desc": "",
+      "bullets": [],
+      "status": "trash",
+      "pdf_url": "/uploads/it_blog_article_1788428470097_oq57nt.pdf",
+      "id": "sta_1788428481610_9s4w",
+      "created_at": "2026-09-03T09:41:21.610Z",
+      "updated_at": "2026-09-03T09:42:00.370Z",
+      "published_at": "2026-09-03T09:41:21.610Z"
+    },
     {
       "id": "staff_01",
       "title": "Temporary Staffing",

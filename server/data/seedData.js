@@ -1544,7 +1544,7 @@ Empowered internal compliance and operations teams to automate 80% of document r
     }
   ],
   settings: {
-    siteName: 'SMRIKAAM Technologies LLP',
+    siteName: 'SMRIKAAM Technologies',
     contactEmail: 'contact@smrikaam.com',
     contactPhone: '+91-9150684601',
     address: 'Coimbatore, Tamil Nadu, India',

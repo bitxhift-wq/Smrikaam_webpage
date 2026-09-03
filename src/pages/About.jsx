@@ -77,7 +77,7 @@ export default function About() {
             ENGINEERING + DOMAIN + DELIVERY
           </h2>
           <p className="text-[11px] sm:text-[14px] md:text-[15px] text-text font-normal leading-relaxed sm:leading-[1.7] mb-2 sm:mb-4 line-clamp-4 sm:line-clamp-none">
-            <span className="text-text font-normal">SMRIKAAM Technologies LLP</span> delivers high-performance engineering across Data, AI, Cloud, IIoT, and Intelligent Automation. Headquartered in Coimbatore, India, we bridge shop-floor hardware and cloud software with zero-compromise precision.
+            <span className="text-text font-normal">SMRIKAAM Technologies</span> delivers high-performance engineering across Data, AI, Cloud, IIoT, and Intelligent Automation. Headquartered in Coimbatore, India, we bridge shop-floor hardware and cloud software with zero-compromise precision.
           </p>
         </BlueprintWrapper>
 
@@ -216,7 +216,7 @@ export default function About() {
           </Link>
         </div>
         <p className="text-text-muted text-[15px] font-normal max-w-2xl leading-[1.55]">
-          SMRIKAAM Technologies LLP is headquartered in Coimbatore, Tamil Nadu, India. From our Coimbatore engineering center, we deliver mission-critical Data, AI, Cloud, and Industrial IoT solutions to enterprises globally.
+          SMRIKAAM Technologies is headquartered in Coimbatore, Tamil Nadu, India. From our Coimbatore engineering center, we deliver mission-critical Data, AI, Cloud, and Industrial IoT solutions to enterprises globally.
         </p>
       </div>
 
