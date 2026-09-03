@@ -78,13 +78,13 @@ export default function CaseStudies() {
                       <h3 className="font-heading text-base md:text-lg font-bold tracking-tight uppercase text-accent text-left">
                         INDUSTRY &amp; DOMAIN
                       </h3>
-                      <div>
-                        <p className="text-[15px] md:text-[16px] font-medium text-text">
+                      <div className="text-[15px] md:text-[16px] text-text font-normal leading-[1.65] text-left md:text-justify">
+                        <p className="font-normal text-text">
                           {cs.client_name || 'Enterprise Client'}
                         </p>
-                        <span className="text-[13px] text-text-muted font-normal">
+                        <p className="text-[13px] text-text-muted font-normal leading-[1.6] mt-1">
                           {cs.industry}
-                        </span>
+                        </p>
                       </div>
                     </div>
 
@@ -113,25 +113,27 @@ export default function CaseStudies() {
                       <h3 className="font-heading text-base md:text-lg font-bold tracking-tight uppercase text-accent text-left">
                         RESULT &amp; METRICS
                       </h3>
-                      <div>
+                      <div className="flex flex-wrap items-baseline gap-x-6 gap-y-2 text-[15px] md:text-[16px] leading-[1.65]">
                         {rawOutcomes.length > 0 ? (
-                          <div className="flex flex-wrap items-baseline gap-x-6 gap-y-2">
-                            {rawOutcomes.map((out, i) => (
-                              <div key={i} className="flex flex-wrap items-baseline gap-x-2 gap-y-1">
-                                <span className="font-heading text-lg md:text-xl font-bold text-accent">{out.metric}</span>
-                                <span className="text-[13px] text-text-muted font-normal">{out.label}</span>
-                                {i < rawOutcomes.length - 1 && (
-                                  <span className="text-text-muted font-normal text-xs select-none ml-3" aria-hidden="true">·</span>
-                                )}
-                              </div>
-                            ))}
-                          </div>
+                          rawOutcomes.map((out, i) => (
+                            <div key={i} className="flex flex-wrap items-baseline gap-x-2 gap-y-1">
+                              <span className="font-heading text-[16px] md:text-[18px] font-bold text-accent">
+                                {out.metric}
+                              </span>
+                              <span className="text-[13px] md:text-[14px] text-text-muted font-normal">
+                                {out.label}
+                              </span>
+                            </div>
+                          ))
                         ) : (
-                          <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
-                            <span className="font-heading text-lg md:text-xl font-bold text-accent">35% Downtime Reduction</span>
-                            <span className="text-text-muted font-normal text-xs select-none" aria-hidden="true">·</span>
-                            <span className="text-[13px] text-text-muted font-normal">99.999% Platform Uptime SLA</span>
-                          </div>
+                          <>
+                            <span className="font-heading text-[16px] md:text-[18px] font-bold text-accent">
+                              35% Downtime Reduction
+                            </span>
+                            <span className="text-[13px] md:text-[14px] text-text-muted font-normal">
+                              99.999% Platform Uptime SLA
+                            </span>
+                          </>
                         )}
                       </div>
                     </div>
