@@ -12,6 +12,7 @@ import RichTextRenderer from '../components/RichTextRenderer';
 import DecorativeSideCubes from '../components/visuals/DecorativeSideCubes';
 import MobileTabSelector from '../components/MobileTabSelector';
 import PageCTA from '../components/PageCTA';
+import ServiceDetailPanel from '../components/ServiceDetailPanel';
 
 function parseBulletPoints(data) {
   if (!data) return [];
@@ -267,155 +268,18 @@ export default function Services() {
               {/* Right Column: Active Service Detailed Stage */}
               {activeService && (
                 <div ref={detailContainerRef} className="col-span-12 md:col-span-7 lg:col-span-8 min-w-0 w-full">
-                <div
-                  key={activeService.id}
-                  role="tabpanel"
-                  id={`service-panel-${activeService.slug || activeService.id}`}
-                  aria-labelledby={`service-tab-${activeService.slug || activeService.id}`}
-                  className="service-detail-panel p-2.5 sm:p-6 md:p-8 space-y-4 sm:space-y-6"
-                >
-                  
-                  {/* Header: Title */}
-                  <div className="border-b border-border/70 pb-5">
-                    <h2 className="font-heading text-2xl sm:text-3xl lg:text-4xl font-bold text-text tracking-tight uppercase">
-                      {activeService.title}
-                    </h2>
-                  </div>
-
-                  {/* Service Detailed Narrative */}
-                  {activeService.description && (
-                    <div className="type-body text-[15px] md:text-[16px] font-normal text-text-muted leading-[1.7] text-left md:text-justify">
-                      <RichTextRenderer content={activeService.description} />
-                    </div>
-                  )}
-
-                  {/* Real Photograph with Parallax on Desktop */}
-                  <div
-                    ref={stageRef}
-                    onMouseMove={handleMouseMove}
-                    onMouseEnter={() => setIsHovered(true)}
-                    onMouseLeave={() => {
-                      setIsHovered(false);
-                      setMousePos({ x: 0.5, y: 0.5 });
-                    }}
-                    className="relative overflow-hidden aspect-video border border-border bg-black/5 dark:bg-white/5"
-                  >
-                    <img
-                      src={activeService.image}
-                      alt={activeService.title}
-                      onError={(e) => {
-                        e.currentTarget.style.display = 'none';
-                      }}
-                      className="w-full h-full object-cover transition-transform duration-300 ease-out"
-                      style={{
-                        transform: `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translate3d(${translateX}px, ${translateY}px, 0px)`
-                      }}
-                    />
-                  </div>
-
-                  {/* Business Problems Solved */}
-                  <div className="border-t border-border/70 pt-6">
-                    <h3 className="font-heading text-base md:text-lg font-bold tracking-tight uppercase text-accent mb-2.5 text-left">
-                      BUSINESS PROBLEMS SOLVED
-                    </h3>
-                    <ul className="space-y-2">
-                      {activeService.businessProblems.map((prob, i) => (
-                        <li key={i} className="flex items-start gap-2.5 text-[15px] md:text-[15px] font-normal text-text leading-[1.7]">
-                          <span className="w-1.5 h-1.5 rounded-full bg-accent mt-2.5 shrink-0" aria-hidden="true" />
-                          <div>{renderBulletText(prob)}</div>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-
-                  {/* Core Capabilities */}
-                  <div className="border-t border-border/70 pt-6">
-                    <h3 className="font-heading text-base md:text-lg font-bold tracking-tight uppercase text-accent mb-3 text-left">
-                      CORE CAPABILITIES
-                    </h3>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-                      {activeService.capabilities.map((cap, i) => (
-                        <div
-                          key={i}
-                          className="flex items-center gap-2 px-3.5 py-2 bg-black/[0.03] dark:bg-white/[0.04] border border-border text-[12px] md:text-[13px] text-text font-normal"
-                        >
-                          <span>{cap}</span>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Technology Stack */}
-                  <div className="border-t border-border/70 pt-6">
-                    <h3 className="font-heading text-base md:text-lg font-bold tracking-tight uppercase text-accent mb-3 text-left">
-                      MODERN TECHNOLOGY STACK
-                    </h3>
-                    <div className="flex flex-wrap gap-2.5">
-                      {activeService.technology.map((tech, i) => (
-                        <span
-                          key={i}
-                          className="inline-flex items-center px-3 py-1.5 bg-bg border border-border text-[12px] md:text-[13px] text-text font-normal"
-                        >
-                          {tech}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Business Outcome */}
-                  <div className="border-t border-border/70 pt-6">
-                    <div className="p-4 bg-black/[0.02] dark:bg-white/[0.03] border-l-2 border-accent">
-                      <div className="font-heading text-base md:text-lg font-bold tracking-tight uppercase text-accent mb-1.5 text-left">
-                        BUSINESS OUTCOME
-                      </div>
-                      <p className="text-[14px] md:text-[15px] text-text font-normal leading-[1.5] text-left">
-                        {activeService.outcomes}
-                      </p>
-                    </div>
-                  </div>
-
-                  {/* Accelerator & Case Study Links */}
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2 border-t border-border/70 text-[13px]">
-                    <div className="p-3.5 border border-border/70 flex flex-col justify-between">
-                      <span className="text-[11px] text-text-muted font-normal uppercase tracking-wider mb-1.5 text-left">
-                        ENGINEERED PRODUCT / ASSET
-                      </span>
-                      <Link to={`/products/${activeService.acceleratorSlug || 'bitxhift'}`} className="text-text font-semibold hover:text-accent transition-colors inline-flex items-center gap-1.5 group/acc">
-                        <span>{activeService.accelerator}</span>
-                        <span className="text-accent transition-transform duration-200 group-hover/acc:translate-x-1" aria-hidden="true">→</span>
-                      </Link>
-                    </div>
-                    <div className="p-3.5 border border-border/70 flex flex-col justify-between">
-                      <span className="text-[11px] text-text-muted font-normal uppercase tracking-wider mb-1.5 text-left">
-                        CASE STUDY / WORKBENCH
-                      </span>
-                      <Link to={`/case-studies/${activeService.caseStudySlug || ''}`} className="text-text font-medium hover:text-accent transition-colors inline-flex items-center gap-1.5 group/cs">
-                        <span className="line-clamp-1">{activeService.caseStudy}</span>
-                        <span className="text-accent transition-transform duration-200 group-hover/cs:translate-x-1 shrink-0" aria-hidden="true">→</span>
-                      </Link>
-                    </div>
-                  </div>
-
-                  {/* Direct Specification & CTA Links */}
-                  <div className="pt-2 flex flex-col sm:flex-row gap-3">
-                    <Link
-                      to={`/services/${activeService.slug}`}
-                      className="btn btn-secondary flex-1 py-3 text-xs font-semibold uppercase tracking-wider inline-flex items-center justify-center gap-2"
-                    >
-                      <span>VIEW FULL SPECIFICATION</span>
-                      <ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />
-                    </Link>
-                    <Link
-                      to="/contact"
-                      className="btn btn-primary flex-1 py-3 text-xs font-semibold uppercase tracking-wider inline-flex items-center justify-center gap-2"
-                    >
-                      <span>DISCUSS THIS SERVICE</span>
-                      <span className="arrow-hover" aria-hidden="true">→</span>
-                    </Link>
-                  </div>
+                  <ServiceDetailPanel
+                    service={activeService}
+                    stageRef={stageRef}
+                    isHovered={isHovered}
+                    mousePos={mousePos}
+                    handleMouseMove={handleMouseMove}
+                    setIsHovered={setIsHovered}
+                    setMousePos={setMousePos}
+                    isStandalone={false}
+                  />
                 </div>
-              </div>
-            )}
+              )}
           </div>
         </div>
       )}
