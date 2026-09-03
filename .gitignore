@@ -12,12 +12,9 @@ vite.config.js.timestamp-*
 
 # Environment variables & secrets
 .env
-.env.local
-.env.production
-.env.*.local
-.env.development.local
-.env.test.local
-.env.production.local
+.env.*
+!.env.example
+
 
 # Logs
 logs/
