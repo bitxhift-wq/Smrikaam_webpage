@@ -336,7 +336,8 @@ export default function App() {
             <Route path="/careers" element={<PublicLayout><Careers /></PublicLayout>} />
             <Route path="/contact" element={<PublicLayout><Contact /></PublicLayout>} />
 
-            {/* HIDDEN ADMIN CMS ROUTES */}
+            {/* ADMIN CMS ROUTES */}
+            <Route path="/admin/login" element={<AdminLogin />} />
             <Route path={`${ADMIN_ROUTE_BASE}/login`} element={<AdminLogin />} />
             <Route path="/smk-console-x9k2m7/login" element={<Navigate to={`${ADMIN_ROUTE_BASE}/login`} replace />} />
             <Route path="/smk-console-x9k2m7/*" element={<Navigate to={ADMIN_ROUTE_BASE} replace />} />
@@ -395,7 +396,36 @@ export default function App() {
               <Route path="settings" element={<SettingsPage />} />
               <Route path="inbox" element={<InboxPage />} />
               <Route path="book-a-call" element={<AdminBookCallPage />} />
+            </Route>
+
+            {/* Protected Admin Routes for /admin */}
+            <Route
+              path="/admin"
+              element={
+                <RequireAuth>
+                  <AdminLayout />
+                </RequireAuth>
+              }
+            >
+              <Route index element={<Navigate to="/admin/dashboard" replace />} />
+              <Route path="dashboard" element={<DashboardPage />} />
+              <Route path="book-a-call" element={<AdminBookCallPage />} />
               <Route path="enquiries" element={<AdminBookCallPage />} />
+              <Route path="blogs" element={<AdminContentManager resource="posts" title="Blog Articles" fields={BLOG_FIELDS} />} />
+              <Route path="services" element={<AdminContentManager resource="services" title="Services" fields={SERVICE_FIELDS} />} />
+              <Route path="accelerators" element={<AdminContentManager resource="accelerators" title="Products" fields={ACCELERATOR_FIELDS} />} />
+              <Route path="products" element={<Navigate to="/admin/accelerators" replace />} />
+              <Route path="industries" element={<AdminContentManager resource="industries" title="Industries" fields={INDUSTRY_FIELDS} />} />
+              <Route path="case-studies" element={<AdminContentManager resource="case-studies" title="Case Studies" fields={CASE_STUDY_FIELDS} />} />
+              <Route path="staffing" element={<AdminContentManager resource="staffing" title="Staffing Models & Roles" fields={STAFFING_FIELDS} />} />
+              <Route path="locations" element={<AdminContentManager resource="locations" title="Locations & Facilities" fields={LOCATION_FIELDS} />} />
+              <Route path="reports" element={<ReportsManagerPage />} />
+              <Route path="media" element={<MediaLibraryView />} />
+              <Route path="drafts" element={<PublishingLifecyclePage viewType="draft" />} />
+              <Route path="published" element={<PublishingLifecyclePage viewType="published" />} />
+              <Route path="trash" element={<PublishingLifecyclePage viewType="trash" />} />
+              <Route path="settings" element={<SettingsPage />} />
+              <Route path="inbox" element={<InboxPage />} />
             </Route>
 
             {/* Fallback route */}

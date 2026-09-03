@@ -2,8 +2,8 @@
   "users": [
     {
       "id": "usr_admin_01",
-      "name": "SMRIKAAM Master Admin",
-      "email": "admin@smrikaam.com",
+      "name": "BitXhift SuperAdmin",
+      "email": "bitxhift@gmail.com",
       "passwordHash": "$2b$10$UcsMGDJ7e.Xr5vnFUdTMKO6sydFrywjXSjDrVAhkQCAxPLmLlklme",
       "role": "superadmin",
       "created_at": "2026-08-01T00:00:00.000Z",
@@ -1474,6 +1474,22 @@
   ],
   "activityLogs": [
     {
+      "id": "log_1788426929816_x6qe",
+      "date": "3 SEP",
+      "title": "Admin Login Successful",
+      "description": "User \"BitXhift SuperAdmin\" logged in from ::1",
+      "type": "auth_login",
+      "timestamp": "2026-09-03T09:15:29.816Z"
+    },
+    {
+      "id": "log_1788426929094_t6hm",
+      "date": "3 SEP",
+      "title": "New Book a Call Request: Apex Healthcare Cloud",
+      "description": "Sunita Narayanan (sunita.n@apexhealth.io) requested session for Healthcare & Life Sciences",
+      "type": "engagement",
+      "timestamp": "2026-09-03T09:15:29.094Z"
+    },
+    {
       "id": "log_1788426398165_elwj",
       "date": "3 SEP",
       "title": "New Book a Call Request: Titan Manufacturing Corp",
@@ -1933,6 +1949,26 @@
     }
   ],
   "engagements": [
+    {
+      "id": "eng_1788426929084_x0gpvb",
+      "full_name": "Sunita Narayanan",
+      "company_name": "Apex Healthcare Cloud",
+      "email": "sunita.n@apexhealth.io",
+      "phone": "+91 91234 56789",
+      "job_title": "Director of Platform Engineering",
+      "requirement_type": "Healthcare & Life Sciences",
+      "message": "Require HIPAA-compliant cloud migration & FHIR integration for 12 regional hospitals.",
+      "preferred_date": "2026-09-15",
+      "preferred_time": "02:00 PM - 04:00 PM",
+      "source": "Public Web Form",
+      "status": "QUALIFIED",
+      "priority": "URGENT",
+      "assigned_to": "Dr. Ananya Sharma — Cloud Architect Lead",
+      "admin_notes": "Verified HIPAA compliance requirements. Proposal deck sent.",
+      "is_read": true,
+      "created_at": "2026-09-03T09:15:29.084Z",
+      "updated_at": "2026-09-03T09:15:29.859Z"
+    },
     {
       "id": "eng_1788426398160_mlc391",
       "full_name": "Vikram Malhotra",

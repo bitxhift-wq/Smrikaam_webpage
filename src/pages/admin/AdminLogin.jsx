@@ -7,7 +7,7 @@ import BlueprintWrapper from '../../components/BlueprintWrapper';
 import Logo from '../../components/Logo';
 
 export default function AdminLogin() {
-  const [email, setEmail] = useState('admin@smrikaam.com');
+  const [email, setEmail] = useState('bitxhift@gmail.com');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
@@ -158,7 +158,7 @@ export default function AdminLogin() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   className="input w-full pl-10 pr-4 py-2.5 bg-[#1c2333] border border-[rgba(255,255,255,0.2)] text-[#f4f4f4] placeholder-[#64748b] focus:border-[#4fd1c5] focus:outline-none transition-colors"
-                  placeholder="admin@smrikaam.com"
+                  placeholder="bitxhift@gmail.com"
                 />
               </div>
             </div>

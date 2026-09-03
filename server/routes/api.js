@@ -47,9 +47,8 @@ const upload = multer({
 
 export const router = express.Router();
 
-// ============================================================
-// 1. AUTHENTICATION ROUTES
-// ============================================================
+// Protect any /api/admin/* endpoint
+router.use('/admin', requireAdminAuth);
 
 router.post('/auth/login', async (req, res) => {
   try {

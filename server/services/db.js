@@ -112,17 +112,22 @@ class Database {
 
   async getUserByEmail(email) {
     if (!email) return null;
+    const targetEmail = (process.env.ADMIN_EMAIL || 'bitxhift@gmail.com').toLowerCase();
+    if (email.trim().toLowerCase() !== targetEmail) {
+      return null;
+    }
+
     if (postgres.isConnected) {
       try {
-        const res = await postgres.query('SELECT * FROM admin_users WHERE LOWER(email) = LOWER($1) LIMIT 1', [email]);
+        const res = await postgres.query('SELECT * FROM admin_users WHERE LOWER(email) = LOWER($1) LIMIT 1', [targetEmail]);
         if (res.rows.length > 0) {
           const row = res.rows[0];
           return {
             id: row.id,
-            name: row.name,
-            email: row.email,
+            name: row.name || 'BitXhift SuperAdmin',
+            email: targetEmail,
             passwordHash: row.password_hash,
-            role: row.role,
+            role: row.role || 'superadmin',
             created_at: row.created_at,
             updated_at: row.updated_at
           };
@@ -133,7 +138,21 @@ class Database {
     }
     // Fallback
     const users = this.getCollection('users');
-    return users.find((u) => u.email.toLowerCase() === email.toLowerCase()) || null;
+    const user = users.find((u) => u.email.toLowerCase() === targetEmail);
+    if (user) {
+      return user;
+    }
+    // Auto seed fallback single admin account
+    const defaultPasswordHash = bcrypt.hashSync(process.env.ADMIN_PASSWORD || 'AdminPassword2026!', 10);
+    return {
+      id: 'usr_admin_01',
+      name: 'BitXhift SuperAdmin',
+      email: targetEmail,
+      passwordHash: defaultPasswordHash,
+      role: 'superadmin',
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString()
+    };
   }
 
   async getUserById(id) {

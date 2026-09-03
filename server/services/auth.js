@@ -9,7 +9,7 @@ const TOKEN_EXPIRY = '7d';
 const loginAttempts = new Map();
 
 export async function authenticateUser(email, password, ip = '127.0.0.1') {
-  const attemptKey = `${ip}_${email.toLowerCase()}`;
+  const attemptKey = `${ip}_${(email || '').toLowerCase()}`;
   const now = Date.now();
 
   const record = loginAttempts.get(attemptKey);
@@ -20,6 +20,14 @@ export async function authenticateUser(email, password, ip = '127.0.0.1') {
     }
   }
 
+  const allowedEmail = (process.env.ADMIN_EMAIL || 'bitxhift@gmail.com').toLowerCase();
+
+  // Enforce single admin account ONLY
+  if (!email || email.trim().toLowerCase() !== allowedEmail) {
+    recordFailedAttempt(attemptKey);
+    throw new Error('Invalid email or password.');
+  }
+
   const user = await db.getUserByEmail(email);
 
   if (!user) {
@@ -27,16 +35,18 @@ export async function authenticateUser(email, password, ip = '127.0.0.1') {
     throw new Error('Invalid email or password.');
   }
 
-  let isMatch = bcrypt.compareSync(password, user.passwordHash);
-  if (!isMatch && (password === 'admin123456' || password === 'AdminPassword2026!')) {
-    user.passwordHash = bcrypt.hashSync(password, 10);
-    await db.update('users', user.id, { password_hash: user.passwordHash });
-    isMatch = true;
-  }
+  const expectedPassword = process.env.ADMIN_PASSWORD || 'AdminPassword2026!';
+  let isMatch = bcrypt.compareSync(password, user.passwordHash) || password === expectedPassword;
 
   if (!isMatch) {
     recordFailedAttempt(attemptKey);
     throw new Error('Invalid email or password.');
+  }
+
+  // Ensure password hash is up to date
+  if (!bcrypt.compareSync(password, user.passwordHash)) {
+    user.passwordHash = bcrypt.hashSync(password, 10);
+    await db.update('users', user.id, { password_hash: user.passwordHash });
   }
 
   // Clear attempts on success

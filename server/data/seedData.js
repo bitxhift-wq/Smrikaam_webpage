@@ -7,8 +7,8 @@ export const initialSeedData = {
   users: [
     {
       id: 'usr_admin_01',
-      name: 'SMRIKAAM Master Admin',
-      email: 'admin@smrikaam.com',
+      name: 'BitXhift SuperAdmin',
+      email: 'bitxhift@gmail.com',
       passwordHash: initialPasswordHash,
       role: 'superadmin',
       created_at: '2026-08-01T00:00:00.000Z',
