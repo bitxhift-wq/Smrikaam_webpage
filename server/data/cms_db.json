@@ -1399,6 +1399,16 @@
   ],
   "media": [
     {
+      "id": "med_pdf_1788430010211_rdta",
+      "filename": "it_blog_article_1788430010199_qatwu9.pdf",
+      "originalName": "it_blog_article.pdf",
+      "url": "/uploads/it_blog_article_1788430010199_qatwu9.pdf",
+      "mimetype": "application/pdf",
+      "size": 54021,
+      "type": "pdf",
+      "created_at": "2026-09-03T10:06:50.211Z"
+    },
+    {
       "id": "med_pdf_1788428569816_2rh2",
       "filename": "it_blog_article_1788428569814_p7skpv.pdf",
       "originalName": "it_blog_article.pdf",
@@ -1430,6 +1440,22 @@
     }
   ],
   "activityLogs": [
+    {
+      "id": "log_1788430015247_9f2o",
+      "date": "3 SEP",
+      "title": "Created post: \"it_blog_article\"",
+      "description": "Status: published by BitXhift SuperAdmin",
+      "type": "posts_create",
+      "timestamp": "2026-09-03T10:06:55.247Z"
+    },
+    {
+      "id": "log_1788430010214_vaaw",
+      "date": "3 SEP",
+      "title": "Uploaded PDF Document: \"it_blog_article.pdf\"",
+      "description": "Saved as /uploads/it_blog_article_1788430010199_qatwu9.pdf",
+      "type": "pdf_upload",
+      "timestamp": "2026-09-03T10:06:50.214Z"
+    },
     {
       "id": "log_1788428580056_dzsn",
       "date": "3 SEP",
