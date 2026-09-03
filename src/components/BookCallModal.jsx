@@ -183,7 +183,7 @@ export default function BookCallModal() {
                     Full Name *
                   </label>
                   <div className="relative flex items-center w-full">
-                    <User className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-[var(--color-text-muted)] pointer-events-none z-10" />
+                    <User className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-[var(--color-text-muted)] pointer-events-none z-10" />
                     <input
                       type="text"
                       id="modal-name"
@@ -192,7 +192,7 @@ export default function BookCallModal() {
                       value={formData.name}
                       onChange={handleChange}
                       placeholder="e.g. Ananya Sharma"
-                      className="input pl-10 pr-3 h-10 w-full text-xs bg-[var(--color-bg)] border border-[var(--color-border)] text-[var(--color-text)] focus:border-[var(--color-accent)] focus:outline-none transition-colors"
+                      className="input has-icon-left h-10 w-full text-xs bg-[var(--color-bg)] border border-[var(--color-border)] text-[var(--color-text)] focus:border-[var(--color-accent)] focus:outline-none transition-colors"
                     />
                   </div>
                 </div>
@@ -203,7 +203,7 @@ export default function BookCallModal() {
                     Company Name *
                   </label>
                   <div className="relative flex items-center w-full">
-                    <Building className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-[var(--color-text-muted)] pointer-events-none z-10" />
+                    <Building className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-[var(--color-text-muted)] pointer-events-none z-10" />
                     <input
                       type="text"
                       id="modal-company"
@@ -212,7 +212,7 @@ export default function BookCallModal() {
                       value={formData.company}
                       onChange={handleChange}
                       placeholder="e.g. Apex Enterprise Systems"
-                      className="input pl-10 pr-3 h-10 w-full text-xs bg-[var(--color-bg)] border border-[var(--color-border)] text-[var(--color-text)] focus:border-[var(--color-accent)] focus:outline-none transition-colors"
+                      className="input has-icon-left h-10 w-full text-xs bg-[var(--color-bg)] border border-[var(--color-border)] text-[var(--color-text)] focus:border-[var(--color-accent)] focus:outline-none transition-colors"
                     />
                   </div>
                 </div>
@@ -223,7 +223,7 @@ export default function BookCallModal() {
                     Work Email *
                   </label>
                   <div className="relative flex items-center w-full">
-                    <Mail className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-[var(--color-text-muted)] pointer-events-none z-10" />
+                    <Mail className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-[var(--color-text-muted)] pointer-events-none z-10" />
                     <input
                       type="email"
                       id="modal-email"
@@ -232,7 +232,7 @@ export default function BookCallModal() {
                       value={formData.email}
                       onChange={handleChange}
                       placeholder="ananya@apexenterprise.com"
-                      className="input pl-10 pr-3 h-10 w-full text-xs bg-[var(--color-bg)] border border-[var(--color-border)] text-[var(--color-text)] focus:border-[var(--color-accent)] focus:outline-none transition-colors"
+                      className="input has-icon-left h-10 w-full text-xs bg-[var(--color-bg)] border border-[var(--color-border)] text-[var(--color-text)] focus:border-[var(--color-accent)] focus:outline-none transition-colors"
                     />
                   </div>
                 </div>
@@ -243,7 +243,7 @@ export default function BookCallModal() {
                     Phone Number
                   </label>
                   <div className="relative flex items-center w-full">
-                    <Phone className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-[var(--color-text-muted)] pointer-events-none z-10" />
+                    <Phone className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-[var(--color-text-muted)] pointer-events-none z-10" />
                     <input
                       type="tel"
                       id="modal-phone"
@@ -251,7 +251,7 @@ export default function BookCallModal() {
                       value={formData.phone}
                       onChange={handleChange}
                       placeholder="+91 98765 43210"
-                      className="input pl-10 pr-3 h-10 w-full text-xs bg-[var(--color-bg)] border border-[var(--color-border)] text-[var(--color-text)] focus:border-[var(--color-accent)] focus:outline-none transition-colors"
+                      className="input has-icon-left h-10 w-full text-xs bg-[var(--color-bg)] border border-[var(--color-border)] text-[var(--color-text)] focus:border-[var(--color-accent)] focus:outline-none transition-colors"
                     />
                   </div>
                 </div>
@@ -262,7 +262,7 @@ export default function BookCallModal() {
                     Job Title / Role
                   </label>
                   <div className="relative flex items-center w-full">
-                    <Briefcase className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-[var(--color-text-muted)] pointer-events-none z-10" />
+                    <Briefcase className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-[var(--color-text-muted)] pointer-events-none z-10" />
                     <input
                       type="text"
                       id="modal-jobTitle"
@@ -270,7 +270,7 @@ export default function BookCallModal() {
                       value={formData.jobTitle}
                       onChange={handleChange}
                       placeholder="VP Engineering / CTO / Head of Data"
-                      className="input pl-10 pr-3 h-10 w-full text-xs bg-[var(--color-bg)] border border-[var(--color-border)] text-[var(--color-text)] focus:border-[var(--color-accent)] focus:outline-none transition-colors"
+                      className="input has-icon-left h-10 w-full text-xs bg-[var(--color-bg)] border border-[var(--color-border)] text-[var(--color-text)] focus:border-[var(--color-accent)] focus:outline-none transition-colors"
                     />
                   </div>
                 </div>
@@ -281,13 +281,13 @@ export default function BookCallModal() {
                     Service Area of Interest *
                   </label>
                   <div className="relative flex items-center w-full">
-                    <Cpu className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-[var(--color-text-muted)] pointer-events-none z-10" />
+                    <Cpu className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-[var(--color-text-muted)] pointer-events-none z-10" />
                     <select
                       id="modal-service"
                       name="service"
                       value={formData.service}
                       onChange={handleChange}
-                      className="input pl-10 pr-8 h-10 w-full text-xs bg-[var(--color-bg)] border border-[var(--color-border)] text-[var(--color-text)] focus:border-[var(--color-accent)] focus:outline-none transition-colors appearance-none cursor-pointer"
+                      className="input has-icon-left has-icon-right h-10 w-full text-xs bg-[var(--color-bg)] border border-[var(--color-border)] text-[var(--color-text)] focus:border-[var(--color-accent)] focus:outline-none transition-colors appearance-none cursor-pointer"
                     >
                       <option value="Artificial Intelligence & Machine Learning">Artificial Intelligence & ML</option>
                       <option value="Industrial IoT (IIoT)">Industrial IoT (IIoT) & Edge</option>
@@ -301,7 +301,7 @@ export default function BookCallModal() {
                       <option value="Staffing Services">Staffing & Pod Augmentation</option>
                       <option value="Accelerator Demo">BitXhift / MigrateMax / ParseMaster Demo</option>
                     </select>
-                    <ChevronDown className="w-4 h-4 absolute right-3 top-1/2 -translate-y-1/2 text-[var(--color-text-muted)] pointer-events-none z-10" />
+                    <ChevronDown className="w-4 h-4 absolute right-3.5 top-1/2 -translate-y-1/2 text-[var(--color-text-muted)] pointer-events-none z-10" />
                   </div>
                 </div>
 
@@ -311,7 +311,7 @@ export default function BookCallModal() {
                     Preferred Date
                   </label>
                   <div className="relative flex items-center w-full">
-                    <Calendar className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-[var(--color-text-muted)] pointer-events-none z-10" />
+                    <Calendar className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-[var(--color-text-muted)] pointer-events-none z-10" />
                     <input
                       type="date"
                       id="modal-date"
@@ -319,7 +319,7 @@ export default function BookCallModal() {
                       min={new Date().toISOString().split('T')[0]}
                       value={formData.preferredDate}
                       onChange={handleChange}
-                      className="input pl-10 pr-3 h-10 w-full text-xs bg-[var(--color-bg)] border border-[var(--color-border)] text-[var(--color-text)] focus:border-[var(--color-accent)] focus:outline-none transition-colors cursor-pointer"
+                      className="input has-icon-left h-10 w-full text-xs bg-[var(--color-bg)] border border-[var(--color-border)] text-[var(--color-text)] focus:border-[var(--color-accent)] focus:outline-none transition-colors cursor-pointer"
                     />
                   </div>
                 </div>
@@ -330,20 +330,20 @@ export default function BookCallModal() {
                     Preferred Time Slot
                   </label>
                   <div className="relative flex items-center w-full">
-                    <Clock className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-[var(--color-text-muted)] pointer-events-none z-10" />
+                    <Clock className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-[var(--color-text-muted)] pointer-events-none z-10" />
                     <select
                       id="modal-time"
                       name="preferredTime"
                       value={formData.preferredTime}
                       onChange={handleChange}
-                      className="input pl-10 pr-8 h-10 w-full text-xs bg-[var(--color-bg)] border border-[var(--color-border)] text-[var(--color-text)] focus:border-[var(--color-accent)] focus:outline-none transition-colors appearance-none cursor-pointer"
+                      className="input has-icon-left has-icon-right h-10 w-full text-xs bg-[var(--color-bg)] border border-[var(--color-border)] text-[var(--color-text)] focus:border-[var(--color-accent)] focus:outline-none transition-colors appearance-none cursor-pointer"
                     >
                       <option value="10:00 AM - 12:00 PM">10:00 AM - 12:00 PM IST</option>
                       <option value="02:00 PM - 04:00 PM">02:00 PM - 04:00 PM IST</option>
                       <option value="04:00 PM - 06:00 PM">04:00 PM - 06:00 PM IST</option>
                       <option value="07:00 PM - 09:00 PM">07:00 PM - 09:00 PM IST (US / EU)</option>
                     </select>
-                    <ChevronDown className="w-4 h-4 absolute right-3 top-1/2 -translate-y-1/2 text-[var(--color-text-muted)] pointer-events-none z-10" />
+                    <ChevronDown className="w-4 h-4 absolute right-3.5 top-1/2 -translate-y-1/2 text-[var(--color-text-muted)] pointer-events-none z-10" />
                   </div>
                 </div>
               </div>

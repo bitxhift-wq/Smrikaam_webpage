@@ -1388,6 +1388,16 @@ html.dark .service-tab-item.active {
   width: 100%;
 }
 
+.input.has-icon-left,
+.has-icon-left {
+  padding-left: 2.75rem !important;
+}
+
+.input.has-icon-right,
+.has-icon-right {
+  padding-right: 2.5rem !important;
+}
+
 .input::placeholder {
   color: var(--color-text-muted);
   opacity: 1;
