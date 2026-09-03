@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
-import { Users, ArrowUpRight, CheckCircle2, ShieldCheck, ChevronDown, ChevronUp } from 'lucide-react';
+import { Users, ArrowUpRight, CheckCircle2, ShieldCheck, ChevronDown } from 'lucide-react';
 import { useCMS } from '../context/CMSContext';
 import BlueprintWrapper from '../components/BlueprintWrapper';
 import TextReveal from '../components/anim/TextReveal';
@@ -36,12 +36,30 @@ export default function Staffing() {
   ];
 
   const faqs = [
-    { q: 'How fast can you shortlist candidates?', a: 'For temporary staffing and staff augmentation, we deliver a shortlist of 3-5 pre-screened candidates within 48 to 72 hours.' },
-    { q: 'Do you handle payroll and compliance for contract staff?', a: 'Yes. SMRIKAAM Technologies LLP manages complete statutory compliance, PF/ESI, payroll, background checks, and NDAs for all temporary and contract talent.' },
-    { q: 'What technology areas do you specialise in?', a: 'We specialise exclusively in Data Engineering, Industrial IoT, AI/ML (Generative & RAG), Cloud Infrastructure (AWS/Azure/GCP), DevOps/Kubernetes, and SAP/ERP Integrations.' },
-    { q: 'Can you build a dedicated offshore team for us?', a: 'Yes, we set up dedicated engineering pods and ODCs from our Coimbatore headquarters with single-point project delivery management.' },
-    { q: 'Do you offer a replacement guarantee?', a: 'All permanent placement hires come with a 90-day replacement guarantee at zero additional cost.' },
-    { q: 'Which locations do you serve?', a: 'We serve enterprise clients across India and global remote teams directly from our Coimbatore headquarters.' }
+    {
+      q: 'How fast can you shortlist candidates?',
+      a: 'SMRIKAAM can typically present an initial shortlist based on the role, technology requirements, seniority, and engagement model. Timelines vary by skill availability and role complexity, with priority searches handled through an accelerated sourcing process.'
+    },
+    {
+      q: 'Do you handle payroll and compliance for contract staff?',
+      a: 'Yes. For applicable contract staffing engagements, SMRIKAAM can support payroll administration, statutory compliance, onboarding, documentation, and ongoing workforce coordination.'
+    },
+    {
+      q: 'What technology areas do you specialise in?',
+      a: 'Our staffing capabilities cover software engineering, AI and machine learning, data engineering, cloud and DevOps, cybersecurity, IoT, enterprise applications, analytics, and other specialised technology domains.'
+    },
+    {
+      q: 'Can you build a dedicated offshore team for us?',
+      a: 'Yes. We can help establish dedicated engineering teams aligned to your technology stack, delivery model, governance requirements, and business objectives, including ongoing team scaling and management support.'
+    },
+    {
+      q: 'Do you offer a replacement guarantee?',
+      a: 'Replacement terms depend on the engagement model and contractual agreement. Where applicable, replacement support can be provided for candidates who exit or are unable to continue within the agreed engagement period.'
+    },
+    {
+      q: 'Which locations do you serve?',
+      a: 'SMRIKAAM supports technology staffing and delivery requirements across India and international markets, subject to the specific role, engagement model, and client requirements.'
+    }
   ];
 
   return (
@@ -166,19 +184,35 @@ export default function Staffing() {
         </h2>
 
         <div className="space-y-4">
-          {faqs.map((faq, idx) => (
-            <BlueprintWrapper key={idx} className="p-4 cursor-pointer" onClick={() => setOpenFaq(openFaq === idx ? null : idx)}>
-              <div className="flex items-center justify-between font-heading text-base font-bold text-text uppercase">
-                <span>{faq.q}</span>
-                {openFaq === idx ? <ChevronUp className="w-5 h-5 text-accent" /> : <ChevronDown className="w-5 h-5 text-text-muted" />}
-              </div>
-              {openFaq === idx && (
-                <div className="mt-3 pt-3 border-t border-border text-[15px] font-normal text-text-muted leading-[1.65]">
-                  {faq.a}
-                </div>
-              )}
-            </BlueprintWrapper>
-          ))}
+          {faqs.map((faq, idx) => {
+            const isOpen = openFaq === idx;
+            return (
+              <BlueprintWrapper key={idx} className="p-4">
+                <button
+                  type="button"
+                  aria-expanded={isOpen}
+                  aria-controls={`faq-answer-${idx}`}
+                  onClick={() => setOpenFaq(isOpen ? null : idx)}
+                  className="w-full flex items-center justify-between text-left font-heading text-base font-bold text-text uppercase cursor-pointer group focus:outline-none focus:text-accent"
+                >
+                  <span>{faq.q}</span>
+                  <ChevronDown
+                    className={`w-5 h-5 shrink-0 transition-transform duration-200 ${
+                      isOpen ? 'rotate-180 text-accent' : 'text-text-muted group-hover:text-text'
+                    }`}
+                  />
+                </button>
+                {isOpen && (
+                  <div
+                    id={`faq-answer-${idx}`}
+                    className="mt-3 pt-3 border-t border-border text-[15px] font-normal text-text-muted leading-[1.65]"
+                  >
+                    {faq.a}
+                  </div>
+                )}
+              </BlueprintWrapper>
+            );
+          })}
         </div>
       </div>
 

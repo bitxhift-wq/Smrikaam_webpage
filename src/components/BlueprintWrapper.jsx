@@ -1,12 +1,12 @@
 import React from 'react';
 
-export default function BlueprintWrapper({ children, className = '', dark = false, pulseCorners = false, showCorners = false, style }) {
+export default function BlueprintWrapper({ children, className = '', dark = false, pulseCorners = false, showCorners = false, style, ...props }) {
   // Corners are opt-in: only render when showCorners is true, or when
   // pulseCorners is true (the animated contact-form registration marks).
   const renderCorners = showCorners || pulseCorners;
   const cornerClass = `corner ${pulseCorners ? 'corner-pulse' : ''}`;
   return (
-    <div className={`blueprint ${dark ? 'blueprint-dark' : ''} ${className}`} style={style}>
+    <div className={`blueprint ${dark ? 'blueprint-dark' : ''} ${className}`} style={style} {...props}>
       {renderCorners && (
         <>
           <i className={`${cornerClass} tl`}>+</i>
