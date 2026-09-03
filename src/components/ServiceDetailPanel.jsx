@@ -56,7 +56,7 @@ export default function ServiceDetailPanel({
   const acceleratorSlug = service.acceleratorSlug || service.accelerator_slug || 'bitxhift';
   const caseStudyTitle = service.caseStudy || service.case_study || 'Smart Factory Manufacturing Transformation';
   const caseStudySlug = service.caseStudySlug || service.case_study_slug || 'case-studies';
-  const heroImage = service.cover_image_url || service.image || 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=1200&auto=format&fit=crop';
+  const heroImage = service.cover_image_url || service.image || 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1200&auto=format&fit=crop';
   const serviceSlug = service.slug || service.id;
 
   return (

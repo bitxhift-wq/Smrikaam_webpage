@@ -2,6 +2,10 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, ArrowUpRight } from 'lucide-react';
 
+import React, { useState, useEffect, useRef } from 'react';
+import { Link } from 'react-router-dom';
+import { ArrowRight, ArrowUpRight } from 'lucide-react';
+
 export default function ServicesInteractiveSection() {
   const [activeIdx, setActiveIdx] = useState(0);
   const [mousePos, setMousePos] = useState({ x: 0.5, y: 0.5 });
@@ -17,7 +21,7 @@ export default function ServicesInteractiveSection() {
       description: 'Transform siloed legacy data into real-time operational visibility with high-performance BI frameworks, executive dashboards, and embedded analytics engines.',
       capabilities: ['Executive KPI Views', 'Real-Time Telemetry', 'Automated Financial Reporting', 'Embedded Analytics'],
       tech: ['PowerBI', 'Tableau', 'Looker', 'BigQuery'],
-      image: 'https://images.unsplash.com/photo-1551836022-d5d88e9218df?q=80&w=1200&auto=format&fit=crop',
+      image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1200&auto=format&fit=crop',
       caption: 'DATA → INSIGHT → DECISION — Enterprise Telemetry Control Environment',
       link: '/services'
     },
@@ -29,7 +33,7 @@ export default function ServicesInteractiveSection() {
       description: 'Connect shop-floor machinery, capture sensor telemetry, and achieve predictive maintenance with real-time OEE tracking across industrial operations.',
       capabilities: ['OPC-UA / Modbus Ingestion', 'Edge Sensor Integration', 'Predictive Maintenance', 'Live Floor Wallboards'],
       tech: ['MQTT', 'Node-RED', 'TimescaleDB', 'InfluxDB'],
-      image: 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?q=80&w=1200&auto=format&fit=crop',
+      image: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=1200&auto=format&fit=crop',
       caption: 'CONNECTED MACHINES — Smart Factory Floor & OEE Automation',
       link: '/services'
     },
@@ -41,7 +45,7 @@ export default function ServicesInteractiveSection() {
       description: 'Build high-throughput data pipelines, automated ELT workflows, and modern lakehouse architectures engineered for zero data loss and sub-second queries.',
       capabilities: ['ETL / ELT Pipelines', 'Lakehouse Architecture', 'Schema Drift Control', 'CDC Telemetry Sync'],
       tech: ['dbt', 'Apache Spark', 'Snowflake', 'Databricks'],
-      image: 'https://images.unsplash.com/photo-1573164713988-8665fc963095?q=80&w=1200&auto=format&fit=crop',
+      image: 'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?q=80&w=1200&auto=format&fit=crop',
       caption: 'DATA PLATFORMS — High-Throughput Engineering Infrastructure',
       link: '/services'
     },
@@ -53,38 +57,6 @@ export default function ServicesInteractiveSection() {
       description: 'Deploy autonomous AI agents, domain-tuned LLMs, and agentic RAG pipelines that automate complex technical workflows with enterprise guardrails.',
       capabilities: ['Agentic RAG Pipelines', 'Document OCR & NLP', 'Custom Fine-Tuned Models', 'Enterprise Guardrails'],
       tech: ['LangChain', 'LlamaIndex', 'Gemini API'],
-      image: 'https://images.unsplash.com/photo-1531482615713-2afd69097998?q=80&w=1200&auto=format&fit=crop',
-      caption: 'HUMAN + ARTIFICIAL INTELLIGENCE — Autonomous Agentic AI Systems',
-      link: '/services'
-    },
-    {
-      id: 'devops-cloud',
-      num: '05',
-      title: 'DevOps & Cloud',
-      tagline: 'Infrastructure as Code, CI/CD pipelines, and zero-downtime cloud migration.',
-      description: 'Engineer zero-downtime cloud landing zones, automated Infrastructure as Code (IaC), and resilient CI/CD delivery pipelines across AWS, Google Cloud, and Azure.',
-      capabilities: ['Cloud Landing Zones', 'Infrastructure as Code', 'Zero-Downtime Migration', 'Kubernetes / Docker'],
-      tech: ['AWS', 'Google Cloud', 'Azure', 'Terraform', 'Kubernetes'],
-      image: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?q=80&w=1200&auto=format&fit=crop',
-      caption: 'CLOUD INFRASTRUCTURE — Distributed Multi-Cloud System Architecture',
-      link: '/services'
-    },
-    {
-      id: 'data-governance',
-      num: '06',
-      title: 'Data Governance',
-      tagline: 'Lineage tracking, data cataloguing, security auditing, and DPDP compliance.',
-      description: 'Establish enterprise data trust with automated lineage mapping, granular role-based access controls, data cataloguing, and regulatory compliance auditing.',
-      capabilities: ['Automated Lineage Mapping', 'Data Cataloging', 'Role-Based Access Control', 'DPDP Compliance Audit'],
-      tech: ['Collibra', 'Apache Atlas', 'Privacera', 'Great Expectations'],
-      image: 'https://images.unsplash.com/photo-1563986768609-322da13575f3?q=80&w=1200&auto=format&fit=crop',
-      caption: 'TRUST & COMPLIANCE — Enterprise Lineage & Security Control',
-      link: '/services'
-    }
-  ];
-
-  // Preload images to eliminate flickers
-  useEffect(() => {
     services.forEach((srv) => {
       const img = new Image();
       img.src = srv.image;

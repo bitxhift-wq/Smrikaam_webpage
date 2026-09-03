@@ -148,7 +148,7 @@ Empowered internal compliance and operations teams to automate 80% of document r
       "acceleratorSlug": "bitxhift",
       "caseStudy": "Smart Factory Manufacturing Transformation",
       "caseStudySlug": "case-studies",
-      "cover_image_url": "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=1200&auto=format&fit=crop",
+      "cover_image_url": "https://images.unsplash.com/photo-1555255707-c07966088b7b?q=80&w=1200&auto=format&fit=crop",
       "status": "published",
       "display_order": 1,
       "created_at": "2026-08-01T00:00:00.000Z",
