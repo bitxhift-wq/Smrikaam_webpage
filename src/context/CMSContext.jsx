@@ -164,6 +164,17 @@ export function CMSProvider({ children }) {
     return res.data;
   }, [refresh]);
 
+  // Smart Document Importer (PDF / DOCX)
+  const importSmartDocument = useCallback(async (file) => {
+    const formData = new FormData();
+    formData.append('file', file);
+    const res = await api.post('/documents/import-smart', formData, {
+      headers: { 'Content-Type': 'multipart/form-data' }
+    });
+    refresh();
+    return res.data;
+  }, [refresh]);
+
   // DOCX Import
   const importDocx = useCallback(async (file) => {
     const formData = new FormData();
@@ -209,6 +220,7 @@ export function CMSProvider({ children }) {
     restoreItem,
     bulkAction,
     uploadMedia,
+    importSmartDocument,
     importDocx,
     uploadPdf
   };

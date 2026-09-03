@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import {
   Plus, Edit2, Trash2, CheckCircle, Clock, Archive, X, Save,
   Search, Eye, Upload, FileText, ArrowLeft, Image as ImageIcon,
-  Sparkles, ExternalLink, AlertCircle, Check, Tag
+  Sparkles, ExternalLink, AlertCircle, Check, Tag, FileCheck,
+  FileCode, Layers, ShieldCheck, Loader2
 } from 'lucide-react';
 import { useCMS } from '../../context/CMSContext';
 import BlueprintWrapper from '../../components/BlueprintWrapper';
@@ -15,13 +16,14 @@ const PREDEFINED_CATEGORIES = [
   'DevOps & Cloud Infrastructure',
   'Artificial Intelligence & Machine Learning',
   'Data Governance & Security',
+  'Integration Services',
   'ServiceNow Solutions',
   'Technology Advisory',
   'Staffing & Pod Augmentation'
 ];
 
 export default function AdminBlogManager() {
-  const { fetchAdmin, createItem, updateItem, updateStatus, deleteItem, importDocx, uploadMedia } = useCMS();
+  const { fetchAdmin, createItem, updateItem, updateStatus, deleteItem, importSmartDocument, uploadMedia } = useCMS();
 
   const [view, setView] = useState('list'); // 'list' | 'editor' | 'preview'
   const [posts, setPosts] = useState([]);
@@ -44,17 +46,26 @@ export default function AdminBlogManager() {
     author: 'SMRIKAAM Engineering Team',
     meta_title: '',
     meta_description: '',
-    status: 'draft'
+    status: 'draft', // ALWAYS DRAFT ON IMPORT
+    sourceType: '',
+    sourceFileName: ''
   });
 
   const [tagInput, setTagInput] = useState('');
   const [saving, setSaving] = useState(false);
-  const [importing, setImporting] = useState(false);
   const [uploadingImage, setUploadingImage] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
   const [fieldErrors, setFieldErrors] = useState({});
   const [successMsg, setSuccessMsg] = useState('');
   const [imgLoadError, setImgLoadError] = useState(false);
+
+  // Smart Importer Modal & Processing States
+  const [importModalOpen, setImportModalOpen] = useState(false);
+  const [auditModalOpen, setAuditModalOpen] = useState(false);
+  const [importStep, setImportStep] = useState(0); // 0: Idle, 1: Reading, 2: Extracting, 3: Structuring, 4: Complete
+  const [importingFile, setImportingFile] = useState(false);
+  const [importAuditData, setImportAuditData] = useState(null);
+  const [dragOver, setDragOver] = useState(false);
 
   // Load all posts for admin table
   const loadPosts = async () => {
@@ -89,7 +100,9 @@ export default function AdminBlogManager() {
       author: 'SMRIKAAM Engineering Team',
       meta_title: '',
       meta_description: '',
-      status: 'draft'
+      status: 'draft',
+      sourceType: '',
+      sourceFileName: ''
     });
     setEditingPostId(null);
     setErrorMsg('');
@@ -119,7 +132,9 @@ export default function AdminBlogManager() {
       author: post.author || 'SMRIKAAM Engineering Team',
       meta_title: post.meta_title || '',
       meta_description: post.meta_description || '',
-      status: post.status || 'draft'
+      status: post.status || 'draft',
+      sourceType: post.sourceType || '',
+      sourceFileName: post.sourceFileName || ''
     });
     setEditingPostId(post.id);
     setErrorMsg('');
@@ -133,7 +148,6 @@ export default function AdminBlogManager() {
   const handleTitleChange = (val) => {
     setFormData((prev) => {
       const next = { ...prev, title: val };
-      // Auto-generate slug if slug hasn't been manually locked or if it matched previous auto slug
       const autoSlug = val.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
       if (!prev.slug || prev.slug === prev.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '')) {
         next.slug = autoSlug;
@@ -165,27 +179,56 @@ export default function AdminBlogManager() {
     }));
   };
 
-  // Import DOCX / PDF Document
-  const handleDocxImport = async (e) => {
-    const file = e.target.files?.[0];
+  // Smart Document Importer Handler
+  const processSmartImport = async (file) => {
     if (!file) return;
 
-    setImporting(true);
+    const ext = file.name.substring(file.name.lastIndexOf('.')).toLowerCase();
+    if (!['.pdf', '.docx', '.doc'].includes(ext)) {
+      setErrorMsg('Unsupported file format. Please upload a PDF or DOCX file.');
+      return;
+    }
+
+    setImportingFile(true);
     setErrorMsg('');
+    setImportStep(1); // Reading
+
     try {
-      const res = await importDocx(file);
-      if (res && res.content) {
-        setFormData((prev) => ({
-          ...prev,
-          content: res.content,
-          title: prev.title || res.title || file.name.replace(/\.[^/.]+$/, '')
-        }));
-        setSuccessMsg('Article content imported successfully from document.');
+      setTimeout(() => setImportStep(2), 600); // Extracting
+      setTimeout(() => setImportStep(3), 1200); // Structuring
+
+      const res = await importSmartDocument(file);
+      if (res && res.data) {
+        const d = res.data;
+        setImportStep(4); // Complete
+        setImportAuditData(d);
+
+        // Populate formData in draft mode (NEVER AUTO-PUBLISH)
+        setFormData({
+          title: d.title || '',
+          slug: d.slug || '',
+          category: d.category || 'Industrial IoT (IIoT)',
+          excerpt: d.excerpt || '',
+          content: d.content || '',
+          cover_image_url: d.cover_image_url || '',
+          tags: d.tags || ['Engineering', 'Cloud'],
+          author: d.author || 'SMRIKAAM Engineering Team',
+          meta_title: d.meta_title || '',
+          meta_description: d.meta_description || '',
+          status: 'draft', // FORCE DRAFT MODE
+          sourceType: d.sourceType || ext.replace('.', '').toUpperCase(),
+          sourceFileName: file.name
+        });
+
+        setEditingPostId(null);
+        setImportModalOpen(false);
+        setAuditModalOpen(true);
       }
     } catch (err) {
-      setErrorMsg(err.response?.data?.error || err.message || 'Failed to import document.');
+      setErrorMsg(err.response?.data?.error || err.message || 'Failed to parse document.');
     } finally {
-      setImporting(false);
+      setImportingFile(false);
+      setImportStep(0);
     }
   };
 
@@ -250,7 +293,7 @@ export default function AdminBlogManager() {
       } else {
         const created = await createItem('posts', payload);
         if (created?.id) setEditingPostId(created.id);
-        setSuccessMsg(`Article created successfully (${finalStatus.toUpperCase()}).`);
+        setSuccessMsg(`Article created & saved as DRAFT successfully.`);
       }
 
       setFormData((prev) => ({ ...prev, status: finalStatus, slug: finalSlug }));
@@ -303,12 +346,21 @@ export default function AdminBlogManager() {
               </h1>
             </div>
 
-            <button
-              onClick={handleOpenCreate}
-              className="btn btn-primary text-xs font-bold py-2.5 px-5 flex items-center justify-center gap-2 uppercase tracking-wider cursor-pointer"
-            >
-              <Plus className="w-4 h-4" /> CREATE NEW ARTICLE
-            </button>
+            <div className="flex items-center gap-3">
+              <button
+                onClick={() => setImportModalOpen(true)}
+                className="admin-btn text-xs font-mono font-bold py-2.5 px-4 flex items-center justify-center gap-2 uppercase tracking-wider cursor-pointer bg-[var(--admin-surface)] text-emerald-400 border border-emerald-500/40 hover:bg-[var(--admin-surface-hover)]"
+              >
+                <Upload className="w-4 h-4" /> IMPORT DOCX / PDF
+              </button>
+
+              <button
+                onClick={handleOpenCreate}
+                className="btn btn-primary text-xs font-bold py-2.5 px-5 flex items-center justify-center gap-2 uppercase tracking-wider cursor-pointer"
+              >
+                <Plus className="w-4 h-4" /> CREATE NEW ARTICLE
+              </button>
+            </div>
           </div>
 
           {/* Filters Bar */}
@@ -351,8 +403,8 @@ export default function AdminBlogManager() {
                   <tr className="border-b border-[var(--admin-border)] bg-[var(--admin-surface)] text-[var(--admin-text-secondary)] uppercase tracking-wider">
                     <th className="p-3.5">Article</th>
                     <th className="p-3.5">Category</th>
+                    <th className="p-3.5">Source</th>
                     <th className="p-3.5">Status</th>
-                    <th className="p-3.5">Author</th>
                     <th className="p-3.5 text-right">Actions</th>
                   </tr>
                 </thead>
@@ -366,7 +418,7 @@ export default function AdminBlogManager() {
                   ) : filteredPosts.length === 0 ? (
                     <tr>
                       <td colSpan={5} className="p-8 text-center text-[var(--admin-text-secondary)]">
-                        No blog articles found. Click "CREATE NEW ARTICLE" above to write your first post.
+                        No blog articles found. Click "IMPORT DOCX / PDF" or "CREATE NEW ARTICLE" above to get started.
                       </td>
                     </tr>
                   ) : (
@@ -403,6 +455,16 @@ export default function AdminBlogManager() {
                         </td>
 
                         <td className="p-3.5 whitespace-nowrap">
+                          {post.sourceType ? (
+                            <span className="px-2 py-0.5 bg-blue-500/20 text-blue-300 border border-blue-500/40 text-[10px] font-bold uppercase rounded-sm flex items-center gap-1 w-max">
+                              <FileCode className="w-3 h-3" /> {post.sourceType}
+                            </span>
+                          ) : (
+                            <span className="text-[var(--admin-text-secondary)] text-[11px]">Manual</span>
+                          )}
+                        </td>
+
+                        <td className="p-3.5 whitespace-nowrap">
                           <span
                             className={`px-2 py-0.5 text-[10px] font-bold uppercase rounded-sm ${
                               post.status === 'published'
@@ -414,10 +476,6 @@ export default function AdminBlogManager() {
                           >
                             {post.status || 'draft'}
                           </span>
-                        </td>
-
-                        <td className="p-3.5 whitespace-nowrap text-[var(--admin-text-secondary)]">
-                          {post.author || 'SMRIKAAM Team'}
                         </td>
 
                         <td className="p-3.5 text-right whitespace-nowrap">
@@ -493,17 +551,12 @@ export default function AdminBlogManager() {
 
             {/* Header Right Actions */}
             <div className="flex flex-wrap items-center gap-2">
-              <label className="admin-btn text-xs py-1.5 px-3 cursor-pointer bg-[var(--admin-surface)] hover:bg-[var(--admin-surface-hover)] text-emerald-400 border border-emerald-500/40 flex items-center gap-1.5">
-                <Upload className="w-3.5 h-3.5" />
-                <span>{importing ? 'IMPORTING...' : 'IMPORT DOCX / PDF'}</span>
-                <input
-                  type="file"
-                  accept=".docx,.doc,.pdf"
-                  onChange={handleDocxImport}
-                  disabled={importing}
-                  className="hidden"
-                />
-              </label>
+              <button
+                onClick={() => setImportModalOpen(true)}
+                className="admin-btn text-xs py-1.5 px-3 cursor-pointer bg-[var(--admin-surface)] hover:bg-[var(--admin-surface-hover)] text-emerald-400 border border-emerald-500/40 flex items-center gap-1.5"
+              >
+                <Upload className="w-3.5 h-3.5" /> IMPORT DOCX / PDF
+              </button>
 
               <button
                 onClick={() => setView('preview')}
@@ -918,6 +971,195 @@ export default function AdminBlogManager() {
               />
             </div>
           </BlueprintWrapper>
+        </div>
+      )}
+
+      {/* MODAL 1: SMART DOCUMENT UPLOAD DIALOG */}
+      {importModalOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-in fade-in duration-200">
+          <div className="relative w-full max-w-lg">
+            <BlueprintWrapper dark className="p-6 sm:p-8 space-y-6 border border-[var(--admin-border)] shadow-2xl">
+              <div className="flex items-center justify-between border-b border-[var(--admin-border)] pb-4">
+                <div>
+                  <div className="font-mono text-[10px] text-emerald-400 uppercase tracking-widest font-semibold">
+                    INTELLIGENT IMPORTER
+                  </div>
+                  <h3 className="font-heading text-xl font-bold uppercase text-[var(--admin-text-primary)]">
+                    IMPORT BLOG ARTICLE
+                  </h3>
+                </div>
+                <button
+                  onClick={() => setImportModalOpen(false)}
+                  className="text-[var(--admin-text-secondary)] hover:text-white"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
+
+              {/* Drag & Drop Upload Zone */}
+              <div
+                onDragOver={(e) => { e.preventDefault(); setDragOver(true); }}
+                onDragLeave={() => setDragOver(false)}
+                onDrop={(e) => {
+                  e.preventDefault();
+                  setDragOver(false);
+                  const file = e.dataTransfer.files?.[0];
+                  if (file) processSmartImport(file);
+                }}
+                className={`p-8 border-2 border-dashed text-center transition-all cursor-pointer ${
+                  dragOver
+                    ? 'border-emerald-400 bg-emerald-500/10'
+                    : 'border-[var(--admin-border)] hover:border-emerald-500/50 bg-[var(--admin-bg)]'
+                }`}
+              >
+                {importingFile ? (
+                  <div className="py-6 space-y-3">
+                    <Loader2 className="w-10 h-10 text-emerald-400 animate-spin mx-auto" />
+                    <div className="font-mono text-xs text-emerald-300 font-bold uppercase tracking-wider">
+                      {importStep === 1 && '1. READING DOCUMENT...'}
+                      {importStep === 2 && '2. EXTRACTING CONTENT & IMAGES...'}
+                      {importStep === 3 && '3. STRUCTURING DRAFT ARTICLE...'}
+                      {importStep === 4 && '4. PARSING COMPLETE!'}
+                    </div>
+                    <p className="text-[11px] text-[var(--admin-text-secondary)]">
+                      Analyzing title, headings, paragraph structure, and media streams...
+                    </p>
+                  </div>
+                ) : (
+                  <label className="block space-y-3 cursor-pointer">
+                    <Upload className="w-10 h-10 text-emerald-400 mx-auto opacity-80" />
+                    <div>
+                      <p className="text-sm font-sans font-bold text-[var(--admin-text-primary)]">
+                        Drag & Drop PDF or DOCX file here
+                      </p>
+                      <p className="text-xs text-[var(--admin-text-secondary)] mt-1 font-mono">
+                        Supports Microsoft Word (.docx) and Adobe PDF (.pdf)
+                      </p>
+                    </div>
+
+                    <div className="pt-2">
+                      <span className="btn btn-primary text-xs py-2 px-5 font-bold uppercase tracking-wider inline-flex items-center gap-1.5">
+                        <FileText className="w-4 h-4" /> SELECT PDF / DOCX FILE
+                      </span>
+                    </div>
+
+                    <input
+                      type="file"
+                      accept=".pdf,.docx,.doc"
+                      onChange={(e) => {
+                        const file = e.target.files?.[0];
+                        if (file) processSmartImport(file);
+                      }}
+                      className="hidden"
+                    />
+                  </label>
+                )}
+              </div>
+
+              {/* Modal Actions */}
+              <div className="flex justify-end gap-3 border-t border-[var(--admin-border)] pt-4">
+                <button
+                  type="button"
+                  onClick={() => setImportModalOpen(false)}
+                  className="admin-btn text-xs px-4 py-2 text-[var(--admin-text-secondary)] hover:text-white"
+                >
+                  CANCEL
+                </button>
+              </div>
+            </BlueprintWrapper>
+          </div>
+        </div>
+      )}
+
+      {/* MODAL 2: IMPORT AUDIT REPORT & REVIEW CONFIRMATION */}
+      {auditModalOpen && importAuditData && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-md animate-in fade-in duration-200">
+          <div className="relative w-full max-w-xl">
+            <BlueprintWrapper dark className="p-6 sm:p-8 space-y-6 border border-emerald-500/40 shadow-2xl">
+              <div className="flex items-center justify-between border-b border-[var(--admin-border)] pb-4">
+                <div className="flex items-center gap-2">
+                  <CheckCircle className="w-5 h-5 text-emerald-400" />
+                  <div>
+                    <div className="font-mono text-[10px] text-emerald-400 uppercase tracking-widest font-semibold">
+                      IMPORT COMPLETE
+                    </div>
+                    <h3 className="font-heading text-xl font-bold uppercase text-[var(--admin-text-primary)]">
+                      DOCUMENT AUDIT REPORT
+                    </h3>
+                  </div>
+                </div>
+                <button
+                  onClick={() => setAuditModalOpen(false)}
+                  className="text-[var(--admin-text-secondary)] hover:text-white"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
+
+              {/* Audit Metadata Summary Grid */}
+              <div className="grid grid-cols-2 gap-4 font-mono text-xs bg-[var(--admin-bg)] p-4 border border-[var(--admin-border)]">
+                <div>
+                  <span className="text-[var(--admin-text-secondary)] block text-[10px] uppercase">DOCUMENT SOURCE</span>
+                  <span className="font-bold text-white flex items-center gap-1 mt-0.5">
+                    <FileCode className="w-3.5 h-3.5 text-blue-400" /> {importAuditData.sourceFileName}
+                  </span>
+                </div>
+
+                <div>
+                  <span className="text-[var(--admin-text-secondary)] block text-[10px] uppercase">PAGES / SECTIONS</span>
+                  <span className="font-bold text-white mt-0.5 block">{importAuditData.numPages} Pages Analyzed</span>
+                </div>
+
+                <div>
+                  <span className="text-[var(--admin-text-secondary)] block text-[10px] uppercase">TITLE DETECTED</span>
+                  <span className="font-bold text-emerald-300 truncate mt-0.5 block">{importAuditData.title}</span>
+                </div>
+
+                <div>
+                  <span className="text-[var(--admin-text-secondary)] block text-[10px] uppercase">SUGGESTED CATEGORY</span>
+                  <span className="font-bold text-white mt-0.5 block">{importAuditData.category}</span>
+                </div>
+
+                <div>
+                  <span className="text-[var(--admin-text-secondary)] block text-[10px] uppercase">IMAGES EXTRACTED</span>
+                  <span className="font-bold text-white mt-0.5 block">{importAuditData.extractedImages?.length || 0} Media Assets Saved</span>
+                </div>
+
+                <div>
+                  <span className="text-[var(--admin-text-secondary)] block text-[10px] uppercase">INITIAL STATUS</span>
+                  <span className="font-bold text-amber-300 uppercase mt-0.5 block">DRAFT (PENDING REVIEW)</span>
+                </div>
+              </div>
+
+              {/* Safety Banner */}
+              <div className="p-3 bg-amber-950/60 border-l-4 border-amber-500 text-amber-200 text-xs font-mono flex items-center gap-2">
+                <ShieldCheck className="w-4 h-4 shrink-0 text-amber-400" />
+                <span>Article is saved in <strong>DRAFT MODE</strong>. Review and edit content before publishing.</span>
+              </div>
+
+              {/* Modal Actions */}
+              <div className="flex items-center justify-between border-t border-[var(--admin-border)] pt-4">
+                <button
+                  type="button"
+                  onClick={() => setAuditModalOpen(false)}
+                  className="admin-btn text-xs px-4 py-2 text-[var(--admin-text-secondary)] hover:text-white"
+                >
+                  CLOSE
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => {
+                    setAuditModalOpen(false);
+                    setView('editor');
+                  }}
+                  className="btn btn-primary text-xs py-2.5 px-6 font-bold uppercase tracking-wider flex items-center gap-2 cursor-pointer"
+                >
+                  <Edit2 className="w-4 h-4" /> REVIEW &amp; EDIT ARTICLE
+                </button>
+              </div>
+            </BlueprintWrapper>
+          </div>
         </div>
       )}
     </div>

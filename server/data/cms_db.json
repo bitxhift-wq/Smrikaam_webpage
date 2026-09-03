@@ -12,6 +12,24 @@
   ],
   "posts": [
     {
+      "title": "it_blog_article",
+      "slug": "it-blog-article",
+      "category": "",
+      "excerpt": "",
+      "content": "",
+      "cover_image_url": "",
+      "tags": [],
+      "author": "",
+      "meta_title": "",
+      "meta_description": "",
+      "status": "trash",
+      "pdf_url": "/uploads/it_blog_article_1788428101087_he3p4m.pdf",
+      "id": "pos_1788428105812_ewh6",
+      "created_at": "2026-09-03T09:35:05.812Z",
+      "updated_at": "2026-09-03T09:37:53.726Z",
+      "published_at": "2026-09-03T09:35:05.812Z"
+    },
+    {
       "title": "High-Throughput Time-Series Architecture for Discrete Manufacturing",
       "slug": "high-throughput-time-series-manufacturing",
       "category": "Industrial IoT",
@@ -593,8 +611,9 @@
       "caseStudy": "Intelligent Document & Workflow Automation",
       "caseStudySlug": "case-studies",
       "cover_image_url": "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=1200&auto=format&fit=crop",
-      "status": "published",
-      "display_order": 10
+      "status": "draft",
+      "display_order": 10,
+      "updated_at": "2026-09-03T09:22:42.494Z"
     }
   ],
   "accelerators": [
@@ -1333,28 +1352,6 @@
       "reportType": "Weekly",
       "category": "Services",
       "title": "Automated Edge Telemetry & Real-Time OPC-UA Ingestion",
-      "problemStatement": "Legacy factory machinery lacks sub-50ms operational visibility across distributed production lines.",
-      "solutionStatement": "Deployed BitXhift edge intelligence agents delivering continuous microsecond streaming telemetry.",
-      "techStack": [
-        "Python",
-        "OPC-UA",
-        "MQTT",
-        "TimescaleDB",
-        "Docker"
-      ],
-      "date": "2026-08-28",
-      "cover_image_url": "https://images.unsplash.com/photo-1581092160607-ee22621dd758?q=80&w=1200&auto=format&fit=crop",
-      "relatedContent": "Industrial IoT (IIoT)",
-      "status": "published",
-      "id": "rep_1787832376468_1rji",
-      "created_at": "2026-08-27T12:06:16.468Z",
-      "updated_at": "2026-08-27T12:06:16.468Z",
-      "published_at": "2026-08-27T12:06:16.468Z"
-    },
-    {
-      "reportType": "Weekly",
-      "category": "Services",
-      "title": "Automated Edge Telemetry & Real-Time OPC-UA Ingestion",
       "problemStatement": "Legacy factory machinery lacks sub-50ms operational visibility.",
       "solutionStatement": "Deployed BitXhift edge agents delivering continuous streaming telemetry.",
       "techStack": [
@@ -1367,10 +1364,10 @@
       "date": "2026-08-27",
       "cover_image_url": "https://images.unsplash.com/photo-1581092160607-ee22621dd758?q=80&w=1200&auto=format&fit=crop",
       "relatedContent": "Industrial IoT (IIoT)",
-      "status": "published",
+      "status": "trash",
       "id": "rep_1787826861040_9sh3",
       "created_at": "2026-08-27T10:34:21.040Z",
-      "updated_at": "2026-08-27T10:34:21.040Z",
+      "updated_at": "2026-09-03T09:40:01.411Z",
       "published_at": "2026-08-27T10:34:21.040Z"
     },
     {
@@ -1416,63 +1413,61 @@
       "created_at": "2026-08-20T08:00:00.000Z",
       "updated_at": "2026-08-20T08:00:00.000Z",
       "published_at": "2026-08-20T08:00:00.000Z"
-    },
-    {
-      "id": "rep_03",
-      "reportType": "Monthly",
-      "category": "Case Studies",
-      "title": "Smart Factory Manufacturing OEE Scaling Report",
-      "problemStatement": "Machining plants suffer 30%+ efficiency loss from unmonitored minor stops and micro-stoppages.",
-      "solutionStatement": "Continuous 50ms vibration telemetry captures anomalies before catastrophic tool breakage occurs.",
-      "techStack": [
-        "BitXhift",
-        "OPC-UA",
-        "TimescaleDB",
-        "React",
-        "SAP"
-      ],
-      "date": "2026-07-31",
-      "cover_image_url": "https://images.unsplash.com/photo-1551836022-d5d88e9218df?q=80&w=1200&auto=format&fit=crop",
-      "relatedContent": "Smart Factory Manufacturing Transformation",
-      "status": "published",
-      "created_at": "2026-07-31T08:00:00.000Z",
-      "updated_at": "2026-07-31T08:00:00.000Z",
-      "published_at": "2026-07-31T08:00:00.000Z"
     }
   ],
   "media": [
     {
-      "id": "med_docx_1787826876427_lvrc",
-      "filename": "docx_extracted_1787826876426_tnynvd.png",
-      "originalName": "image1.png",
-      "url": "/uploads/docx_extracted_1787826876426_tnynvd.png",
-      "mimetype": "image/png",
-      "size": 70,
-      "type": "image",
-      "created_at": "2026-08-27T10:34:36.427Z"
-    },
-    {
-      "id": "med_01",
-      "filename": "smart-factory-telemetry.jpg",
-      "originalName": "smart-factory-telemetry.jpg",
-      "url": "https://images.unsplash.com/photo-1581092160607-ee22621dd758?q=80&w=1200&auto=format&fit=crop",
-      "mimetype": "image/jpeg",
-      "size": 412950,
-      "type": "image",
-      "created_at": "2026-08-20T10:00:00.000Z"
-    },
-    {
-      "id": "med_02",
-      "filename": "cloud-lakehouse.jpg",
-      "originalName": "cloud-lakehouse.jpg",
-      "url": "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?q=80&w=1200&auto=format&fit=crop",
-      "mimetype": "image/jpeg",
-      "size": 385400,
-      "type": "image",
-      "created_at": "2026-08-22T14:30:00.000Z"
+      "id": "med_pdf_1788428101090_unj4",
+      "filename": "it_blog_article_1788428101087_he3p4m.pdf",
+      "originalName": "it_blog_article.pdf",
+      "url": "/uploads/it_blog_article_1788428101087_he3p4m.pdf",
+      "mimetype": "application/pdf",
+      "size": 54021,
+      "type": "pdf",
+      "created_at": "2026-09-03T09:35:01.090Z"
     }
   ],
   "activityLogs": [
+    {
+      "id": "log_1788428105815_vto8",
+      "date": "3 SEP",
+      "title": "Created post: \"it_blog_article\"",
+      "description": "Status: published by BitXhift SuperAdmin",
+      "type": "posts_create",
+      "timestamp": "2026-09-03T09:35:05.815Z"
+    },
+    {
+      "id": "log_1788428101094_yz81",
+      "date": "3 SEP",
+      "title": "Uploaded PDF Document: \"it_blog_article.pdf\"",
+      "description": "Saved as /uploads/it_blog_article_1788428101087_he3p4m.pdf",
+      "type": "pdf_upload",
+      "timestamp": "2026-09-03T09:35:01.094Z"
+    },
+    {
+      "id": "log_1788427864338_ry3w",
+      "date": "3 SEP",
+      "title": "Deleted media file: \"image1.png\"",
+      "description": "Removed by Admin",
+      "type": "media_delete",
+      "timestamp": "2026-09-03T09:31:04.338Z"
+    },
+    {
+      "id": "log_1788427860102_hbgc",
+      "date": "3 SEP",
+      "title": "Deleted media file: \"smart-factory-telemetry.jpg\"",
+      "description": "Removed by Admin",
+      "type": "media_delete",
+      "timestamp": "2026-09-03T09:31:00.102Z"
+    },
+    {
+      "id": "log_1788427610191_bm92",
+      "date": "3 SEP",
+      "title": "Deleted media file: \"cloud-lakehouse.jpg\"",
+      "description": "Removed by Admin",
+      "type": "media_delete",
+      "timestamp": "2026-09-03T09:26:50.191Z"
+    },
     {
       "id": "log_1788427194981_u1bs",
       "date": "3 SEP",
@@ -2019,7 +2014,7 @@
       "admin_notes": "",
       "is_read": true,
       "created_at": "2026-09-03T09:19:29.911Z",
-      "updated_at": "2026-09-03T09:19:42.967Z"
+      "updated_at": "2026-09-03T09:39:03.027Z"
     },
     {
       "id": "eng_1788426929084_x0gpvb",

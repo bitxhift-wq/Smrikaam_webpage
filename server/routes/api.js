@@ -367,9 +367,58 @@ router.delete('/media/:id', requireAdminAuth, (req, res) => {
   }
 });
 
+import { parseDocument } from '../services/documentImporter.js';
+
 // ============================================================
-// 4. DOCX EXTRACTION & PDF UPLOADS
+// 4. DOCX EXTRACTION & PDF UPLOADS & SMART DOCUMENT IMPORTER
 // ============================================================
+
+router.post('/documents/import-smart', requireAdminAuth, upload.single('file'), async (req, res) => {
+  try {
+    if (!req.file) {
+      return res.status(400).json({ error: 'No PDF or DOCX file uploaded.' });
+    }
+
+    const ext = path.extname(req.file.originalname).toLowerCase();
+    if (!['.pdf', '.docx', '.doc'].includes(ext)) {
+      return res.status(400).json({ error: 'Unsupported file format. Please upload a PDF or DOCX document.' });
+    }
+
+    // Process document structure, text, metadata, and embedded images
+    const parsedData = await parseDocument(req.file, UPLOADS_DIR);
+
+    // Save extracted images to media collection
+    if (parsedData.extractedImages && parsedData.extractedImages.length > 0) {
+      parsedData.extractedImages.forEach((img) => {
+        db.getCollection('media').unshift({
+          id: `med_doc_${Date.now()}_${Math.random().toString(36).substr(2, 4)}`,
+          filename: img.filename,
+          originalName: req.file.originalname,
+          url: img.url,
+          mimetype: 'image/png',
+          size: img.size,
+          type: 'image',
+          created_at: new Date().toISOString()
+        });
+      });
+    }
+
+    db.save();
+    db.logActivity(
+      `Smart Import: "${req.file.originalname}" (${parsedData.sourceType})`,
+      `Extracted ${parsedData.extractedImages.length} images, detected title "${parsedData.title}", assigned status DRAFT`,
+      'document_import'
+    );
+
+    res.json({
+      success: true,
+      data: parsedData
+    });
+  } catch (err) {
+    console.error('Smart Document Importer error:', err);
+    res.status(500).json({ error: `Document import failed: ${err.message}` });
+  }
+});
 
 router.post('/documents/import-docx', requireAdminAuth, upload.single('file'), async (req, res) => {
   try {
