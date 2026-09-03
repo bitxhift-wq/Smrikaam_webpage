@@ -103,13 +103,13 @@ export default function AdminLayout() {
   const isActive = (path) => location.pathname === path;
 
   return (
-    <div className="admin-theme min-h-screen flex flex-col md:flex-row bg-[#0b0e14] text-[#f4f4f4] font-sans">
+    <div className="admin-theme min-h-screen flex flex-col md:flex-row bg-[var(--admin-bg)] text-[var(--admin-text-primary)] font-sans">
       {/* Mobile Topbar */}
-      <div className="md:hidden flex items-center justify-between p-4 bg-[#141924] border-b border-[rgba(255,255,255,0.15)] z-30">
+      <div className="md:hidden flex items-center justify-between p-4 bg-[var(--admin-surface)] border-b border-[var(--admin-border)] z-30">
         <Logo height={32} dark />
         <button
           onClick={() => setMobileNavOpen(!mobileNavOpen)}
-          className="p-2 border border-[rgba(255,255,255,0.2)] text-white"
+          className="p-2 border border-[var(--admin-border)] text-white hover:bg-[var(--admin-surface-hover)] transition-colors"
         >
           {mobileNavOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
         </button>
@@ -117,22 +117,22 @@ export default function AdminLayout() {
 
       {/* Sidebar Nav */}
       <aside
-        className={`w-full md:w-64 bg-[#141924] border-r border-[rgba(255,255,255,0.15)] p-5 flex flex-col justify-between shrink-0 fixed md:static inset-y-0 left-0 z-40 transform transition-transform duration-200 overflow-y-auto ${
+        className={`w-full md:w-64 bg-[var(--admin-surface)] border-r border-[var(--admin-border)] p-5 flex flex-col justify-between shrink-0 fixed md:static inset-y-0 left-0 z-40 transform transition-transform duration-200 overflow-y-auto ${
           mobileNavOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'
         }`}
       >
         <div>
           {/* Brand Header */}
-          <div className="pb-5 mb-5 border-b border-[rgba(255,255,255,0.15)] flex items-center justify-between">
+          <div className="pb-5 mb-5 border-b border-[var(--admin-border)] flex items-center justify-between">
             <div>
               <Logo height={36} dark />
-              <div className="font-mono text-[10px] text-[#4fd1c5] uppercase tracking-widest mt-2">
+              <div className="font-mono text-[10px] text-emerald-400 uppercase tracking-[0.2em] font-semibold mt-2">
                 SMRIKAAM CMS v2.0 • CENTRAL
               </div>
             </div>
             <button
               onClick={() => setMobileNavOpen(false)}
-              className="md:hidden text-gray-400 hover:text-white"
+              className="md:hidden text-[var(--admin-text-secondary)] hover:text-white"
             >
               <X className="w-5 h-5" />
             </button>
@@ -142,7 +142,7 @@ export default function AdminLayout() {
           <nav className="space-y-6">
             {navSections.map((sec) => (
               <div key={sec.title}>
-                <div className="font-mono text-[10px] font-bold text-[#9aa3b5] uppercase tracking-widest px-3 mb-2">
+                <div className="font-mono text-[10px] font-bold text-[var(--admin-text-secondary)] uppercase tracking-[0.15em] px-3 mb-2">
                   {sec.title}
                 </div>
                 <div className="space-y-1">
@@ -156,8 +156,8 @@ export default function AdminLayout() {
                         onClick={() => setMobileNavOpen(false)}
                         className={`flex items-center justify-between px-3 py-2 text-xs font-mono uppercase tracking-wider transition-colors ${
                           active
-                            ? 'bg-[#1c2333] text-[#4fd1c5] border-l-4 border-[#4fd1c5] font-bold'
-                            : 'text-[#9aa3b5] hover:text-[#f4f4f4] hover:bg-[#1c2333]'
+                            ? 'bg-[var(--admin-surface-hover)] text-emerald-400 border-l-4 border-emerald-400 font-bold'
+                            : 'text-[var(--admin-text-secondary)] hover:text-[var(--admin-text-primary)] hover:bg-[var(--admin-surface-hover)]'
                         }`}
                       >
                         <div className="flex items-center gap-3">
@@ -179,16 +179,16 @@ export default function AdminLayout() {
         </div>
 
         {/* User profile & Logout */}
-        <div className="pt-5 mt-6 border-t border-[rgba(255,255,255,0.15)]">
+        <div className="pt-5 mt-6 border-t border-[var(--admin-border)]">
           {user && (
             <div className="mb-3 px-1">
-              <div className="font-mono text-xs font-bold text-[#f4f4f4]">{user.name}</div>
-              <div className="font-mono text-[10px] text-[#9aa3b5] truncate">{user.email}</div>
+              <div className="font-mono text-xs font-bold text-[var(--admin-text-primary)]">{user.name}</div>
+              <div className="font-mono text-[10px] text-[var(--admin-text-secondary)] truncate">{user.email}</div>
             </div>
           )}
           <button
             onClick={handleLogout}
-            className="admin-btn w-full justify-center text-xs py-2 text-rose-400 hover:text-rose-300 hover:border-rose-500/50"
+            className="admin-btn w-full justify-center text-xs py-2 text-rose-400 hover:text-rose-300 hover:border-rose-500/50 cursor-pointer"
           >
             <LogOut className="w-4 h-4 inline mr-1.5" strokeWidth={1.5} /> Sign Out
           </button>
@@ -196,7 +196,7 @@ export default function AdminLayout() {
       </aside>
 
       {/* Main Content Workspace */}
-      <main className="flex-grow p-4 sm:p-6 md:p-10 overflow-y-auto bg-[#0b0e14] min-w-0 w-full max-w-full">
+      <main className="flex-grow p-4 sm:p-6 md:p-10 overflow-y-auto bg-[var(--admin-bg)] min-w-0 w-full max-w-full">
         <Outlet />
       </main>
     </div>
