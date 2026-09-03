@@ -13,7 +13,7 @@ export default function ReportEditor({ report, onSave, onCancel }) {
     solutionStatement: '',
     techStack: ['IIoT', 'Python', 'MQTT', 'Cloud'],
     date: new Date().toISOString().split('T')[0],
-    cover_image_url: 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?q=80&w=1200&auto=format&fit=crop',
+    cover_image_url: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1200&auto=format&fit=crop',
     relatedContent: 'Industrial IoT (IIoT)',
     status: 'published'
   });

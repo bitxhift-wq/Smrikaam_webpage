@@ -125,7 +125,7 @@ export default function Products() {
         outcomes: item.businessOutcomes || item.outcomes || item.outcome || 'Delivers 35% reduction in unplanned downtime and 60% faster deployment across enterprise infrastructure.',
         caseStudy: linkedCase ? linkedCase.title : (item.caseStudy || `${item.name || item.title} Enterprise Deployment`),
         caseStudySlug: linkedCase ? linkedCase.slug : null,
-        image: item.cover_image_url || item.image || 'https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?q=80&w=1200&auto=format&fit=crop',
+        image: item.cover_image_url || item.image || 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=1200&auto=format&fit=crop',
         caption: `${(item.name || item.title).toUpperCase()} — Production Engineering Specification`
       };
     });

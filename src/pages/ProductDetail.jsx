@@ -107,7 +107,7 @@ export default function ProductDetail() {
     : ['MQTT', 'OPC-UA', 'Node-RED', 'TimescaleDB', 'Docker Edge', 'React', 'Python'];
 
   const outcomes = product.businessOutcomes || product.outcomes || product.outcome || 'Delivers 35% reduction in unplanned downtime and 60% faster deployment across enterprise infrastructure.';
-  const coverImage = product.cover_image_url || product.image || 'https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?q=80&w=1200&auto=format&fit=crop';
+  const coverImage = product.cover_image_url || product.image || 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=1200&auto=format&fit=crop';
 
   return (
     <div className="relative z-10 pt-20 sm:pt-28 pb-16 sm:pb-24 px-4 sm:px-6 md:px-16 max-w-5xl mx-auto">

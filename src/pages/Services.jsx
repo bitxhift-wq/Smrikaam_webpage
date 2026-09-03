@@ -137,7 +137,7 @@ export default function Services() {
         outcomes: item.outcomes || item.outcome || item.businessOutcomes || 'Delivers measurable operational efficiency, 99.9% uptime, and scalable enterprise performance.',
         accelerator: linkedAcc ? linkedAcc.name : (item.accelerator || 'Proprietary SMRIKAAM Asset'),
         caseStudy: linkedCase ? linkedCase.title : (item.caseStudy || `${item.title || item.name} Deployment Blueprint`),
-        image: item.cover_image_url || item.image || 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=1200&auto=format&fit=crop',
+        image: item.cover_image_url || item.image || 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1200&auto=format&fit=crop',
         caption: `${(item.title || item.name).toUpperCase()} — Architecture Blueprint`
       };
     });
