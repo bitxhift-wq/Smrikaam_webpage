@@ -60,9 +60,15 @@ export default function Products() {
 
     const frameId = requestAnimationFrame(() => {
       if (detailContainerRef.current) {
-        detailContainerRef.current.scrollIntoView({
-          behavior: 'auto',
-          block: 'start'
+        const headerEl = document.querySelector('header') || document.querySelector('nav');
+        const headerHeight = headerEl ? headerEl.getBoundingClientRect().height : 80;
+        const rect = detailContainerRef.current.getBoundingClientRect();
+        const absoluteTop = rect.top + window.scrollY;
+        const targetScroll = Math.max(0, absoluteTop - headerHeight - 16);
+
+        window.scrollTo({
+          top: targetScroll,
+          behavior: 'auto'
         });
       }
     });

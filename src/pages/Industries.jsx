@@ -60,9 +60,15 @@ export default function Industries() {
 
     const frameId = requestAnimationFrame(() => {
       if (detailContainerRef.current) {
-        detailContainerRef.current.scrollIntoView({
-          behavior: 'auto',
-          block: 'start'
+        const headerEl = document.querySelector('header') || document.querySelector('nav');
+        const headerHeight = headerEl ? headerEl.getBoundingClientRect().height : 80;
+        const rect = detailContainerRef.current.getBoundingClientRect();
+        const absoluteTop = rect.top + window.scrollY;
+        const targetScroll = Math.max(0, absoluteTop - headerHeight - 16);
+
+        window.scrollTo({
+          top: targetScroll,
+          behavior: 'auto'
         });
       }
     });
@@ -284,6 +290,16 @@ export default function Industries() {
                         if (e.key === 'Enter' || e.key === ' ') {
                           e.preventDefault();
                           setActiveIdx(idx);
+                        } else if (e.key === 'ArrowDown') {
+                          e.preventDefault();
+                          const nextIdx = (idx + 1) % industries.length;
+                          setActiveIdx(nextIdx);
+                          document.getElementById(`industry-tab-${industries[nextIdx].id}`)?.focus();
+                        } else if (e.key === 'ArrowUp') {
+                          e.preventDefault();
+                          const prevIdx = (idx - 1 + industries.length) % industries.length;
+                          setActiveIdx(prevIdx);
+                          document.getElementById(`industry-tab-${industries[prevIdx].id}`)?.focus();
                         }
                       }}
                       className={`service-tab-item group py-2 sm:py-4 px-2 sm:px-4 cursor-pointer flex items-start justify-between gap-1 sm:gap-4 outline-none focus-visible:ring-1 focus-visible:ring-accent ${
