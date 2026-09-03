@@ -207,6 +207,28 @@ CREATE TABLE IF NOT EXISTS settings (
   updated_at TIMESTAMPTZ DEFAULT NOW()
 );
 
+-- 13. Engagements / Book-a-Call Table
+CREATE TABLE IF NOT EXISTS engagements (
+  id VARCHAR(64) PRIMARY KEY,
+  full_name VARCHAR(255) NOT NULL,
+  company_name VARCHAR(255) NOT NULL,
+  email VARCHAR(255) NOT NULL,
+  phone VARCHAR(64),
+  job_title VARCHAR(255),
+  requirement_type VARCHAR(255) NOT NULL,
+  message TEXT NOT NULL,
+  preferred_date VARCHAR(64),
+  preferred_time VARCHAR(64),
+  source VARCHAR(255) DEFAULT 'Book a Call Form',
+  status VARCHAR(32) DEFAULT 'NEW',
+  priority VARCHAR(32) DEFAULT 'MEDIUM',
+  assigned_to VARCHAR(255),
+  admin_notes TEXT,
+  is_read BOOLEAN DEFAULT false,
+  created_at TIMESTAMPTZ DEFAULT NOW(),
+  updated_at TIMESTAMPTZ DEFAULT NOW()
+);
+
 -- Indexes for performance
 CREATE INDEX IF NOT EXISTS idx_posts_slug ON posts (slug);
 CREATE INDEX IF NOT EXISTS idx_posts_status ON posts (status);
@@ -220,3 +242,5 @@ CREATE INDEX IF NOT EXISTS idx_reports_status ON reports (status);
 CREATE INDEX IF NOT EXISTS idx_staffing_slug ON staffing (slug);
 CREATE INDEX IF NOT EXISTS idx_locations_slug ON locations (slug);
 CREATE INDEX IF NOT EXISTS idx_activity_logs_time ON activity_logs (timestamp DESC);
+CREATE INDEX IF NOT EXISTS idx_engagements_created ON engagements (created_at DESC);
+CREATE INDEX IF NOT EXISTS idx_engagements_status ON engagements (status);

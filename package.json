@@ -7,7 +7,10 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "server": "node server/index.js",
+    "db:migrate": "node scripts/migrate_to_supabase.js",
+    "db:check": "node scripts/check_postgres.js"
   },
   "dependencies": {
     "@react-three/drei": "^9.106.0",

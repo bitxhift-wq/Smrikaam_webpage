@@ -431,7 +431,7 @@ if (fs.existsSync(seedDataPath)) {
 
 // 3. Update Supabase Database if DATABASE_URL is set
 async function updateSupabase() {
-  const connectionString = process.env.DATABASE_URL || "postgresql://postgres:Smrikaam!123%40321!@db.xkvdyeruawdvkownbnam.supabase.co:5432/postgres";
+  const connectionString = process.env.DATABASE_URL || process.env.DIRECT_URL;
   if (!connectionString) {
     console.log('No DATABASE_URL found, skipping Supabase update.');
     return;

@@ -15,13 +15,19 @@ const { Client } = pg;
 async function initPostgres() {
   console.log('=== INITIALIZING SMRIKAAM POSTGRESQL DATABASE ===');
 
-  const connectionString =
-    process.env.DATABASE_URL ||
-    `postgresql://${process.env.PGUSER || 'postgres'}:${process.env.PGPASSWORD || 'postgres'}@${process.env.PGHOST || 'localhost'}:${process.env.PGPORT || 5432}/${process.env.PGDATABASE || 'smrikaam_db'}`;
+  const connectionString = process.env.DATABASE_URL || process.env.DIRECT_URL;
+  if (!connectionString) {
+    console.error('DATABASE_URL is not configured.');
+    process.exit(1);
+  }
 
-  console.log('Target PostgreSQL Connection String:', connectionString.replace(/:[^:@]+@/, ':****@'));
+  console.log('DATABASE_URL: configured');
 
-  const client = new Client({ connectionString });
+  const isSupabase = connectionString.includes('supabase') || connectionString.includes('sslmode=require');
+  const client = new Client({
+    connectionString,
+    ssl: (isSupabase || !connectionString.includes('localhost')) ? { rejectUnauthorized: false } : false
+  });
 
   try {
     await client.connect();

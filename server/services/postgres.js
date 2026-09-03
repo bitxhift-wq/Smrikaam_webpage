@@ -16,7 +16,13 @@ class PostgresService {
 
   init() {
     const isProd = process.env.NODE_ENV === 'production' || process.env.VERCEL === '1';
-    const connectionString = process.env.DATABASE_URL;
+    const connectionString = process.env.DATABASE_URL || process.env.DIRECT_URL;
+
+    if (connectionString) {
+      console.log('DATABASE_URL: configured');
+    } else {
+      console.warn('DATABASE_URL is not configured.');
+    }
 
     if (!connectionString && isProd) {
       console.error('CRITICAL CONFIG ERROR: DATABASE_URL is missing in production environment!');
