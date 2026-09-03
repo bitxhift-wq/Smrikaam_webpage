@@ -3,7 +3,7 @@ import { Link, useNavigate, useLocation, Outlet } from 'react-router-dom';
 import {
   LayoutDashboard, FileText, Cpu, Zap, Factory, Briefcase, FileBarChart,
   Image as ImageIcon, CheckCircle, Clock, Trash2, Settings, LogOut, Menu, X,
-  Users, MapPin, PhoneCall, Inbox
+  Users, MapPin, PhoneCall
 } from 'lucide-react';
 import api from '../../api';
 import Logo from '../../components/Logo';
@@ -62,8 +62,7 @@ export default function AdminLayout() {
     {
       title: 'LEADS & ENQUIRIES',
       items: [
-        { label: 'Book a Call', path: `${ADMIN_ROUTE_BASE}/book-a-call`, icon: PhoneCall, badge: unreadCount },
-        { label: 'All Enquiries', path: `${ADMIN_ROUTE_BASE}/enquiries`, icon: Inbox }
+        { label: 'Book a Call', path: `${ADMIN_ROUTE_BASE}/book-a-call`, icon: PhoneCall, badge: unreadCount }
       ]
     },
     {
