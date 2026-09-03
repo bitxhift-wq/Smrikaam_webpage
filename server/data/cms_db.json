@@ -1474,6 +1474,38 @@
   ],
   "activityLogs": [
     {
+      "id": "log_1788427194981_u1bs",
+      "date": "3 SEP",
+      "title": "Admin Login Successful",
+      "description": "User \"BitXhift SuperAdmin\" logged in from ::1",
+      "type": "auth_login",
+      "timestamp": "2026-09-03T09:19:54.981Z"
+    },
+    {
+      "id": "log_1788427194620_hpkb",
+      "date": "3 SEP",
+      "title": "New Book a Call Request: Apex Healthcare Cloud",
+      "description": "Sunita Narayanan (sunita.n@apexhealth.io) requested session for Healthcare & Life Sciences",
+      "type": "engagement",
+      "timestamp": "2026-09-03T09:19:54.620Z"
+    },
+    {
+      "id": "log_1788427169915_jzzr",
+      "date": "3 SEP",
+      "title": "New Book a Call Request: Apex",
+      "description": "akil (bitxhift@gmail.com) requested session for Technology Transformation",
+      "type": "engagement",
+      "timestamp": "2026-09-03T09:19:29.915Z"
+    },
+    {
+      "id": "log_1788427126084_9pa9",
+      "date": "3 SEP",
+      "title": "Admin Login Successful",
+      "description": "User \"BitXhift SuperAdmin\" logged in from ::1",
+      "type": "auth_login",
+      "timestamp": "2026-09-03T09:18:46.084Z"
+    },
+    {
       "id": "log_1788426929816_x6qe",
       "date": "3 SEP",
       "title": "Admin Login Successful",
@@ -1949,6 +1981,46 @@
     }
   ],
   "engagements": [
+    {
+      "id": "eng_1788427194618_v6wr54",
+      "full_name": "Sunita Narayanan",
+      "company_name": "Apex Healthcare Cloud",
+      "email": "sunita.n@apexhealth.io",
+      "phone": "+91 91234 56789",
+      "job_title": "Director of Platform Engineering",
+      "requirement_type": "Healthcare & Life Sciences",
+      "message": "Require HIPAA-compliant cloud migration & FHIR integration for 12 regional hospitals.",
+      "preferred_date": "2026-09-15",
+      "preferred_time": "02:00 PM - 04:00 PM",
+      "source": "Public Web Form",
+      "status": "QUALIFIED",
+      "priority": "URGENT",
+      "assigned_to": "Dr. Ananya Sharma — Cloud Architect Lead",
+      "admin_notes": "Verified HIPAA compliance requirements. Proposal deck sent.",
+      "is_read": true,
+      "created_at": "2026-09-03T09:19:54.618Z",
+      "updated_at": "2026-09-03T09:19:55.005Z"
+    },
+    {
+      "id": "eng_1788427169911_i8u8d2",
+      "full_name": "akil",
+      "company_name": "Apex",
+      "email": "bitxhift@gmail.com",
+      "phone": "6382950334",
+      "job_title": "",
+      "requirement_type": "Technology Transformation",
+      "message": "bnm,",
+      "preferred_date": "",
+      "preferred_time": "",
+      "source": "Contact Page",
+      "status": "CONTACTED",
+      "priority": "MEDIUM",
+      "assigned_to": "",
+      "admin_notes": "",
+      "is_read": true,
+      "created_at": "2026-09-03T09:19:29.911Z",
+      "updated_at": "2026-09-03T09:19:42.967Z"
+    },
     {
       "id": "eng_1788426929084_x0gpvb",
       "full_name": "Sunita Narayanan",

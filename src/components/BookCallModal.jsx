@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { X, Calendar, Clock, Send, CheckCircle2, AlertTriangle, Phone, Mail, Building, User, Briefcase, ChevronDown } from 'lucide-react';
+import {
+  X, Calendar, Clock, Send, CheckCircle2, AlertTriangle, Phone,
+  Mail, Building, User, Briefcase, ChevronDown, Cpu
+} from 'lucide-react';
 import api from '../api';
 import BlueprintWrapper from './BlueprintWrapper';
 
@@ -115,15 +118,16 @@ export default function BookCallModal() {
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/80 backdrop-blur-sm overflow-y-auto animate-in fade-in duration-200"
+      className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-black/80 backdrop-blur-md overflow-y-auto animate-in fade-in duration-200"
       role="dialog"
       aria-modal="true"
       aria-labelledby="modal-title"
     >
       <div className="relative w-full max-w-2xl my-auto">
-        <BlueprintWrapper pulseCorners={true} className="bg-[var(--color-surface)] border border-[var(--color-border)] p-6 sm:p-8 md:p-10 shadow-2xl overflow-hidden text-[var(--color-text)]">
+        <BlueprintWrapper pulseCorners={true} className="bg-[var(--color-surface)] border border-[var(--color-border)] p-5 sm:p-8 md:p-10 shadow-2xl overflow-hidden text-[var(--color-text)] relative">
           {/* Close Button */}
           <button
+            type="button"
             onClick={() => setIsOpen(false)}
             className="absolute top-4 right-4 p-2 text-[var(--color-text-muted)] hover:text-[var(--color-text)] border border-[var(--color-border)] bg-black/10 dark:bg-white/10 hover:border-[var(--color-accent)] transition-all cursor-pointer z-20"
             aria-label="Close Book a Call Modal"
@@ -132,52 +136,54 @@ export default function BookCallModal() {
           </button>
 
           {/* Header */}
-          <div className="mb-6">
-            <div className="font-mono text-[10px] sm:text-[11px] text-[var(--color-accent)] uppercase tracking-[0.2em] font-semibold mb-1">
+          <div className="mb-6 md:mb-8 text-left pr-8">
+            <div className="font-mono text-[10px] sm:text-[11px] text-[var(--color-accent)] uppercase tracking-[0.2em] font-semibold mb-1.5">
               SCHEDULE A TECHNICAL SESSION
             </div>
             <h2 id="modal-title" className="font-heading text-2xl sm:text-3xl font-bold uppercase tracking-tight text-[var(--color-text)]">
               BOOK A STRATEGY CALL
             </h2>
-            <p className="text-xs sm:text-sm text-[var(--color-text-muted)] mt-1 leading-relaxed">
+            <p className="text-xs sm:text-sm text-[var(--color-text-muted)] mt-1.5 leading-relaxed max-w-xl">
               Connect directly with SMRIKAAM lead solution architects in Coimbatore. Select your preferred slot and project details.
             </p>
           </div>
 
           {/* Success Alert */}
           {successMsg ? (
-            <div className="py-8 px-4 text-center border border-emerald-500/40 bg-emerald-500/10 rounded-sm">
-              <CheckCircle2 className="w-12 h-12 text-emerald-400 mx-auto mb-3" />
-              <h3 className="font-heading text-lg font-bold uppercase text-emerald-300 mb-2">
+            <div className="py-8 px-4 text-center border border-emerald-500/40 bg-emerald-500/10 rounded-sm space-y-4">
+              <CheckCircle2 className="w-12 h-12 text-emerald-400 mx-auto" />
+              <h3 className="font-heading text-lg font-bold uppercase text-emerald-300">
                 SESSION SCHEDULED
               </h3>
-              <p className="text-sm text-[var(--color-text)] max-w-md mx-auto leading-relaxed mb-6">
+              <p className="text-sm text-[var(--color-text)] max-w-md mx-auto leading-relaxed">
                 {successMsg}
               </p>
               <button
+                type="button"
                 onClick={() => setIsOpen(false)}
-                className="btn btn-primary px-8 py-2.5 font-bold uppercase tracking-wider text-xs"
+                className="btn btn-primary px-8 py-2.5 font-bold uppercase tracking-wider text-xs cursor-pointer mt-2"
               >
                 CLOSE WINDOW
               </button>
             </div>
           ) : (
-            <form onSubmit={handleSubmit} className="space-y-4">
+            <form onSubmit={handleSubmit} className="space-y-0">
               {errorMsg && (
-                <div className="p-3 border-l-4 border-rose-500 bg-rose-500/10 text-xs text-rose-300 flex items-center gap-2">
+                <div className="mb-5 p-3 border-l-4 border-rose-500 bg-rose-500/10 text-xs text-rose-300 flex items-center gap-2">
                   <AlertTriangle className="w-4 h-4 shrink-0 text-rose-400" />
                   <span>{errorMsg}</span>
                 </div>
               )}
 
               {/* Form Grid */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                {/* Full Name */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-5">
+                {/* 1. Full Name */}
                 <div className="field">
-                  <label htmlFor="modal-name" className="block text-[11px] font-mono uppercase tracking-wider text-[var(--color-text-muted)] mb-1">
+                  <label htmlFor="modal-name" className="block text-[11px] font-mono uppercase tracking-wider text-[var(--color-text-muted)] mb-1.5 text-left">
                     Full Name *
                   </label>
-                  <div className="relative">
+                  <div className="relative flex items-center w-full">
+                    <User className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-[var(--color-text-muted)] pointer-events-none z-10" />
                     <input
                       type="text"
                       id="modal-name"
@@ -186,18 +192,18 @@ export default function BookCallModal() {
                       value={formData.name}
                       onChange={handleChange}
                       placeholder="e.g. Ananya Sharma"
-                      className="input pl-9 w-full text-xs"
+                      className="input pl-10 pr-3 h-10 w-full text-xs bg-[var(--color-bg)] border border-[var(--color-border)] text-[var(--color-text)] focus:border-[var(--color-accent)] focus:outline-none transition-colors"
                     />
-                    <User className="w-4 h-4 absolute left-2.5 top-2.5 text-[var(--color-text-muted)]" />
                   </div>
                 </div>
 
-                {/* Company Name */}
+                {/* 2. Company Name */}
                 <div className="field">
-                  <label htmlFor="modal-company" className="block text-[11px] font-mono uppercase tracking-wider text-[var(--color-text-muted)] mb-1">
+                  <label htmlFor="modal-company" className="block text-[11px] font-mono uppercase tracking-wider text-[var(--color-text-muted)] mb-1.5 text-left">
                     Company Name *
                   </label>
-                  <div className="relative">
+                  <div className="relative flex items-center w-full">
+                    <Building className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-[var(--color-text-muted)] pointer-events-none z-10" />
                     <input
                       type="text"
                       id="modal-company"
@@ -206,18 +212,18 @@ export default function BookCallModal() {
                       value={formData.company}
                       onChange={handleChange}
                       placeholder="e.g. Apex Enterprise Systems"
-                      className="input pl-9 w-full text-xs"
+                      className="input pl-10 pr-3 h-10 w-full text-xs bg-[var(--color-bg)] border border-[var(--color-border)] text-[var(--color-text)] focus:border-[var(--color-accent)] focus:outline-none transition-colors"
                     />
-                    <Building className="w-4 h-4 absolute left-2.5 top-2.5 text-[var(--color-text-muted)]" />
                   </div>
                 </div>
 
-                {/* Work Email */}
+                {/* 3. Work Email */}
                 <div className="field">
-                  <label htmlFor="modal-email" className="block text-[11px] font-mono uppercase tracking-wider text-[var(--color-text-muted)] mb-1">
+                  <label htmlFor="modal-email" className="block text-[11px] font-mono uppercase tracking-wider text-[var(--color-text-muted)] mb-1.5 text-left">
                     Work Email *
                   </label>
-                  <div className="relative">
+                  <div className="relative flex items-center w-full">
+                    <Mail className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-[var(--color-text-muted)] pointer-events-none z-10" />
                     <input
                       type="email"
                       id="modal-email"
@@ -226,18 +232,18 @@ export default function BookCallModal() {
                       value={formData.email}
                       onChange={handleChange}
                       placeholder="ananya@apexenterprise.com"
-                      className="input pl-9 w-full text-xs"
+                      className="input pl-10 pr-3 h-10 w-full text-xs bg-[var(--color-bg)] border border-[var(--color-border)] text-[var(--color-text)] focus:border-[var(--color-accent)] focus:outline-none transition-colors"
                     />
-                    <Mail className="w-4 h-4 absolute left-2.5 top-2.5 text-[var(--color-text-muted)]" />
                   </div>
                 </div>
 
-                {/* Phone */}
+                {/* 4. Phone Number */}
                 <div className="field">
-                  <label htmlFor="modal-phone" className="block text-[11px] font-mono uppercase tracking-wider text-[var(--color-text-muted)] mb-1">
+                  <label htmlFor="modal-phone" className="block text-[11px] font-mono uppercase tracking-wider text-[var(--color-text-muted)] mb-1.5 text-left">
                     Phone Number
                   </label>
-                  <div className="relative">
+                  <div className="relative flex items-center w-full">
+                    <Phone className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-[var(--color-text-muted)] pointer-events-none z-10" />
                     <input
                       type="tel"
                       id="modal-phone"
@@ -245,18 +251,18 @@ export default function BookCallModal() {
                       value={formData.phone}
                       onChange={handleChange}
                       placeholder="+91 98765 43210"
-                      className="input pl-9 w-full text-xs"
+                      className="input pl-10 pr-3 h-10 w-full text-xs bg-[var(--color-bg)] border border-[var(--color-border)] text-[var(--color-text)] focus:border-[var(--color-accent)] focus:outline-none transition-colors"
                     />
-                    <Phone className="w-4 h-4 absolute left-2.5 top-2.5 text-[var(--color-text-muted)]" />
                   </div>
                 </div>
 
-                {/* Job Title */}
+                {/* 5. Job Title / Role */}
                 <div className="field">
-                  <label htmlFor="modal-jobTitle" className="block text-[11px] font-mono uppercase tracking-wider text-[var(--color-text-muted)] mb-1">
+                  <label htmlFor="modal-jobTitle" className="block text-[11px] font-mono uppercase tracking-wider text-[var(--color-text-muted)] mb-1.5 text-left">
                     Job Title / Role
                   </label>
-                  <div className="relative">
+                  <div className="relative flex items-center w-full">
+                    <Briefcase className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-[var(--color-text-muted)] pointer-events-none z-10" />
                     <input
                       type="text"
                       id="modal-jobTitle"
@@ -264,44 +270,48 @@ export default function BookCallModal() {
                       value={formData.jobTitle}
                       onChange={handleChange}
                       placeholder="VP Engineering / CTO / Head of Data"
-                      className="input pl-9 w-full text-xs"
+                      className="input pl-10 pr-3 h-10 w-full text-xs bg-[var(--color-bg)] border border-[var(--color-border)] text-[var(--color-text)] focus:border-[var(--color-accent)] focus:outline-none transition-colors"
                     />
-                    <Briefcase className="w-4 h-4 absolute left-2.5 top-2.5 text-[var(--color-text-muted)]" />
                   </div>
                 </div>
 
-                {/* Service Area */}
+                {/* 6. Service Area of Interest */}
                 <div className="field">
-                  <label htmlFor="modal-service" className="block text-[11px] font-mono uppercase tracking-wider text-[var(--color-text-muted)] mb-1">
+                  <label htmlFor="modal-service" className="block text-[11px] font-mono uppercase tracking-wider text-[var(--color-text-muted)] mb-1.5 text-left">
                     Service Area of Interest *
                   </label>
-                  <select
-                    id="modal-service"
-                    name="service"
-                    value={formData.service}
-                    onChange={handleChange}
-                    className="input w-full text-xs"
-                  >
-                    <option value="Artificial Intelligence & Machine Learning">Artificial Intelligence & ML</option>
-                    <option value="Industrial IoT (IIoT)">Industrial IoT (IIoT) & Edge</option>
-                    <option value="Enterprise Data Engineering">Enterprise Data Engineering</option>
-                    <option value="Generative AI & LLM Systems">Generative AI & LLM Systems</option>
-                    <option value="DevOps & Cloud Infrastructure">DevOps & Cloud Infrastructure</option>
-                    <option value="Data Governance & Security">Data Governance & Security</option>
-                    <option value="Integration Services">Integration Services</option>
-                    <option value="ServiceNow Solutions">ServiceNow Solutions</option>
-                    <option value="Technology Advisory">Technology Advisory</option>
-                    <option value="Staffing Services">Staffing & Pod Augmentation</option>
-                    <option value="Accelerator Demo">BitXhift / MigrateMax / ParseMaster Demo</option>
-                  </select>
+                  <div className="relative flex items-center w-full">
+                    <Cpu className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-[var(--color-text-muted)] pointer-events-none z-10" />
+                    <select
+                      id="modal-service"
+                      name="service"
+                      value={formData.service}
+                      onChange={handleChange}
+                      className="input pl-10 pr-8 h-10 w-full text-xs bg-[var(--color-bg)] border border-[var(--color-border)] text-[var(--color-text)] focus:border-[var(--color-accent)] focus:outline-none transition-colors appearance-none cursor-pointer"
+                    >
+                      <option value="Artificial Intelligence & Machine Learning">Artificial Intelligence & ML</option>
+                      <option value="Industrial IoT (IIoT)">Industrial IoT (IIoT) & Edge</option>
+                      <option value="Enterprise Data Engineering">Enterprise Data Engineering</option>
+                      <option value="Generative AI & LLM Systems">Generative AI & LLM Systems</option>
+                      <option value="DevOps & Cloud Infrastructure">DevOps & Cloud Infrastructure</option>
+                      <option value="Data Governance & Security">Data Governance & Security</option>
+                      <option value="Integration Services">Integration Services</option>
+                      <option value="ServiceNow Solutions">ServiceNow Solutions</option>
+                      <option value="Technology Advisory">Technology Advisory</option>
+                      <option value="Staffing Services">Staffing & Pod Augmentation</option>
+                      <option value="Accelerator Demo">BitXhift / MigrateMax / ParseMaster Demo</option>
+                    </select>
+                    <ChevronDown className="w-4 h-4 absolute right-3 top-1/2 -translate-y-1/2 text-[var(--color-text-muted)] pointer-events-none z-10" />
+                  </div>
                 </div>
 
-                {/* Preferred Date */}
+                {/* 7. Preferred Date */}
                 <div className="field">
-                  <label htmlFor="modal-date" className="block text-[11px] font-mono uppercase tracking-wider text-[var(--color-text-muted)] mb-1">
+                  <label htmlFor="modal-date" className="block text-[11px] font-mono uppercase tracking-wider text-[var(--color-text-muted)] mb-1.5 text-left">
                     Preferred Date
                   </label>
-                  <div className="relative">
+                  <div className="relative flex items-center w-full">
+                    <Calendar className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-[var(--color-text-muted)] pointer-events-none z-10" />
                     <input
                       type="date"
                       id="modal-date"
@@ -309,68 +319,70 @@ export default function BookCallModal() {
                       min={new Date().toISOString().split('T')[0]}
                       value={formData.preferredDate}
                       onChange={handleChange}
-                      className="input pl-9 w-full text-xs"
+                      className="input pl-10 pr-3 h-10 w-full text-xs bg-[var(--color-bg)] border border-[var(--color-border)] text-[var(--color-text)] focus:border-[var(--color-accent)] focus:outline-none transition-colors cursor-pointer"
                     />
-                    <Calendar className="w-4 h-4 absolute left-2.5 top-2.5 text-[var(--color-text-muted)]" />
                   </div>
                 </div>
 
-                {/* Preferred Time Slot */}
+                {/* 8. Preferred Time Slot */}
                 <div className="field">
-                  <label htmlFor="modal-time" className="block text-[11px] font-mono uppercase tracking-wider text-[var(--color-text-muted)] mb-1">
+                  <label htmlFor="modal-time" className="block text-[11px] font-mono uppercase tracking-wider text-[var(--color-text-muted)] mb-1.5 text-left">
                     Preferred Time Slot
                   </label>
-                  <div className="relative">
+                  <div className="relative flex items-center w-full">
+                    <Clock className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-[var(--color-text-muted)] pointer-events-none z-10" />
                     <select
                       id="modal-time"
                       name="preferredTime"
                       value={formData.preferredTime}
                       onChange={handleChange}
-                      className="input pl-9 w-full text-xs"
+                      className="input pl-10 pr-8 h-10 w-full text-xs bg-[var(--color-bg)] border border-[var(--color-border)] text-[var(--color-text)] focus:border-[var(--color-accent)] focus:outline-none transition-colors appearance-none cursor-pointer"
                     >
                       <option value="10:00 AM - 12:00 PM">10:00 AM - 12:00 PM IST</option>
                       <option value="02:00 PM - 04:00 PM">02:00 PM - 04:00 PM IST</option>
                       <option value="04:00 PM - 06:00 PM">04:00 PM - 06:00 PM IST</option>
                       <option value="07:00 PM - 09:00 PM">07:00 PM - 09:00 PM IST (US / EU)</option>
                     </select>
-                    <Clock className="w-4 h-4 absolute left-2.5 top-2.5 text-[var(--color-text-muted)]" />
+                    <ChevronDown className="w-4 h-4 absolute right-3 top-1/2 -translate-y-1/2 text-[var(--color-text-muted)] pointer-events-none z-10" />
                   </div>
                 </div>
               </div>
 
-              {/* Requirement Details Textarea */}
-              <div className="field">
-                <label htmlFor="modal-message" className="block text-[11px] font-mono uppercase tracking-wider text-[var(--color-text-muted)] mb-1">
+              {/* 9. Project Details / Requirement Focus */}
+              <div className="field mt-4 md:mt-5">
+                <label htmlFor="modal-message" className="block text-[11px] font-mono uppercase tracking-wider text-[var(--color-text-muted)] mb-1.5 text-left">
                   Project Details / Requirement Focus
                 </label>
                 <textarea
                   id="modal-message"
                   name="message"
-                  rows={3}
+                  rows={4}
                   value={formData.message}
                   onChange={handleChange}
                   placeholder="Describe your current tech stack, machinery count, data goals, or transformation timeline..."
-                  className="input w-full text-xs"
+                  className="input w-full p-3 text-xs bg-[var(--color-bg)] border border-[var(--color-border)] text-[var(--color-text)] focus:border-[var(--color-accent)] focus:outline-none transition-colors leading-relaxed resize-y"
                 />
               </div>
 
-              {/* Submit Button */}
-              <button
-                type="submit"
-                disabled={submitting}
-                className="btn btn-primary w-full justify-center py-3 text-xs font-bold uppercase tracking-wider mt-2 cursor-pointer"
-              >
-                {submitting ? (
-                  <span className="flex items-center gap-2">
-                    <span className="w-3.5 h-3.5 border-2 border-current border-t-transparent rounded-full animate-spin" />
-                    SUBMITTING REQUEST...
-                  </span>
-                ) : (
-                  <span className="flex items-center gap-1.5">
-                    CONFIRM &amp; BOOK SESSION <Send className="w-3.5 h-3.5" />
-                  </span>
-                )}
-              </button>
+              {/* 10. Submit Button */}
+              <div className="mt-6 md:mt-8 flex justify-center">
+                <button
+                  type="submit"
+                  disabled={submitting}
+                  className="btn btn-primary w-full sm:w-auto min-w-[280px] h-11 px-8 text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 cursor-pointer shadow-md hover:shadow-lg transition-all"
+                >
+                  {submitting ? (
+                    <span className="flex items-center gap-2">
+                      <span className="w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin" />
+                      SUBMITTING REQUEST...
+                    </span>
+                  ) : (
+                    <span className="flex items-center gap-2">
+                      CONFIRM &amp; BOOK SESSION <Send className="w-4 h-4" />
+                    </span>
+                  )}
+                </button>
+              </div>
             </form>
           )}
         </BlueprintWrapper>
