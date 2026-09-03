@@ -82,7 +82,7 @@
       "slug": "generative-ai-agentic-automation",
       "excerpt": "Building context-aware Retrieval-Augmented Generation (RAG) pipelines with strict data governance and DPDP compliance.",
       "content": "## Generative AI with Enterprise Governance\nDeploying Large Language Models in production enterprise environments demands strict determinism, context grounding, and strict role-based access control (RBAC).\n\n### Grounded Agentic RAG Architecture\nOur agentic framework combines hybrid semantic vector search with deterministic validation gates to eliminate hallucinations and enforce zero data leakage.\n\n- **Hybrid BM25 + Dense Embeddings** for precision retrieval\n- **Zero Data Leakage Guardrails** adhering to DPDP compliance\n- **Action Execution Validation** with full audit logging\n\n### Production Deployment\nEmpowered internal compliance and operations teams to automate 80% of document review and policy lookup tasks with sub-second response times.",
-      "cover_image_url": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1200&auto=format&fit=crop",
+      "cover_image_url": "https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=1200&auto=format&fit=crop",
       "category": "Generative AI",
       "tags": [
         "Generative AI",
@@ -249,7 +249,7 @@
       "acceleratorSlug": "migratemax",
       "caseStudy": "Multi-Cloud Migration & FinOps Optimization",
       "caseStudySlug": "case-studies",
-      "cover_image_url": "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?q=80&w=1200&auto=format&fit=crop",
+      "cover_image_url": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1200&auto=format&fit=crop",
       "status": "published",
       "display_order": 3
     },
@@ -299,7 +299,7 @@
       "acceleratorSlug": "bitxhift",
       "caseStudy": "Real-Time Data Pipeline Acceleration",
       "caseStudySlug": "case-studies",
-      "cover_image_url": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1200&auto=format&fit=crop",
+      "cover_image_url": "https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=1200&auto=format&fit=crop",
       "status": "published",
       "display_order": 4
     },
@@ -592,7 +592,7 @@
       "acceleratorSlug": "parsemaster",
       "caseStudy": "Intelligent Document & Workflow Automation",
       "caseStudySlug": "case-studies",
-      "cover_image_url": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=1200&auto=format&fit=crop",
+      "cover_image_url": "https://images.unsplash.com/photo-1531403009284-440f080d1e12?q=80&w=1200&auto=format&fit=crop",
       "status": "published",
       "display_order": 10
     }

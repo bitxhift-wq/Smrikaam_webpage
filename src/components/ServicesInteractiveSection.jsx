@@ -2,10 +2,6 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, ArrowUpRight } from 'lucide-react';
 
-import React, { useState, useEffect, useRef } from 'react';
-import { Link } from 'react-router-dom';
-import { ArrowRight, ArrowUpRight } from 'lucide-react';
-
 export default function ServicesInteractiveSection() {
   const [activeIdx, setActiveIdx] = useState(0);
   const [mousePos, setMousePos] = useState({ x: 0.5, y: 0.5 });
@@ -40,23 +36,55 @@ export default function ServicesInteractiveSection() {
     {
       id: 'data-engineering',
       num: '03',
-      title: 'Data Engineering',
+      title: 'Enterprise Data Engineering',
       tagline: 'Ingestion pipelines, schema normalization, and automated cloud warehouse loads.',
       description: 'Build high-throughput data pipelines, automated ELT workflows, and modern lakehouse architectures engineered for zero data loss and sub-second queries.',
       capabilities: ['ETL / ELT Pipelines', 'Lakehouse Architecture', 'Schema Drift Control', 'CDC Telemetry Sync'],
       tech: ['dbt', 'Apache Spark', 'Snowflake', 'Databricks'],
-      image: 'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?q=80&w=1200&auto=format&fit=crop',
+      image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1200&auto=format&fit=crop',
       caption: 'DATA PLATFORMS — High-Throughput Engineering Infrastructure',
       link: '/services'
     },
     {
       id: 'gen-ai',
       num: '04',
-      title: 'Generative & Agentic AI',
+      title: 'Generative AI & LLM Systems',
       tagline: 'Context-aware LLM agents, automated document parsing, and predictive models.',
       description: 'Deploy autonomous AI agents, domain-tuned LLMs, and agentic RAG pipelines that automate complex technical workflows with enterprise guardrails.',
       capabilities: ['Agentic RAG Pipelines', 'Document OCR & NLP', 'Custom Fine-Tuned Models', 'Enterprise Guardrails'],
       tech: ['LangChain', 'LlamaIndex', 'Gemini API'],
+      image: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=1200&auto=format&fit=crop',
+      caption: 'HUMAN + ARTIFICIAL INTELLIGENCE — Autonomous Agentic AI Systems',
+      link: '/services'
+    },
+    {
+      id: 'devops-cloud',
+      num: '05',
+      title: 'DevOps & Cloud Infrastructure',
+      tagline: 'Infrastructure as Code, CI/CD pipelines, and zero-downtime cloud migration.',
+      description: 'Engineer zero-downtime cloud landing zones, automated Infrastructure as Code (IaC), and resilient CI/CD delivery pipelines across AWS, Google Cloud, and Azure.',
+      capabilities: ['Cloud Landing Zones', 'Infrastructure as Code', 'Zero-Downtime Migration', 'Kubernetes / Docker'],
+      tech: ['AWS', 'Google Cloud', 'Azure', 'Terraform', 'Kubernetes'],
+      image: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?q=80&w=1200&auto=format&fit=crop',
+      caption: 'CLOUD INFRASTRUCTURE — Distributed Multi-Cloud System Architecture',
+      link: '/services'
+    },
+    {
+      id: 'ai-workflow',
+      num: '06',
+      title: 'Intelligent AI Workflow Automation',
+      tagline: 'Automated business processes, intelligent agents, and software workflow orchestration.',
+      description: 'Automate complex enterprise software workflows with intelligent AI agents, automated ticket routing, and resilient process orchestration.',
+      capabilities: ['AI Workflow Orchestration', 'Automated Ticket Routing', 'Intelligent Process Automation', 'DPDP Compliance Audit'],
+      tech: ['ServiceNow', 'Python', 'LangGraph', 'FastAPI'],
+      image: 'https://images.unsplash.com/photo-1531403009284-440f080d1e12?q=80&w=1200&auto=format&fit=crop',
+      caption: 'WORKFLOW AUTOMATION — Intelligent Process Control & Orchestration',
+      link: '/services'
+    }
+  ];
+
+  // Preload images to eliminate flickers
+  useEffect(() => {
     services.forEach((srv) => {
       const img = new Image();
       img.src = srv.image;
@@ -83,7 +111,6 @@ export default function ServicesInteractiveSection() {
   return (
     <section className="bg-[#FFFFFF] py-20 px-6 md:px-16 border-t border-b border-[#E5E5E5] text-[#111111]">
       <div className="max-w-7xl mx-auto">
-        {/* Header Section */}
         <div className="mb-16 border-b border-[#E5E5E5] pb-6 flex flex-col md:flex-row md:items-end justify-between gap-4">
           <div>
             <div className="font-mono text-xs text-[#111111] uppercase tracking-[0.2em] mb-2 font-bold">
