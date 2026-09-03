@@ -1,7 +1,7 @@
 import bcrypt from 'bcryptjs';
 
-// Pre-hashed password for initial admin (Password: AdminPassword2026!)
-const initialPasswordHash = bcrypt.hashSync('AdminPassword2026!', 10);
+// Pre-hashed password for initial admin (Password: Smrikaam!123@321!)
+const initialPasswordHash = bcrypt.hashSync('Smrikaam!123@321!', 10);
 
 export const initialSeedData = {
   users: [

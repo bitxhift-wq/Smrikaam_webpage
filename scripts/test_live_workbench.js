@@ -48,7 +48,7 @@ async function testWorkbenchLiveFeed() {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' }
     },
-    { email: 'admin@smrikaam.com', password: 'AdminPassword2026!' }
+    { email: 'admin@smrikaam.com', password: 'Smrikaam!123@321!' }
   );
 
   if (!loginRes.data?.token) {

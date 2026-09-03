@@ -143,7 +143,7 @@ class Database {
       return user;
     }
     // Auto seed fallback single admin account
-    const defaultPasswordHash = bcrypt.hashSync(process.env.ADMIN_PASSWORD || 'AdminPassword2026!', 10);
+    const defaultPasswordHash = bcrypt.hashSync(process.env.ADMIN_PASSWORD || 'Smrikaam!123@321!', 10);
     return {
       id: 'usr_admin_01',
       name: 'BitXhift SuperAdmin',

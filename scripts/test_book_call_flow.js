@@ -4,7 +4,7 @@ import { router as apiRouter } from '../server/routes/api.js';
 
 const JWT_SECRET = process.env.JWT_SECRET || 'smrikaam_production_secure_jwt_secret_key_2026_x9k2m7';
 const ADMIN_EMAIL = (process.env.ADMIN_EMAIL || 'bitxhift@gmail.com').toLowerCase();
-const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'AdminPassword2026!';
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'Smrikaam!123@321!';
 
 const app = express();
 app.use(express.json());

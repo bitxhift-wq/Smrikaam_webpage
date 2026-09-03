@@ -35,7 +35,7 @@ export async function authenticateUser(email, password, ip = '127.0.0.1') {
     throw new Error('Invalid email or password.');
   }
 
-  const expectedPassword = process.env.ADMIN_PASSWORD || 'AdminPassword2026!';
+  const expectedPassword = process.env.ADMIN_PASSWORD || 'Smrikaam!123@321!';
   let isMatch = bcrypt.compareSync(password, user.passwordHash) || password === expectedPassword;
 
   if (!isMatch) {
