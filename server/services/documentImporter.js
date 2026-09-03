@@ -2,7 +2,47 @@ import fs from 'fs';
 import path from 'path';
 import zlib from 'zlib';
 import JSZip from 'jszip';
-import { PDFParse } from 'pdf-parse';
+
+/**
+ * Server-safe polyfills for PDF.js when running in headless / serverless environments (Vercel Lambda)
+ * Ensures that missing browser DOM globals (DOMMatrix, ImageData, Path2D) do not crash module loading.
+ */
+function ensurePdfPolyfills() {
+  if (typeof globalThis.DOMMatrix === 'undefined') {
+    globalThis.DOMMatrix = class DOMMatrix {
+      constructor() {
+        this.a = 1; this.b = 0; this.c = 0; this.d = 1; this.e = 0; this.f = 0;
+        this.m11 = 1; this.m12 = 0; this.m13 = 0; this.m14 = 0;
+        this.m21 = 0; this.m22 = 1; this.m23 = 0; this.m24 = 0;
+        this.m31 = 0; this.m32 = 0; this.m33 = 1; this.m34 = 0;
+        this.m41 = 0; this.m42 = 0; this.m43 = 0; this.m44 = 1;
+        this.is2D = true;
+        this.isIdentity = true;
+      }
+      multiplySelf() { return this; }
+      preMultiplySelf() { return this; }
+      translate() { return this; }
+      scale() { return this; }
+      invertSelf() { return this; }
+    };
+  }
+
+  if (typeof globalThis.ImageData === 'undefined') {
+    globalThis.ImageData = class ImageData {
+      constructor(width, height) {
+        this.width = width;
+        this.height = height;
+        this.data = new Uint8ClampedArray(width * height * 4);
+      }
+    };
+  }
+
+  if (typeof globalThis.Path2D === 'undefined') {
+    globalThis.Path2D = class Path2D {
+      addPath() {}
+    };
+  }
+}
 
 const CATEGORY_KEYWORDS = {
   'Artificial Intelligence & Machine Learning': ['artificial intelligence', 'machine learning', 'ml', 'neural', 'classification', 'model', 'dataset', 'inference', 'vision', 'decision-making', 'predictive'],
@@ -121,7 +161,9 @@ export async function parseDocument(file, uploadsDir) {
   const contentBlocks = [];
 
   if (ext === '.pdf') {
-    // 1. PDF Parsing with PDFParse
+    // 1. Safe Vercel-compatible PDF Parsing: ensure polyfills first, then lazy-load
+    ensurePdfPolyfills();
+    const { PDFParse } = await import('pdf-parse');
     const parser = new PDFParse({ data: fileBuffer });
     await parser.load();
 

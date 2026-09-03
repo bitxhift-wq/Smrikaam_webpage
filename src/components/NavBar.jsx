@@ -5,6 +5,20 @@ import Logo from './Logo';
 import { useCMS } from '../context/CMSContext';
 import { openBookCallModal } from './BookCallModal';
 
+const CANONICAL_SERVICES = [
+  { name: 'Artificial Intelligence & Machine Learning', path: '/services/ai-ml' },
+  { name: 'Industrial IoT (IIoT)', path: '/services/industrial-iot-iiot' },
+  { name: 'Data Engineering & Modernization', path: '/services/data-engineering' },
+  { name: 'Generative AI & Agentic AI', path: '/services/generative-agentic-ai' },
+  { name: 'DevOps & Cloud Infrastructure', path: '/services/devops-cloud' },
+  { name: 'Data Governance & Quality', path: '/services/data-governance' },
+  { name: 'Integration Services', path: '/services/integration-services' },
+  { name: 'ServiceNow Solutions', path: '/services/servicenow-solutions' },
+  { name: 'Advisory Services', path: '/services/advisory-services' },
+  { name: 'AI Workflow Automation', path: '/services/ai-workflow-automation' },
+  { name: 'Staffing Services', path: '/staffing' }
+];
+
 export default function NavBar() {
   const {
     services: cmsPublishedServices,
@@ -17,6 +31,68 @@ export default function NavBar() {
   const [industriesDropdown, setIndustriesDropdown] = useState(false);
   const [caseStudiesDropdown, setCaseStudiesDropdown] = useState(false);
   const [companyDropdown, setCompanyDropdown] = useState(false);
+
+  // Intentional hover-delay timer refs to prevent flicker across gaps
+  const servicesTimeoutRef = useRef(null);
+  const acceleratorsTimeoutRef = useRef(null);
+  const industriesTimeoutRef = useRef(null);
+  const caseStudiesTimeoutRef = useRef(null);
+  const companyTimeoutRef = useRef(null);
+
+  const handleMouseEnter = (setter, timerRef) => {
+    if (timerRef.current) {
+      clearTimeout(timerRef.current);
+      timerRef.current = null;
+    }
+    setter(true);
+  };
+
+  const handleMouseLeave = (setter, timerRef) => {
+    if (timerRef.current) {
+      clearTimeout(timerRef.current);
+    }
+    timerRef.current = setTimeout(() => {
+      setter(false);
+    }, 180);
+  };
+
+  const handleDropdownKeyDown = (e, setter, menuId, buttonId) => {
+    if (e.key === 'Enter' || e.key === ' ' || e.key === 'ArrowDown') {
+      e.preventDefault();
+      setter(true);
+      setTimeout(() => {
+        const first = document.querySelector(`#${menuId} a`);
+        if (first) first.focus();
+      }, 50);
+    } else if (e.key === 'Escape') {
+      e.preventDefault();
+      setter(false);
+      const btn = document.getElementById(buttonId);
+      if (btn) btn.focus();
+    }
+  };
+
+  const handleMenuLinkKeyDown = (e, setter, menuId, buttonId, idx) => {
+    if (e.key === 'Escape') {
+      e.preventDefault();
+      setter(false);
+      const btn = document.getElementById(buttonId);
+      if (btn) btn.focus();
+    } else if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      const all = document.querySelectorAll(`#${menuId} a`);
+      if (all[idx + 1]) all[idx + 1].focus();
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      const all = document.querySelectorAll(`#${menuId} a`);
+      if (idx > 0 && all[idx - 1]) {
+        all[idx - 1].focus();
+      } else {
+        const btn = document.getElementById(buttonId);
+        if (btn) btn.focus();
+      }
+    }
+  };
 
   // Mobile accordion drawer state
   const [mobileAccordions, setMobileAccordions] = useState({
@@ -71,6 +147,9 @@ export default function NavBar() {
 
   // Close dropdowns on route change
   useEffect(() => {
+    [servicesTimeoutRef, acceleratorsTimeoutRef, industriesTimeoutRef, caseStudiesTimeoutRef, companyTimeoutRef].forEach(ref => {
+      if (ref.current) clearTimeout(ref.current);
+    });
     setServicesDropdown(false);
     setAcceleratorsDropdown(false);
     setIndustriesDropdown(false);
@@ -110,13 +189,17 @@ export default function NavBar() {
   };
 
   const servicesSubLinks = useMemo(() => {
-    const list = Array.isArray(cmsPublishedServices) && cmsPublishedServices.length > 0
-      ? cmsPublishedServices.map((s) => ({
-          name: s.title || s.name,
-          path: `/services/${s.slug}`
-        }))
-      : [];
-    return [...list, { name: 'Staffing Services', path: '/staffing' }];
+    if (Array.isArray(cmsPublishedServices) && cmsPublishedServices.length > 0) {
+      const list = cmsPublishedServices.map((s) => ({
+        name: s.title || s.name,
+        path: `/services/${s.slug}`
+      }));
+      if (!list.some(item => item.path === '/staffing')) {
+        list.push({ name: 'Staffing Services', path: '/staffing' });
+      }
+      return list;
+    }
+    return CANONICAL_SERVICES;
   }, [cmsPublishedServices]);
 
   const acceleratorsSubLinks = useMemo(() => {
@@ -195,15 +278,24 @@ export default function NavBar() {
             HOME
           </Link>
 
-          {/* SERVICES — Hover reveals drop list, Click enters /services */}
+          {/* SERVICES — Hover reveals drop list, Click toggles dropdown */}
           <div
             className="relative flex items-center h-full py-2"
-            onMouseEnter={() => setServicesDropdown(true)}
-            onMouseLeave={() => setServicesDropdown(false)}
+            onMouseEnter={() => handleMouseEnter(setServicesDropdown, servicesTimeoutRef)}
+            onMouseLeave={() => handleMouseLeave(setServicesDropdown, servicesTimeoutRef)}
           >
-            <Link
-              to="/services"
-              onClick={() => setServicesDropdown(false)}
+            <button
+              type="button"
+              id="nav-services-button"
+              aria-haspopup="menu"
+              aria-expanded={servicesDropdown}
+              aria-controls="nav-services-menu"
+              onClick={(e) => {
+                e.stopPropagation();
+                if (servicesTimeoutRef.current) clearTimeout(servicesTimeoutRef.current);
+                setServicesDropdown((prev) => !prev);
+              }}
+              onKeyDown={(e) => handleDropdownKeyDown(e, setServicesDropdown, 'nav-services-menu', 'nav-services-button')}
               className={`text-xs uppercase tracking-widest font-semibold flex items-center gap-1.5 cursor-pointer bg-transparent border-0 outline-none p-0 transition-colors ${
                 isServicesActive || servicesDropdown ? 'text-[var(--ribbon-active)]' : 'text-[var(--ribbon-text-secondary)] hover:text-[var(--ribbon-text)]'
               }`}
@@ -216,21 +308,38 @@ export default function NavBar() {
                 aria-hidden="true"
                 focusable="false"
               />
-            </Link>
+            </button>
 
             {servicesDropdown && (
               <div
-                className="absolute left-0 top-full pt-1 w-64 z-50"
+                id="nav-services-menu"
+                role="menu"
+                aria-label="Services Menu"
+                className="absolute left-0 top-full pt-1.5 w-72 z-[100]"
                 style={{ filter: 'drop-shadow(0 10px 25px rgba(0, 0, 0, 0.45))' }}
+                onMouseEnter={() => handleMouseEnter(setServicesDropdown, servicesTimeoutRef)}
+                onMouseLeave={() => handleMouseLeave(setServicesDropdown, servicesTimeoutRef)}
               >
-                <div className="bg-[var(--ribbon-dropdown-bg)] border border-[var(--ribbon-dropdown-border)] p-1.5 shadow-2xl flex flex-col gap-0.5 rounded-none max-h-[70vh] overflow-y-auto custom-scrollbar">
-                  {servicesSubLinks.map((sub) => {
+                <div className="bg-[var(--ribbon-dropdown-bg)] border border-[var(--ribbon-dropdown-border)] p-1.5 shadow-2xl flex flex-col gap-0.5 rounded-none max-h-[75vh] overflow-y-auto custom-scrollbar">
+                  <Link
+                    to="/services"
+                    role="menuitem"
+                    onClick={() => setServicesDropdown(false)}
+                    onKeyDown={(e) => handleMenuLinkKeyDown(e, setServicesDropdown, 'nav-services-menu', 'nav-services-button', 0)}
+                    className="px-3 py-2 text-xs uppercase tracking-wider flex items-center justify-between font-bold text-[var(--ribbon-active)] hover:bg-[var(--ribbon-dropdown-hover)] border-b border-[var(--ribbon-dropdown-border)] mb-1 group transition-colors"
+                  >
+                    <span>ALL SERVICES</span>
+                    <span className="text-xs transition-transform duration-150 group-hover:translate-x-0.5">→</span>
+                  </Link>
+                  {servicesSubLinks.map((sub, idx) => {
                     const subActive = isActive(sub.path);
                     return (
                       <Link
                         key={sub.path}
                         to={sub.path}
+                        role="menuitem"
                         onClick={() => setServicesDropdown(false)}
+                        onKeyDown={(e) => handleMenuLinkKeyDown(e, setServicesDropdown, 'nav-services-menu', 'nav-services-button', idx + 1)}
                         className={`px-3 py-2 text-xs uppercase tracking-wider flex items-center justify-between transition-colors duration-150 rounded-none group ${
                           subActive
                             ? 'text-[var(--ribbon-dropdown-text)] font-bold bg-[var(--ribbon-dropdown-active)] border-l-2 border-[var(--ribbon-dropdown-text)]'
@@ -256,15 +365,24 @@ export default function NavBar() {
             )}
           </div>
 
-          {/* ACCELERATORS — Hover reveals drop list, Click enters /accelerators */}
+          {/* ACCELERATORS / PRODUCTS — Hover reveals drop list, Click toggles dropdown */}
           <div
             className="relative flex items-center h-full py-2"
-            onMouseEnter={() => setAcceleratorsDropdown(true)}
-            onMouseLeave={() => setAcceleratorsDropdown(false)}
+            onMouseEnter={() => handleMouseEnter(setAcceleratorsDropdown, acceleratorsTimeoutRef)}
+            onMouseLeave={() => handleMouseLeave(setAcceleratorsDropdown, acceleratorsTimeoutRef)}
           >
-            <Link
-              to="/products"
-              onClick={() => setAcceleratorsDropdown(false)}
+            <button
+              type="button"
+              id="nav-products-button"
+              aria-haspopup="menu"
+              aria-expanded={acceleratorsDropdown}
+              aria-controls="nav-products-menu"
+              onClick={(e) => {
+                e.stopPropagation();
+                if (acceleratorsTimeoutRef.current) clearTimeout(acceleratorsTimeoutRef.current);
+                setAcceleratorsDropdown((prev) => !prev);
+              }}
+              onKeyDown={(e) => handleDropdownKeyDown(e, setAcceleratorsDropdown, 'nav-products-menu', 'nav-products-button')}
               className={`text-xs uppercase tracking-widest font-semibold flex items-center gap-1.5 cursor-pointer bg-transparent border-0 outline-none p-0 transition-colors ${
                 isAcceleratorsActive || acceleratorsDropdown ? 'text-[var(--ribbon-active)]' : 'text-[var(--ribbon-text-secondary)] hover:text-[var(--ribbon-text)]'
               }`}
@@ -277,21 +395,38 @@ export default function NavBar() {
                 aria-hidden="true"
                 focusable="false"
               />
-            </Link>
+            </button>
 
             {acceleratorsDropdown && (
               <div
-                className="absolute left-0 top-full pt-1 w-64 z-50"
+                id="nav-products-menu"
+                role="menu"
+                aria-label="Products Menu"
+                className="absolute left-0 top-full pt-1.5 w-64 z-[100]"
                 style={{ filter: 'drop-shadow(0 10px 25px rgba(0, 0, 0, 0.45))' }}
+                onMouseEnter={() => handleMouseEnter(setAcceleratorsDropdown, acceleratorsTimeoutRef)}
+                onMouseLeave={() => handleMouseLeave(setAcceleratorsDropdown, acceleratorsTimeoutRef)}
               >
-                <div className="bg-[var(--ribbon-dropdown-bg)] border border-[var(--ribbon-dropdown-border)] p-1.5 shadow-2xl flex flex-col gap-0.5 rounded-none max-h-[70vh] overflow-y-auto custom-scrollbar">
-                  {acceleratorsSubLinks.map((sub) => {
+                <div className="bg-[var(--ribbon-dropdown-bg)] border border-[var(--ribbon-dropdown-border)] p-1.5 shadow-2xl flex flex-col gap-0.5 rounded-none max-h-[75vh] overflow-y-auto custom-scrollbar">
+                  <Link
+                    to="/products"
+                    role="menuitem"
+                    onClick={() => setAcceleratorsDropdown(false)}
+                    onKeyDown={(e) => handleMenuLinkKeyDown(e, setAcceleratorsDropdown, 'nav-products-menu', 'nav-products-button', 0)}
+                    className="px-3 py-2 text-xs uppercase tracking-wider flex items-center justify-between font-bold text-[var(--ribbon-active)] hover:bg-[var(--ribbon-dropdown-hover)] border-b border-[var(--ribbon-dropdown-border)] mb-1 group transition-colors"
+                  >
+                    <span>ALL PRODUCTS</span>
+                    <span className="text-xs transition-transform duration-150 group-hover:translate-x-0.5">→</span>
+                  </Link>
+                  {acceleratorsSubLinks.map((sub, idx) => {
                     const subActive = isActive(sub.path);
                     return (
                       <Link
                         key={sub.name}
                         to={sub.path}
+                        role="menuitem"
                         onClick={() => setAcceleratorsDropdown(false)}
+                        onKeyDown={(e) => handleMenuLinkKeyDown(e, setAcceleratorsDropdown, 'nav-products-menu', 'nav-products-button', idx + 1)}
                         className={`px-3 py-2 text-xs uppercase tracking-wider flex items-center justify-between transition-colors duration-150 rounded-none group ${
                           subActive
                             ? 'text-[var(--ribbon-dropdown-text)] font-bold bg-[var(--ribbon-dropdown-active)] border-l-2 border-[var(--ribbon-dropdown-text)]'
@@ -317,15 +452,24 @@ export default function NavBar() {
             )}
           </div>
 
-          {/* INDUSTRIES — Hover reveals drop list, Click enters /industries */}
+          {/* INDUSTRIES — Hover reveals drop list, Click toggles dropdown */}
           <div
             className="relative flex items-center h-full py-2"
-            onMouseEnter={() => setIndustriesDropdown(true)}
-            onMouseLeave={() => setIndustriesDropdown(false)}
+            onMouseEnter={() => handleMouseEnter(setIndustriesDropdown, industriesTimeoutRef)}
+            onMouseLeave={() => handleMouseLeave(setIndustriesDropdown, industriesTimeoutRef)}
           >
-            <Link
-              to="/industries"
-              onClick={() => setIndustriesDropdown(false)}
+            <button
+              type="button"
+              id="nav-industries-button"
+              aria-haspopup="menu"
+              aria-expanded={industriesDropdown}
+              aria-controls="nav-industries-menu"
+              onClick={(e) => {
+                e.stopPropagation();
+                if (industriesTimeoutRef.current) clearTimeout(industriesTimeoutRef.current);
+                setIndustriesDropdown((prev) => !prev);
+              }}
+              onKeyDown={(e) => handleDropdownKeyDown(e, setIndustriesDropdown, 'nav-industries-menu', 'nav-industries-button')}
               className={`text-xs uppercase tracking-widest font-semibold flex items-center gap-1.5 cursor-pointer bg-transparent border-0 outline-none p-0 transition-colors ${
                 isIndustriesActive || industriesDropdown ? 'text-[var(--ribbon-active)]' : 'text-[var(--ribbon-text-secondary)] hover:text-[var(--ribbon-text)]'
               }`}
@@ -338,21 +482,38 @@ export default function NavBar() {
                 aria-hidden="true"
                 focusable="false"
               />
-            </Link>
+            </button>
 
             {industriesDropdown && (
               <div
-                className="absolute left-0 top-full pt-1 w-64 z-50"
+                id="nav-industries-menu"
+                role="menu"
+                aria-label="Industries Menu"
+                className="absolute left-0 top-full pt-1.5 w-64 z-[100]"
                 style={{ filter: 'drop-shadow(0 10px 25px rgba(0, 0, 0, 0.45))' }}
+                onMouseEnter={() => handleMouseEnter(setIndustriesDropdown, industriesTimeoutRef)}
+                onMouseLeave={() => handleMouseLeave(setIndustriesDropdown, industriesTimeoutRef)}
               >
-                <div className="bg-[var(--ribbon-dropdown-bg)] border border-[var(--ribbon-dropdown-border)] p-1.5 shadow-2xl flex flex-col gap-0.5 rounded-none max-h-[70vh] overflow-y-auto custom-scrollbar">
-                  {industriesSubLinks.map((sub) => {
+                <div className="bg-[var(--ribbon-dropdown-bg)] border border-[var(--ribbon-dropdown-border)] p-1.5 shadow-2xl flex flex-col gap-0.5 rounded-none max-h-[75vh] overflow-y-auto custom-scrollbar">
+                  <Link
+                    to="/industries"
+                    role="menuitem"
+                    onClick={() => setIndustriesDropdown(false)}
+                    onKeyDown={(e) => handleMenuLinkKeyDown(e, setIndustriesDropdown, 'nav-industries-menu', 'nav-industries-button', 0)}
+                    className="px-3 py-2 text-xs uppercase tracking-wider flex items-center justify-between font-bold text-[var(--ribbon-active)] hover:bg-[var(--ribbon-dropdown-hover)] border-b border-[var(--ribbon-dropdown-border)] mb-1 group transition-colors"
+                  >
+                    <span>ALL INDUSTRIES</span>
+                    <span className="text-xs transition-transform duration-150 group-hover:translate-x-0.5">→</span>
+                  </Link>
+                  {industriesSubLinks.map((sub, idx) => {
                     const subActive = isActive(sub.path);
                     return (
                       <Link
                         key={sub.path}
                         to={sub.path}
+                        role="menuitem"
                         onClick={() => setIndustriesDropdown(false)}
+                        onKeyDown={(e) => handleMenuLinkKeyDown(e, setIndustriesDropdown, 'nav-industries-menu', 'nav-industries-button', idx + 1)}
                         className={`px-3 py-2 text-xs uppercase tracking-wider flex items-center justify-between transition-colors duration-150 rounded-none group ${
                           subActive
                             ? 'text-[var(--ribbon-dropdown-text)] font-bold bg-[var(--ribbon-dropdown-active)] border-l-2 border-[var(--ribbon-dropdown-text)]'
@@ -378,15 +539,24 @@ export default function NavBar() {
             )}
           </div>
 
-          {/* CASE STUDIES — Hover reveals drop list, Click enters /case-studies */}
+          {/* CASE STUDIES — Hover reveals drop list, Click toggles dropdown */}
           <div
             className="relative flex items-center h-full py-2"
-            onMouseEnter={() => setCaseStudiesDropdown(true)}
-            onMouseLeave={() => setCaseStudiesDropdown(false)}
+            onMouseEnter={() => handleMouseEnter(setCaseStudiesDropdown, caseStudiesTimeoutRef)}
+            onMouseLeave={() => handleMouseLeave(setCaseStudiesDropdown, caseStudiesTimeoutRef)}
           >
-            <Link
-              to="/case-studies"
-              onClick={() => setCaseStudiesDropdown(false)}
+            <button
+              type="button"
+              id="nav-casestudies-button"
+              aria-haspopup="menu"
+              aria-expanded={caseStudiesDropdown}
+              aria-controls="nav-casestudies-menu"
+              onClick={(e) => {
+                e.stopPropagation();
+                if (caseStudiesTimeoutRef.current) clearTimeout(caseStudiesTimeoutRef.current);
+                setCaseStudiesDropdown((prev) => !prev);
+              }}
+              onKeyDown={(e) => handleDropdownKeyDown(e, setCaseStudiesDropdown, 'nav-casestudies-menu', 'nav-casestudies-button')}
               className={`text-xs uppercase tracking-widest font-semibold flex items-center gap-1.5 cursor-pointer bg-transparent border-0 outline-none p-0 transition-colors ${
                 isCaseStudiesActive || caseStudiesDropdown ? 'text-[var(--ribbon-active)]' : 'text-[var(--ribbon-text-secondary)] hover:text-[var(--ribbon-text)]'
               }`}
@@ -399,21 +569,38 @@ export default function NavBar() {
                 aria-hidden="true"
                 focusable="false"
               />
-            </Link>
+            </button>
 
             {caseStudiesDropdown && (
               <div
-                className="absolute left-0 top-full pt-1 w-64 z-50"
+                id="nav-casestudies-menu"
+                role="menu"
+                aria-label="Case Studies Menu"
+                className="absolute left-0 top-full pt-1.5 w-64 z-[100]"
                 style={{ filter: 'drop-shadow(0 10px 25px rgba(0, 0, 0, 0.45))' }}
+                onMouseEnter={() => handleMouseEnter(setCaseStudiesDropdown, caseStudiesTimeoutRef)}
+                onMouseLeave={() => handleMouseLeave(setCaseStudiesDropdown, caseStudiesTimeoutRef)}
               >
-                <div className="bg-[var(--ribbon-dropdown-bg)] border border-[var(--ribbon-dropdown-border)] p-1.5 shadow-2xl flex flex-col gap-0.5 rounded-none max-h-[70vh] overflow-y-auto custom-scrollbar">
-                  {caseStudiesSubLinks.map((sub) => {
+                <div className="bg-[var(--ribbon-dropdown-bg)] border border-[var(--ribbon-dropdown-border)] p-1.5 shadow-2xl flex flex-col gap-0.5 rounded-none max-h-[75vh] overflow-y-auto custom-scrollbar">
+                  <Link
+                    to="/case-studies"
+                    role="menuitem"
+                    onClick={() => setCaseStudiesDropdown(false)}
+                    onKeyDown={(e) => handleMenuLinkKeyDown(e, setCaseStudiesDropdown, 'nav-casestudies-menu', 'nav-casestudies-button', 0)}
+                    className="px-3 py-2 text-xs uppercase tracking-wider flex items-center justify-between font-bold text-[var(--ribbon-active)] hover:bg-[var(--ribbon-dropdown-hover)] border-b border-[var(--ribbon-dropdown-border)] mb-1 group transition-colors"
+                  >
+                    <span>All Case Studies</span>
+                    <span className="text-xs transition-transform duration-150 group-hover:translate-x-0.5">→</span>
+                  </Link>
+                  {caseStudiesSubLinks.map((sub, idx) => {
                     const subActive = isActive(sub.path);
                     return (
                       <Link
                         key={sub.path}
                         to={sub.path}
+                        role="menuitem"
                         onClick={() => setCaseStudiesDropdown(false)}
+                        onKeyDown={(e) => handleMenuLinkKeyDown(e, setCaseStudiesDropdown, 'nav-casestudies-menu', 'nav-casestudies-button', idx + 1)}
                         className={`px-3 py-2 text-xs uppercase tracking-wider flex items-center justify-between transition-colors duration-150 rounded-none group ${
                           subActive
                             ? 'text-[var(--ribbon-dropdown-text)] font-bold bg-[var(--ribbon-dropdown-active)] border-l-2 border-[var(--ribbon-dropdown-text)]'
@@ -439,15 +626,24 @@ export default function NavBar() {
             )}
           </div>
 
-          {/* COMPANY — Hover reveals drop list, Click enters /about */}
+          {/* COMPANY — Hover reveals drop list, Click toggles dropdown */}
           <div
             className="relative flex items-center h-full py-2"
-            onMouseEnter={() => setCompanyDropdown(true)}
-            onMouseLeave={() => setCompanyDropdown(false)}
+            onMouseEnter={() => handleMouseEnter(setCompanyDropdown, companyTimeoutRef)}
+            onMouseLeave={() => handleMouseLeave(setCompanyDropdown, companyTimeoutRef)}
           >
-            <Link
-              to="/about"
-              onClick={() => setCompanyDropdown(false)}
+            <button
+              type="button"
+              id="nav-company-button"
+              aria-haspopup="menu"
+              aria-expanded={companyDropdown}
+              aria-controls="nav-company-menu"
+              onClick={(e) => {
+                e.stopPropagation();
+                if (companyTimeoutRef.current) clearTimeout(companyTimeoutRef.current);
+                setCompanyDropdown((prev) => !prev);
+              }}
+              onKeyDown={(e) => handleDropdownKeyDown(e, setCompanyDropdown, 'nav-company-menu', 'nav-company-button')}
               className={`text-xs uppercase tracking-widest font-semibold flex items-center gap-1.5 cursor-pointer bg-transparent border-0 outline-none p-0 transition-colors ${
                 isCompanyActive || companyDropdown ? 'text-[var(--ribbon-active)]' : 'text-[var(--ribbon-text-secondary)] hover:text-[var(--ribbon-text)]'
               }`}
@@ -460,21 +656,28 @@ export default function NavBar() {
                 aria-hidden="true"
                 focusable="false"
               />
-            </Link>
+            </button>
 
             {companyDropdown && (
               <div
-                className="absolute left-0 top-full pt-1 w-64 z-50"
+                id="nav-company-menu"
+                role="menu"
+                aria-label="Company Menu"
+                className="absolute left-0 top-full pt-1.5 w-64 z-[100]"
                 style={{ filter: 'drop-shadow(0 10px 25px rgba(0, 0, 0, 0.45))' }}
+                onMouseEnter={() => handleMouseEnter(setCompanyDropdown, companyTimeoutRef)}
+                onMouseLeave={() => handleMouseLeave(setCompanyDropdown, companyTimeoutRef)}
               >
-                <div className="bg-[var(--ribbon-dropdown-bg)] border border-[var(--ribbon-dropdown-border)] p-1.5 shadow-2xl flex flex-col gap-0.5 rounded-none max-h-[70vh] overflow-y-auto custom-scrollbar">
-                  {companySubLinks.map((sub) => {
+                <div className="bg-[var(--ribbon-dropdown-bg)] border border-[var(--ribbon-dropdown-border)] p-1.5 shadow-2xl flex flex-col gap-0.5 rounded-none max-h-[75vh] overflow-y-auto custom-scrollbar">
+                  {companySubLinks.map((sub, idx) => {
                     const subActive = isActive(sub.path);
                     return (
                       <Link
                         key={sub.path}
                         to={sub.path}
+                        role="menuitem"
                         onClick={() => setCompanyDropdown(false)}
+                        onKeyDown={(e) => handleMenuLinkKeyDown(e, setCompanyDropdown, 'nav-company-menu', 'nav-company-button', idx)}
                         className={`px-3 py-2 text-xs uppercase tracking-wider flex items-center justify-between transition-colors duration-150 rounded-none group ${
                           subActive
                             ? 'text-[var(--ribbon-dropdown-text)] font-bold bg-[var(--ribbon-dropdown-active)] border-l-2 border-[var(--ribbon-dropdown-text)]'

@@ -10,10 +10,22 @@ import { authenticateUser, requireAdminAuth, verifyToken } from '../services/aut
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// Uploads directory: in public/uploads for direct browser serving
-const UPLOADS_DIR = path.resolve(__dirname, '../../public/uploads');
-if (!fs.existsSync(UPLOADS_DIR)) {
-  fs.mkdirSync(UPLOADS_DIR, { recursive: true });
+// Uploads directory: in public/uploads for direct browser serving, with fallback to /tmp in serverless
+let UPLOADS_DIR = path.resolve(__dirname, '../../public/uploads');
+try {
+  if (!fs.existsSync(UPLOADS_DIR)) {
+    fs.mkdirSync(UPLOADS_DIR, { recursive: true });
+  }
+} catch (err) {
+  // If filesystem is read-only (e.g. AWS Lambda / Vercel serverless), fallback to /tmp/uploads
+  UPLOADS_DIR = path.resolve('/tmp', 'uploads');
+  if (!fs.existsSync(UPLOADS_DIR)) {
+    try {
+      fs.mkdirSync(UPLOADS_DIR, { recursive: true });
+    } catch (e) {
+      console.warn('Could not create uploads directory in /tmp:', e.message);
+    }
+  }
 }
 
 // Multer Storage Configuration
@@ -367,8 +379,6 @@ router.delete('/media/:id', requireAdminAuth, (req, res) => {
   }
 });
 
-import { parseDocument } from '../services/documentImporter.js';
-
 // ============================================================
 // 4. DOCX EXTRACTION & PDF UPLOADS & SMART DOCUMENT IMPORTER
 // ============================================================
@@ -383,6 +393,9 @@ router.post('/documents/import-smart', requireAdminAuth, upload.single('file'), 
     if (!['.pdf', '.docx', '.doc'].includes(ext)) {
       return res.status(400).json({ error: 'Unsupported file format. Please upload a PDF or DOCX document.' });
     }
+
+    // Lazy load documentImporter only when an import request arrives
+    const { parseDocument } = await import('../services/documentImporter.js');
 
     // Process document structure, text, metadata, and embedded images
     const parsedData = await parseDocument(req.file, UPLOADS_DIR);
