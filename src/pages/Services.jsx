@@ -222,9 +222,9 @@ export default function Services() {
                     <div
                       key={srv.id}
                       role="tab"
-                      id={`service-tab-${srv.id}`}
+                      id={`service-tab-${srv.slug || srv.id}`}
                       aria-selected={isActive}
-                      aria-controls={`service-panel-${srv.id}`}
+                      aria-controls={`service-panel-${srv.slug || srv.id}`}
                       tabIndex={0}
                       onClick={() => setActiveIdx(idx)}
                       onKeyDown={(e) => {
@@ -269,8 +269,8 @@ export default function Services() {
                 <div
                   key={activeService.id}
                   role="tabpanel"
-                  id={`service-panel-${activeService.id}`}
-                  aria-labelledby={`service-tab-${activeService.id}`}
+                  id={`service-panel-${activeService.slug || activeService.id}`}
+                  aria-labelledby={`service-tab-${activeService.slug || activeService.id}`}
                   className="service-detail-panel p-2.5 sm:p-6 md:p-8 space-y-4 sm:space-y-6"
                 >
                   
