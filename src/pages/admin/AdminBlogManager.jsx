@@ -207,12 +207,12 @@ export default function AdminBlogManager() {
         setFormData({
           title: d.title || '',
           slug: d.slug || '',
-          category: d.category || 'Industrial IoT (IIoT)',
+          category: d.category || '',
           excerpt: d.excerpt || '',
           content: d.content || '',
           cover_image_url: d.cover_image_url || '',
-          tags: d.tags || ['Engineering', 'Cloud'],
-          author: d.author || 'SMRIKAAM Engineering Team',
+          tags: d.tags || [],
+          author: d.author || '', // Do NOT invent author if missing
           meta_title: d.meta_title || '',
           meta_description: d.meta_description || '',
           status: 'draft', // FORCE DRAFT MODE
@@ -253,17 +253,46 @@ export default function AdminBlogManager() {
     }
   };
 
-  // Save / Publish Action
+  // Clean Markdown helper
+  const cleanContentString = (raw) => {
+    if (!raw) return '';
+    return raw
+      .replace(/\r\n/g, '\n')
+      .replace(/^#{1,6}\s*$/gm, '')
+      .replace(/^>\s*$/gm, '')
+      .replace(/^[-*+]\s*$/gm, '')
+      .replace(/^\d+\.\s*$/gm, '')
+      .replace(/!\[[^\]]*\]\(\s*\)/g, '')
+      .replace(/!\[[^\]]*\]\((undefined|null)\)/g, '')
+      .replace(/\b(Article content coming soon|Transforming factories, operations, and enterprise systems|No description available|Content unavailable|undefined|null|N\/A)\b/gi, '')
+      .replace(/\n{3,}/g, '\n\n')
+      .trim();
+  };
+
+  // Save / Publish Action with Strict Validation
   const handleSave = async (targetStatus) => {
     setErrorMsg('');
     setSuccessMsg('');
     const errors = {};
 
-    if (!formData.title || !formData.title.trim()) {
+    const cleanTitle = (formData.title || '').trim();
+    const lowerTitle = cleanTitle.toLowerCase();
+    if (!cleanTitle) {
       errors.title = 'Article title is required.';
+    } else if (lowerTitle === 'it_blog_article' || lowerTitle === 'untitled' || lowerTitle === 'new blog') {
+      errors.title = 'Please enter a genuine descriptive title from the source document.';
     }
-    if (!formData.content || !formData.content.trim()) {
+
+    const cleanedBody = cleanContentString(formData.content);
+    if (!cleanedBody || cleanedBody.length < 20) {
       errors.content = 'Article content is required.';
+    }
+
+    // Strict validation when publishing
+    if (targetStatus === 'published') {
+      if (!cleanedBody || cleanedBody.length < 50) {
+        errors.content = 'Cannot publish: The article does not contain enough readable content to create a published article.';
+      }
     }
 
     if (Object.keys(errors).length > 0) {
@@ -276,12 +305,14 @@ export default function AdminBlogManager() {
 
     try {
       const finalStatus = targetStatus || formData.status || 'draft';
-      const autoSlug = (formData.title || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+      const autoSlug = cleanTitle.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
       const finalSlug = formData.slug ? formData.slug.trim() : autoSlug;
 
       const payload = {
         ...formData,
-        title: formData.title.trim(),
+        title: cleanTitle,
+        content: cleanedBody,
+        excerpt: (formData.excerpt || '').trim(),
         slug: finalSlug,
         status: finalStatus,
         tags: formData.tags
@@ -293,10 +324,19 @@ export default function AdminBlogManager() {
       } else {
         const created = await createItem('posts', payload);
         if (created?.id) setEditingPostId(created.id);
-        setSuccessMsg(`Article created & saved as DRAFT successfully.`);
+        setSuccessMsg(
+          finalStatus === 'published'
+            ? 'Article successfully published!'
+            : 'Article draft saved successfully.'
+        );
       }
 
-      setFormData((prev) => ({ ...prev, status: finalStatus, slug: finalSlug }));
+      setFormData((prev) => ({
+        ...prev,
+        content: cleanedBody,
+        status: finalStatus,
+        slug: finalSlug
+      }));
       await loadPosts();
     } catch (err) {
       setErrorMsg(err.response?.data?.error || err.message || 'Failed to save article.');
@@ -1106,8 +1146,8 @@ export default function AdminBlogManager() {
                 </div>
 
                 <div>
-                  <span className="text-[var(--admin-text-secondary)] block text-[10px] uppercase">PAGES / SECTIONS</span>
-                  <span className="font-bold text-white mt-0.5 block">{importAuditData.numPages} Pages Analyzed</span>
+                  <span className="text-[var(--admin-text-secondary)] block text-[10px] uppercase">SECTIONS &amp; STRUCTURE</span>
+                  <span className="font-bold text-white mt-0.5 block">{importAuditData.sectionsCount || 1} Sections • {importAuditData.paragraphsCount || 1} Paragraphs</span>
                 </div>
 
                 <div>
@@ -1116,8 +1156,13 @@ export default function AdminBlogManager() {
                 </div>
 
                 <div>
+                  <span className="text-[var(--admin-text-secondary)] block text-[10px] uppercase">AUTHOR DETECTED</span>
+                  <span className="font-bold text-white mt-0.5 block">{importAuditData.author || 'Omitted (None in source)'}</span>
+                </div>
+
+                <div>
                   <span className="text-[var(--admin-text-secondary)] block text-[10px] uppercase">SUGGESTED CATEGORY</span>
-                  <span className="font-bold text-white mt-0.5 block">{importAuditData.category}</span>
+                  <span className="font-bold text-white mt-0.5 block">{importAuditData.category || 'Omitted'}</span>
                 </div>
 
                 <div>
@@ -1125,9 +1170,9 @@ export default function AdminBlogManager() {
                   <span className="font-bold text-white mt-0.5 block">{importAuditData.extractedImages?.length || 0} Media Assets Saved</span>
                 </div>
 
-                <div>
-                  <span className="text-[var(--admin-text-secondary)] block text-[10px] uppercase">INITIAL STATUS</span>
-                  <span className="font-bold text-amber-300 uppercase mt-0.5 block">DRAFT (PENDING REVIEW)</span>
+                <div className="col-span-2 border-t border-[var(--admin-border)] pt-2 mt-1 flex items-center justify-between">
+                  <span className="text-[var(--admin-text-secondary)] text-[10px] uppercase">INITIAL PUBLISHING STATE</span>
+                  <span className="font-bold text-amber-300 uppercase">DRAFT (PENDING REVIEW)</span>
                 </div>
               </div>
 

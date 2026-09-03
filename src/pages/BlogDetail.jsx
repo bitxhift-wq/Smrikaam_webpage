@@ -98,10 +98,17 @@ export default function BlogDetail() {
             {(post.category || post.category_id) && (
               <span className="tag tag-accent">{post.category || post.category_id}</span>
             )}
-            <span className="text-xs text-text-muted flex items-center gap-1 font-normal">
-              <Calendar className="w-3.5 h-3.5 text-accent" strokeWidth={1.5} />
-              {post.created_at || post.published_at ? new Date(post.created_at || post.published_at).toLocaleDateString() : 'N/A'}
-            </span>
+            {(post.published_at || post.created_at) && (
+              <span className="text-xs text-text-muted flex items-center gap-1 font-normal">
+                <Calendar className="w-3.5 h-3.5 text-accent" strokeWidth={1.5} />
+                {new Date(post.published_at || post.created_at).toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' })}
+              </span>
+            )}
+            {post.author && post.author.trim() && !post.author.toLowerCase().includes('unknown') && (
+              <span className="text-xs text-text-muted font-normal">
+                • By <span className="text-text font-medium">{post.author}</span>
+              </span>
+            )}
           </div>
 
           <TextReveal
@@ -110,20 +117,20 @@ export default function BlogDetail() {
             className="font-heading text-2xl sm:text-4xl lg:text-5xl font-bold uppercase tracking-tight text-[var(--color-text)] mb-6 leading-[1.02]"
           />
 
-          {post.excerpt && (
+          {post.excerpt && post.excerpt.trim() && (
             <p className="text-[15px] sm:text-[16px] md:text-[18px] text-[var(--color-text-secondary)] font-normal border-l-2 border-[var(--color-accent)] pl-4 mb-8 text-left leading-[1.6]">
               {post.excerpt}
             </p>
           )}
 
-          {post.cover_image_url && (
+          {post.cover_image_url && post.cover_image_url !== 'undefined' && post.cover_image_url !== 'null' && (
             <Reveal className="mb-10 overflow-hidden border border-border h-48 sm:h-64 md:h-80 relative bg-black/5 dark:bg-white/5">
               <img src={post.cover_image_url} alt={post.title} className="w-full h-full object-cover" />
             </Reveal>
           )}
 
           {/* Post Body */}
-          {post.content && (
+          {post.content && post.content.trim() && (
             <div id="content" data-scroll-label="INSIGHTS">
               <Reveal className="mb-12">
                 <div className="type-body text-[15px] md:text-[15px] font-normal text-text-muted leading-[1.65] text-left md:text-justify">

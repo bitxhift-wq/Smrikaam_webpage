@@ -144,7 +144,34 @@ export default function RichTextRenderer({ content, className = '' }) {
         continue;
       }
 
-      // 2. Blockquotes (> ...)
+      // 2. Standalone Markdown Images (![caption](url))
+      const imageMatch = trimmed.match(/^!\[([^\]]*)\]\(([^)]+)\)$/);
+      if (imageMatch) {
+        const altText = imageMatch[1].trim();
+        const imgUrl = imageMatch[2].trim();
+
+        if (imgUrl && imgUrl !== 'undefined' && imgUrl !== 'null') {
+          elements.push(
+            <figure key={`img-${i}`} className="cms-figure my-8 border border-border bg-black/[0.02] dark:bg-white/[0.02] overflow-hidden">
+              <img
+                src={imgUrl}
+                alt={altText || 'Document Visual'}
+                className="w-full h-auto max-h-[500px] object-contain mx-auto"
+                loading="lazy"
+              />
+              {altText && altText.length > 0 && !altText.toLowerCase().includes('undefined') && (
+                <figcaption className="px-4 py-2 border-t border-border font-mono text-xs text-text-muted text-center italic bg-black/[0.015] dark:bg-white/[0.015]">
+                  {altText}
+                </figcaption>
+              )}
+            </figure>
+          );
+        }
+        i++;
+        continue;
+      }
+
+      // 3. Blockquotes (> ...)
       if (trimmed.startsWith('>')) {
         const quoteLines = [];
         while (i < lines.length && lines[i].trim().startsWith('>')) {
@@ -166,7 +193,7 @@ export default function RichTextRenderer({ content, className = '' }) {
         continue;
       }
 
-      // 3. Headings (# H1 to ###### H6)
+      // 4. Headings (# H1 to ###### H6)
       const headingMatch = trimmed.match(/^(#{1,6})\s+(.+)$/);
       if (headingMatch) {
         const level = headingMatch[1].length;

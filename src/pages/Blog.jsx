@@ -59,14 +59,16 @@ export default function Blog() {
                 {post.cover_image_url && (
                   <div className="overflow-hidden border-b border-border mb-3 sm:mb-6 -mx-3.5 -mt-3.5 sm:-mx-6 sm:-mt-6 h-32 sm:h-56 relative bg-black/5 dark:bg-white/5">
                     <img src={post.cover_image_url} alt={post.title} className="w-full h-full object-cover duotone" />
-                    {post.category_id && (
+                    {(post.category || post.category_id) && (
                       <div className="absolute top-2 left-2 sm:top-4 sm:left-4 bg-white/90 dark:bg-bg/90 border border-border px-1.5 sm:px-3 py-0.5 sm:py-1 font-mono text-[9px] sm:text-[13px] text-accent font-medium backdrop-blur-sm">
-                        {post.category_id}
+                        {post.category || post.category_id}
                       </div>
                     )}
                   </div>
                 )}
-                <div className="card-kicker font-mono text-[9px] sm:text-[13px] font-medium text-accent uppercase tracking-[0.18em] truncate">ARTICLE • {post.slug}</div>
+                <div className="card-kicker font-mono text-[9px] sm:text-[13px] font-medium text-accent uppercase tracking-[0.18em] truncate">
+                  {post.category || 'TECHNICAL ARTICLE'} • {post.slug}
+                </div>
                 <h2 className="card-title text-xs sm:text-xl md:text-2xl font-semibold uppercase group-hover:text-accent transition-colors line-clamp-2 mt-1">
                   {post.title}
                 </h2>

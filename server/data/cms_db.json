@@ -1881,19 +1881,6 @@
   },
   "staffing": [
     {
-      "title": "it_blog_article",
-      "slug": "it-blog-article",
-      "subtitle": "",
-      "desc": "",
-      "bullets": [],
-      "status": "trash",
-      "pdf_url": "/uploads/it_blog_article_1788428470097_oq57nt.pdf",
-      "id": "sta_1788428481610_9s4w",
-      "created_at": "2026-09-03T09:41:21.610Z",
-      "updated_at": "2026-09-03T09:42:00.370Z",
-      "published_at": "2026-09-03T09:41:21.610Z"
-    },
-    {
       "id": "staff_01",
       "title": "Temporary Staffing",
       "slug": "temporary-staffing",
@@ -2121,7 +2108,7 @@
       "admin_notes": "",
       "is_read": false,
       "created_at": "2026-09-03T09:06:18.299Z",
-      "updated_at": "2026-09-03T09:06:18.299Z"
+      "updated_at": "2026-09-03T09:59:09.703Z"
     },
     {
       "id": "eng_1788426358688_3b4scd",
@@ -2135,13 +2122,13 @@
       "preferred_date": "2026-09-10",
       "preferred_time": "11:00 AM - 01:00 PM",
       "source": "E2E Test Script",
-      "status": "NEW",
+      "status": "CONTACTED",
       "priority": "MEDIUM",
       "assigned_to": "",
       "admin_notes": "",
-      "is_read": false,
+      "is_read": true,
       "created_at": "2026-09-03T09:05:58.688Z",
-      "updated_at": "2026-09-03T09:05:58.688Z"
+      "updated_at": "2026-09-03T09:59:00.643Z"
     }
   ]
 }
